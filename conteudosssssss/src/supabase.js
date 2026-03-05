@@ -63,5 +63,16 @@
     }
     return null;
   }
-  window.SUPA = { signUp, signIn, resetPassword, getUser, getUserProfile };
+  async function verifyOTP(email, token) {
+    const sb = getClient();
+    if (!sb) throw new Error("Supabase não configurado.");
+    const { data, error } = await sb.auth.verifyOtp({
+      email,
+      token,
+      type: 'signup'
+    });
+    if (error) throw new Error(error.message);
+    return data;
+  }
+  window.SUPA = { signUp, signIn, resetPassword, getUser, getUserProfile, verifyOTP };
 })(); 

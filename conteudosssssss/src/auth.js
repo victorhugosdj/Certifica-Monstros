@@ -79,7 +79,7 @@ function setupAuth() {
     try {
       if (window.SUPA) {
         const data = await SUPA.signUp(email, pass, name);
-        if (data.user && (data.session || data.user.identities?.length)) {
+        if (data.user) {
           // If auto-confirm is on in Supabase, we can unlock immediately
           if (data.session) {
             const userObj = { id: data.user.id, name: name, email: email };
@@ -87,8 +87,12 @@ function setupAuth() {
             unlockApp(userObj);
             notify("Cadastro realizado e login automático!", "success");
           } else {
-            notify("Enviamos um email de confirmação. Verifique sua caixa de entrada.", "info");
-            showLoginView();
+            notify("Enviamos um código de confirmação. Verifique seu email.", "info");
+            // Show confirmation panel automatically
+            if (confirmPanel) {
+              confirmPanel.style.display = "block";
+              document.getElementById("confirm-email").value = email;
+            }
           }
         } else {
           notify("Ocorreu um problema ao cadastrar. Verifique os dados.", "error");
@@ -252,6 +256,36 @@ function setupAuth() {
       if (e.key === "Enter") regBtn.click();
     });
   });
+
+  // Listener para confirmação de código (OTP)
+  const confirmBtn = document.getElementById("confirm-code-btn");
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", async () => {
+      const email = document.getElementById("confirm-email").value.trim();
+      const code = document.getElementById("confirm-code").value.trim();
+      if (!email || !code) return notify("Preencha email e código.", "error");
+
+      try {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Verificando...";
+        if (window.SUPA) {
+          const { user, session } = await SUPA.verifyOTP(email, code);
+          if (session) {
+            const userObj = { id: user.id, name: user.user_metadata?.name || email.split('@')[0], email: user.email };
+            localStorage.setItem('auth_user', JSON.stringify(userObj));
+            unlockApp(userObj);
+            notify("Email confirmado! Acesso liberado.", "success");
+          }
+        }
+      } catch (err) {
+        notify("Código inválido ou expirado.", "error");
+        console.error("Erro OTP:", err.message);
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "Confirmar cadastro";
+      }
+    });
+  }
 }
 
 function unlockApp(user) {
