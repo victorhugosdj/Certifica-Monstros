@@ -1,9 +1,22 @@
--- SCRIPT DEFINITIVO DE PRODUÇÃO - EXECUTAR NO SQL EDITOR DO SUPABASE --
+-- ==========================================
+-- SCRIPT DE CONFIGURAÇÃO MESTRE (MASTER SETUP)
+-- PROJETO: Certifica Monstros - Treinador de Elite
+-- VERSÃO: 1.0 (Produção)
+-- ==========================================
 
--- 1. Extensões e Limpeza (Opcional)
+-- 1. EXTENSÕES
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Esquema de Tabelas (Sincronizado)
+-- 2. LIMPEZA (Opcional - Remova o comentário se quiser resetar totalmente)
+-- DROP TRIGGER IF EXISTS trigger_update_metrics ON public.progress;
+-- DROP FUNCTION IF EXISTS public.sync_metrics_trigger();
+-- DROP TABLE IF EXISTS public.drafts;
+-- DROP TABLE IF EXISTS public.metrics;
+-- DROP TABLE IF EXISTS public.progress;
+-- DROP TABLE IF EXISTS public.profiles;
+
+-- 3. ESQUEMA DE TABELAS (Ligadas ao auth.users do Supabase)
 CREATE TABLE IF NOT EXISTS public.profiles (
   user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   display_name TEXT DEFAULT 'Aluno',
@@ -37,29 +50,32 @@ CREATE TABLE IF NOT EXISTS public.drafts (
   updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
 );
 
--- 3. Segurança (RLS)
+-- 4. SEGURANÇA (Row Level Security - RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.metrics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.drafts ENABLE ROW LEVEL SECURITY;
 
--- Políticas
-CREATE POLICY "authenticated_select_profiles" ON public.profiles FOR SELECT TO authenticated USING (true);
-CREATE POLICY "authenticated_upsert_profiles" ON public.profiles FOR ALL TO authenticated USING (auth.uid() = user_id);
+-- POLÍTICAS DE ACESSO
+CREATE POLICY "profiles_select" ON public.profiles FOR SELECT TO authenticated USING (true);
+CREATE POLICY "profiles_update" ON public.profiles FOR UPDATE TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "profiles_insert" ON public.profiles FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "authenticated_select_progress" ON public.progress FOR SELECT TO authenticated USING (auth.uid() = user_id);
-CREATE POLICY "authenticated_upsert_progress" ON public.progress FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "progress_select" ON public.progress FOR SELECT TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "progress_all" ON public.progress FOR ALL TO authenticated USING (auth.uid() = user_id);
 
-CREATE POLICY "authenticated_select_metrics" ON public.metrics FOR SELECT TO authenticated USING (true);
+CREATE POLICY "metrics_select" ON public.metrics FOR SELECT TO authenticated USING (true);
+-- Nota: Metrics é atualizada via Trigger (Security Definer), por isso não precisa de política de UPDATE para o usuário.
 
-CREATE POLICY "authenticated_all_drafts" ON public.drafts FOR ALL TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "drafts_owner" ON public.drafts FOR ALL TO authenticated USING (auth.uid() = user_id);
 
--- 4. Índices
+-- 5. ÍNDICES DE PERFORMANCE
 CREATE INDEX IF NOT EXISTS idx_profiles_user_id ON public.profiles(user_id);
 CREATE INDEX IF NOT EXISTS idx_progress_user_id ON public.progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_metrics_ranking ON public.metrics (consolidated_count DESC, global_accuracy DESC);
+CREATE INDEX IF NOT EXISTS idx_metrics_last_update ON public.metrics(last_update DESC);
 
--- 5. Função de Sincronização Automática (Expert Version)
+-- 6. FUNÇÃO DE AUTOMAÇÃO (Gatilho de Ranking)
 CREATE OR REPLACE FUNCTION public.sync_metrics_trigger()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -129,20 +145,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- 6. Ativar o Gatilho (Trigger)
--- Mudamos para BEFORE para que o NEW.updated_at seja salvo na mesma transação
+-- 7. ATIVAR GATILHO
 DROP TRIGGER IF EXISTS trigger_update_metrics ON public.progress;
 CREATE TRIGGER trigger_update_metrics
 BEFORE INSERT OR UPDATE ON public.progress
 FOR EACH ROW EXECUTE FUNCTION public.sync_metrics_trigger();
 
--- Segurança Extra (Recomendação Sênior)
+-- 8. ENDURECIMENTO (Hardening)
 REVOKE EXECUTE ON FUNCTION public.sync_metrics_trigger() FROM PUBLIC;
--- Caso exista a função auxiliar _upsert_metrics (se você a manteve separada, senão ignore)
--- REVOKE EXECUTE ON FUNCTION public._upsert_metrics(UUID, TEXT, INTEGER, NUMERIC, INTEGER) FROM PUBLIC;
-
 REVOKE ALL ON public.metrics FROM PUBLIC;
 GRANT SELECT ON public.metrics TO authenticated;
-
--- Índice Extra para consultas por data
-CREATE INDEX IF NOT EXISTS idx_metrics_last_update ON public.metrics(last_update DESC);

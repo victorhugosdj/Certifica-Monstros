@@ -304,7 +304,7 @@ function unlockApp(user) {
 
   updateAuthUI();
   renderModules();
-  switchView("home");
+  switchView("how-it-works");
 }
 
 function logoutUser() {
