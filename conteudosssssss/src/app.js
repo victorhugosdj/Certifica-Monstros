@@ -3,14 +3,30 @@
  */
 
 async function initApp() {
+  // Global Error Handler for diagnostics
+  window.addEventListener('error', (event) => {
+    console.error("Erro Detectado:", event.error);
+    if (typeof notify === "function") {
+      notify(`Erro de Sistema: ${event.message}`, "error");
+    }
+  });
+
   await DB.init();
+
+  if (!window.SUPABASE) {
+    console.warn("SUPABASE não detectado!");
+    if (typeof notify === "function") {
+      notify("Aviso: Chaves do Supabase não configuradas no index.html. O sistema usará armazenamento local.", "warning");
+    }
+  }
+
   setupAuth();
   setupNavigation();
   setupModuleActions();
   setupResetProgress();
   if (window.setupSettings) window.setupSettings();
 
-  // Se houver usuário salvo no localStorage (sessão persistente manual simples para este demo)
+  // Se houver usuário salvo no localStorage
   const savedUser = JSON.parse(localStorage.getItem('auth_user'));
   if (savedUser) {
     unlockApp(savedUser);

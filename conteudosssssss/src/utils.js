@@ -56,19 +56,19 @@ const Utils = {
      * Sistema de Notificação UI (Toast)
      */
     notify(message, type = "info", timeout = 4000) {
-        let container = document.getElementById("notification-container");
+        let container = document.getElementById("toast-container");
         if (!container) {
             container = document.createElement("div");
-            container.id = "notification-container";
-            container.className = "notification-container";
+            container.id = "toast-container";
+            container.className = "toast-container";
             document.body.appendChild(container);
         }
 
         const toast = document.createElement("div");
-        toast.className = `notification-toast toast-${type}`;
+        toast.className = `toast toast-${type}`;
         toast.innerHTML = `
       <div class="toast-content">${message}</div>
-      <div class="toast-close">&times;</div>
+      <button class="toast-close">&times;</button>
     `;
 
         container.appendChild(toast);
@@ -77,15 +77,19 @@ const Utils = {
         closeBtn.onclick = () => toast.classList.add("fade-out");
 
         toast.addEventListener("animationend", (e) => {
-            if (e.animationName === "fadeOut" || toast.classList.contains("fade-out")) {
+            if (toast.classList.contains("fade-out")) {
                 toast.remove();
             }
         });
 
         setTimeout(() => {
-            if (toast.parentElement) toast.classList.add("fade-out");
+            if (toast.parentElement) {
+                toast.classList.add("fade-out");
+                // Fallback remove if animation doesn't fire
+                setTimeout(() => { if (toast.parentElement) toast.remove(); }, 500);
+            }
         }, timeout);
-    }
+    },
     /**
      * Renderiza um texto Markdown simples para HTML
      */

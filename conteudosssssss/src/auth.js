@@ -103,7 +103,9 @@ function setupAuth() {
       document.getElementById("reg-password-confirm").value = "";
 
     } catch (err) {
-      notify(err.message, "error");
+      console.error("Erro no cadastro:", err);
+      if (typeof notify === "function") notify(err.message, "error");
+      else alert("Erro: " + err.message);
     }
   });
 
@@ -220,11 +222,17 @@ function setupAuth() {
       await sendClientLog("login_success", { email });
 
     } catch (err) {
+      console.error("Erro no login:", err);
       let msg = err.message;
       if (msg.includes("Invalid login credentials") || msg.includes("Credenciais inválidas")) {
         msg = "Email ou senha incorretos. Por favor, tente novamente.";
+      } else if (msg.includes("Supabase não configurado")) {
+        msg = "Sistema indisponível: Configure as chaves do Supabase no index.html.";
       }
-      notify(msg, "error");
+
+      if (typeof notify === "function") notify(msg, "error");
+      else alert("Erro: " + msg);
+
       await sendClientLog("login_failed", { email, error: err.message });
     } finally {
       loginBtn.disabled = false;
@@ -248,11 +256,17 @@ function setupAuth() {
 
 function unlockApp(user) {
   CURRENT_USER = user;
+  const app = document.getElementById("app");
+  if (app) {
+    app.classList.remove("app-locked");
+    app.classList.add("app-unlocked");
+  }
+
   const loginScreen = document.getElementById("login-screen");
   const mainApp = document.getElementById("main-app");
 
   if (loginScreen) loginScreen.style.display = "none";
-  if (mainApp) mainApp.style.display = "block";
+  if (mainApp) mainApp.style.display = "flex";
 
   updateAuthUI();
   renderModules();
@@ -261,6 +275,14 @@ function unlockApp(user) {
 
 function logoutUser() {
   CURRENT_USER = null;
+  localStorage.removeItem('auth_user');
+
+  const app = document.getElementById("app");
+  if (app) {
+    app.classList.remove("app-unlocked");
+    app.classList.add("app-locked");
+  }
+
   const loginScreen = document.getElementById("login-screen");
   const mainApp = document.getElementById("main-app");
 
@@ -270,6 +292,8 @@ function logoutUser() {
   // Limpar formulários
   if (document.getElementById("login-email")) document.getElementById("login-email").value = "";
   if (document.getElementById("login-password")) document.getElementById("login-password").value = "";
+
+  if (typeof notify === "function") notify("Sessão encerrada.", "info");
 }
 
 function updateAuthUI() {
