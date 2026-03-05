@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifica Monstros – Treinador de Elite</title>
+  <meta name="description"
+    content="Plataforma premium de preparação para certificações de Hiperautomação. Treine com simulados oficiais e acompanhe seu progresso.">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Certifica Monstros – Treinador de Elite">
+  <meta property="og:description"
+    content="Domine a trilha de Hiperautomação com simulados oficiais e acompanhe sua evolução no pódio.">
+  <meta property="og:image" content="assets/img/logo.png">
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <meta name="emailjs-public-key" content="qt7eaV9YfrklG0qqa">
+  <meta name="emailjs-service-id" content="service_rew4l75">
+  <!-- Supabase -->
+  <meta name="supabase-url" content="https://ibmembnxtbpsehqdorme.supabase.co">
+  <meta name="supabase-anon-key"
+    content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibWVtYm54dGJwc2VocWRvcm1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NzI4NzIsImV4cCI6MjA4ODA0ODg3Mn0.K0-75dWTwUNYm09iOP8bKzxqEWndloyWDIpPnDToa0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif !important;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div id="app" class="app-locked">
+    <!-- TELA DE LOGIN -->
+    <section id="login-screen">
+      <div id="login-overlay" class="login-overlay">
+        <div class="login-card">
+          <div class="login-logo-container">
+            <img src="assets/img/logo.png" alt="Logo" class="sidebar-logo">
+          </div>
+
+          <div id="site-intro" class="site-intro">
+            <p>Domine a trilha de Hiperautomação com simulados oficiais e acompanhe sua evolução no pódio.</p>
+          </div>
+
+          <div id="login-form-container" class="auth-form">
+            <div class="form-group">
+              <input type="email" id="login-email" placeholder="Seu email">
+            </div>
+            <div class="form-group">
+              <input type="password" id="login-password" placeholder="Senha">
+            </div>
+            <button id="login-btn" class="btn-primary btn-block">ENTRAR</button>
+            <div class="auth-switch">
+              <a href="#" id="show-register">Criar nova conta</a> • <a href="#" id="show-forgot">Esqueci a senha</a>
+            </div>
+            <div id="confirm-panel"
+              style="display:none; margin-top:16px; border-top:1px solid #1f2937; padding-top:12px;">
+              <div class="form-group">
+                <input type="email" id="confirm-email" placeholder="Email para confirmar cadastro">
+              </div>
+              <div class="form-group">
+                <input type="text" id="confirm-code" placeholder="Código de confirmação (6 dígitos)">
+              </div>
+              <button id="confirm-code-btn" class="btn-secondary btn-block">Confirmar cadastro</button>
+            </div>
+          </div>
+
+          <div id="register-form-container" class="auth-form" style="display: none;">
+            <div class="form-group">
+              <input type="text" id="reg-name" placeholder="Nome completo">
+            </div>
+            <div class="form-group">
+              <input type="email" id="reg-email" placeholder="Seu melhor email">
+            </div>
+            <div class="form-group">
+              <input type="password" id="reg-password" placeholder="Defina sua senha">
+            </div>
+            <div class="form-group">
+              <input type="password" id="reg-password-confirm" placeholder="Confirme sua senha">
+            </div>
+            <button id="register-btn" class="btn-primary btn-block">Cadastrar</button>
+            <div class="auth-switch">
+              <a href="#" id="show-login">Já tenho conta</a>
+            </div>
+          </div>
+
+          <div id="forgot-form-container" class="auth-form" style="display:none;">
+            <div class="form-group">
+              <input type="email" id="forgot-email" placeholder="Seu email">
+            </div>
+            <button id="send-reset-code-btn" class="btn-secondary btn-block">Enviar código de redefinição</button>
+            <div class="form-group" style="margin-top:12px;">
+              <input type="text" id="reset-code" placeholder="Código recebido (6 dígitos)">
+            </div>
+            <div class="form-group">
+              <input type="password" id="new-password" placeholder="Nova senha">
+            </div>
+            <button id="reset-password-btn" class="btn-primary btn-block">Redefinir senha</button>
+            <div class="auth-switch">
+              <a href="#" id="forgot-show-login">Voltar ao login</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODO DE EXIBIÇAO PRINCIPAL -->
+    <section id="main-app" style="display: none;">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="logo-main"></div>
+          <div class="brand-text">
+            <span class="brand-title">Fábrica de Monstros</span>
+            <span class="brand-subtitle">Treinador de Elite</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" id="nav-how-it-works" data-view="how-it-works">
+            <i>💡</i> <span>Como funciona</span>
+          </button>
+          <button class="nav-item" id="nav-home" data-view="home">
+            <i>📚</i> <span>Módulos</span>
+          </button>
+          <button class="nav-item" id="nav-dashboard" data-view="dashboard">
+            <i>📊</i> <span>Dashboard</span>
+          </button>
+          <button class="nav-item" id="nav-ranking" data-view="ranking">
+            <i>🏆</i> <span>Ranking</span>
+          </button>
+          <button class="nav-item" id="nav-settings" data-view="settings">
+            <i>⚙️</i> <span>Configurações</span>
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <span class="footer-label">Perfil atual:</span>
+          <span class="footer-value" id="current-student-label">Visitante</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="main-header">
+          <div>
+            <button id="sidebar-toggle-btn" class="btn-secondary" style="margin-bottom: 12px;">☰</button>
+            <h1 id="main-title">Módulos e Provas</h1>
+            <p id="main-subtitle">Siga a trilha: entenda o sistema, escolha o aluno, estude o conteúdo e faça as provas
+              na ordem sugerida.</p>
+          </div>
+        </header>
+
+        <!-- Views do App -->
+        <section id="view-how-it-works" class="view view-active">
+          <div class="how-it-works-container">
+            <div class="card glass-card">
+              <h2>Bem-vindo à Fábrica de Monstros</h2>
+              <div class="step">
+                <h3>Visão Geral</h3>
+                <p>O Treinador de Hiperautomação é uma plataforma projetada para prepará-lo para certificações de elite.
+                </p>
+              </div>
+              <button class="btn-primary" onclick="switchView('home')" style="margin-top: 20px;">Começar meus
+                estudos</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-home" class="view">
+          <div class="home-layout">
+            <div class="home-modules" id="home-modules-list"></div>
+            <div class="home-detail" id="home-module-detail">
+              <div class="card glass-card">
+                <div class="card-title">Selecione um Módulo</div>
+                <p>Escolha um dos módulos à esquerda para iniciar sua jornada de aprendizado.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-dashboard" class="view">
+          <div id="dashboard-container" class="dashboard"></div>
+        </section>
+
+        <section id="view-wrong-bank" class="view">
+          <div id="wrong-bank-container" class="dashboard"></div>
+        </section>
+
+        <section id="view-ranking" class="view">
+          <div id="ranking-container" class="dashboard"></div>
+        </section>
+
+        <section id="view-settings" class="view">
+          <div class="settings-container card glass-card">
+            <h2>Configurações da Conta</h2>
+            <div class="auth-form" style="max-width: 400px; margin-top: 24px;">
+              <div class="form-group">
+                <label>Nome de Exibição</label>
+                <input type="text" id="settings-display-name" placeholder="Nome">
+              </div>
+              <button id="update-profile-btn" class="btn-primary btn-block">Salvar Alterações</button>
+
+              <hr style="margin: 32px 0; border-color: var(--border);">
+
+              <div class="form-group">
+                <label>Nova Senha</label>
+                <input type="password" id="settings-new-password" placeholder="Mínimo 6 caracteres">
+              </div>
+              <button id="update-password-btn" class="btn-secondary btn-block">Trocar Senha</button>
+
+              <hr style="margin: 32px 0; border-color: var(--border);">
+
+              <button id="logout-btn-ui" class="btn-danger btn-block" style="background: #ef4444; color: white;">Sair da
+                Conta</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- MODAL DE PROVA (Z-INDEX SUPERIOR) -->
+      <div id="exam-modal" class="login-overlay" style="display:none;">
+        <div class="exam-fullscreen-card glass-card">
+          <div id="exam-container" class="exam-container"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </main>
+  </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      var pkMeta = document.querySelector('meta[name="emailjs-public-key"]');
+      var pk = pkMeta && pkMeta.content ? pkMeta.content : null;
+      if (pk) { emailjs.init(pk); }
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      var urlMeta = document.querySelector('meta[name="supabase-url"]');
+      var keyMeta = document.querySelector('meta[name="supabase-anon-key"]');
+      var url = urlMeta && urlMeta.content ? urlMeta.content : null;
+      var key = keyMeta && keyMeta.content ? keyMeta.content : null;
+      if (url && key && window.supabase) {
+        window.SUPABASE = window.supabase.createClient(url, key);
+      }
+    })();
+  </script>
+  <script src="src/utils.js"></script>
+  <script src="src/supabase.js"></script>
+  <script src="src/parser.js"></script>
+  <script src="src/exam-ui.js"></script>
+  <script src="src/questions-data.js"></script>
+  <script src="src/config.js"></script>
+  <script src="src/database.js"></script>
+  <script src="src/auth.js"></script>
+  <script src="src/dashboard.js"></script>
+  <script src="src/settings.js"></script>
+  <script src="src/achievements.js"></script>
+  <script src="src/exam-engine.js"></script>
+  <script src="src/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+
+</html>

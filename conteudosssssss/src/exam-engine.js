@@ -1,0 +1,144 @@
+/**
+ * MOTOR DE PROVAS (EXAM ENGINE) - Logic Only
+ */
+
+const ExamEngine = {
+  /**
+   * Carrega todas as questões de um módulo a partir dos arquivos .md
+   */
+  async loadPool(moduloId) {
+    const moduleInfo = MODULES.find(m => m.id === moduloId);
+    if (!moduleInfo) return [];
+
+    const files = [`data/modules/Modulo ${moduloId}/prova 1.md`, `data/modules/Modulo ${moduloId}/prova 2.md`, `data/modules/Modulo ${moduloId}/prova 3.md`];
+    let pool = [];
+
+    for (const file of files) {
+      try {
+        const resp = await fetch(encodeURI(file));
+        if (resp.ok) {
+          const text = await resp.text();
+          const parsed = QuestionParser.parseExam(text, moduleInfo.code);
+          pool = [...pool, ...parsed];
+        }
+      } catch (e) { console.warn(`Erro ao carregar ${file}:`, e); }
+    }
+
+    if (pool.length === 0) {
+      pool = QUESTION_BANK.filter(q => q.modulo === moduloId);
+    }
+    return pool;
+  },
+
+  /**
+   * Gera um simulado de 15 questões baseado no critério
+   */
+  generateExam(moduloId, apenasErros, state, fullPool) {
+    const moduleCode = `M${moduloId}`;
+    const moduleState = getModuleState(state, moduleCode);
+    let pool = fullPool;
+
+    if (apenasErros) {
+      const errors = moduleState.errorBank || [];
+      pool = pool.filter(q => errors.includes(q.id));
+      if (pool.length < 15) {
+        const others = fullPool.filter(q => !pool.find(p => p.id === q.id));
+        pool = [...pool, ...others.sort(() => 0.5 - Math.random())];
+      }
+    } else {
+      const unmastered = pool.filter(q => {
+        const qStats = moduleState.questionStats[q.id];
+        return !qStats || qStats.streak < 1;
+      });
+      if (unmastered.length < 15) {
+        const others = pool.filter(q => !unmastered.find(u => u.id === q.id));
+        pool = [...unmastered, ...others.sort(() => 0.5 - Math.random())];
+      } else {
+        pool = unmastered;
+      }
+    }
+
+    return pool.sort(() => 0.5 - Math.random()).slice(0, 15);
+  },
+
+  /**
+   * Inicia a prova (Ponto de entrada do UI)
+   */
+  async start(moduleCode, examType) {
+    const moduleInfo = MODULES.find(m => m.code === moduleCode);
+    const state = await loadState();
+    const fullPool = await this.loadPool(moduleInfo.id);
+    const questions = this.generateExam(moduleInfo.id, examType === "REFORCO", state, fullPool);
+
+    ExamUI.openModal();
+    ExamUI.renderExamList(moduleInfo, questions, examType, () => this.grade(moduleCode, questions));
+  },
+
+  /**
+   * Avalia as respostas da prova
+   */
+  async grade(moduleCode, questions) {
+    const state = await loadState();
+    const moduleState = getModuleState(state, moduleCode);
+    let correctCount = 0;
+    const wrongQuestions = [];
+
+    questions.forEach(q => {
+      const inputName = `q_${q.id}`;
+      const radios = Array.from(document.querySelectorAll(`input[name="${inputName}"]`));
+      const selected = radios.find(r => r.checked);
+      const answerIdx = selected ? parseInt(selected.value) : -1;
+      const isCorrect = answerIdx === q.correta;
+
+      if (!moduleState.questionStats[q.id]) {
+        moduleState.questionStats[q.id] = { total: 0, correct: 0, wrong: 0, streak: 0 };
+      }
+      const stats = moduleState.questionStats[q.id];
+      stats.total += 1;
+      moduleState.totalAnswered += 1;
+
+      if (isCorrect) {
+        stats.correct += 1;
+        stats.streak += 1;
+        moduleState.correctCount += 1;
+        correctCount += 1;
+        if (stats.streak >= 2) {
+          moduleState.errorBank = (moduleState.errorBank || []).filter(id => id !== q.id);
+        }
+      } else {
+        stats.wrong += 1;
+        stats.streak = 0;
+        if (!moduleState.errorBank) moduleState.errorBank = [];
+        if (!moduleState.errorBank.includes(q.id)) moduleState.errorBank.push(q.id);
+
+        wrongQuestions.push({
+          id: q.id,
+          pergunta: q.pergunta,
+          corretaText: q.opcoes[q.correta],
+          respostaText: answerIdx >= 0 ? q.opcoes[answerIdx] : "Não respondida",
+          justificativa: q.justificativa
+        });
+      }
+    });
+
+    moduleState.attempts += 1;
+    await saveState(state);
+
+    // Check for achievements if user is logged in
+    if (window.BadgeManager && CURRENT_USER) {
+      BadgeManager.checkAchievements(CURRENT_USER.id, state);
+    }
+
+    ExamUI.renderSummary({
+      accuracy: computeAccuracy(correctCount, questions.length),
+      correct: correctCount,
+      total: questions.length
+    }, wrongQuestions);
+
+    renderModules();
+  }
+};
+
+// Aliases para compatibilidade legada
+window.renderExam = (m, t) => ExamEngine.start(m, t);
+window.startExamSequential = (m, t) => ExamEngine.start(m, t); 
