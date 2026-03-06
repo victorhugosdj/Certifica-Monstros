@@ -327,9 +327,9 @@ function logoutUser() {
   if (loginScreen) loginScreen.style.display = "block";
   if (mainApp) mainApp.style.display = "none";
 
-  // Limpar formulários
-  if (document.getElementById("login-email")) document.getElementById("login-email").value = "";
-  if (document.getElementById("login-password")) document.getElementById("login-password").value = "";
+  // Limpar formulários (Apenas se não for um evento automático de sistema)
+  // if (document.getElementById("login-email")) document.getElementById("login-email").value = "";
+  // if (document.getElementById("login-password")) document.getElementById("login-password").value = "";
 
   if (typeof notify === "function") notify("Sessão encerrada.", "info");
 }
