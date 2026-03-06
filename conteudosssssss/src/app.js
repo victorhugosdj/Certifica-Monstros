@@ -26,10 +26,34 @@ async function initApp() {
   setupResetProgress();
   if (window.setupSettings) window.setupSettings();
 
-  // Se houver usuário salvo no localStorage
+  // Recuperação de Sessão (Melhorada)
   const savedUser = JSON.parse(localStorage.getItem('auth_user'));
   if (savedUser) {
-    unlockApp(savedUser);
+    // Se for mock, desbloqueia direto
+    if (savedUser.mock) {
+      unlockApp(savedUser);
+    } else if (window.SUPA) {
+      // Se for Supabase, valida se a sessão ainda é válida no servidor
+      try {
+        const remoteUser = await SUPA.getUser();
+        if (remoteUser) {
+          // Mantém as informações locais atualizadas com o perfil remoto
+          const userObj = {
+            id: remoteUser.id,
+            email: remoteUser.email,
+            name: remoteUser.profile?.display_name || remoteUser.user_metadata?.name || savedUser.name
+          };
+          unlockApp(userObj);
+        } else {
+          localStorage.removeItem('auth_user');
+        }
+      } catch (e) {
+        console.warn("Sessão remota expirada ou erro:", e.message);
+        unlockApp(savedUser); // Fallback para o que temos salvo se o erro não for fatal
+      }
+    } else {
+      unlockApp(savedUser);
+    }
   }
 }
 

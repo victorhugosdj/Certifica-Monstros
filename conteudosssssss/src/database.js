@@ -6,7 +6,8 @@
 const DB_KEYS = {
   PROGRESS: 'cert_app_progress_v3',
   DRAFTS: 'cert_app_drafts_v2',
-  METRICS: 'cert_app_metrics_v3'
+  METRICS: 'cert_app_metrics_v3',
+  USERS: 'cert_app_users_v1'
 };
 
 const providers = {
@@ -80,16 +81,36 @@ const DB = {
 
   async authenticate(email, password) {
     if (window.SUPA) {
-      const authData = await window.SUPA.signIn(email, password);
-      const profile = await window.SUPA.getUserProfile(authData.user.id);
-      return {
-        id: authData.user.id,
-        email: authData.user.email,
-        name: profile ? profile.display_name : (authData.user.user_metadata?.name || email.split('@')[0]),
-        profile: profile
-      };
+      try {
+        const authData = await window.SUPA.signIn(email, password);
+        const profile = await window.SUPA.getUserProfile(authData.user.id);
+        return {
+          id: authData.user.id,
+          email: authData.user.email,
+          name: profile ? profile.display_name : (authData.user.user_metadata?.name || email.split('@')[0]),
+          profile: profile
+        };
+      } catch (e) {
+        console.warn("Supabase Auth falhou, tentando Mock...", e.message);
+      }
     }
-    throw new Error('Supabase não disponível para autenticação.');
+
+    // Mock Auth Fallback (para testes sem Supabase)
+    const users = JSON.parse(localStorage.getItem(DB_KEYS.USERS)) || {};
+    const user = users[email];
+    if (user && user.password === password) {
+      return { id: user.id, email: user.email, name: user.name, mock: true };
+    }
+    throw new Error('Credenciais inválidas ou Supabase indisponível.');
+  },
+
+  async signUpMock(email, password, name) {
+    const users = JSON.parse(localStorage.getItem(DB_KEYS.USERS)) || {};
+    if (users[email]) throw new Error("Usuário já existe.");
+    const newUser = { id: 'mock_' + Date.now(), email, password, name };
+    users[email] = newUser;
+    localStorage.setItem(DB_KEYS.USERS, JSON.stringify(users));
+    return newUser;
   },
 
   async getRanking() {

@@ -71,6 +71,10 @@ function setupAuth() {
       alert("Preencha todos os campos.");
       return;
     }
+    if (pass.length < 6) {
+      alert("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
     if (pass !== passConfirm) {
       alert("As senhas não coincidem.");
       return;
@@ -80,7 +84,6 @@ function setupAuth() {
       if (window.SUPA) {
         const data = await SUPA.signUp(email, pass, name);
         if (data.user) {
-          // If auto-confirm is on in Supabase, we can unlock immediately
           if (data.session) {
             const userObj = { id: data.user.id, name: name, email: email };
             localStorage.setItem('auth_user', JSON.stringify(userObj));
@@ -88,17 +91,18 @@ function setupAuth() {
             notify("Cadastro realizado e login automático!", "success");
           } else {
             notify("Enviamos um código de confirmação. Verifique seu email.", "info");
-            // Show confirmation panel automatically
             if (confirmPanel) {
               confirmPanel.style.display = "block";
               document.getElementById("confirm-email").value = email;
             }
           }
-        } else {
-          notify("Ocorreu um problema ao cadastrar. Verifique os dados.", "error");
         }
       } else {
-        notify("Supabase não disponível.", "error");
+        // Mock SignUp Fallback
+        const newUser = await DB.signUpMock(email, pass, name);
+        localStorage.setItem('auth_user', JSON.stringify(newUser));
+        unlockApp(newUser);
+        notify("Cadastro (Local) realizado!", "success");
       }
 
       document.getElementById("reg-name").value = "";
