@@ -3,31 +3,8 @@
  */
 
 const ExamEngine = {
-  /**
-   * Carrega todas as questões de um módulo a partir dos arquivos .md
-   */
   async loadPool(moduloId) {
-    const moduleInfo = MODULES.find(m => m.id === moduloId);
-    if (!moduleInfo) return [];
-
-    const files = [`data/modules/Modulo ${moduloId}/prova 1.md`, `data/modules/Modulo ${moduloId}/prova 2.md`, `data/modules/Modulo ${moduloId}/prova 3.md`];
-    let pool = [];
-
-    for (const file of files) {
-      try {
-        const resp = await fetch(encodeURI(file));
-        if (resp.ok) {
-          const text = await resp.text();
-          const parsed = QuestionParser.parseExam(text, moduleInfo.code);
-          pool = [...pool, ...parsed];
-        }
-      } catch (e) { console.warn(`Erro ao carregar ${file}:`, e); }
-    }
-
-    if (pool.length === 0) {
-      pool = QUESTION_BANK.filter(q => q.modulo === moduloId);
-    }
-    return pool;
+    return QUESTION_BANK.filter(q => q.modulo === moduloId);
   },
 
   /**

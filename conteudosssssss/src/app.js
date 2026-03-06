@@ -2,6 +2,35 @@
  * INICIALIZAÇÃO E NAVEGAÇÃO PRINCIPAL
  */
 
+let MODULOS_JSON_CACHE = null;
+
+async function fetchModulosJson() {
+  if (MODULOS_JSON_CACHE) return MODULOS_JSON_CACHE;
+  try {
+    const res = await fetch("data/modulos.json");
+    if (!res.ok) throw new Error("Erro fetch");
+    MODULOS_JSON_CACHE = await res.json();
+    return MODULOS_JSON_CACHE;
+  } catch (e) {
+    console.warn("modulos.json não encontrado", e);
+    return [];
+  }
+}
+
+function formatModuleJsonToMarkdown(modJson) {
+  if (!modJson) return "";
+  let md = modJson.introducao ? modJson.introducao + "\n\n" : "";
+  if (modJson.topicos) {
+    modJson.topicos.forEach(t => {
+      md += `## ${t.titulo}\n${t.texto}\n\n`;
+    });
+  }
+  if (modJson.conclusao) {
+    md += modJson.conclusao;
+  }
+  return md;
+}
+
 async function initApp() {
   // Global Error Handler for diagnostics
   window.addEventListener('error', (event) => {
@@ -26,7 +55,7 @@ async function initApp() {
   setupResetProgress();
   if (window.setupSettings) window.setupSettings();
 
-  // Observador de Autenticação em Tempo Real (Apenas Supabase)
+  // Observador de Autenticação em Tempo Real 
   if (window.SUPA) {
     SUPA.onAuthStateChange((event, user) => {
       console.log("Auth Event:", event, user ? user.email : "null");
@@ -134,104 +163,73 @@ async function renderModules() {
     `;
     list.appendChild(card);
 
-    const num = m.id;
-    const rawPath = `data/modules/Modulo ${num}/conteudo ${num}.md`;
-    const path = encodeURI(rawPath);
-    fetch(path)
-      .then(res => res.ok ? res.text() : "")
-      .then(text => {
-        if (!text) return;
-        const preview = text.split(/\r?\n/).slice(0, 8).join("\n");
-        const el = document.getElementById(`home-preview-${m.code}`);
-        if (el) el.innerHTML = renderMarkdown(preview);
-      })
-      .catch(() => { });
+    fetchModulosJson().then(mods => {
+      const modJson = mods.find(mo => mo.codigo === m.code);
+      if (!modJson) return;
+      const text = formatModuleJsonToMarkdown(modJson);
+      const preview = text.split(/\r?\n/).slice(0, 8).join("\n");
+      const el = document.getElementById(`home-preview-${m.code}`);
+      if (el) el.innerHTML = renderMarkdown(preview);
+    }).catch(() => { });
   });
 }
 
 function loadModuleContent(moduleCode) {
   const moduleInfo = MODULES.find(m => m.code === moduleCode);
   if (!moduleInfo) return;
-  const num = moduleInfo.id;
   const container = document.getElementById("module-content-" + moduleCode);
   if (!container) return;
-  const rawPath = `data/modules/Modulo ${num}/conteudo ${num}.md`;
-  const path = encodeURI(rawPath);
-  fetch(path)
-    .then(res => {
-      if (!res.ok) throw new Error("Erro ao carregar conteúdo");
-      return res.text();
-    })
-    .then(text => {
+
+  fetchModulosJson()
+    .then(mods => {
+      const modJson = mods.find(m => m.codigo === moduleCode);
+      if (!modJson) throw new Error("Módulo não encontrado no JSON");
+      const text = formatModuleJsonToMarkdown(modJson);
       MODULE_CONTENT_CACHE[moduleCode] = text;
       container.innerHTML = renderMarkdown(text);
       renderModuleIndex(moduleCode);
       renderModuleSections(moduleCode);
     })
     .catch(() => {
-      container.textContent = "Não foi possível carregar o conteúdo do módulo. Verifique se o arquivo existe.";
+      container.textContent = "Não foi possível carregar o conteúdo do módulo (JSON).";
     });
 }
 
 function loadModuleExamsMD(moduleCode) {
   const moduleInfo = MODULES.find(m => m.code === moduleCode);
   if (!moduleInfo) return;
-  const num = moduleInfo.id;
   const grid = document.getElementById(`module-exams-grid-${moduleInfo.code}`);
   if (!grid) return;
-  const files = [`data/modules/Modulo ${num}/prova 1.md`, `data/modules/Modulo ${num}/prova 2.md`, `data/modules/Modulo ${num}/prova 3.md`];
   grid.innerHTML = "";
-  files.forEach((raw, idx) => {
-    const path = encodeURI(raw);
-    fetch(path)
-      .then(res => res.ok ? res.text() : "")
-      .then(text => {
-        const preview = text ? text.split(/\r?\n/).slice(0, 3).join("\n") : "";
-        const html = `
-          <div class="module-exam-card">
-            <div class="module-exam-title">Prova ${idx + 1}</div>
-            <div class="module-exam-preview">${preview ? renderMarkdown(preview) : "<em>Arquivo não encontrado</em>"}</div>
-            <div class="module-exam-actions">
-              <button class="btn-primary" data-action="exam-seq" data-exam="P1" data-module="${moduleInfo.code}">Gerar Prova ${idx + 1}</button>
-            </div>
-          </div>
-        `;
-        const el = document.createElement("div");
-        el.innerHTML = html;
-        grid.appendChild(el.firstElementChild);
-      })
-      .catch(() => {
-        const el = document.createElement("div");
-        el.className = "module-exam-card";
-        el.innerHTML = `
-          <div class="module-exam-title">Prova ${idx + 1}</div>
-          <div class="module-exam-preview"><em>Arquivo não encontrado</em></div>
-          <div class="module-exam-actions">
-            <button class="btn-primary" data-action="exam-seq" data-exam="P1" data-module="${moduleInfo.code}">Gerar Prova ${idx + 1}</button>
-          </div>
-        `;
-        grid.appendChild(el);
-      });
-  });
+  for (let idx = 0; idx < 3; idx++) {
+    const html = `
+      <div class="module-exam-card">
+        <div class="module-exam-title">Simulado ${idx + 1}</div>
+        <div class="module-exam-preview">15 questões exclusivas de ${moduleCode}. Banco dinâmico.</div>
+        <div class="module-exam-actions">
+          <button class="btn-primary" data-action="exam-seq" data-exam="SIMULADO" data-module="${moduleInfo.code}">Gerar Simulado</button>
+        </div>
+      </div>
+    `;
+    const el = document.createElement("div");
+    el.innerHTML = html;
+    grid.appendChild(el.firstElementChild);
+  }
 }
 
 function loadModuleContentInto(moduleCode, targetId) {
   const moduleInfo = MODULES.find(m => m.code === moduleCode);
   if (!moduleInfo) return;
-  const num = moduleInfo.id;
   const container = document.getElementById(targetId);
   if (!container) return;
-  const rawPath = `data/modules/Modulo ${num}/conteudo ${num}.md`;
-  const path = encodeURI(rawPath);
-  fetch(path)
-    .then(res => {
-      if (!res.ok) throw new Error("Erro ao carregar conteúdo");
-      return res.text();
-    })
-    .then(text => {
+
+  fetchModulosJson()
+    .then(mods => {
+      const modJson = mods.find(m => m.codigo === moduleCode);
+      if (!modJson) throw new Error("Módulo não encontrado no JSON");
+      const text = formatModuleJsonToMarkdown(modJson);
       MODULE_CONTENT_CACHE[moduleCode] = text;
 
-      // Track read modules for achievements
       const readModules = JSON.parse(localStorage.getItem('read_modules') || '[]');
       if (!readModules.includes(moduleCode)) {
         readModules.push(moduleCode);
@@ -241,50 +239,30 @@ function loadModuleContentInto(moduleCode, targetId) {
       container.innerHTML = renderMarkdown(text);
     })
     .catch(() => {
-      container.textContent = "Não foi possível carregar o conteúdo do módulo. Verifique se o arquivo existe.";
+      container.textContent = "Não foi possível carregar o conteúdo do módulo (JSON).";
     });
 }
 
 function loadModuleExamsInto(moduleCode, gridId) {
   const moduleInfo = MODULES.find(m => m.code === moduleCode);
   if (!moduleInfo) return;
-  const num = moduleInfo.id;
   const grid = document.getElementById(gridId);
   if (!grid) return;
-  const files = [`data/modules/Modulo ${num}/prova 1.md`, `data/modules/Modulo ${num}/prova 2.md`, `data/modules/Modulo ${num}/prova 3.md`];
   grid.innerHTML = "";
-  files.forEach((raw, idx) => {
-    const path = encodeURI(raw);
-    fetch(path)
-      .then(res => res.ok ? res.text() : "")
-      .then(text => {
-        const preview = text ? text.split(/\r?\n/).slice(0, 3).join("\n") : "";
-        const html = `
-          <div class="module-exam-card">
-            <div class="module-exam-title">Prova ${idx + 1}</div>
-            <div class="module-exam-preview">${preview ? renderMarkdown(preview) : "<em>Arquivo não encontrado</em>"}</div>
-            <div class="module-exam-actions">
-              <button class="btn-primary" data-action="exam-seq" data-exam="P1" data-module="${moduleInfo.code}">Gerar Prova ${idx + 1}</button>
-            </div>
-          </div>
-        `;
-        const el = document.createElement("div");
-        el.innerHTML = html;
-        grid.appendChild(el.firstElementChild);
-      })
-      .catch(() => {
-        const el = document.createElement("div");
-        el.className = "module-exam-card";
-        el.innerHTML = `
-          <div class="module-exam-title">Prova ${idx + 1}</div>
-          <div class="module-exam-preview"><em>Arquivo não encontrado</em></div>
-          <div class="module-exam-actions">
-            <button class="btn-primary" data-action="exam-seq" data-exam="P1" data-module="${moduleInfo.code}">Gerar Prova ${idx + 1}</button>
-          </div>
-        `;
-        grid.appendChild(el);
-      });
-  });
+  for (let idx = 0; idx < 3; idx++) {
+    const html = `
+      <div class="module-exam-card">
+        <div class="module-exam-title">Simulado ${idx + 1}</div>
+        <div class="module-exam-preview">15 questões exclusivas de ${moduleCode}. Banco dinâmico.</div>
+        <div class="module-exam-actions">
+          <button class="btn-primary" data-action="exam-seq" data-exam="SIMULADO" data-module="${moduleInfo.code}">Gerar Simulado</button>
+        </div>
+      </div>
+    `;
+    const el = document.createElement("div");
+    el.innerHTML = html;
+    grid.appendChild(el.firstElementChild);
+  }
 }
 
 async function renderAllModulesLibrary() {

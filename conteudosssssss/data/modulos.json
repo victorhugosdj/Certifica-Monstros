@@ -1,0 +1,24 @@
+[
+    {
+        "codigo": "M1",
+        "introducao": "# Boas-vindas ao Módulo 1\n\nEste é o formato base para o conteúdo. A partir de agora o sistema não lê mais arquivos `.md` soltos.",
+        "topicos": [
+            {
+                "titulo": "Fundamentos Iniciais",
+                "texto": "Insira o conteúdo do seu curso aqui, utilizando texto formatado em Markdown se desejar (ex: **negrito** e *itálico*)."
+            }
+        ],
+        "conclusao": "## Conclusão\n\nAgora você está pronto para o simulado deste módulo."
+    },
+    {
+        "codigo": "M2",
+        "introducao": "# Módulo 2\n\nComo o conteúdo está organizado em um único `modulos.json`, a velocidade do site será instantânea.",
+        "topicos": [
+            {
+                "titulo": "Governança e Escala",
+                "texto": "A escalabilidade da hiperautomação depende de uma forte fundação do C4E."
+            }
+        ],
+        "conclusao": "Reflita sobre como aplicar a governança no seu ambiente."
+    }
+]
