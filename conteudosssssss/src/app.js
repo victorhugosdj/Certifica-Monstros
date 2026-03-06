@@ -26,7 +26,7 @@ async function initApp() {
   setupResetProgress();
   if (window.setupSettings) window.setupSettings();
 
-  // Observador de Autenticação em Tempo Real (Ajustado para Estabilidade)
+  // Observador de Autenticação em Tempo Real (Apenas Supabase)
   if (window.SUPA) {
     SUPA.onAuthStateChange((event, user) => {
       console.log("Auth Event:", event, user ? user.email : "null");
@@ -40,26 +40,12 @@ async function initApp() {
         localStorage.setItem('auth_user', JSON.stringify(userObj));
         unlockApp(userObj);
       } else if (event === 'SIGNED_OUT') {
-        // Apenas limpa se for um logout EXPLÍCITO
-        const saved = JSON.parse(localStorage.getItem('auth_user'));
-        if (saved && !saved.mock) {
-          logoutUser();
-        }
-      } else {
-        // Se for INITIAL_SESSION ou outro evento sem usuário, 
-        // mas temos um mock salvo, não fazemos nada (deixa o app carregar o mock)
-        const saved = JSON.parse(localStorage.getItem('auth_user'));
-        if (saved && saved.mock) {
-          unlockApp(saved);
-        }
+        localStorage.removeItem('auth_user');
+        logoutUser();
       }
     });
   } else {
-    // Fallback para usuários Mock (Offline/Sem Supabase)
-    const savedUser = JSON.parse(localStorage.getItem('auth_user'));
-    if (savedUser && savedUser.mock) {
-      unlockApp(savedUser);
-    }
+    console.error("SUPABASE não inicializado em app.js");
   }
 }
 

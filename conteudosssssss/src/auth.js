@@ -60,12 +60,6 @@ function setupAuth() {
     const email = document.getElementById("reg-email").value.trim();
     const pass = document.getElementById("reg-password").value;
     const passConfirm = document.getElementById("reg-password-confirm").value;
-    const apiMeta = document.querySelector('meta[name="mongo-api-base"]');
-    const apiBase = apiMeta && apiMeta.content ? apiMeta.content : null;
-    async function sendClientLog(event, payload) {
-      if (!apiBase) return;
-      try { await fetch(apiBase + "/logs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ event, payload }) }); } catch (_) { }
-    }
 
     if (!name || !email || !pass) {
       alert("Preencha todos os campos.");
@@ -81,28 +75,22 @@ function setupAuth() {
     }
 
     try {
-      if (window.SUPA) {
-        const data = await SUPA.signUp(email, pass, name);
-        if (data.user) {
-          if (data.session) {
-            const userObj = { id: data.user.id, name: name, email: email };
-            localStorage.setItem('auth_user', JSON.stringify(userObj));
-            unlockApp(userObj);
-            notify("Cadastro realizado e login automático!", "success");
-          } else {
-            notify("Enviamos um código de confirmação. Verifique seu email.", "info");
-            if (confirmPanel) {
-              confirmPanel.style.display = "block";
-              document.getElementById("confirm-email").value = email;
-            }
+      if (!window.SUPA) throw new Error("Supabase não detectado.");
+
+      const data = await SUPA.signUp(email, pass, name);
+      if (data.user) {
+        if (data.session) {
+          const userObj = { id: data.user.id, name: name, email: email };
+          localStorage.setItem('auth_user', JSON.stringify(userObj));
+          unlockApp(userObj);
+          notify("Cadastro realizado e login automático!", "success");
+        } else {
+          notify("Enviamos um código de confirmação. Verifique seu email.", "info");
+          if (confirmPanel) {
+            confirmPanel.style.display = "block";
+            document.getElementById("confirm-email").value = email;
           }
         }
-      } else {
-        // Mock SignUp Fallback
-        const newUser = await DB.signUpMock(email, pass, name);
-        localStorage.setItem('auth_user', JSON.stringify(newUser));
-        unlockApp(newUser);
-        notify("Cadastro (Local) realizado!", "success");
       }
 
       document.getElementById("reg-name").value = "";
@@ -161,24 +149,9 @@ function setupAuth() {
       const email = document.getElementById("forgot-email").value.trim();
       if (!email) { alert("Informe o email."); return; }
       try {
-        if (window.SUPA) {
-          await SUPA.resetPassword(email);
-          if (typeof notify === "function") notify("Verifique seu email para o link de redefinição.", "info"); else alert("Verifique seu email para o link de redefinição.");
-        } else {
-          const res = await DB.requestPasswordReset(email);
-          const svcMeta = document.querySelector('meta[name="emailjs-service-id"]');
-          const tplMeta = document.querySelector('meta[name="emailjs-template-reset-id"]');
-          const serviceId = svcMeta && svcMeta.content ? svcMeta.content : null;
-          const templateId = tplMeta && tplMeta.content ? tplMeta.content : null;
-          const params = { to_name: res.user.name, to_email: email, reset_code: res.code };
-          if (serviceId && templateId) {
-            emailjs.send(serviceId, templateId, params)
-              .then(() => { if (typeof notify === "function") notify("Código de redefinição enviado.", "success"); else alert("Código de redefinição enviado."); },
-                () => { if (typeof notify === "function") notify(`Código de redefinição: ${res.code}`, "info"); else alert(`Código de redefinição: ${res.code}`); });
-          } else {
-            if (typeof notify === "function") notify(`Código de redefinição: ${res.code}`, "info"); else alert(`Código de redefinição: ${res.code}`);
-          }
-        }
+        if (!window.SUPA) throw new Error("Supabase não detectado.");
+        await SUPA.resetPassword(email);
+        if (typeof notify === "function") notify("Verifique seu email para o link de redefinição.", "success"); else alert("Verifique seu email para o link de redefinição.");
       } catch (e) {
         if (typeof notify === "function") notify(e.message, "error"); else alert(e.message);
       }
@@ -210,24 +183,25 @@ function setupAuth() {
   loginBtn.addEventListener("click", async () => {
     const email = document.getElementById("login-email").value.trim();
     const pass = document.getElementById("login-password").value;
-    const apiMeta = document.querySelector('meta[name="mongo-api-base"]');
-    const apiBase = apiMeta && apiMeta.content ? apiMeta.content : null;
-
-    async function sendClientLog(event, payload) {
-      if (!apiBase) return;
-      try { await fetch(apiBase + "/logs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ event, payload }) }); } catch (_) { }
-    }
 
     try {
       loginBtn.disabled = true;
       loginBtn.textContent = "Entrando...";
-      await sendClientLog("login_attempt", { email });
 
-      const user = await DB.authenticate(email, pass);
+      if (!window.SUPA) throw new Error("Supabase não configurado.");
+
+      const authData = await window.SUPA.signIn(email, pass);
+      const profile = await window.SUPA.getUserProfile(authData.user.id);
+      const user = {
+        id: authData.user.id,
+        email: authData.user.email,
+        name: profile ? profile.display_name : (authData.user.user_metadata?.name || email.split('@')[0]),
+        profile: profile
+      };
+
       localStorage.setItem('auth_user', JSON.stringify(user));
       unlockApp(user);
       notify("Login realizado com sucesso.", "success");
-      await sendClientLog("login_success", { email });
 
     } catch (err) {
       console.error("Erro no login:", err);
@@ -235,13 +209,12 @@ function setupAuth() {
       if (msg.includes("Invalid login credentials") || msg.includes("Credenciais inválidas")) {
         msg = "Email ou senha incorretos. Por favor, tente novamente.";
       } else if (msg.includes("Supabase não configurado")) {
-        msg = "Sistema indisponível: Configure as chaves do Supabase no index.html.";
+        msg = "Sistema indisponível: Banco de dados offline.";
       }
 
       if (typeof notify === "function") notify(msg, "error");
       else alert("Erro: " + msg);
 
-      await sendClientLog("login_failed", { email, error: err.message });
     } finally {
       loginBtn.disabled = false;
       loginBtn.textContent = "ENTRAR";
