@@ -120,9 +120,12 @@ function renderDashboard() {
             <div class="kpi-label">Módulos</div>
             <div class="kpi-value" style="font-size: 2rem;">${MODULES.length}</div>
           </div>
-          <div class="kpi">
-            <div class="kpi-label">Mais Desafiador</div>
-            <div class="kpi-value" style="font-size: 1.2rem; color: var(--primary);">${metrics.hardestModule ? metrics.hardestModule.code : '---'}</div>
+          <div class="kpi" style="border-left: 3px solid var(--danger); padding-left: 12px;">
+            <div class="kpi-label" style="color: var(--danger);">⚠️ Módulo Crítico</div>
+            <div class="kpi-value" style="font-size: 1.2rem; font-weight: 800; color: #fff;">
+              ${metrics.hardestModule ? metrics.hardestModule.code + ' (' + formatPercent(metrics.hardestModule.accuracy) + ')' : '--'}
+            </div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Menor Aproveitamento</div>
           </div>
         </div>
       </div>
