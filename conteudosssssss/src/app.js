@@ -19,6 +19,8 @@ async function fetchModulosJson() {
 
 function formatModuleJsonToMarkdown(modJson) {
   if (!modJson) return "";
+  if (modJson.markdown) return modJson.markdown;
+
   let md = modJson.introducao ? modJson.introducao + "\n\n" : "";
   if (modJson.topicos) {
     modJson.topicos.forEach(t => {
