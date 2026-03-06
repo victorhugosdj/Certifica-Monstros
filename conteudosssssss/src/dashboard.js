@@ -182,9 +182,9 @@ function renderDashboard() {
     </div>
 
     <div class="card glass-card">
-      <div class="card-title">💡 Questões que precisam de atenção</div>
+      <div class="card-title">💡 Questões Desafiadoras (Retentativas)</div>
       <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 16px;">
-        Abaixo estão as questões com maior histórico de erro. Acerte-as 2 vezes seguidas para consolidar o conhecimento.
+        Questões com histórico de erro. Acerte-as 2 vezes seguidas (Streak 2/2) para removê-las desta lista.
       </p>
       <div id="challenging-list">
         ${renderChallengingList(metrics.questions)}
@@ -255,12 +255,15 @@ function renderChallengingList(questions) {
             <td><code>${q.id}</code></td>
             <td>${q.moduleCode}</td>
             <td style="color: var(--primary); font-weight: 700;">${q.wrong}</td>
-            <td>${q.streak}/2</td>
+            <td><span style="color: ${q.streak === 1 ? 'var(--success)' : 'var(--text-dim)'};">${q.streak}/2</span></td>
             <td>${formatPercent(q.accuracy)}</td>
           </tr>
         `).join("")}
       </tbody>
     </table>
+    <div style="margin-top: 10px; font-size: 0.8rem; color: var(--text-dim);">
+      * Acerte <strong>2 vezes seguidas</strong> para consolidar.
+    </div>
   `;
 }
 
