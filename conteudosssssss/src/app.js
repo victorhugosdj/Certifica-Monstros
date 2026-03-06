@@ -26,32 +26,30 @@ async function initApp() {
   setupResetProgress();
   if (window.setupSettings) window.setupSettings();
 
-  // Recuperação de Sessão (Melhorada)
-  const savedUser = JSON.parse(localStorage.getItem('auth_user'));
-  if (savedUser) {
-    // Se for mock, desbloqueia direto
-    if (savedUser.mock) {
-      unlockApp(savedUser);
-    } else if (window.SUPA) {
-      // Se for Supabase, valida se a sessão ainda é válida no servidor
-      try {
-        const remoteUser = await SUPA.getUser();
-        if (remoteUser) {
-          // Mantém as informações locais atualizadas com o perfil remoto
-          const userObj = {
-            id: remoteUser.id,
-            email: remoteUser.email,
-            name: remoteUser.profile?.display_name || remoteUser.user_metadata?.name || savedUser.name
-          };
-          unlockApp(userObj);
-        } else {
-          localStorage.removeItem('auth_user');
+  // Observador de Autenticação em Tempo Real (NOVO)
+  if (window.SUPA) {
+    SUPA.onAuthStateChange((event, user) => {
+      console.log("Auth Event:", event, user);
+      if (user) {
+        const userObj = {
+          id: user.id,
+          email: user.email,
+          name: user.profile?.display_name || user.user_metadata?.name || user.email.split('@')[0]
+        };
+        localStorage.setItem('auth_user', JSON.stringify(userObj));
+        unlockApp(userObj);
+      } else {
+        // Se o usuário deslogar ou a sessão expirar, e não for um usuário mock
+        const saved = JSON.parse(localStorage.getItem('auth_user'));
+        if (saved && !saved.mock) {
+          logoutUser();
         }
-      } catch (e) {
-        console.warn("Sessão remota expirada ou erro:", e.message);
-        unlockApp(savedUser); // Fallback para o que temos salvo se o erro não for fatal
       }
-    } else {
+    });
+  } else {
+    // Fallback para usuários Mock (Offline)
+    const savedUser = JSON.parse(localStorage.getItem('auth_user'));
+    if (savedUser && savedUser.mock) {
       unlockApp(savedUser);
     }
   }
