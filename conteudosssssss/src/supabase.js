@@ -74,5 +74,17 @@
     if (error) throw new Error(error.message);
     return data;
   }
-  window.SUPA = { signUp, signIn, resetPassword, getUser, getUserProfile, verifyOTP };
-})(); 
+  function onAuthStateChange(callback) {
+    const sb = getClient();
+    if (!sb) return;
+    return sb.auth.onAuthStateChange(async (event, session) => {
+      if (session && session.user) {
+        const profile = await getUserProfile(session.user.id);
+        callback(event, { ...session.user, profile, session });
+      } else {
+        callback(event, null);
+      }
+    });
+  }
+  window.SUPA = { signUp, signIn, resetPassword, getUser, getUserProfile, verifyOTP, onAuthStateChange };
+})();
