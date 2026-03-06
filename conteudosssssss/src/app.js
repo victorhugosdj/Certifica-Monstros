@@ -341,14 +341,18 @@ function renderHomeModuleDetail(moduleCode) {
         <div class="skeleton-line"></div>
       </div>
 
-      <div class="module-detail-footer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div class="module-detail-footer" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
         <button class="btn-primary" 
           data-action="exam-seq" data-exam="SIMULADO" data-module="${moduleInfo.code}" style="height: 60px; font-weight: 700;">
-          🎯 SIMULADO (15 QUESTÕES)
+          📄 INICIAR PROVA (15 Q.)
         </button>
         <button class="btn-secondary" 
-          data-action="exam-seq" data-exam="REFORCO" data-module="${moduleInfo.code}" style="height: 60px; font-weight: 700;">
-          🚀 REFORÇO (ERROS)
+          data-action="exam-seq" data-exam="REFORCO" data-module="${moduleInfo.code}" style="height: 60px; font-weight: 700; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+          ⚡ QUESTÕES ERRADAS
+        </button>
+        <button class="btn-secondary" 
+          data-action="exam-seq" data-exam="SIMULADO" data-module="${moduleInfo.code}" style="height: 60px; font-weight: 700;">
+          🔄 NOVA PROVA
         </button>
       </div>
     </div>
