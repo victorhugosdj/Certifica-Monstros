@@ -2,9 +2,25 @@
  * MOTOR DE PROVAS (EXAM ENGINE) - Logic Only
  */
 
+let PROVAS_JSON_CACHE = null;
+
+async function fetchProvasJson() {
+  if (PROVAS_JSON_CACHE) return PROVAS_JSON_CACHE;
+  try {
+    const res = await fetch("data/provas.json");
+    if (!res.ok) throw new Error("Erro fetch provas");
+    PROVAS_JSON_CACHE = await res.json();
+    return PROVAS_JSON_CACHE;
+  } catch (e) {
+    console.warn("provas.json não encontrado", e);
+    return [];
+  }
+}
+
 const ExamEngine = {
   async loadPool(moduloId) {
-    return QUESTION_BANK.filter(q => q.modulo === moduloId);
+    const bank = await fetchProvasJson();
+    return bank.filter(q => q.modulo === moduloId);
   },
 
   /**
@@ -64,8 +80,8 @@ const ExamEngine = {
       const inputName = `q_${q.id}`;
       const radios = Array.from(document.querySelectorAll(`input[name="${inputName}"]`));
       const selected = radios.find(r => r.checked);
-      const answerIdx = selected ? parseInt(selected.value) : -1;
-      const isCorrect = answerIdx === q.correta;
+      const answerText = selected ? selected.value : "";
+      const isCorrect = answerText === q.correta_texto;
 
       if (!moduleState.questionStats[q.id]) {
         moduleState.questionStats[q.id] = { total: 0, correct: 0, wrong: 0, streak: 0 };
@@ -91,8 +107,8 @@ const ExamEngine = {
         wrongQuestions.push({
           id: q.id,
           pergunta: q.pergunta,
-          corretaText: q.opcoes[q.correta],
-          respostaText: answerIdx >= 0 ? q.opcoes[answerIdx] : "Não respondida",
+          corretaText: q.correta_texto,
+          respostaText: answerText || "Não respondida",
           justificativa: q.justificativa
         });
       }
