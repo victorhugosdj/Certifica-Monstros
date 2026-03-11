@@ -1,0 +1,189 @@
+
+=== m7_q301 ===
+P: Um cenário descreve que uma organização quer compartilhar conectores, templates e fragmentos entre times internos apenas. Qual tipo de Exchange deve s
+  [0] Exchange público apenas
+  [1] Exchange privado da organização <-- CURRENT
+  [2] GitHub público
+  [3] File server compartilhado
+
+=== m7_q302 ===
+P: Uma API é publicada no Exchange com sua especificação. O que o Exchange oferece automaticamente para ajudar consumidores?
+  [0] Apenas download de um PDF
+  [1] Console interativo para testar chamadas e documentação navegável <-- CURRENT
+  [2] Apenas logs da API
+  [3] Relatórios financeiros
+
+=== m7_q303 ===
+P: NTO quer reutilizar um modelo padrão de “Endereço” em várias APIs RAML. Que tipo de ativo é mais adequado?
+  [0] API Specification completa
+  [1] API Fragment (por exemplo, dataType de Endereço) <-- CURRENT
+  [2] Template de projeto
+  [3] RPA Asset
+
+=== m7_q304 ===
+P: Uma alternativa afirma que “Exchange armazena apenas APIs, não outros tipos de ativos”. Como isso deve ser avaliado?
+  [0] Correto
+  [1] Falso; Exchange também armazena conectores, templates, fragments, RPA assets, etc. <-- CURRENT
+  [2] Verdadeiro apenas on‑premises
+  [3] Verdadeiro apenas para contas gratuitas
+
+=== m7_q305 ===
+P: Uma empresa quer consumir conectores oficiais para SAP e Oracle desenvolvidos pela MuleSoft e parceiros. Onde esses ativos ficam disponíveis?
+  [0] Apenas em Runtime Manager
+  [1] No Anypoint Exchange público <-- CURRENT
+  [2] Apenas em Composer
+  [3] Apenas em RPA Manager
+
+=== m7_q306 ===
+P: AnyAirlines deseja que os desenvolvedores vejam quais projetos dependem de um determinado fragmento RAML antes de modificá‑lo. Qual recurso do Exchang
+  [0] API Notebook
+  [1] Dependency tracking <-- CURRENT
+  [2] Visualizer
+  [3] RPA Dashboard
+
+=== m7_q307 ===
+P: Um item de prova descreve o Exchange como “primeira fonte de verdade” antes de criar qualquer nova integração. O que isso significa na prática?
+  [0] Sempre criar novas APIs sem olhar o catálogo
+  [1] Consultar Exchange para ver se já existem APIs/ativos reutilizáveis antes de desenvolver algo novo <-- CURRENT
+  [2] Usar Exchange apenas para documentação, nunca para reutilização
+  [3] Usar apenas RPA
+
+=== m7_q308 ===
+P: NTO quer publicar um processo RPA já existente para que outras áreas saibam que ela pode ser reutilizada. Onde isso deve ser exposto?
+  [0] Apenas na wiki interna
+  [1] Como RPA Asset no Anypoint Exchange <-- CURRENT
+  [2] Apenas no RPA Manager
+  [3] Apenas em e‑mails
+
+=== m7_q309 ===
+P: Uma alternativa diz que “o Exchange não tem impacto na prova, pois é apenas uma loja visual”. Como o candidato deve responder?
+  [0] Concordar; não é relevante
+  [1] Discordar; Exchange é central para reutilização, Mocking Service e descoberta de ativos <-- CURRENT
+  [2] Depende do projeto
+  [3] Só vale para APIs públicas
+
+=== m7_q310 ===
+P: Um time quer utilizar um template pronto de integração “Salesforce ↔ SAP” fornecido pela MuleSoft. Onde esse template é encontrado?
+  [0] API Manager
+  [1] Anypoint Exchange (Templates) <-- CURRENT
+  [2] Runtime Manager
+  [3] RPA Manager
+
+=== m7_q311 ===
+P: Uma questão contrasta duas opções:
+  [0] A
+  [1] B <-- CURRENT
+  [2] Ambas igualmente
+  [3] Nenhuma
+
+=== m7_q312 ===
+P: Uma alternativa diz: “Para maximizar reutilização, sempre crie novos ativos sem registrar dependências.” Por que isso é uma pegadinha?
+  [0] Porque Exchange não suporta dependências
+  [1] Porque ignorar dependências dificulta entendimento de impacto e governança <-- CURRENT
+  [2] Porque dependências são opcionais
+  [3] Porque só RPA usa dependências
+
+=== m7_q313 ===
+P: AnyAirlines quer que a equipe de Salesforce Flow comece a integrar uma API de crédito antes que ela seja implementada de fato. O contrato RAML já exis
+  [0] Deploy direto em produção
+  [1] Mocking Service do Exchange, expondo uma URL simulada <-- CURRENT
+  [2] Apenas testes manuais no Postman
+  [3] Logs locais
+
+=== m7_q314 ===
+P: Northern Trail Outfitters (NTO) quer que desenvolvedores externos testem uma API usando um console interativo e, depois, solicitem credenciais de aces
+  [0] Runtime Manager
+  [1] API Portal/Exchange com fluxo de “Request Access” <-- CURRENT
+  [2] Anypoint Studio
+  [3] Composer
+
+=== m7_q315 ===
+P: Um cenário descreve que o time de front‑end quer continuar testando contra mocks enquanto o backend evolui. Qual prática se encaixa melhor?
+  [0] Usar sempre o backend real
+  [1] Usar Mocking Service com dados de exemplo até o backend estar pronto <-- CURRENT
+  [2] Esperar o backend ficar pronto sem testar
+  [3] Usar apenas RPA
+
+=== m7_q316 ===
+P: Uma alternativa diz que “Mocking Service não é adequado para cenários de hiperautomação”. Como isso deve ser avaliado?
+  [0] Correto
+  [1] Falso; é muito útil para permitir que Flow, Composer e RPA avancem em paralelo <-- CURRENT
+  [2] Só correto on‑premises
+  [3] Só vale para APIs públicas
+
+=== m7_q317 ===
+P: NTO quer separar o consumo interno e externo de uma API, mas manter a mesma especificação. O que o Exchange e API Manager podem oferecer?
+  [0] Nada; é preciso duplicar a API
+  [1] Mesmo contrato no Exchange, com diferentes políticas e portais por consumidor <-- CURRENT
+  [2] Apenas documentação estática
+  [3] Apenas logs
+
+=== m7_q318 ===
+P: Um desenvolvedor Mule quer criar tutoriais interativos que executam chamadas reais de API dentro da documentação. Que recurso é citado no conteúdo do 
+  [0] API Notebook
+  [1] Visualizer <-- CURRENT
+  [2] RPA Recorder
+  [3] Functional Monitoring
+
+=== m7_q319 ===
+P: Uma empresa deseja que times de negócio possam navegar pelos ativos de integração (APIs, templates, RPA) e entender o que já existe antes de abrir nov
+  [0] Manter tudo apenas em repositórios Git internos <-- CURRENT
+  [1] Publicar e manter ativos bem documentados no Exchange
+  [2] Enviar e‑mails com anexos de código
+  [3] Deixar a equipe de integração “lembrar de cabeça”
+
+=== m7_q320 ===
+P: AnyAirlines quer que consumidores externos solicitem acesso a uma API diretamente pela documentação e recebam um Client ID/Secret quando aprovados. Qu
+  [0] Provisionamento manual em Studio
+  [1] Fluxo de “Request Access” em um API Portal do Exchange <-- CURRENT
+  [2] Process Builder no Salesforce
+  [3] Apenas e‑mail manual
+
+=== m7_q321 ===
+P: Uma alternativa sugere que “Mocking Service deve ser usado em produção para sempre, pois simplifica o backend”. Por que isso é uma pegadinha?
+  [0] Porque mocks nunca são permitidos
+  [1] Porque Mocking Service é para testes e desenvolvimento paralelo, não para substituir o backend em produção <-- CURRENT
+  [2] Porque só RPA usa mocks
+  [3] Porque Flow não funciona com mocks
+
+=== m7_q322 ===
+P: Em um cenário de prova, o candidato precisa identificar onde encontrar exemplos de requisição e resposta para uma API. Qual local é o mais esperado?
+  [0] Código fonte da API apenas
+  [1] Documentação e console interativo do asset no Exchange <-- CURRENT
+  [2] E‑mails antigos da equipe
+  [3] Logs de produção
+
+=== m7_q323 ===
+P: NTO quer controlar quem pode ver determinados ativos sensíveis (por exemplo, APIs internas de finanças). Como o Exchange ajuda?
+  [0] Não ajuda; tudo é sempre público
+  [1] Permite configurar visibilidade e permissões de acesso a assets <-- CURRENT
+  [2] Somente API Manager faz isso
+  [3] Apenas logs controlam acesso
+
+=== m7_q324 ===
+P: Um time lança uma nova versão de uma API, mas quer manter a anterior para alguns consumidores. Como o Exchange contribui aqui?
+  [0] Não suporta versões
+  [1] Permite versionar assets e manter documentação de múltiplas versões <-- CURRENT
+  [2] Remove automaticamente versões antigas
+  [3] Só mostra a última versão
+
+=== m7_q325 ===
+P: AnyAirlines quer registrar também templates e exemplos de integração de referência para que projetos futuros sejam acelerados. Como isso aparece no Ex
+  [0] Como APIs apenas
+  [1] Como Templates e Examples publicados como assets <-- CURRENT
+  [2] Como logs
+  [3] Como workers
+
+=== m7_q326 ===
+P: Uma alternativa afirma que “apenas APIs públicas da MuleSoft podem ser colocadas no Exchange; APIs internas da empresa não”. Como isso deve ser tratad
+  [0] Correto
+  [1] Falso; organizações podem ter Exchanges privados com seus próprios assets internos <-- CURRENT
+  [2] Verdadeiro apenas em CloudHub
+  [3] Verdadeiro só para RAML
+
+=== m7_q327 ===
+P: Um time quer criar um portal de desenvolvedores para uma API específica, com branding, docs e botão de acesso. Qual combinação de recursos suporta iss
+  [0] API Portal no Exchange + API Manager para controle de acesso
+  [1] Apenas Runtime Manager <-- CURRENT
+  [2] Apenas Anypoint Studio
+  [3] Apenas RPA Manager

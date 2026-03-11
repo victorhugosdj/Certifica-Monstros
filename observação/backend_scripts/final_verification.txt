@@ -1,0 +1,16 @@
+=== VERIFICACAO FINAL ===
+Total de questoes: 360
+Correta valida (encontrada nas opcoes): 360
+Correta invalida: 0
+Correções nesta passagem: 3
+
+
+=== POR MODULO ===
+  Modulo 1: 45 questoes
+  Modulo 2: 45 questoes
+  Modulo 3: 45 questoes
+  Modulo 4: 45 questoes
+  Modulo 5: 45 questoes
+  Modulo 6: 45 questoes
+  Modulo 7: 45 questoes
+  Modulo 8: 45 questoes

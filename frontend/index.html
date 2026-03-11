@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifica Monstros — Portal de Simulados</title>
+
+  <!-- Configurações de Supabase -->
+  <meta name="supabase-url" content="https://ibmembnxtbpsehqdorme.supabase.co" />
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibWVtYm54dGJwc2VocWRvcm1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NzI4NzIsImV4cCI6MjA4ODA0ODg3Mn0.K0-75dWTwUNYm09iOP8bKzxqEWndloyWDIpPnDToa0E" />
+  <meta name="api-base-url" content="http://localhost:8000" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- LOGIN -->
+    <section id="login-screen" class="view">
+      <div class="card card-center">
+        <h2>Entrar</h2>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Senha</label>
+          <input id="login-password" type="password" placeholder="••••••••" />
+        </div>
+        <button id="login-btn" class="btn btn-primary">Entrar</button>
+        <p class="small">
+          Ainda não tem conta? <a href="#" id="show-register">Criar conta</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- APP PRINCIPAL -->
+    <section id="main-app" style="display:none;">
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar-brand">
+          <span class="sidebar-logo">🧠</span>
+          <div>
+            <div class="sidebar-title">Certifica Monstros</div>
+            <div class="sidebar-subtitle">Portal de Simulados</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="sidebar-item active" data-view="how-to">
+            <span class="sidebar-icon">💡</span>
+            <span class="sidebar-label">Como Utilizar</span>
+          </button>
+          <button class="sidebar-item" data-view="modules">
+            <span class="sidebar-icon">📚</span>
+            <span class="sidebar-label">Módulos</span>
+          </button>
+          <button class="sidebar-item" data-view="dashboard">
+            <span class="sidebar-icon">📊</span>
+            <span class="sidebar-label">Dashboard</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user"><span id="user-name">Visitante</span></div>
+          <button id="btn-logout" class="btn btn-ghost">Sair</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section id="view-how-to" class="view-section active">
+          <h2>Como utilizar</h2>
+          <p>Escolha um módulo e inicie o simulado. Você pode refazer apenas as questões erradas ou treinar o módulo completo.</p>
+          <ul>
+            <li>Acesse <strong>Módulos</strong> e escolha uma trilha.</li>
+            <li>No <strong>Dashboard</strong> veja sua dificuldade real e refaça questões desafiadoras.</li>
+            <li>Suas respostas são armazenadas localmente e (opcionalmente) no Supabase.</li>
+          </ul>
+        </section>
+
+        <section id="view-modules" class="view-section">
+          <h2>Módulos</h2>
+          <div id="modules-grid" class="modules-grid"></div>
+        </section>
+
+        <section id="view-dashboard" class="view-section">
+          <h2>Dashboard</h2>
+          <div id="dashboard-root"></div>
+        </section>
+      </main>
+    </section>
+
+    <div id="exam-modal" class="modal-overlay" style="display:none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Simulado</h3>
+          <button id="close-exam" class="btn btn-icon">✕</button>
+        </div>
+        <div id="exam-content" class="modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/module-viewer.js"></script>
+  <script src="app.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+
+</html>
