@@ -346,7 +346,7 @@ function renderModulesGrid(modules) {
         const moduleObjective = editalInfo.description || m.objetivo_pt || 'Sem descritivo no edital para este módulo.';
         const progress = getModuleProgress(moduleNumber);
         card.innerHTML = `
-          <div class="module-topline">Módulo ${moduleNumber}${moduleWeight ? ` (${escapeHtml(moduleWeight)})` : ''}</div>
+          <div class="module-topline">MÓDULO ${escapeHtml(m.codigo || moduleNumber)}${moduleWeight ? ` (${escapeHtml(moduleWeight)})` : ''}</div>
           <div class="module-title">${escapeHtml(moduleSubject)}</div>
           <div class="module-description-simple">${escapeHtml(moduleObjective)}</div>
           <div class="module-progress-wrap">
@@ -355,7 +355,6 @@ function renderModulesGrid(modules) {
             </div>
             <div class="module-percent">${progress.percentage}%</div>
           </div>
-          <div class="module-click-hint">👉 Clique para ver conteúdo</div>
         `;
 
         // Click handler para abrir conteúdo

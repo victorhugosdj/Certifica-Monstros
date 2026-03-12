@@ -413,10 +413,10 @@ a {
 }
 
 .module-topline {
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   color: #ffb3b3;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.03em;
 }
 
 .module-head {
@@ -454,7 +454,7 @@ a {
   font-size: 0.88rem;
   color: #d2d9ea;
   line-height: 1.5;
-  min-height: 78px;
+  min-height: 84px;
 }
 
 .module-description strong {
@@ -482,15 +482,9 @@ a {
 
 .module-percent {
   margin-top: 6px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #f2f4fa;
-}
-
-.module-click-hint {
-  font-size: 0.82rem;
-  color: #8c96ab;
-  margin-top: 2px;
 }
 
 .module-actions {
