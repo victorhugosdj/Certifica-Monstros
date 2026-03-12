@@ -278,7 +278,12 @@ function normalizeText(value) {
     .trim();
 }
 
-function resolveEditalInfo(moduleData) {
+function resolveEditalInfo(moduleData, moduleNumber) {
+  const byNumber = EDITAL_CONTENT_BY_TOPIC[moduleNumber - 1];
+  if (byNumber) {
+    return { description: byNumber.description, weight: byNumber.weight };
+  }
+
   const searchable = normalizeText(`${moduleData?.titulo_pt || ''} ${moduleData?.objetivo_pt || ''} ${moduleData?.codigo || ''}`);
   const found = EDITAL_CONTENT_BY_TOPIC.find(item =>
     item.match.every(term => searchable.includes(normalizeText(term)))
@@ -341,7 +346,7 @@ function renderModulesGrid(modules) {
         
         const moduleNumber = idx + 1;
         const moduleSubject = m.titulo_pt || `Módulo ${moduleNumber}`;
-        const editalInfo = resolveEditalInfo(m);
+        const editalInfo = resolveEditalInfo(m, moduleNumber);
         const moduleWeight = editalInfo.weight || m.peso_edital || '';
         const moduleObjective = editalInfo.description || m.objetivo_pt || 'Sem descritivo no edital para este módulo.';
         const progress = getModuleProgress(moduleNumber);
