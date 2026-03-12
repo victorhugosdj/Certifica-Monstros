@@ -364,20 +364,21 @@ a {
 
 .modules-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .module-card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
-  padding: 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   transition: transform 0.18s ease, background 0.18s ease;
+  min-height: 260px;
 }
 
 .module-progress-bar {
@@ -402,13 +403,68 @@ a {
 }
 
 .module-title {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 
-.module-meta {
-  font-size: 0.85rem;
+.module-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.module-weight {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ff9d9d;
+  border: 1px solid rgba(242, 67, 67, 0.35);
+  background: rgba(242, 67, 67, 0.14);
+  border-radius: 999px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.module-subject {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e8eefc;
+  line-height: 1.35;
+}
+
+.module-description {
+  font-size: 0.8rem;
   color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.module-description strong {
+  color: #dbe8ff;
+  font-weight: 700;
+}
+
+.module-points {
+  margin: 2px 0 0 16px;
+  padding: 0;
+  color: #cfd8ea;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.module-progress-wrap {
+  margin-top: auto;
+}
+
+.module-progress-text {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.module-click-hint {
+  font-size: 0.82rem;
+  color: #8c96ab;
+  margin-top: 2px;
 }
 
 .module-actions {
@@ -536,6 +592,10 @@ a {
 }
 
 @media (max-width: 900px) {
+  .modules-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .sidebar {
     position: fixed;
     left: -280px;
@@ -551,6 +611,12 @@ a {
 
   .main {
     padding: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .modules-grid {
+    grid-template-columns: 1fr;
   }
 }
 
