@@ -29,16 +29,15 @@ function getUserProgress(userId) {
 
 const OFFICIAL_EXAMS_BASE_PATH = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Questões';
 const OFFICIAL_EXAMS = [
-  { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Prova' },
-  { title: 'Simulado V3', file: 'Simulado V3.md', version: 'V3', kind: 'Prova' },
-  { title: 'Simulado V3 Port', file: 'Simulado V3 Port.md', version: 'V3-PT', kind: 'Prova' },
-  { title: 'Simulado V4', file: 'Simulado V4.md', version: 'V4', kind: 'Prova' },
-  { title: 'Guia (Agente)', file: 'Guia (Agente).md', version: 'Apoio', kind: 'Material' },
+  { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Simulado oficial' },
+  { title: 'Simulado V3', file: 'Simulado V3.md', version: 'V3', kind: 'Simulado oficial' },
+  { title: 'Simulado V3 Port', file: 'Simulado V3 Port.md', version: 'V3-PT', kind: 'Simulado oficial' },
+  { title: 'Simulado V4', file: 'Simulado V4.md', version: 'V4', kind: 'Simulado oficial' },
   { title: 'Revisão Exame Hyper', file: 'RevisãoExameHyper.md', version: 'Apoio', kind: 'Material' },
-  { title: 'Roteiro (Agente)', file: 'Roteiro (Agente).md', version: 'Apoio', kind: 'Material' },
 ];
-const OFFICIAL_EXAM_FILTERS = ['Todas', ...new Set(OFFICIAL_EXAMS.map(item => item.version))];
 let selectedOfficialExamFilter = 'Todas';
+const SIMULADO_EXAMS = OFFICIAL_EXAMS.filter(item => /simulado/i.test(item.title) || /simulado/i.test(item.file));
+const SIMULADO_EXAM_FILTERS = ['Todas', ...new Set(SIMULADO_EXAMS.map(item => item.version))];
 
 function escapeHtml(text) {
   return String(text || '')
@@ -68,7 +67,7 @@ async function openOfficialExam(file, title) {
       openModal(`
         <div style="max-height:70vh;overflow-y:auto;padding-bottom:16px;">
           <div style="padding:16px;border-bottom:1px solid #eee;margin-bottom:16px;">
-            <h2 style="margin:0;color:#0066cc;">PROVAS OFICIAIS</h2>
+            <h2 style="margin:0;color:#0066cc;">SIMULADOS OFICIAIS</h2>
             <p style="margin:4px 0;color:#666;font-size:0.9em;">${escapeHtml(title)}</p>
           </div>
           <div style="padding:0 16px;line-height:1.6;">
@@ -118,7 +117,7 @@ function renderOfficialExams() {
   const container = document.getElementById('official-exams-container');
   if (!container) return;
 
-  const filtersHtml = OFFICIAL_EXAM_FILTERS.map(filter => `
+  const filtersHtml = SIMULADO_EXAM_FILTERS.map(filter => `
     <button
       type="button"
       data-official-filter="${escapeHtml(filter)}"
@@ -130,8 +129,8 @@ function renderOfficialExams() {
   `).join('');
 
   const filteredExams = selectedOfficialExamFilter === 'Todas'
-    ? OFFICIAL_EXAMS
-    : OFFICIAL_EXAMS.filter(item => item.version === selectedOfficialExamFilter);
+    ? SIMULADO_EXAMS
+    : SIMULADO_EXAMS.filter(item => item.version === selectedOfficialExamFilter);
 
   const cardsHtml = filteredExams.map(item => `
     <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;">
