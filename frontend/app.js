@@ -344,25 +344,16 @@ function renderModulesGrid(modules) {
         const editalInfo = resolveEditalInfo(m);
         const moduleWeight = editalInfo.weight || m.peso_edital || '';
         const moduleObjective = editalInfo.description || m.objetivo_pt || 'Sem descritivo no edital para este módulo.';
-        const modulePillars = Array.isArray(m.pilares_pt) ? m.pilares_pt.slice(0, 2) : [];
-        const modulePillarsHtml = modulePillars.map(p => `<li>${escapeHtml(p)}</li>`).join('');
-
         const progress = getModuleProgress(moduleNumber);
         card.innerHTML = `
-          <div class="module-head">
-            <div class="module-title">${escapeHtml(m.codigo)}</div>
-            ${moduleWeight ? `<span class="module-weight">${escapeHtml(moduleWeight)} edital</span>` : ''}
-          </div>
-          <div class="module-subject">${escapeHtml(moduleSubject)}</div>
-          <div class="module-description">
-            <strong>Aborda no edital:</strong> ${escapeHtml(moduleObjective)}
-          </div>
-          ${modulePillars.length ? `<ul class="module-points">${modulePillarsHtml}</ul>` : ''}
+          <div class="module-topline">Módulo ${moduleNumber}${moduleWeight ? ` (${escapeHtml(moduleWeight)})` : ''}</div>
+          <div class="module-title">${escapeHtml(moduleSubject)}</div>
+          <div class="module-description-simple">${escapeHtml(moduleObjective)}</div>
           <div class="module-progress-wrap">
             <div class="module-progress-bar">
               <div class="module-progress-fill" style="width: ${progress.percentage}%"></div>
             </div>
-            <div class="module-progress-text">Progresso: ${progress.percentage}% (${progress.correct}/${progress.total})</div>
+            <div class="module-percent">${progress.percentage}%</div>
           </div>
           <div class="module-click-hint">👉 Clique para ver conteúdo</div>
         `;

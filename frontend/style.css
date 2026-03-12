@@ -407,8 +407,16 @@ a {
 }
 
 .module-title {
-  font-size: 1.8rem;
+  font-size: 1.12rem;
   font-weight: 700;
+  line-height: 1.35;
+}
+
+.module-topline {
+  font-size: 0.82rem;
+  color: #ffb3b3;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .module-head {
@@ -442,6 +450,13 @@ a {
   line-height: 1.5;
 }
 
+.module-description-simple {
+  font-size: 0.88rem;
+  color: #d2d9ea;
+  line-height: 1.5;
+  min-height: 78px;
+}
+
 .module-description strong {
   color: #dbe8ff;
   font-weight: 700;
@@ -463,6 +478,13 @@ a {
   font-size: 0.75rem;
   color: #aaa;
   margin-top: 4px;
+}
+
+.module-percent {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f2f4fa;
 }
 
 .module-click-hint {
