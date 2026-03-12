@@ -227,6 +227,75 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
+const EDITAL_CONTENT_BY_TOPIC = [
+  {
+    match: ['boas praticas', 'hiperautomacao'],
+    description: 'Aplicar boas práticas ao usar hiperautomação',
+    weight: '20%',
+  },
+  {
+    match: ['composer'],
+    description: 'Usar o Composer para automatizar integrações de dados em um projeto de hiperautomação',
+    weight: '12%',
+  },
+  {
+    match: ['rpa'],
+    description: 'Projetar, construir e gerenciar processos MuleSoft RPA usados em hiperautomação',
+    weight: '17%',
+  },
+  {
+    match: ['salesforce flow'],
+    description: 'Usar Salesforce Flow para construir workflows de hiperautomação',
+    weight: '13%',
+  },
+  {
+    match: ['anypoint platform e apis', 'entregar e gerenciar apis'],
+    description: 'Usar a plataforma Anypoint para entregar e gerenciar APIs em um projeto de hiperautomação',
+    weight: '15%',
+  },
+  {
+    match: ['monitoring', 'api manager', 'monitorar endpoints'],
+    description: 'Usar Anypoint Platform para monitorar endpoints de APIs de hiperautomação',
+    weight: '7%',
+  },
+  {
+    match: ['exchange'],
+    description: 'Usar Anypoint Exchange para catalogar (publicar), compartilhar, descobrir e reutilizar assets',
+    weight: '8%',
+  },
+  {
+    match: ['orchestration', 'orchestrator'],
+    description: 'Usar Salesforce Flow Orchestrator para construir fluxos paralelos, multiusuário e com múltiplas etapas',
+    weight: '8%',
+  },
+];
+
+function normalizeText(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function resolveEditalInfo(moduleData) {
+  const searchable = normalizeText(`${moduleData?.titulo_pt || ''} ${moduleData?.objetivo_pt || ''} ${moduleData?.codigo || ''}`);
+  const found = EDITAL_CONTENT_BY_TOPIC.find(item =>
+    item.match.every(term => searchable.includes(normalizeText(term)))
+  ) || EDITAL_CONTENT_BY_TOPIC.find(item =>
+    item.match.some(term => searchable.includes(normalizeText(term)))
+  );
+
+  if (found) {
+    return { description: found.description, weight: found.weight };
+  }
+
+  return {
+    description: moduleData?.objetivo_pt || 'Sem descritivo no edital para este módulo.',
+    weight: moduleData?.peso_edital || '',
+  };
+}
+
 function getModuleProgress(moduleNumber) {
   const provas = STATE.provas || [];
   const progress = loadProgress(CURRENT_USER?.id || 'unknown');
@@ -272,8 +341,9 @@ function renderModulesGrid(modules) {
         
         const moduleNumber = idx + 1;
         const moduleSubject = m.titulo_pt || `Módulo ${moduleNumber}`;
-        const moduleWeight = m.peso_edital || '';
-        const moduleObjective = m.objetivo_pt || 'Sem descritivo no edital para este módulo.';
+        const editalInfo = resolveEditalInfo(m);
+        const moduleWeight = editalInfo.weight || m.peso_edital || '';
+        const moduleObjective = editalInfo.description || m.objetivo_pt || 'Sem descritivo no edital para este módulo.';
         const modulePillars = Array.isArray(m.pilares_pt) ? m.pilares_pt.slice(0, 2) : [];
         const modulePillarsHtml = modulePillars.map(p => `<li>${escapeHtml(p)}</li>`).join('');
 
