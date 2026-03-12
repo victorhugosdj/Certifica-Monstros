@@ -9,7 +9,7 @@
   <!-- Configurações de Supabase -->
   <meta name="supabase-url" content="https://ibmembnxtbpsehqdorme.supabase.co" />
   <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibWVtYm54dGJwc2VocWRvcm1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0NzI4NzIsImV4cCI6MjA4ODA0ODg3Mn0.K0-75dWTwUNYm09iOP8bKzxqEWndloyWDIpPnDToa0E" />
-  <meta name="api-base-url" content="http://localhost:8000" />
+  <meta name="api-base-url" content="" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -22,27 +22,121 @@
     <!-- LOGIN -->
     <section id="login-screen" class="view">
       <div class="card card-center">
-        <h2>Entrar</h2>
-        <div class="form-group">
-          <label for="login-email">Email</label>
-          <input id="login-email" type="email" placeholder="seu@email.com" />
+        <div class="login-header">
+          <img src="assets/img/logo.png" alt="Certifica Monstros" class="login-logo" />
+          <div>
+            <h2>Certifica Monstros</h2>
+            <p>Portal de Simulados</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="login-password">Senha</label>
-          <input id="login-password" type="password" placeholder="••••••••" />
+        
+        <!-- FORMULÁRIO DE ENTRAR -->
+        <div id="login-form">
+          <h3 style="margin-bottom: 16px; font-size: 1.1rem;">Entrar</h3>
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" placeholder="seu@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Senha</label>
+            <input id="login-password" type="password" placeholder="••••••••" />
+          </div>
+          <button id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 12px;">Entrar</button>
+          
+          <!-- OPÇÕES ABAIXO -->
+          <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+            <button type="button" class="btn btn-link" onclick="mostrarFormCriarConta()">➕ Criar conta</button>
+            <span style="color: #666;">•</span>
+            <button type="button" class="btn btn-link" onclick="mostrarFormEsqueceuSenha()">🔑 Esqueci a senha</button>
+          </div>
         </div>
-        <button id="login-btn" class="btn btn-primary">Entrar</button>
-        <p class="small">
-          Ainda não tem conta? <a href="#" id="show-register">Criar conta</a>
-        </p>
       </div>
     </section>
+
+    <!-- MODAL - CRIAR CONTA -->
+    <div id="modal-criar-conta" class="modal-overlay" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header" style="justify-content: space-between;">
+          <h3>Criar Conta</h3>
+          <button class="btn-close" onclick="fecharModalCriarConta()">✕</button>
+        </div>
+        <div class="modal-content">
+          <div class="form-group">
+            <label for="register-name">Nome Completo</label>
+            <input id="register-name" type="text" placeholder="João Silva" />
+          </div>
+          <div class="form-group">
+            <label for="register-email">Email</label>
+            <input id="register-email" type="email" placeholder="seu@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="register-password">Senha</label>
+            <input id="register-password" type="password" placeholder="••••••••" />
+          </div>
+          <div class="form-group">
+            <label for="register-password-confirm">Confirmar Senha</label>
+            <input id="register-password-confirm" type="password" placeholder="••••••••" />
+          </div>
+          <button id="register-btn" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Criar Conta</button>
+          <p style="text-align: center; margin-top: 12px; font-size: 0.85rem; color: #aaa;">
+            Já tem conta? <a href="#" onclick="fecharModalCriarConta(); return false;" style="color: #4CAF50;">Entrar aqui</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL - ESQUECI A SENHA -->
+    <div id="modal-esqueci-senha" class="modal-overlay" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header" style="justify-content: space-between;">
+          <h3>Recuperar Senha</h3>
+          <button class="btn-close" onclick="fecharModalEsqueceuSenha()">✕</button>
+        </div>
+        <div class="modal-content">
+          <p style="color: #aaa; margin-bottom: 16px; font-size: 0.95rem;">
+            Digite seu email para receber um link de alteração de senha
+          </p>
+          <div class="form-group">
+            <label for="reset-email">Email</label>
+            <input id="reset-email" type="email" placeholder="seu@email.com" />
+          </div>
+          <button id="reset-btn" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Enviar Link</button>
+          <p style="text-align: center; margin-top: 12px; font-size: 0.85rem; color: #aaa;">
+            <a href="#" onclick="fecharModalEsqueceuSenha(); return false;" style="color: #2196F3;">Voltar para login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL - ATUALIZAR SENHA -->
+    <div id="modal-atualizar-senha" class="modal-overlay" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-header" style="justify-content: space-between;">
+          <h3>Definir Nova Senha</h3>
+          <button class="btn-close" onclick="fecharModalAtualizarSenha()">×</button>
+        </div>
+        <div class="modal-content">
+          <p style="color: #aaa; margin-bottom: 16px; font-size: 0.95rem;">
+            Você voltou pelo link de recuperação. Defina sua nova senha para concluir o acesso.
+          </p>
+          <div class="form-group">
+            <label for="new-password">Nova senha</label>
+            <input id="new-password" type="password" placeholder="••••••••" />
+          </div>
+          <div class="form-group">
+            <label for="new-password-confirm">Confirmar nova senha</label>
+            <input id="new-password-confirm" type="password" placeholder="••••••••" />
+          </div>
+          <button id="update-password-btn" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Atualizar Senha</button>
+        </div>
+      </div>
+    </div>
 
     <!-- APP PRINCIPAL -->
     <section id="main-app" style="display:none;">
       <aside id="sidebar" class="sidebar">
         <div class="sidebar-brand">
-          <span class="sidebar-logo">🧠</span>
+          <img src="assets/img/logo.png" alt="Logo Certifica Monstros" class="sidebar-logo" />
           <div>
             <div class="sidebar-title">Certifica Monstros</div>
             <div class="sidebar-subtitle">Portal de Simulados</div>
@@ -72,13 +166,88 @@
 
       <main class="main">
         <section id="view-how-to" class="view-section active">
-          <h2>Como utilizar</h2>
-          <p>Escolha um módulo e inicie o simulado. Você pode refazer apenas as questões erradas ou treinar o módulo completo.</p>
-          <ul>
-            <li>Acesse <strong>Módulos</strong> e escolha uma trilha.</li>
-            <li>No <strong>Dashboard</strong> veja sua dificuldade real e refaça questões desafiadoras.</li>
-            <li>Suas respostas são armazenadas localmente e (opcionalmente) no Supabase.</li>
-          </ul>
+          <h2>📖 Como Utilizar o App</h2>
+          
+          <div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(100, 150, 255, 0.1)); padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2196F3;">
+            <p><strong>Bem-vindo ao Certifica Monstros! 🧠</strong></p>
+            <p style="margin-top: 10px;">Uma plataforma interativa para estudar com <strong>8 módulos, 360 questões</strong> e <strong>ranking em tempo real</strong>.</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            
+            <!-- Card 1: Módulos -->
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(76, 175, 80, 0.3); padding: 15px; border-radius: 8px;">
+              <h3 style="color: #4CAF50; margin-bottom: 10px;">📚 PASSO 1: Explore os Módulos</h3>
+              <p style="font-size: 0.95em; line-height: 1.6;">Clique em "<strong>Módulos</strong>" no menu lateral. Você verá 8 módulos diferentes. Cada módulo contém:</p>
+              <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">
+                <li>📖 Conteúdo teórico (Markdown)</li>
+                <li>❓ 45 questões de múltipla escolha</li>
+                <li>🧪 Simulado interativo</li>
+              </ul>
+            </div>
+
+            <!-- Card 2: Simulado -->
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(76, 175, 80, 0.3); padding: 15px; border-radius: 8px;">
+              <h3 style="color: #2196F3; margin-bottom: 10px;">🎯 PASSO 2: Faça um Simulado</h3>
+              <p style="font-size: 0.95em; line-height: 1.6;">Clique em um módulo para:</p>
+              <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">
+                <li>✅ Ler a teoria completa</li>
+                <li>📝 Fazer 15 perguntas aleatórias</li>
+                <li>✨ Ver resultado imediato</li>
+                <li>💾 Suas respostas são salvas</li>
+              </ul>
+            </div>
+
+            <!-- Card 3: Dashboard -->
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(76, 175, 80, 0.3); padding: 15px; border-radius: 8px;">
+              <h3 style="color: #FF9800; margin-bottom: 10px;">📊 PASSO 3: Acompanhe no Dashboard</h3>
+              <p style="font-size: 0.95em; line-height: 1.6;">Clique em "<strong>Dashboard</strong>" para ver:</p>
+              <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">
+                <li>🏆 Seu ranking (TOP 3)</li>
+                <li>📈 Desempenho por módulo (%)</li>
+                <li>💡 Recomendações personalizadas</li>
+                <li>🎯 Questões desafiadoras</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Métricas -->
+          <div style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #4CAF50; margin-bottom: 10px;">📊 Como Funcionam as Métricas?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div>
+                <strong style="color: #4CAF50;">Taxa de Acerto</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">= (Acertos / Total) × 100</p>
+                <p style="font-size: 0.85em; color: #aaa;">Exemplo: 96/120 = 80%</p>
+              </div>
+              <div>
+                <strong style="color: #4CAF50;">Ranking</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">Ordena por: % DESC, Total DESC</p>
+                <p style="font-size: 0.85em; color: #aaa;">TOP 3 melhores usuários</p>
+              </div>
+              <div>
+                <strong style="color: #4CAF50;">Status</strong>
+                <p style="font-size: 0.9em; margin-top: 5px;">✅ 80%+ | 🟢 70%+ | 🟡 50%+ | 🔴 &lt;50%</p>
+                <p style="font-size: 0.85em; color: #aaa;">Por módulo</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dados -->
+          <div style="background: rgba(100, 150, 255, 0.1); border-left: 4px solid #2196F3; padding: 15px; border-radius: 8px;">
+            <h3 style="color: #2196F3; margin-bottom: 10px;">📚 Estrutura do App</h3>
+            <ul style="font-size: 0.95em; line-height: 1.8;">
+              <li><strong>8 Módulos</strong> de conteúdo completo (Markdown)</li>
+              <li><strong>360 Questões</strong> de múltipla escolha (45 por módulo)</li>
+              <li><strong>Ranking em Tempo Real</strong> com TOP 3 usuários</li>
+              <li><strong>Análise de Desempenho</strong> por módulo com recomendações</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 4px solid #FFC107;">
+            <p style="font-size: 0.95em;"><strong>💡 Dica:</strong> Comece pelos módulos mais fáceis para ganhar confiança. Depois foque nos módulos com baixo desempenho (🔴) para melhorar seu ranking!</p>
+          </div>
         </section>
 
         <section id="view-modules" class="view-section">
@@ -87,11 +256,114 @@
         </section>
 
         <section id="view-dashboard" class="view-section">
-          <h2>Dashboard</h2>
-          <div id="dashboard-root"></div>
+          <h2>📊 Dashboard Interativo</h2>
+          <div id="dashboard-root">
+            <!-- RANKING (TOPO) -->
+            <div class="dashboard-section" id="ranking-section">
+              <h3 style="margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+                🏆 <span>Ranking de Usuários (TOP 3)</span>
+              </h3>
+              <div id="ranking-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                <p style="color: #aaa; text-align: center;">Carregando ranking...</p>
+              </div>
+            </div>
+
+            <!-- MÉTRICAS GERAIS -->
+            <div class="dashboard-section">
+              <h3 style="margin-bottom: 16px;">📈 Suas Métricas</h3>
+              <div id="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+                <div class="metric-card">
+                  <div class="metric-value">0</div>
+                  <div class="metric-label">Total de Questões</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-value">0</div>
+                  <div class="metric-label">Acertos</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-value">0%</div>
+                  <div class="metric-label">Taxa de Acerto</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-value">0/8</div>
+                  <div class="metric-label">Módulos Iniciados</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRÁFICOS -->
+            <div class="dashboard-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+              <!-- Gráfico de Pizza - Taxa de Acerto -->
+              <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 12px; text-align: center;">📊 Acertos vs Erros</h4>
+                <canvas id="chart-acertos-erros" style="max-height: 250px;"></canvas>
+              </div>
+
+              <!-- Gráfico de Radar - Módulos -->
+              <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 12px; text-align: center;">🎯 Desempenho por Módulo</h4>
+                <canvas id="chart-modulos-radar" style="max-height: 250px;"></canvas>
+              </div>
+
+              <!-- Gráfico de Barras - Módulos -->
+              <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 12px; text-align: center;">📈 Progresso por Módulo</h4>
+                <canvas id="chart-modulos-barras" style="max-height: 250px;"></canvas>
+              </div>
+            </div>
+
+            <!-- MÓDULOS COM PROGRESSO -->
+            <div class="dashboard-section">
+              <h3 style="margin-bottom: 16px;">🎓 Módulos (Clique para ver detalhes)</h3>
+              <div id="modules-progress" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                <!-- Os módulos serão adicionados dinamicamente -->
+              </div>
+            </div>
+
+            <!-- ESTATÍSTICAS DETALHADAS -->
+            <div class="dashboard-section">
+              <h3 style="margin-bottom: 16px;">📋 Análise Detalhada</h3>
+              <div id="stats-table" style="overflow-x: auto;">
+                <table class="table" style="width: 100%;">
+                  <thead style="background: rgba(255,255,255,0.05);">
+                    <tr>
+                      <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.1);">Módulo</th>
+                      <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1);">Total</th>
+                      <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1);">⏳ Não Iniciadas</th>
+                      <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1);">✅ Corretas</th>
+                      <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1);">❌ Erradas</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stats-tbody">
+                    <tr><td colspan="5" style="text-align: center; color: #aaa; padding: 20px;">Carregando dados...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- PROVAS OFICIAIS -->
+            <div class="dashboard-section">
+              <h3 style="margin-bottom: 16px;">PROVAS OFICIAIS</h3>
+              <div id="official-exams-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+                <p style="color: #aaa; text-align: center;">Carregando provas oficiais...</p>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </section>
+
+    <!-- SIDEBAR DE DETALHES DO MÓDULO -->
+    <div id="module-sidebar" class="module-sidebar" style="display:none;">
+      <div class="sidebar-overlay" onclick="document.getElementById('module-sidebar').style.display='none'; const oldActions = document.querySelector('.sidebar-actions'); if(oldActions) oldActions.remove();"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h3 id="sidebar-title">Detalhes do Módulo</h3>
+          <button class="btn-close" onclick="document.getElementById('module-sidebar').style.display='none'; const oldActions = document.querySelector('.sidebar-actions'); if(oldActions) oldActions.remove();">✕</button>
+        </div>
+        <div id="sidebar-body" class="sidebar-body"></div>
+      </div>
+    </div>
 
     <div id="exam-modal" class="modal-overlay" style="display:none;">
       <div class="modal-card">
@@ -106,7 +378,7 @@
 
   <script src="src/module-viewer.js"></script>
   <script src="app.js"></script>
-  <script src="dashboard.js"></script>
+  <script src="dashboard-v2.js"></script>
 </body>
 
 </html>
