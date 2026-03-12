@@ -36,6 +36,8 @@ function setView(viewId) {
   if (viewId === 'dashboard' && typeof initDashboard === 'function') {
     initDashboard();
   }
+
+  closeMobileSidebar();
 }
 
 function showLogin() {
@@ -46,6 +48,22 @@ function showLogin() {
 function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'flex';
+}
+
+function openMobileSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (!sidebar) return;
+  sidebar.classList.add('open');
+  if (backdrop) backdrop.classList.add('open');
+}
+
+function closeMobileSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (!sidebar) return;
+  sidebar.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('open');
 }
 
 function getErrorKey(userId) {
@@ -661,6 +679,30 @@ function bindNavigation() {
     btn.addEventListener('click', () => {
       setView(btn.dataset.view);
     });
+  });
+
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      const sidebar = document.getElementById('sidebar');
+      if (!sidebar) return;
+      if (sidebar.classList.contains('open')) {
+        closeMobileSidebar();
+      } else {
+        openMobileSidebar();
+      }
+    });
+  }
+
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (backdrop) {
+    backdrop.addEventListener('click', closeMobileSidebar);
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      closeMobileSidebar();
+    }
   });
 }
 
