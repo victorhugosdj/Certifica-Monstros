@@ -485,14 +485,16 @@ function renderModulesProgress(userId, stats) {
     
     const circumference = 251.2; // 2 * PI * 40
     const offset = circumference - (percentage / 100) * circumference;
-    
+    const statusLabel = mod.attempted > 0 ? 'Iniciado' : 'Novo';
+    const wrong = mod.wrong || 0;
+
     html.push(`<div class="module-progress-item" onclick="abrirSidebarModulo(${i})">`);
     html.push(`<div class="module-header">`);
     html.push(`<span class="module-name">Módulo ${i}</span>`);
-    html.push(`<span class="module-status">${mod.attempted > 0 ? '✓' : '○'}</span>`);
+    html.push(`<span class="module-status">${statusLabel}</span>`);
     html.push(`</div>`);
-    
-    // Círculo de progresso SVG
+
+    html.push(`<div class="module-progress-main">`);
     html.push(`<div class="progress-circle">`);
     html.push(`<svg viewBox="0 0 100 100">`);
     html.push(`<circle class="progress-circle-bg" cx="50" cy="50" r="40" />`);
@@ -500,8 +502,16 @@ function renderModulesProgress(userId, stats) {
     html.push(`</svg>`);
     html.push(`<div class="progress-text">${percentage}%</div>`);
     html.push(`</div>`);
-    
-    html.push(`<div class="progress-stats">${mod.correct}/${mod.total} acertos</div>`);
+    html.push(`<div class="module-kpis">`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Total</span><strong>${mod.total}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Não iniciadas</span><strong>${mod.notStarted}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Corretas</span><strong style="color:#4CAF50;">${mod.correct}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Erradas</span><strong style="color:#FF5252;">${wrong}</strong></div>`);
+    html.push(`</div>`);
+    html.push(`</div>`);
+
+    html.push(`<div class="progress-bar-small"><div class="progress-bar-fill" style="width:${percentage}%;background:${colors.stroke};"></div></div>`);
+    html.push(`<div class="module-analysis-hint">Clique para abrir detalhes e revisar erros</div>`);
     html.push(`</div>`);
   }
 
@@ -557,7 +567,11 @@ async function initDashboard() {
     renderChartRadar(stats);
     renderChartBarras(stats);
     renderModulesProgress(CURRENT_USER.id, stats);
-    renderStatsTable(stats);
+    const statsTable = document.getElementById('stats-table');
+    if (statsTable) {
+      const detailedSection = statsTable.closest('.dashboard-section');
+      if (detailedSection) detailedSection.style.display = 'none';
+    }
     renderOfficialExams();
 
   } catch (error) {
