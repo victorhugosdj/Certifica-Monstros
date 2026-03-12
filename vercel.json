@@ -1,32 +1,9 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/assets/(.*)",
-      "destination": "/frontend/assets/$1"
-    },
-    {
-      "source": "/src/(.*)",
-      "destination": "/frontend/src/$1"
-    },
-    {
-      "source": "/data/(.*)",
-      "destination": "/frontend/data/$1"
-    },
-    {
-      "source": "/style.css",
-      "destination": "/frontend/style.css"
-    },
-    {
-      "source": "/app.js",
-      "destination": "/frontend/app.js"
-    },
-    {
-      "source": "/dashboard-v2.js",
-      "destination": "/frontend/dashboard-v2.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/index.html"
+      "source": "/",
+      "destination": "/frontend/index.html",
+      "permanent": false
     }
   ]
 }
