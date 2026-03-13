@@ -101,21 +101,23 @@ function countOfficialQuestionsInMarkdown(markdown) {
 
 function resolveOfficialCorrectOption(rawAnswer, options) {
   const answerText = String(rawAnswer || '').replace(/[*`>_]/g, '').trim();
-  if (!answerText) return '';
+  if (!answerText) return [];
 
-  const singleLetter = answerText.match(/^([A-E])$/i);
-  if (singleLetter) {
-    const optionIndex = singleLetter[1].toUpperCase().charCodeAt(0) - 65;
-    return options[optionIndex] || answerText;
+  const letterMatches = answerText.match(/\b([A-E])\b/gi);
+  if (letterMatches?.length) {
+    const mapped = letterMatches
+      .map(letter => {
+        const optionIndex = letter.toUpperCase().charCodeAt(0) - 65;
+        return options[optionIndex] || null;
+      })
+      .filter(Boolean);
+    return [...new Set(mapped)];
   }
 
-  const multipleLetters = answerText.match(/[A-E]/gi);
-  if (multipleLetters && multipleLetters.length >= 1) {
-    const firstIndex = multipleLetters[0].toUpperCase().charCodeAt(0) - 65;
-    return options[firstIndex] || answerText;
-  }
+  const exactOption = options.find(opt => String(opt).trim() === answerText);
+  if (exactOption) return [exactOption];
 
-  return answerText;
+  return [answerText];
 }
 
 function parseOfficialExamMarkdown(markdown, fileName) {
@@ -126,13 +128,15 @@ function parseOfficialExamMarkdown(markdown, fileName) {
 
   const flushCurrent = () => {
     if (!current || !current.pergunta || !current.opcoes.length || !current.correta_texto) return;
-    current.correta_texto = resolveOfficialCorrectOption(current.correta_texto, current.opcoes);
+    const correctOptions = resolveOfficialCorrectOption(current.correta_texto, current.opcoes);
     questions.push({
       id: `official:${fileName}:${current.numero}`,
       modulo: 9,
       pergunta: current.pergunta,
       opcoes: current.opcoes,
-      correta_texto: current.correta_texto,
+      correta_texto: correctOptions[0] || '',
+      corretas_texto: correctOptions,
+      is_multipla: correctOptions.length > 1,
       justificativa: current.justificativa || '',
     });
   };
@@ -210,7 +214,9 @@ async function loadOfficialExamCatalog() {
                 modulo: Number(q.module || 9),
                 pergunta: q.question || '',
                 opcoes: Array.isArray(q.options) ? q.options : [],
-                correta_texto: q.correctText || '',
+                correta_texto: Array.isArray(q.correctOptions) ? (q.correctOptions[0] || '') : (q.correctText || ''),
+                corretas_texto: Array.isArray(q.correctOptions) ? q.correctOptions : (q.correctText ? [q.correctText] : []),
+                is_multipla: Array.isArray(q.correctOptions) ? q.correctOptions.length > 1 : false,
                 justificativa: q.explanation || '',
               })).filter(q => q.pergunta && q.opcoes.length && q.correta_texto)
             : [];

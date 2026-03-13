@@ -473,6 +473,39 @@ function toModuleNumber(moduloId) {
   return match ? Number(match[0]) : null;
 }
 
+function normalizeAnswerList(value) {
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (!value) return [];
+  return [value];
+}
+
+function getQuestionCorrectOptions(question) {
+  const fromArray = normalizeAnswerList(question?.corretas_texto);
+  if (fromArray.length) return fromArray;
+  return normalizeAnswerList(question?.correta_texto);
+}
+
+function evaluateQuestionScore(question, userAnswer) {
+  const correctOptions = getQuestionCorrectOptions(question);
+  const selectedOptions = normalizeAnswerList(userAnswer);
+  const uniqueCorrect = [...new Set(correctOptions)];
+  const uniqueSelected = [...new Set(selectedOptions)];
+
+  if (!uniqueCorrect.length) return 0;
+
+  const isExactMatch = uniqueCorrect.length === uniqueSelected.length
+    && uniqueCorrect.every(opt => uniqueSelected.includes(opt));
+  if (isExactMatch) return 1;
+
+  // Regra solicitada: em questões de 2 respostas, 1 certa + 1 errada = 0.5
+  if (uniqueCorrect.length === 2 && uniqueSelected.length === 2) {
+    const hits = uniqueSelected.filter(opt => uniqueCorrect.includes(opt)).length;
+    if (hits === 1) return 0.5;
+  }
+
+  return 0;
+}
+
 async function gerarSimulado(moduloId, apenasErros = false) {
   if (!CURRENT_USER) return;
   const modNumber = toModuleNumber(moduloId);
@@ -506,11 +539,17 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
   function renderCurrentQuestion() {
     const question = questions[state.currentIndex];
     const questionOptions = question.opcoes || [];
-    const selected = state.answers[question.id] || '';
+    const isMultiQuestion = getQuestionCorrectOptions(question).length > 1 || Boolean(question.is_multipla);
+    const selected = isMultiQuestion
+      ? normalizeAnswerList(state.answers[question.id])
+      : (state.answers[question.id] || '');
     const isConfirmed = Boolean(state.confirmed[question.id]);
     const isRevealed = Boolean(state.revealCorrect[question.id]);
-    const isCorrect = selected === question.correta_texto;
+    const questionScore = evaluateQuestionScore(question, selected);
+    const isCorrect = questionScore === 1;
+    const correctOptions = getQuestionCorrectOptions(question);
     const progressPct = Math.round(((state.currentIndex + 1) / questions.length) * 100);
+    const hasSelection = isMultiQuestion ? selected.length > 0 : Boolean(selected);
 
     const html = `
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
@@ -526,10 +565,14 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:14px;margin-top:14px;align-items:start;">
         <div class="question" style="margin:0;">
           <div class="question-title">${state.currentIndex + 1}. ${question.pergunta}</div>
+          ${isMultiQuestion ? '<div style="font-size:.82rem;color:#9fb3d7;margin-top:4px;">Selecione mais de uma opção quando necessário.</div>' : ''}
           <div class="options">
             ${questionOptions.map((opt, idx) => `
-              <label class="option" style="${selected === opt ? 'border-color:#2196F3;' : ''}">
-                <input type="radio" name="current_question" value="${opt}" ${selected === opt ? 'checked' : ''} ${isConfirmed ? 'disabled' : ''} />
+              <label class="option" style="
+                ${isMultiQuestion ? (selected.includes(opt) ? 'border-color:#2196F3;' : '') : (selected === opt ? 'border-color:#2196F3;' : '')}
+                ${isRevealed && correctOptions.includes(opt) ? 'background:rgba(76,175,80,.18);border-color:#4CAF50;' : ''}
+              ">
+                <input type="${isMultiQuestion ? 'checkbox' : 'radio'}" name="current_question" value="${opt}" ${(isMultiQuestion ? selected.includes(opt) : selected === opt) ? 'checked' : ''} ${isConfirmed ? 'disabled' : ''} />
                 ${String.fromCharCode(65 + idx)}. ${opt}
               </label>
             `).join('')}
@@ -546,9 +589,9 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
       </div>
 
       ${isConfirmed ? `
-        <div style="margin-top:14px;padding:12px;border-radius:8px;background:${isCorrect ? 'rgba(76,175,80,.12)' : 'rgba(255,82,82,.12)'};border-left:4px solid ${isCorrect ? '#4CAF50' : '#FF5252'};">
-          <div style="font-weight:700;margin-bottom:6px;">${isCorrect ? 'Resposta correta ✅' : 'Resposta incorreta ❌'}</div>
-          ${isRevealed ? `<div><strong>Correta:</strong> ${question.correta_texto}</div>` : ''}
+        <div style="margin-top:14px;padding:12px;border-radius:8px;background:${questionScore > 0 ? 'rgba(76,175,80,.12)' : 'rgba(255,82,82,.12)'};border-left:4px solid ${questionScore > 0 ? '#4CAF50' : '#FF5252'};">
+          <div style="font-weight:700;margin-bottom:6px;">${isCorrect ? 'Resposta correta ✅' : (questionScore === 0.5 ? 'Resposta parcial ⚠️ (0,5 ponto)' : 'Resposta incorreta ❌')}</div>
+          ${isRevealed ? `<div><strong>Correta(s):</strong> ${correctOptions.join(' | ')}</div>` : ''}
           ${isRevealed && question.justificativa ? `<div style="margin-top:6px;"><strong>Justificativa:</strong> ${question.justificativa}</div>` : ''}
         </div>
       ` : ''}
@@ -559,7 +602,7 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
           <button id="show-correct" class="btn btn-secondary" ${!isConfirmed ? 'disabled' : ''}>Mostrar correta</button>
         </div>
         <div style="display:flex;gap:8px;">
-          <button id="confirm-answer" class="btn btn-primary" ${!selected || isConfirmed ? 'disabled' : ''}>Confirmar resposta</button>
+          <button id="confirm-answer" class="btn btn-primary" ${!hasSelection || isConfirmed ? 'disabled' : ''}>Confirmar resposta</button>
           <button id="next-question" class="btn btn-primary" ${!isConfirmed ? 'disabled' : ''}>${state.currentIndex === questions.length - 1 ? 'Finalizar' : 'Próxima'}</button>
         </div>
       </div>
@@ -571,7 +614,16 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
 
     document.querySelectorAll('input[name="current_question"]').forEach(input => {
       input.addEventListener('change', () => {
-        state.answers[question.id] = input.value;
+        if (isMultiQuestion) {
+          const current = normalizeAnswerList(state.answers[question.id]);
+          if (input.checked) {
+            state.answers[question.id] = [...new Set([...current, input.value])];
+          } else {
+            state.answers[question.id] = current.filter(opt => opt !== input.value);
+          }
+        } else {
+          state.answers[question.id] = input.value;
+        }
         renderCurrentQuestion();
       });
     });
@@ -656,13 +708,16 @@ async function gradeExam(questions, answersByQuestionId = {}) {
 
   const payload = [];
   let correctCount = 0;
+  let totalPoints = 0;
 
   questions.forEach(q => {
     const answer = answersByQuestionId[q.id] ?? null;
-    const isCorrect = answer === q.correta_texto;
+    const questionScore = evaluateQuestionScore(q, answer);
+    const isCorrect = questionScore === 1;
+    totalPoints += questionScore;
 
     // Atualiza registro de erros para permitir visualização detalhada
-    if (!isCorrect) {
+    if (questionScore < 1) {
       errors[q.id] = (errors[q.id] || 0) + 1;
     } else {
       delete errors[q.id];
@@ -671,6 +726,7 @@ async function gradeExam(questions, answersByQuestionId = {}) {
     // Atualiza progresso local para que dashboard saiba quais questões foram respondidas
     progress[q.id] = {
       correct: isCorrect,
+      points: questionScore,
       attempts: (progress[q.id]?.attempts || 0) + 1,
       lastAnsweredAt: new Date().toISOString()
     };
@@ -689,15 +745,16 @@ async function gradeExam(questions, answersByQuestionId = {}) {
   saveProgress(CURRENT_USER.id, progress);
   const synced = await recordResponses(payload);
 
-  const score = Math.round((correctCount / questions.length) * 100);
+  const score = Math.round((totalPoints / questions.length) * 100);
   openModal(`<div style="text-align:center;">
     <h3>Resultado: ${score}%</h3>
-    <p>Acertou ${correctCount} de ${questions.length} questões.</p>
+    <p>Pontuação: ${totalPoints.toFixed(1)} de ${questions.length}.</p>
+    <p>Acertos completos: ${correctCount}.</p>
     <p style="color:${synced ? '#4CAF50' : '#FFB74D'};">${synced ? 'Respostas sincronizadas com o servidor.' : 'Respostas salvas localmente. A sincronização com o servidor falhou.'}</p>
     <button id="close-result" class="btn btn-primary">Fechar</button>
   </div>`);
   document.getElementById('close-result').onclick = closeModal;
-  return { score, correctCount, total: questions.length, synced };
+  return { score, correctCount, total: questions.length, totalPoints, synced };
 }
 
 function bindNavigation() {

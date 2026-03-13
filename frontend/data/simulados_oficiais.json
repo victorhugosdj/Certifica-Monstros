@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-13T12:55:29.492Z",
+  "generatedAt": "2026-03-13T14:05:07.146Z",
   "sourceFolder": "frontend/data/modules/conteudos e provas/Hyperautomation/Simulados e Questões",
   "exams": [
     {
@@ -20,6 +20,10 @@
             "Anypoint API specifications"
           ],
           "correctText": "Open API specifications",
+          "correctOptions": [
+            "Open API specifications"
+          ],
+          "isMultiple": false,
           "explanation": "To enable Salesforce to call external services within a flow, the appropriate specifications must be imported to make these external services available as invokable actions. The correct specification is Open API specifications. OpenAPI Specification (formerly known as Swagger) is a standard for defining APIs which can be easily imported into Salesforce to facilitate the integration and invocation of external services. Salesforce allows the import of OpenAPI specifications, which define the available endpoints and operations of an API, making them accessible as invocable actions in a Salesforce flow."
         },
         {
@@ -33,6 +37,10 @@
             "It sends a notification to the configured email address."
           ],
           "correctText": "It sends a notification to the configured email address.",
+          "correctOptions": [
+            "It sends a notification to the configured email address."
+          ],
+          "isMultiple": false,
           "explanation": "MuleSoft Composer provides a way to handle errors and notify users when something goes wrong in a flow. Aside from viewing errors on the Flow Details page, MuleSoft Composer can also send notifications to alert users about the errors. MuleSoft Composer can be configured to send notifications to a specified email address. This allows users to be promptly informed of any issues without having to constantly monitor the Flow Details page."
         },
         {
@@ -46,6 +54,10 @@
             "4"
           ],
           "correctText": "2",
+          "correctOptions": [
+            "2"
+          ],
+          "isMultiple": false,
           "explanation": "To achieve a bidirectional sync between two Salesforce orgs using MuleSoft Composer, you would need a minimum of two flows. Flow 1 (Sync from Org A to Org B): This flow monitors changes in Org A and updates Org B with the new data whenever a change occurs. Flow 2 (Sync from Org B to Org A): Similarly, this flow monitors changes in Org B and updates Org A with the new data whenever a change occurs. This setup ensures that any change in either Salesforce org is reflected in the other."
         },
         {
@@ -59,6 +71,10 @@
             "A parent flow with subflows to help organize automated actions and generate reusable components"
           ],
           "correctText": "A single flow Orchestration that uses Stages and Steps to organize automated actions and process user inputs",
+          "correctOptions": [
+            "A single flow Orchestration that uses Stages and Steps to organize automated actions and process user inputs"
+          ],
+          "isMultiple": false,
           "explanation": "To address the comprehensive, multi-step process automation requirement, a single flow orchestration that uses Stages and Steps is the best solution. Flow Orchestration allows Salesforce admins to build sophisticated automations by structuring the flow into Stages and Steps. By leveraging Stages and Steps, Salesforce Flow Orchestration can handle both user inputs and backend automated steps seamlessly. Given that a single user will execute the process, Flow Orchestration is ideal as it can manage the end-to-end process in a structured manner."
         },
         {
@@ -72,6 +88,10 @@
             "Documentation on the elements used by the user during the process"
           ],
           "correctText": "Documentation on the elements used by the user during the process",
+          "correctOptions": [
+            "Documentation on the elements used by the user during the process"
+          ],
+          "isMultiple": false,
           "explanation": "When using MuleSoft RPA Recorder to gather steps required for interacting with a website, it automatically collects documentation on the elements used by the user during the process. The RPA Recorder captures all the elements (e.g., buttons, fields, and other UI components) that the user interacts with during the manual process recording. It collects metadata such as element IDs, types, and positions."
         },
         {
@@ -85,6 +105,10 @@
             "Anypoint Platform"
           ],
           "correctText": "Anypoint Platform",
+          "correctOptions": [
+            "Anypoint Platform"
+          ],
+          "isMultiple": false,
           "explanation": "To implement built-in automated testing for new integrations, the Anypoint Platform is the appropriate tool. Anypoint Platform includes various tools such as MUnit for automated testing of Mule applications. MUnit allows developers to create, design, and run tests natively within Anypoint Studio. It supports comprehensive testing features including unit tests and integration tests."
         },
         {
@@ -98,6 +122,11 @@
             "Ensure MuleSoft Composer is installed on both the source and target orgs."
           ],
           "correctText": "Ensure the flow trigger is connected to a sandbox instance of Salesforce.",
+          "correctOptions": [
+            "Ensure the flow trigger is connected to a sandbox instance of Salesforce.",
+            "Ensure action steps are connected to a sandbox instance of Salesforce."
+          ],
+          "isMultiple": true,
           "explanation": "Flow Trigger Connection: Before testing any Composer flow, it is crucial to connect the flow trigger to a sandbox instance of Salesforce. This ensures that testing does not impact the production environment. Action Steps Connection: Similar to the flow trigger, action steps within the Composer flow should also be connected to a sandbox instance. This allows comprehensive testing of the flow's functionality without affecting production data."
         },
         {
@@ -111,6 +140,10 @@
             "Create a RAML definition in Design Center."
           ],
           "correctText": "Create a RAML definition in Design Center.",
+          "correctOptions": [
+            "Create a RAML definition in Design Center."
+          ],
+          "isMultiple": false,
           "explanation": "The first step in creating a new API as per MuleSoft best practices is to create a RAML (RESTful API Modeling Language) definition in the Design Center. This step is critical as it outlines the API's structure, endpoints, methods, and data types, providing a clear blueprint for subsequent development."
         },
         {
@@ -124,6 +157,10 @@
             "Rules"
           ],
           "correctText": "Message",
+          "correctOptions": [
+            "Message"
+          ],
+          "isMultiple": false,
           "explanation": "When configuring an Einstein bot to respond to incorrect answers, the 'Message' dialog option should be selected. This allows the bot to display a predefined message to the user, guiding them appropriately or informing them of the incorrect input."
         },
         {
@@ -137,6 +174,10 @@
             "Deactivate the RPA process, enter the inputs manually, the monitor the execution to determine the root cause."
           ],
           "correctText": "Download the analysis package from RPA Manager. revert the RPA process to the Build phase, then import the analysis package to RPA Builder and debug.",
+          "correctOptions": [
+            "Download the analysis package from RPA Manager. revert the RPA process to the Build phase, then import the analysis package to RPA Builder and debug."
+          ],
+          "isMultiple": false,
           "explanation": "The first step is to download the analysis package from the RPA Manager. Reverting the RPA process to the Build phase allows developers to make changes and debug the process. Import the analysis package into RPA Builder, which is the tool used to develop and debug RPA processes. This allows for a detailed investigation using logs and execution data within RPA Builder to step through the process."
         },
         {
@@ -150,6 +191,10 @@
             "1. Create a Salesforce Flow that retrieves the Contact data. 2. Create a Salesforce Flow that retrieves the Loyalty data. 3. Create a Flow Orchestration that uses the two flows and outputs the result to a CSV file."
           ],
           "correctText": "1. Have the MuleSoft team develop a new integration that includes a System API to the Loyalty system and uses the existing Customer System API. 2. Create a Process API to output the final results. 3. Create an Experience API for the business consumers to initiate the integration.",
+          "correctOptions": [
+            "1. Have the MuleSoft team develop a new integration that includes a System API to the Loyalty system and uses the existing Customer System API. 2. Create a Process API to output the final results. 3. Create an Experience API for the business consumers to initiate the integration."
+          ],
+          "isMultiple": false,
           "explanation": "The first step is to develop a new System API that integrates with the Loyalty system. Use the existing System API for customer data to retrieve necessary customer information (reuse). Create a Process API that combines data from both the Customer and Loyalty System APIs to process data and apply business logic. Create an Experience API to serve the business consumers, providing a user-friendly interface for initiating the integration."
         },
         {
@@ -163,6 +208,10 @@
             "Private Cloud Edition"
           ],
           "correctText": "Runtime Fabric",
+          "correctOptions": [
+            "Runtime Fabric"
+          ],
+          "isMultiple": false,
           "explanation": "Anypoint Runtime Fabric (RTF) is designed for deploying Mule applications on any cloud infrastructure, including AWS. It supports vertical and horizontal scalability and enables zero-downtime deployments, which aligns with AnyAirlines' requirements. RTF allows scaling applications both vertically and horizontally and supports zero-downtime deployments by utilizing rolling updates."
         },
         {
@@ -176,6 +225,11 @@
             "Make a GET call to an existing API endpoint, and then verify that the results match expected data."
           ],
           "correctText": "Make a call to a health-check endpoint, and then verify that the endpoint is still running.",
+          "correctOptions": [
+            "Make a call to a health-check endpoint, and then verify that the endpoint is still running.",
+            "Make a GET call to an existing API endpoint, and then verify that the results match expected data."
+          ],
+          "isMultiple": true,
           "explanation": "Creating and regularly calling a health-check endpoint is a common strategy to ensure that the API and its underlying systems are operational. Additionally, making a GET call to an existing API endpoint and verifying that the results match expected data helps ensure that the API is not only running but also functioning correctly."
         },
         {
@@ -189,6 +243,11 @@
             "Use DML statements at the end of the flow wherever possible."
           ],
           "correctText": "Avoid putting DML statements inside of For Loop occurrences.",
+          "correctOptions": [
+            "Avoid putting DML statements inside of For Loop occurrences.",
+            "Loop through a collection variable to save more records with a single DML statement."
+          ],
+          "isMultiple": true,
           "explanation": "Placing DML operations inside a loop can quickly exceed Salesforce governor limits, as each iteration performs a separate DML operation. It's best to collect records in a list and perform DML operations outside the loop. By looping through a collection variable and adding records to it, you can perform bulk DML operations, which are more efficient."
         },
         {
@@ -202,6 +261,10 @@
             "Use mocked data because non-production data is not available to MuleSoft Composer."
           ],
           "correctText": "Create a connection to each of the non-production environments within the Composer UI.",
+          "correctOptions": [
+            "Create a connection to each of the non-production environments within the Composer UI."
+          ],
+          "isMultiple": false,
           "explanation": "To test flows with data in multiple non-production environments, creating connections to each environment within the MuleSoft Composer UI is necessary. This allows the Composer to access and manipulate data across different environments, ensuring comprehensive testing."
         },
         {
@@ -215,6 +278,10 @@
             "Configure OAuth 2.0 in the external service."
           ],
           "correctText": "Assign an appropriate profile or permission set to users in the connected app.",
+          "correctOptions": [
+            "Assign an appropriate profile or permission set to users in the connected app."
+          ],
+          "isMultiple": false,
           "explanation": "Assigning the appropriate profile or permission set to users in the connected app restricts access to the MuleSoft API. This method ensures that only authorized users can invoke the hyperautomation flow. Properly securing the connected app by configuring user profiles and permission sets ensures compliance with security policies."
         },
         {
@@ -228,6 +295,10 @@
             "A cleanup activity that is performed at the end of the process to ensure all running applications are closed"
           ],
           "correctText": "A point in the process where different activities are performed under different circumstances",
+          "correctOptions": [
+            "A point in the process where different activities are performed under different circumstances"
+          ],
+          "isMultiple": false,
           "explanation": "The symbol shown is a diamond with an \"X\" inside, which represents an exclusive gateway in BPMN. This gateway is used to control the flow of the process based on certain conditions or circumstances. When an exclusive gateway is encountered, the process evaluates the conditions on each outgoing sequence flow and chooses the path that meets the conditions."
         },
         {
@@ -241,6 +312,10 @@
             "1. Add a Slack action step after the Salesforce action step. 2. Use the record to construct the message."
           ],
           "correctText": "1. Add a Slack action step after the Salesforce action step. 2. Use the record to construct the message.",
+          "correctOptions": [
+            "1. Add a Slack action step after the Salesforce action step. 2. Use the record to construct the message."
+          ],
+          "isMultiple": false,
           "explanation": "Start by adding a Salesforce action step that uses the Get Records action to retrieve the record based on a unique ID. After retrieving the record, add a Slack action step. Use the retrieved record directly to construct the message in the Slack action step. Since the Get Records action retrieves a single record based on a unique ID, there is no need to handle collections or iterate through records."
         },
         {
@@ -254,6 +329,10 @@
             "System"
           ],
           "correctText": "Process",
+          "correctOptions": [
+            "Process"
+          ],
+          "isMultiple": false,
           "explanation": "Process APIs are responsible for orchestrating and executing business logic. They aggregate, transform, and process data from multiple sources before passing it to Experience APIs or other downstream systems. Given the requirements to aggregate and transform data, the Process tier is the appropriate place."
         },
         {
@@ -268,6 +347,12 @@
             "Create Named Credentials in Salesforce for NTO and AnyAirlines."
           ],
           "correctText": "Use an Action element to call and consume the appropriate API in the Salesforce flow.",
+          "correctOptions": [
+            "Use an Action element to call and consume the appropriate API in the Salesforce flow.",
+            "Create External Services in Salesforce for NTO and AnyAirlines.",
+            "Create Named Credentials in Salesforce for NTO and AnyAirlines."
+          ],
+          "isMultiple": true,
           "explanation": "To connect a Salesforce flow to external APIs, you should: 1) Create Named Credentials in Salesforce to store the URL and authentication details. 2) Create External Services in Salesforce to register the external APIs (using OpenAPI/Swagger or RAML). 3) Use an Action element within the Salesforce Flow to call the registered external services."
         },
         {
@@ -281,6 +366,10 @@
             "The API should be functional and accessible for users to interact with."
           ],
           "correctText": "The visibility level of API instances should be set to public.",
+          "correctOptions": [
+            "The visibility level of API instances should be set to public."
+          ],
+          "isMultiple": false,
           "explanation": "Before sharing an API on the public Anypoint Exchange Portal, the API's visibility level must be configured as public within the Anypoint Platform so that it can be shared and accessed by external users."
         },
         {
@@ -294,6 +383,11 @@
             "MuleSoft Composer"
           ],
           "correctText": "Flow Orchestration",
+          "correctOptions": [
+            "Flow Orchestration",
+            "MuleSoft Composer"
+          ],
+          "isMultiple": true,
           "explanation": "MuleSoft Composer is recommended for easy and quick integration between multiple systems, including different Salesforce orgs (data transfer). Flow Orchestration is ideal for automating complex, multi-step business processes involving multiple users within a single org (distinct multi-user workflow)."
         },
         {
@@ -307,6 +401,10 @@
             "1. A Salesforce flow triggers on the creation of the record and makes an outbound request to a MuleSoft Composer flow. 2. Then, the same MuleSoft Composer flow calls the RPA process and uses the result to create a record in NetSuite."
           ],
           "correctText": "1. A MuleSoft Composer flow triggers on the creation of the record and calls the RPA process. 2. Then, the same flow uses the response to create a record in NetSuite.",
+          "correctOptions": [
+            "1. A MuleSoft Composer flow triggers on the creation of the record and calls the RPA process. 2. Then, the same flow uses the response to create a record in NetSuite."
+          ],
+          "isMultiple": false,
           "explanation": "Use MuleSoft Composer to create a flow that is triggered when a new record is created in Salesforce. Once the flow is triggered, it should call the pre-existing RPA process. After the RPA process completes, the MuleSoft Composer flow can capture the output from the RPA process and use it to create a record in NetSuite."
         },
         {
@@ -320,6 +418,10 @@
             "Create a MuleSoft RPA bot that updates the related account when the order is marked complete."
           ],
           "correctText": "Create a record-triggered flow on the Order object that updates the related account when the order is marked complete.",
+          "correctOptions": [
+            "Create a record-triggered flow on the Order object that updates the related account when the order is marked complete."
+          ],
+          "isMultiple": false,
           "explanation": "To update the Last Order Date custom field on the related account when an order is marked complete in Salesforce, the best practice is to use a record-triggered flow on the Order object. Set the flow to trigger when the order status is updated to complete. Use an Update Records element to update the related Account. This ensures that the data remains within Salesforce and is updated immediately."
         },
         {
@@ -333,6 +435,11 @@
             "Is the process speed-sensitive?"
           ],
           "correctText": "Is the process rule-based?",
+          "correctOptions": [
+            "Is the process rule-based?",
+            "Is the process data-driven?"
+          ],
+          "isMultiple": true,
           "explanation": "When evaluating a candidate process for RPA automation, consider if the process is rule-based and data-driven. RPA is well-suited for processes that follow clear, predefined rules. Data-driven processes involve manipulating, transferring, and extracting data, making them ideal for RPA automation."
         },
         {
@@ -346,6 +453,10 @@
             "Long running workflows that require manual steps and approvals by users"
           ],
           "correctText": "Data transformation from a source system to a target system by a non-technical user",
+          "correctOptions": [
+            "Data transformation from a source system to a target system by a non-technical user"
+          ],
+          "isMultiple": false,
           "explanation": "MuleSoft Composer is designed for business users to create integrations without deep technical knowledge. It is ideal for scenarios that involve data transformation and integration where non-technical users can easily connect different systems, automate data transfers, and transform data from one system to another using a no-code interface."
         },
         {
@@ -359,6 +470,10 @@
             "Use a basic endpoint with a configured consumer endpoint."
           ],
           "correctText": "Create a proxy in front of each existing API.",
+          "correctOptions": [
+            "Create a proxy in front of each existing API."
+          ],
+          "isMultiple": false,
           "explanation": "To expose existing non-MuleSoft APIs and secure them efficiently using Anypoint Platform, you can create API proxies. This approach involves setting up an intermediary that forwards requests to the existing backend APIs, allowing you to leverage Anypoint Platform's API management capabilities without rewriting the existing APIs."
         },
         {
@@ -372,6 +487,10 @@
             "An evaluation flow which evaluates when the process is completed and updates Salesforce records"
           ],
           "correctText": "A Flow Orchestration to automate the multi-departmental process and update Salesforce records",
+          "correctOptions": [
+            "A Flow Orchestration to automate the multi-departmental process and update Salesforce records"
+          ],
+          "isMultiple": false,
           "explanation": "Salesforce Flow Orchestration is designed to manage complex, multi-step business processes that span multiple departments and systems. It allows you to break down the process into stages and define the sequence of actions and approvals required. After completing the external process, Flow Orchestration can be configured to update Salesforce records with the outcome."
         },
         {
@@ -385,6 +504,10 @@
             "Client ID Enforcement"
           ],
           "correctText": "Spike Control",
+          "correctOptions": [
+            "Spike Control"
+          ],
+          "isMultiple": false,
           "explanation": "To prevent an API from being overloaded, the Spike Control policy is suitable. It helps manage sudden bursts of traffic by limiting the rate at which requests are processed. Spike Control smooths out bursts of incoming requests by enforcing a rate limit over a short period, protecting backend systems from being overwhelmed."
         },
         {
@@ -398,6 +521,10 @@
             "Swimlane"
           ],
           "correctText": "Switch/Case",
+          "correctOptions": [
+            "Switch/Case"
+          ],
+          "isMultiple": false,
           "explanation": "To route cases based on specific criteria to different teams (sales, product, or technical support) using MuleSoft Composer, the Switch/Case component is the most appropriate choice. This component allows you to define multiple conditions and route the flow based on these conditions (e.g., case type, priority)."
         },
         {
@@ -411,6 +538,11 @@
             "MuleSoft Composer"
           ],
           "correctText": "Salesforce Flow",
+          "correctOptions": [
+            "Salesforce Flow",
+            "MuleSoft Composer"
+          ],
+          "isMultiple": true,
           "explanation": "Combine MuleSoft Composer for integration and Salesforce Flow for in-Salesforce automation. Use MuleSoft Composer to create a flow that triggers when a new record is created in NetSuite and updates the corresponding record in Salesforce. Use Salesforce Flow to create a record-triggered flow that updates all dependent records whenever the primary Salesforce record is updated."
         },
         {
@@ -424,6 +556,10 @@
             "An Einstein bot that will initiate the credit card application and create a record of an existing Salesforce Custom Object"
           ],
           "correctText": "An RPA process that interacts with multiple applications and websites",
+          "correctOptions": [
+            "An RPA process that interacts with multiple applications and websites"
+          ],
+          "isMultiple": false,
           "explanation": "Developing an RPA process that interacts with multiple applications and websites typically requires the most effort due to the complexity of interaction (navigating web pages, filling forms), integration challenges with different systems, and the need for maintenance and updates as applications change."
         },
         {
@@ -437,6 +573,10 @@
             "Use External Services in Salesforce to connect with Anypoint Platform. Use Orchestrator to coordinate the different ETL jobs in a single UI. Leverage MuleSoft RPA for on-premises systems."
           ],
           "correctText": "Migrate integrations with simple transformations to MuleSoft Composer and complex integrations to Anypoint Platform. Use Anypoint Exchange to view and manage all API integrations.",
+          "correctOptions": [
+            "Migrate integrations with simple transformations to MuleSoft Composer and complex integrations to Anypoint Platform. Use Anypoint Exchange to view and manage all API integrations."
+          ],
+          "isMultiple": false,
           "explanation": "Migrate simple integrations to MuleSoft Composer and complex integrations (involving intricate logic or large data volumes) to Anypoint Platform. Use Anypoint Exchange as a centralized repository to view and manage all API integrations, providing a single interface."
         },
         {
@@ -450,6 +590,11 @@
             "Every 5 minutes"
           ],
           "correctText": "Every 30 minutes",
+          "correctOptions": [
+            "Every 30 minutes",
+            "Every 5 minutes"
+          ],
+          "isMultiple": true,
           "explanation": "MuleSoft Composer provides scheduling functionality that allows you to set up automated flows to run at specified intervals. The available options for scheduling within MuleSoft Composer include \"Every 30 minutes\" and \"Every 5 minutes\"."
         },
         {
@@ -463,6 +608,10 @@
             "OAuth 2.0 access token enforcement"
           ],
           "correctText": "Rate limiting - SLA-Based",
+          "correctOptions": [
+            "Rate limiting - SLA-Based"
+          ],
+          "isMultiple": false,
           "explanation": "The Rate Limiting - SLA-Based policy in Anypoint Platform is designed to control the number of requests an individual client can make to an API. This policy helps protect APIs from being overwhelmed by too many requests by enforcing a limit on the number of requests a client can make within a specified time frame."
         },
         {
@@ -476,6 +625,10 @@
             "Evaluate the criteria for the first two paths in an evaluation flow. Then, use the default path functionality of the decision element for the third path."
           ],
           "correctText": "Have the evaluation flow return a number variable, and use a decision element to determine which path to execute.",
+          "correctOptions": [
+            "Have the evaluation flow return a number variable, and use a decision element to determine which path to execute."
+          ],
+          "isMultiple": false,
           "explanation": "To implement branching logic based on multiple criteria in Flow Orchestration, create an evaluation flow that assesses the exit criteria and returns a number variable indicating which path to take. Then, use a decision element in Flow Orchestration to evaluate the number variable and determine which path to execute next."
         },
         {
@@ -489,6 +642,10 @@
             "In an RPA process runtime"
           ],
           "correctText": "On a configured RPA Bot",
+          "correctOptions": [
+            "On a configured RPA Bot"
+          ],
+          "isMultiple": false,
           "explanation": "During testing of an RPA process, test plans are executed on a configured RPA Bot. This allows you to simulate real-world scenarios and verify the functionality and performance of the RPA process in an environment that closely mirrors production."
         },
         {
@@ -502,6 +659,10 @@
             "MuleSoft RPA"
           ],
           "correctText": "Anypoint Studio",
+          "correctOptions": [
+            "Anypoint Studio"
+          ],
+          "isMultiple": false,
           "explanation": "Anypoint Studio is the most suitable tool for this integration. It supports SOAP-based web services, which is essential for the ERP system. It allows for complex integrations with bidirectional communication and can design integrations that process data in near real-time."
         },
         {
@@ -515,6 +676,10 @@
             "September 28, 2022, at 10:30 a.m."
           ],
           "correctText": "After the first execution is complete",
+          "correctOptions": [
+            "After the first execution is complete"
+          ],
+          "isMultiple": false,
           "explanation": "The process is running in a single Secured Session. Since the first run takes 1 hour (finishing at 11:00 a.m.), the next execution can only start after the first one completes. The subsequent run will then start 45 minutes after the completion of the first run (11:00 a.m. + 45 minutes = 11:45 a.m.). Therefore, it waits until after the first execution is complete."
         },
         {
@@ -528,6 +693,10 @@
             "Run mode is only available for active flows."
           ],
           "correctText": "Debug mode displays details for debugging the flow.",
+          "correctOptions": [
+            "Debug mode displays details for debugging the flow."
+          ],
+          "isMultiple": false,
           "explanation": "Debug mode provides detailed information for each step of the flow, including input and output data, and any errors encountered. It is specifically designed to aid in diagnosing and fixing issues by providing a granular view of the flow's execution. Run mode executes the flow as it is, typically to verify it works under normal conditions."
         },
         {
@@ -541,6 +710,10 @@
             "They leverage AI processing to automatically interact with the customer and collect customer data."
           ],
           "correctText": "They allow the user to interact with the process in between automated backend steps.",
+          "correctOptions": [
+            "They allow the user to interact with the process in between automated backend steps."
+          ],
+          "isMultiple": false,
           "explanation": "Interactive Steps in Flow Orchestration enable users to engage with the process during key stages. These steps are inserted between automated tasks to require human input or decision-making. Once the user completes the required interaction, the process can automatically proceed to the next step."
         },
         {
@@ -555,6 +728,10 @@
             "Create a second MuleSoft Composer flow that runs on a schedule and checks if the RPA process is complete."
           ],
           "correctText": "Create a second MuleSoft Composer flow that starts when the RPA process is complete.",
+          "correctOptions": [
+            "Create a second MuleSoft Composer flow that starts when the RPA process is complete."
+          ],
+          "isMultiple": false,
           "explanation": "When an RPA process involves a User Task that can take a significant amount of time, it is best to create a second MuleSoft Composer flow that is triggered when the RPA process completes. This ensures that the first flow is not held up while waiting. The second flow can start based on an event, such as the completion status of the RPA process."
         },
         {
@@ -568,6 +745,10 @@
             "substitute()"
           ],
           "correctText": "fromStringToBoolean()",
+          "correctOptions": [
+            "fromStringToBoolean()"
+          ],
+          "isMultiple": false,
           "explanation": "To convert a string from NetSuite into a Boolean field in a Salesforce object within MuleSoft Composer, you should use the fromStringToBoolean() function. This function interprets common Boolean strings like \"true\", \"false\", \"yes\", \"no\" and converts them into their corresponding Boolean values."
         },
         {
@@ -581,6 +762,10 @@
             "The API asset should be published to the public Exchange portal."
           ],
           "correctText": "The API asset should be published to the private Exchange portal.",
+          "correctOptions": [
+            "The API asset should be published to the private Exchange portal."
+          ],
+          "isMultiple": false,
           "explanation": "To effectively share an API internally within an organization, publishing the API asset to the private Exchange portal is the best approach. The private Exchange portal is designed for sharing APIs and assets within an organization, allowing you to control access so that only authorized internal users can consume it."
         },
         {
@@ -594,6 +779,10 @@
             "Grouping steps of the process based on hand-offs or key branches of the process."
           ],
           "correctText": "Grouping steps of the process based on hand-offs or key branches of the process.",
+          "correctOptions": [
+            "Grouping steps of the process based on hand-offs or key branches of the process."
+          ],
+          "isMultiple": false,
           "explanation": "In Flow Orchestration, stages should be used to organize a complicated process by grouping steps based on hand-offs or key branches of the process. Each stage can represent a major phase in the process involving a transition of responsibility or a significant decision point."
         },
         {
@@ -607,6 +796,11 @@
             "All keystrokes and mouse clicks in the autogenerated code must be disabled before deploying to production."
           ],
           "correctText": "Some autogenerated code must be replaced with more robust or specialized action steps.",
+          "correctOptions": [
+            "Some autogenerated code must be replaced with more robust or specialized action steps.",
+            "The autogenerated workflows may contain sensitive information that must be removed."
+          ],
+          "isMultiple": true,
           "explanation": "When working with autogenerated workflow code from RPA Recorder: Replace Autogenerated Code: Some code may not be optimized for robustness, so it is necessary to review and replace parts with more robust or specialized action steps. Remove Sensitive Information: Autogenerated workflows might capture sensitive information (usernames, passwords), which must be removed or masked before deploying to production."
         },
         {
@@ -620,6 +814,10 @@
             "MuleSoft Composer"
           ],
           "correctText": "Anypoint Exchange",
+          "correctOptions": [
+            "Anypoint Exchange"
+          ],
+          "isMultiple": false,
           "explanation": "Anypoint Exchange is a repository where developers can publish, share, and discover reusable assets such as APIs, connectors, and templates. By searching Anypoint Exchange, the developer can find existing integrations or assets, avoiding the need to develop a new integration from scratch."
         },
         {
@@ -633,6 +831,10 @@
             "API Manager"
           ],
           "correctText": "API Gateway",
+          "correctOptions": [
+            "API Gateway"
+          ],
+          "isMultiple": false,
           "explanation": "The API Gateway is the runtime component responsible for enforcing API policies. It acts as an intermediary that manages API traffic, security, and performance by applying the policies configured in API Manager (such as rate limiting and security)."
         },
         {
@@ -646,6 +848,10 @@
             "RAML and Apiary only"
           ],
           "correctText": "RAML and OAS only",
+          "correctOptions": [
+            "RAML and OAS only"
+          ],
+          "isMultiple": false,
           "explanation": "Users can download REST APIs published to Anypoint Exchange in RAML (RESTful API Modeling Language) and OAS (OpenAPI Specification). MuleSoft supports both formats, allowing users to choose between these two widely-used standards."
         },
         {
@@ -659,6 +865,10 @@
             "API asset"
           ],
           "correctText": "Template asset",
+          "correctOptions": [
+            "Template asset"
+          ],
+          "isMultiple": false,
           "explanation": "To share a Mule application as a starting point for similar applications, it should be published as a Template asset. A Template includes predefined integration logic and configurations that can be used as a starting point for new projects, allowing other teams to leverage the pre-built solution and ensure consistency."
         },
         {
@@ -672,6 +882,10 @@
             "Anypoint Platform"
           ],
           "correctText": "Anypoint Platform",
+          "correctOptions": [
+            "Anypoint Platform"
+          ],
+          "isMultiple": false,
           "explanation": "The Anypoint Platform provides comprehensive integration capabilities, including real-time data processing, API management, and connectivity to systems like SAP and NetSuite. It supports building robust, scalable APIs that can handle near real-time data synchronization."
         },
         {
@@ -685,6 +899,10 @@
             "Hybrid"
           ],
           "correctText": "Hybrid",
+          "correctOptions": [
+            "Hybrid"
+          ],
+          "isMultiple": false,
           "explanation": "A hybrid deployment strategy involves hosting the control plane (Anypoint Platform management) in the cloud, while the runtime plane (where Mule applications run) is hosted by the client, either on-premises or in their own private cloud. (Note: The question asks for the strategy where runtime is hosted by the client; Private Cloud Edition hosts both control and runtime on client premises, but the context of the answer points to Hybrid as the intended distinction in many MuleSoft contexts, or the question phrasing implies a mix where client hosting is the key differentiator for the runtime part. However, based strictly on the provided text's explanation for answer D: \"Runtime plane is hosted by the client... Control plane is managed by MuleSoft\")."
         },
         {
@@ -698,6 +916,10 @@
             "BPMN is autogenerated with documentation and workflows containing the recorded actions that are automatically created during the build phase."
           ],
           "correctText": "BPMN is autogenerated, which includes documentation in the form of images and a complete recording of keyboard actions and wait times.",
+          "correctOptions": [
+            "BPMN is autogenerated, which includes documentation in the form of images and a complete recording of keyboard actions and wait times."
+          ],
+          "isMultiple": false,
           "explanation": "The RPA Recorder captures the business process and autogenerates a BPMN diagram. Along with the BPMN, it generates detailed documentation that includes images of the steps performed, as well as a complete recording of keyboard actions and wait times. This significantly reduces the time required to document and design the process."
         },
         {
@@ -711,6 +933,10 @@
             "An example of an API implementation following best practices"
           ],
           "correctText": "A MuleSoft application template with key components",
+          "correctOptions": [
+            "A MuleSoft application template with key components"
+          ],
+          "isMultiple": false,
           "explanation": "A MuleSoft application template includes key components and configurations that follow best practices. It provides a consistent starting point for new projects. Publishing this template to Anypoint Exchange allows developers to kickstart their API projects while adhering to uniform standards."
         },
         {
@@ -724,6 +950,10 @@
             "Create a user collection variable and assign the work item to the user collection."
           ],
           "correctText": "Create a Group for the team of Salesforce Users and assign the work item to the group.",
+          "correctOptions": [
+            "Create a Group for the team of Salesforce Users and assign the work item to the group."
+          ],
+          "isMultiple": false,
           "explanation": "Create a Group in Salesforce that includes all the technical writers. When the \"Review Quote\" work item is created, assign it to the group rather than an individual user. This allows any available technical writer within the group to pick up and complete the task, providing flexibility."
         },
         {
@@ -737,6 +967,10 @@
             "Break up the NetSuite Address list into fields that match Salesforce address-related fields using a custom formula field in NetSuite."
           ],
           "correctText": "Combine the Salesforce address-related fields into a list using a custom expression in Composer.",
+          "correctOptions": [
+            "Combine the Salesforce address-related fields into a list using a custom expression in Composer."
+          ],
+          "isMultiple": false,
           "explanation": "Use a custom expression in MuleSoft Composer to combine the individual address-related fields from Salesforce (Street, City, State, etc.) into a format that matches the NetSuite Address list. This custom expression will concatenate the individual simple fields into a structured format that can be mapped directly to the NetSuite Address list."
         },
         {
@@ -750,6 +984,10 @@
             "API Monitoring Dashboard"
           ],
           "correctText": "API Functional Monitoring",
+          "correctOptions": [
+            "API Functional Monitoring"
+          ],
+          "isMultiple": false,
           "explanation": "API Functional Monitoring allows you to set up scheduled tests and monitor the functional performance of your APIs. It can be configured to periodically make API calls to check for specific conditions and provides a dashboard where you can view the history of these tests, including results and failures."
         },
         {
@@ -763,6 +1001,10 @@
             "Multiple project managers"
           ],
           "correctText": "Center of Excellence",
+          "correctOptions": [
+            "Center of Excellence"
+          ],
+          "isMultiple": false,
           "explanation": "The best practice is to choose the Center of Excellence (COE). The CoE is a team of experts responsible for overseeing the implementation, governance, and management of RPA processes. They ensure best practices are followed and manage the RPA process from development through deployment and maintenance."
         },
         {
@@ -776,6 +1018,10 @@
             "Exchange Administrator"
           ],
           "correctText": "RPA Integrator",
+          "correctOptions": [
+            "RPA Integrator"
+          ],
+          "isMultiple": false,
           "explanation": "The appropriate Connected App scope is RPA Integrator. This scope is designed to provide the necessary permissions for integrating RPA Manager with Anypoint Platform, allowing the connected app to interact with the RPA Manager and manage RPA processes."
         },
         {
@@ -789,6 +1035,10 @@
             "For Each loop"
           ],
           "correctText": "Create or Update Record action in Sales Cloud",
+          "correctOptions": [
+            "Create or Update Record action in Sales Cloud"
+          ],
+          "isMultiple": false,
           "explanation": "After the RPA process completes and returns the extracted data, the next step in the flow should be to update Sales Cloud. Use the Create or Update Record action to insert the new sales data into Sales Cloud. This action ensures that existing records are updated if they already exist, or new records are created if they don't."
         }
       ]
@@ -811,6 +1061,10 @@
             "Anypoint Studio local runtime"
           ],
           "correctText": "Runtime Fabric",
+          "correctOptions": [
+            "Runtime Fabric"
+          ],
+          "isMultiple": false,
           "explanation": "Runtime Fabric is designed for customer-managed infrastructure (including Kubernetes) and supports advanced deployment patterns like rolling updates and scaling. CloudHub is MuleSoft-managed (less control over underlying infra). Local runtime isn’t a deployment strategy for production."
         },
         {
@@ -824,6 +1078,11 @@
             "Wants the fastest “click-to-deploy” with default operational management"
           ],
           "correctText": "Must deploy into a private network with strict control over ingress/egress",
+          "correctOptions": [
+            "Must deploy into a private network with strict control over ingress/egress",
+            "Needs to run apps close to on-prem systems with network constraints"
+          ],
+          "isMultiple": true,
           "explanation": "Runtime Fabric fits when you need network control and proximity to restricted systems. CloudHub fits “MuleSoft-managed” and fast operations (B, D)."
         },
         {
@@ -837,6 +1096,10 @@
             "API Gateway policy layer"
           ],
           "correctText": "Process API",
+          "correctOptions": [
+            "Process API"
+          ],
+          "isMultiple": false,
           "explanation": "Process APIs handle orchestration and business logic such as aggregation, normalization, and enrichment. System APIs should remain close to source capabilities. Experience APIs tailor responses per channel. Policies don’t implement business logic."
         },
         {
@@ -851,6 +1114,12 @@
             "System APIs should contain channel-specific formatting logic"
           ],
           "correctText": "System APIs should abstract and stabilize access to core systems of record",
+          "correctOptions": [
+            "System APIs should abstract and stabilize access to core systems of record",
+            "Process APIs should compose data from multiple System APIs and apply business rules",
+            "Experience APIs should tailor data shape to the consumer (mobile/web/partner)"
+          ],
+          "isMultiple": true,
           "explanation": "A/C/D match the tier responsibilities. B and E invert responsibilities (common distractors)."
         },
         {
@@ -864,6 +1133,10 @@
             "JSON Threat Protection"
           ],
           "correctText": "OAuth 2.0 Access Token Enforcement",
+          "correctOptions": [
+            "OAuth 2.0 Access Token Enforcement"
+          ],
+          "isMultiple": false,
           "explanation": "OAuth token enforcement validates access tokens. Client ID Enforcement is identification/contracting (often used with API Manager contracts), not token validation. Spike Control is traffic shaping; JSON Threat Protection is payload safety."
         },
         {
@@ -877,6 +1150,11 @@
             "CORS"
           ],
           "correctText": "Client ID Enforcement",
+          "correctOptions": [
+            "Client ID Enforcement",
+            "OAuth 2.0 Access Token Enforcement"
+          ],
+          "isMultiple": true,
           "explanation": "Client ID Enforcement supports consumer identification and contracts/tiers; OAuth token enforcement validates tokens. Spike Control/CORS don’t cover identity + authorization."
         },
         {
@@ -890,6 +1168,10 @@
             "OAuth 2.0 Access Token Enforcement"
           ],
           "correctText": "JSON Threat Protection",
+          "correctOptions": [
+            "JSON Threat Protection"
+          ],
+          "isMultiple": false,
           "explanation": "JSON Threat Protection is designed to mitigate risks from malicious JSON structures (size, depth, arrays). Spike/Rate limiting control request rates, not payload structure. OAuth validates auth, not payload safety."
         },
         {
@@ -903,6 +1185,10 @@
             "Swimlane"
           ],
           "correctText": "Switch/Case",
+          "correctOptions": [
+            "Switch/Case"
+          ],
+          "isMultiple": false,
           "explanation": "Multiple mutually exclusive routes → Switch/Case. If/Else is binary; For Each iterates; Swimlane isn’t a Composer control component."
         },
         {
@@ -916,6 +1202,10 @@
             "4"
           ],
           "correctText": "2",
+          "correctOptions": [
+            "2"
+          ],
+          "isMultiple": false,
           "explanation": "One flow per direction (Org A→B, Org B→A)."
         },
         {
@@ -929,6 +1219,10 @@
             "Publish to Exchange"
           ],
           "correctText": "Add a sync flag / “Last Synced By” condition to skip reprocessing",
+          "correctOptions": [
+            "Add a sync flag / “Last Synced By” condition to skip reprocessing"
+          ],
+          "isMultiple": false,
           "explanation": "Loop prevention via flags/timestamps is standard. Removing a flow breaks bidirectional requirement; RPA/Exchange don’t solve loop logic."
         },
         {
@@ -942,6 +1236,10 @@
             "Use mock data because Composer can’t access sandboxes"
           ],
           "correctText": "Create separate connections per environment in Composer",
+          "correctOptions": [
+            "Create separate connections per environment in Composer"
+          ],
+          "isMultiple": false,
           "explanation": "Composer uses connections. No per-sandbox installation required. Named Credentials in Anypoint isn’t relevant. Sandboxes are supported."
         },
         {
@@ -955,6 +1253,10 @@
             "Apply Client ID Enforcement"
           ],
           "correctText": "Consider migrating to Anypoint Platform for higher volume/complexity needs",
+          "correctOptions": [
+            "Consider migrating to Anypoint Platform for higher volume/complexity needs"
+          ],
+          "isMultiple": false,
           "explanation": "Higher volume/robustness often suggests Anypoint. RPA/Screen Flow/policies don’t address integration throughput and design limits."
         },
         {
@@ -968,6 +1270,10 @@
             "Rewrite in Apex"
           ],
           "correctText": "Add error handling/branching + notify (email) and proceed for non-critical step",
+          "correctOptions": [
+            "Add error handling/branching + notify (email) and proceed for non-critical step"
+          ],
+          "isMultiple": false,
           "explanation": "Handle errors in-flow and notify. MUnit is for Mule apps, not Composer. MQ doesn’t “ignore errors.” Apex is unnecessary."
         },
         {
@@ -981,6 +1287,10 @@
             "Record Updated"
           ],
           "correctText": "Inbound Webhook trigger",
+          "correctOptions": [
+            "Inbound Webhook trigger"
+          ],
+          "isMultiple": false,
           "explanation": "Webhook enables external/on-demand invocation. Schedule is periodic; record triggers require data changes."
         },
         {
@@ -994,6 +1304,11 @@
             "Apply Spike Control on the Slack connector"
           ],
           "correctText": "Standardize message templates and channels",
+          "correctOptions": [
+            "Standardize message templates and channels",
+            "Add error notifications for failed Slack actions"
+          ],
+          "isMultiple": true,
           "explanation": "Templates and error handling are best practice. For Each isn’t required. Spike Control is an API gateway policy, not a connector setting."
         },
         {
@@ -1007,6 +1322,10 @@
             "Orchestration with stages"
           ],
           "correctText": "If/Else checking for empty result before Slack step",
+          "correctOptions": [
+            "If/Else checking for empty result before Slack step"
+          ],
+          "isMultiple": false,
           "explanation": "Presence/absence is binary → If/Else. Switch/Case and For Each are mismatched; Orchestration is for process coordination, not this."
         },
         {
@@ -1020,6 +1339,10 @@
             "Use Flow Orchestration"
           ],
           "correctText": "Use Composer formatting/conversion functions before mapping",
+          "correctOptions": [
+            "Use Composer formatting/conversion functions before mapping"
+          ],
+          "isMultiple": false,
           "explanation": "Simple transformation belongs in Composer mapping. RPA/API/Orchestration are unnecessary for trivial formatting."
         },
         {
@@ -1033,6 +1356,10 @@
             "Only possible through cron in Anypoint Studio"
           ],
           "correctText": "Schedule every 30 minutes",
+          "correctOptions": [
+            "Schedule every 30 minutes"
+          ],
+          "isMultiple": false,
           "explanation": "Composer offers common intervals such as 30 minutes. Others are incorrect/overcomplicated."
         },
         {
@@ -1046,6 +1373,10 @@
             "Replace with Flow Orchestration"
           ],
           "correctText": "Use a second Composer flow triggered when the RPA completes",
+          "correctOptions": [
+            "Use a second Composer flow triggered when the RPA completes"
+          ],
+          "isMultiple": false,
           "explanation": "Long-running tasks should be decoupled via completion event/second flow. Waiting/polling is inefficient; Orchestration doesn’t replace RPA execution."
         },
         {
@@ -1059,6 +1390,11 @@
             "Update a single Salesforce field"
           ],
           "correctText": "Need API policies, governance, and broad reuse",
+          "correctOptions": [
+            "Need API policies, governance, and broad reuse",
+            "High volume + complex transformations + strict SLAs"
+          ],
+          "isMultiple": true,
           "explanation": "Enterprise scale/governance/complexity → Anypoint. Simple tasks remain in Composer."
         },
         {
@@ -1072,6 +1408,10 @@
             "Spike Control"
           ],
           "correctText": "Use Salesforce permissions (profiles/permission sets) tied to the operation",
+          "correctOptions": [
+            "Use Salesforce permissions (profiles/permission sets) tied to the operation"
+          ],
+          "isMultiple": false,
           "explanation": "User-level access is governed in Salesforce via permissions. API policies don’t directly control Salesforce user invocations."
         },
         {
@@ -1085,6 +1425,10 @@
             "Use Flow Orchestration for logging"
           ],
           "correctText": "Write logs to a custom Salesforce object for each run/failure",
+          "correctOptions": [
+            "Write logs to a custom Salesforce object for each run/failure"
+          ],
+          "isMultiple": false,
           "explanation": "Persisted logs enable reporting/audit. UI-only is limited; Slack isn’t an audit store; Orchestration doesn’t automatically solve logging."
         },
         {
@@ -1099,6 +1443,12 @@
             "Use RPA to compute the top 10%"
           ],
           "correctText": "Build a System API for loyalty and reuse existing Customer System API",
+          "correctOptions": [
+            "Build a System API for loyalty and reuse existing Customer System API",
+            "Build a Process API to aggregate/transform and compute top 10%",
+            "Build an Experience API to expose the result to business consumers"
+          ],
+          "isMultiple": true,
           "explanation": "With existing API-led strategy, extend with System (loyalty), Process (logic), Experience (consumption). Composer-only is less robust; RPA unnecessary when API exists."
         },
         {
@@ -1112,6 +1462,10 @@
             "Store credentials in a public Salesforce text field"
           ],
           "correctText": "Salesforce Named Credentials",
+          "correctOptions": [
+            "Salesforce Named Credentials"
+          ],
+          "isMultiple": false,
           "explanation": "Named Credentials centralize auth and rotation. Client ID Enforcement isn’t credential storage. Hardcoding/public fields are security anti-patterns."
         },
         {
@@ -1125,6 +1479,10 @@
             "Experience API"
           ],
           "correctText": "MuleSoft RPA",
+          "correctOptions": [
+            "MuleSoft RPA"
+          ],
+          "isMultiple": false,
           "explanation": "UI automation without APIs → RPA. Composer/Orchestration require APIs or Salesforce context; Experience API assumes API access."
         },
         {
@@ -1138,6 +1496,10 @@
             "Full test plans"
           ],
           "correctText": "UI elements/metadata used during interaction",
+          "correctOptions": [
+            "UI elements/metadata used during interaction"
+          ],
+          "isMultiple": false,
           "explanation": "Recorder captures UI interaction details; logic/comments/tests are added later."
         },
         {
@@ -1151,6 +1513,11 @@
             "Disable all keystrokes/mouse clicks before production"
           ],
           "correctText": "Replace fragile autogenerated steps with more robust/specialized steps",
+          "correctOptions": [
+            "Replace fragile autogenerated steps with more robust/specialized steps",
+            "Remove/mask sensitive info captured during recording"
+          ],
+          "isMultiple": true,
           "explanation": "Autogenerated flows often need hardening and may contain secrets. “Production-ready” is a trap; disabling clicks breaks automation."
         },
         {
@@ -1164,6 +1531,10 @@
             "Parallel split"
           ],
           "correctText": "Exclusive Gateway (one of several paths based on conditions)",
+          "correctOptions": [
+            "Exclusive Gateway (one of several paths based on conditions)"
+          ],
+          "isMultiple": false,
           "explanation": "“X” gateway = exclusive decision. Other symbols describe different BPMN elements."
         },
         {
@@ -1177,6 +1548,10 @@
             "In Salesforce Setup"
           ],
           "correctText": "On a configured RPA Bot",
+          "correctOptions": [
+            "On a configured RPA Bot"
+          ],
+          "isMultiple": false,
           "explanation": "Bots run executions/tests. Builder is authoring; Manager is monitoring/management."
         },
         {
@@ -1190,6 +1565,10 @@
             "Replace with Composer immediately"
           ],
           "correctText": "Download analysis package, revert to Build phase, import into Builder, debug",
+          "correctOptions": [
+            "Download analysis package, revert to Build phase, import into Builder, debug"
+          ],
+          "isMultiple": false,
           "explanation": "Proper debugging uses analysis package + Builder. Others are unreliable or change scope unnecessarily."
         },
         {
@@ -1203,6 +1582,11 @@
             "Highly variable daily with no patterns"
           ],
           "correctText": "Rule-based",
+          "correctOptions": [
+            "Rule-based",
+            "Data-driven"
+          ],
+          "isMultiple": true,
           "explanation": "RPA excels at repeatable, rules + data. High variability/creativity reduces automation success."
         },
         {
@@ -1216,6 +1600,10 @@
             "Replace with Flow Orchestration"
           ],
           "correctText": "Trigger a second Composer flow when the RPA completes",
+          "correctOptions": [
+            "Trigger a second Composer flow when the RPA completes"
+          ],
+          "isMultiple": false,
           "explanation": "Asynchronous completion pattern. Blocking/polling is inefficient; Orchestration doesn’t execute UI automation."
         },
         {
@@ -1229,6 +1617,10 @@
             "Add a Composer Switch/Case"
           ],
           "correctText": "Add cleanup/finally steps in the bot workflow",
+          "correctOptions": [
+            "Add cleanup/finally steps in the bot workflow"
+          ],
+          "isMultiple": false,
           "explanation": "Cleanup handling belongs in bot design. Gateways/Composer/APIs don’t guarantee application closure."
         },
         {
@@ -1243,6 +1635,12 @@
             "Apply Spike Control"
           ],
           "correctText": "Prefer stable selectors/identifiers over screen coordinates",
+          "correctOptions": [
+            "Prefer stable selectors/identifiers over screen coordinates",
+            "Add waits/state checks before clicking",
+            "Handle exceptions and alternate paths"
+          ],
+          "isMultiple": true,
           "explanation": "Stability + synchronization + exception handling improves robustness. Removing logs harms troubleshooting. Spike Control is unrelated."
         },
         {
@@ -1256,6 +1654,10 @@
             "Stored in a public Salesforce field"
           ],
           "correctText": "Secure credential/secret mechanism (vault/managed secrets)",
+          "correctOptions": [
+            "Secure credential/secret mechanism (vault/managed secrets)"
+          ],
+          "isMultiple": false,
           "explanation": "Secrets must be protected. Hardcoding or public storage is insecure; Slack is not secure secret storage."
         },
         {
@@ -1269,6 +1671,10 @@
             "Ignore the failure and proceed"
           ],
           "correctText": "Update selectors and replace recorded steps with more robust steps",
+          "correctOptions": [
+            "Update selectors and replace recorded steps with more robust steps"
+          ],
+          "isMultiple": false,
           "explanation": "Maintain selectors and harden workflow. More clicks increases fragility. Composer can’t automate UI without APIs. Ignoring breaks business outcomes."
         },
         {
@@ -1282,6 +1688,10 @@
             "RPA bot to coordinate users"
           ],
           "correctText": "Flow Orchestration using stages and steps",
+          "correctOptions": [
+            "Flow Orchestration using stages and steps"
+          ],
+          "isMultiple": false,
           "explanation": "Orchestration is purpose-built for multi-step, handoffs, and process tracking. Others lack governance/coordination."
         },
         {
@@ -1295,6 +1705,10 @@
             "Run large batch jobs"
           ],
           "correctText": "Allow user interaction between automated backend steps",
+          "correctOptions": [
+            "Allow user interaction between automated backend steps"
+          ],
+          "isMultiple": false,
           "explanation": "Interactive Steps are human tasks/inputs in the orchestrated process. Not API policy or batch features."
         },
         {
@@ -1308,6 +1722,11 @@
             "Create random stages for aesthetics"
           ],
           "correctText": "Group steps by handoffs/major branches",
+          "correctOptions": [
+            "Group steps by handoffs/major branches",
+            "Group steps by responsibility transitions (who owns work)"
+          ],
+          "isMultiple": true,
           "explanation": "Stages represent phases/handoffs/ownership changes. Grouping by tool is a common distractor."
         },
         {
@@ -1321,6 +1740,10 @@
             "Apply Spike Control"
           ],
           "correctText": "Evaluation flow returns a number/code, then Decision routes paths",
+          "correctOptions": [
+            "Evaluation flow returns a number/code, then Decision routes paths"
+          ],
+          "isMultiple": false,
           "explanation": "Standard pattern: evaluation output → decision. Composer/policies are irrelevant inside Orchestration routing."
         },
         {
@@ -1334,6 +1757,10 @@
             "Apply Rate Limiting policy"
           ],
           "correctText": "Avoid DML inside loops; use collections and bulk updates",
+          "correctOptions": [
+            "Avoid DML inside loops; use collections and bulk updates"
+          ],
+          "isMultiple": false,
           "explanation": "Bulkification avoids governor limits. Limits can’t be increased. RPA/policies don’t fix Salesforce transaction limits."
         },
         {
@@ -1347,6 +1774,10 @@
             "Experience API only"
           ],
           "correctText": "Orchestration with automated steps and an Interactive Step for approval",
+          "correctOptions": [
+            "Orchestration with automated steps and an Interactive Step for approval"
+          ],
+          "isMultiple": false,
           "explanation": "Orchestration combines automation + human tasks. Others don’t provide in-Salesforce approval orchestration."
         },
         {
@@ -1361,6 +1792,12 @@
             "The process has clear phases/milestones"
           ],
           "correctText": "Multiple users participate",
+          "correctOptions": [
+            "Multiple users participate",
+            "Handoffs across teams",
+            "Interactive steps and stage tracking are required"
+          ],
+          "isMultiple": true,
           "explanation": "Multi-user + handoffs + interactive/traceable phases → Orchestration. Single field update is simple Flow territory."
         },
         {
@@ -1374,6 +1811,10 @@
             "Composer cannot record outcomes"
           ],
           "correctText": "Use Orchestration to update Salesforce records at the end of a stage/step",
+          "correctOptions": [
+            "Use Orchestration to update Salesforce records at the end of a stage/step"
+          ],
+          "isMultiple": false,
           "explanation": "Salesforce remains system of record; update via Flow/Orchestration. Direct DB writes are not appropriate. Policies/claims about Composer are distractors."
         },
         {
@@ -1387,6 +1828,10 @@
             "Send a Slack notification instead"
           ],
           "correctText": "Record-triggered Flow on Order to update Account",
+          "correctOptions": [
+            "Record-triggered Flow on Order to update Account"
+          ],
+          "isMultiple": false,
           "explanation": "This is an internal Salesforce data rule → record-triggered Flow. Other options are unnecessary or don’t meet requirement."
         },
         {
@@ -1400,6 +1845,10 @@
             "Run ignores the latest saved version"
           ],
           "correctText": "Debug shows step-by-step details for troubleshooting",
+          "correctOptions": [
+            "Debug shows step-by-step details for troubleshooting"
+          ],
+          "isMultiple": false,
           "explanation": "Debug provides granular execution detail. The other statements are common distractors/misconceptions."
         },
         {
@@ -1413,6 +1862,10 @@
             "Client ID Enforcement"
           ],
           "correctText": "Stages in Flow Orchestration",
+          "correctOptions": [
+            "Stages in Flow Orchestration"
+          ],
+          "isMultiple": false,
           "explanation": "Stages represent process phases and provide tracking. Others are unrelated."
         },
         {
@@ -1426,6 +1879,11 @@
             "Use RPA as the primary orchestrator"
           ],
           "correctText": "Use Orchestration with stages/steps even if single-user",
+          "correctOptions": [
+            "Use Orchestration with stages/steps even if single-user",
+            "Use subflows for modularity/reuse where appropriate"
+          ],
+          "isMultiple": true,
           "explanation": "Orchestration provides structure/visibility; subflows improve reuse. Massive Screen Flows create maintenance risk. RPA isn’t a Salesforce process coordinator."
         },
         {
@@ -1439,6 +1897,10 @@
             "API Gateway"
           ],
           "correctText": "Process API",
+          "correctOptions": [
+            "Process API"
+          ],
+          "isMultiple": false,
           "explanation": "Process API handles orchestration, aggregation, transformation. Experience shapes per channel; System exposes source systems; Gateway enforces policies."
         },
         {
@@ -1452,6 +1914,10 @@
             "CORS"
           ],
           "correctText": "Spike Control",
+          "correctOptions": [
+            "Spike Control"
+          ],
+          "isMultiple": false,
           "explanation": "Spike Control smooths bursts. Client ID is identification; Threat Protection is payload security; CORS is browser cross-origin."
         },
         {
@@ -1465,6 +1931,10 @@
             "JSON Threat Protection"
           ],
           "correctText": "Rate Limiting – SLA-based",
+          "correctOptions": [
+            "Rate Limiting – SLA-based"
+          ],
+          "isMultiple": false,
           "explanation": "SLA-based rate limiting is per consumer/tier. Spike Control targets burst smoothing, not per-client quotas."
         },
         {
@@ -1478,6 +1948,10 @@
             "Post docs in Slack"
           ],
           "correctText": "Private Exchange",
+          "correctOptions": [
+            "Private Exchange"
+          ],
+          "isMultiple": false,
           "explanation": "Private Exchange is designed for internal discovery/reuse with access control. Public Exchange is external."
         },
         {
@@ -1491,6 +1965,10 @@
             "Add a Switch/Case routing step"
           ],
           "correctText": "Set asset/API instance visibility appropriately for public sharing",
+          "correctOptions": [
+            "Set asset/API instance visibility appropriately for public sharing"
+          ],
+          "isMultiple": false,
           "explanation": "Public sharing requires visibility/public access configuration. Others don’t control Exchange publication."
         },
         {
@@ -1504,6 +1982,11 @@
             "Slack channel history"
           ],
           "correctText": "Anypoint Exchange",
+          "correctOptions": [
+            "Anypoint Exchange",
+            "API catalog/Design Center (as applicable)"
+          ],
+          "isMultiple": true,
           "explanation": "Exchange + design/catalog are for discovery/reuse. Recorder and Slack aren’t asset repositories."
         },
         {
@@ -1517,6 +2000,10 @@
             "Composer scheduling"
           ],
           "correctText": "Runtime Fabric",
+          "correctOptions": [
+            "Runtime Fabric"
+          ],
+          "isMultiple": false,
           "explanation": "Runtime Fabric supports enterprise deployment patterns, scaling, and rolling/zero-downtime approaches on customer-managed infra/cloud."
         },
         {
@@ -1530,6 +2017,10 @@
             "Exchange portal"
           ],
           "correctText": "API Gateway/runtime component",
+          "correctOptions": [
+            "API Gateway/runtime component"
+          ],
+          "isMultiple": false,
           "explanation": "API Manager configures policies; enforcement happens at the gateway/runtime (e.g., Flex Gateway/Mule runtime gateway layer)."
         },
         {
@@ -1543,6 +2034,10 @@
             "Expose each endpoint as a basic endpoint without proxy"
           ],
           "correctText": "Create an API proxy in front of each existing API",
+          "correctOptions": [
+            "Create an API proxy in front of each existing API"
+          ],
+          "isMultiple": false,
           "explanation": "Proxies allow applying policies/analytics quickly. Rewriting is slow; RPA is irrelevant; no proxy means less governance."
         },
         {
@@ -1556,6 +2051,10 @@
             "RPA Manager"
           ],
           "correctText": "MUnit (within Anypoint/Studio ecosystem)",
+          "correctOptions": [
+            "MUnit (within Anypoint/Studio ecosystem)"
+          ],
+          "isMultiple": false,
           "explanation": "MUnit is the standard for Mule app automated tests. Others don’t provide Mule application unit testing."
         },
         {
@@ -1570,6 +2069,12 @@
             "Use RPA because SOAP is “legacy”"
           ],
           "correctText": "Implement using Anypoint Studio (Mule app)",
+          "correctOptions": [
+            "Implement using Anypoint Studio (Mule app)",
+            "Model the API/spec in Design Center (RAML/OAS)",
+            "Apply governance/policies via API Manager"
+          ],
+          "isMultiple": true,
           "explanation": "Enterprise integration with SOAP/complexity → Mule app + API design + policy governance. Composer is too limited; RPA is for UI, not SOAP integration."
         },
         {
@@ -1583,6 +2088,10 @@
             "RPA Recorder"
           ],
           "correctText": "Rate Limiting – SLA-based",
+          "correctOptions": [
+            "Rate Limiting – SLA-based"
+          ],
+          "isMultiple": false,
           "explanation": "SLA-based rate limiting supports tiers/quotas per client. Others aren’t API governance mechanisms."
         }
       ]
@@ -1606,6 +2115,10 @@
             "Deploying a single Einstein Bot for all channels."
           ],
           "correctText": "Combining multiple automation technologies to orchestrate end‑to‑end business processes.",
+          "correctOptions": [
+            "Combining multiple automation technologies to orchestrate end‑to‑end business processes."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1620,6 +2133,10 @@
             "Isolated automation runs in the cloud; hyperautomation runs only on‑premises."
           ],
           "correctText": "Isolated automation fixes point problems; hyperautomation connects people, data, and systems across end‑to‑end business journeys.",
+          "correctOptions": [
+            "Isolated automation fixes point problems; hyperautomation connects people, data, and systems across end‑to‑end business journeys."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1634,6 +2151,10 @@
             "Reports and dashboards only."
           ],
           "correctText": "Flow Builder, Flow Orchestration, MuleSoft Composer, MuleSoft RPA, and Anypoint Platform APIs.",
+          "correctOptions": [
+            "Flow Builder, Flow Orchestration, MuleSoft Composer, MuleSoft RPA, and Anypoint Platform APIs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1648,6 +2169,10 @@
             "Use Apex only because it is a full programming language."
           ],
           "correctText": "MuleSoft Composer for SaaS‑to‑SaaS integrations, MuleSoft RPA for systems without APIs, Flow Orchestration to coordinate human and automated steps.",
+          "correctOptions": [
+            "MuleSoft Composer for SaaS‑to‑SaaS integrations, MuleSoft RPA for systems without APIs, Flow Orchestration to coordinate human and automated steps."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1662,6 +2187,10 @@
             "Move all integrations to spreadsheets."
           ],
           "correctText": "Create an Automation Center of Excellence with design standards, asset catalog, and centralized monitoring.",
+          "correctOptions": [
+            "Create an Automation Center of Excellence with design standards, asset catalog, and centralized monitoring."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1676,6 +2205,10 @@
             "Disable logs to reduce costs."
           ],
           "correctText": "Establish naming conventions, API‑led integration patterns, versioning, and dev/test/prod environments.",
+          "correctOptions": [
+            "Establish naming conventions, API‑led integration patterns, versioning, and dev/test/prod environments."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1690,6 +2223,10 @@
             "Share integration credentials over email."
           ],
           "correctText": "Apply least‑privilege access in integrations, mask sensitive data in logs, and use strong authentication for connections.",
+          "correctOptions": [
+            "Apply least‑privilege access in integrations, mask sensitive data in logs, and use strong authentication for connections."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1704,6 +2241,10 @@
             "Choose only processes that involve RPA."
           ],
           "correctText": "Combination of business impact (time savings, error reduction) and technical feasibility.",
+          "correctOptions": [
+            "Combination of business impact (time savings, error reduction) and technical feasibility."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1718,6 +2259,10 @@
             "Forcing all processes to be synchronous."
           ],
           "correctText": "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems.",
+          "correctOptions": [
+            "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1732,6 +2277,10 @@
             "AI is mandatory for any automation."
           ],
           "correctText": "Einstein Next Best Action recommends actions while Flow Orchestration and integrations execute the resulting steps.",
+          "correctOptions": [
+            "Einstein Next Best Action recommends actions while Flow Orchestration and integrations execute the resulting steps."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1746,6 +2295,10 @@
             "Apex REST."
           ],
           "correctText": "MuleSoft Composer.",
+          "correctOptions": [
+            "MuleSoft Composer."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1760,6 +2313,10 @@
             "Orchestration."
           ],
           "correctText": "Connection.",
+          "correctOptions": [
+            "Connection."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1774,6 +2331,10 @@
             "A unit test step."
           ],
           "correctText": "A trigger that defines which Salesforce event will start the flow.",
+          "correctOptions": [
+            "A trigger that defines which Salesforce event will start the flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1788,6 +2349,10 @@
             "An automation template."
           ],
           "correctText": "A schedule‑based trigger as the start of the flow.",
+          "correctOptions": [
+            "A schedule‑based trigger as the start of the flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1802,6 +2367,10 @@
             "Create new custom objects."
           ],
           "correctText": "Let the user test each change in near real time to validate steps before activation.",
+          "correctOptions": [
+            "Let the user test each change in near real time to validate steps before activation."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1816,6 +2385,10 @@
             "Move the flow directly to a production org without tests."
           ],
           "correctText": "Test the flow on a single record to validate its behavior.",
+          "correctOptions": [
+            "Test the flow on a single record to validate its behavior."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1830,6 +2403,10 @@
             "Only Data Cloud reports."
           ],
           "correctText": "The flow’s Flow Details page in MuleSoft Composer.",
+          "correctOptions": [
+            "The flow’s Flow Details page in MuleSoft Composer."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1844,6 +2421,10 @@
             "RPA Manager."
           ],
           "correctText": "Prebuilt templates.",
+          "correctOptions": [
+            "Prebuilt templates."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1858,6 +2439,10 @@
             "Generate financial reports."
           ],
           "correctText": "Display monthly tasks and credit usage per flow for the organization.",
+          "correctOptions": [
+            "Display monthly tasks and credit usage per flow for the organization."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1872,6 +2457,10 @@
             "Configure multiple triggers for the same event."
           ],
           "correctText": "Copy only new or changed records since the last run to reduce processing.",
+          "correctOptions": [
+            "Copy only new or changed records since the last run to reduce processing."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1886,6 +2475,10 @@
             "Post messages in Slack by default, without setup."
           ],
           "correctText": "Send emails to a configured address.",
+          "correctOptions": [
+            "Send emails to a configured address."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1900,6 +2493,10 @@
             "5."
           ],
           "correctText": "2.",
+          "correctOptions": [
+            "2."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1914,6 +2511,10 @@
             "Testing in sandboxes is not recommended."
           ],
           "correctText": "Both the trigger and all actions that interact with Salesforce.",
+          "correctOptions": [
+            "Both the trigger and all actions that interact with Salesforce."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1928,6 +2529,10 @@
             "Settings New."
           ],
           "correctText": "Flows Create new flow.",
+          "correctOptions": [
+            "Flows Create new flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1942,6 +2547,10 @@
             "By preventing flows from being modified after activation."
           ],
           "correctText": "By letting users experiment and iterate on a flow, breaking logic into clear steps and adjusting as they discover new use cases.",
+          "correctOptions": [
+            "By letting users experiment and iterate on a flow, breaking logic into clear steps and adjusting as they discover new use cases."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1956,6 +2565,10 @@
             "A workflow rule."
           ],
           "correctText": "A Flow Orchestration with Stages and Steps to organize automated actions and user interactions.",
+          "correctOptions": [
+            "A Flow Orchestration with Stages and Steps to organize automated actions and user interactions."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1970,6 +2583,10 @@
             "Before‑save Flow."
           ],
           "correctText": "Screen Flow.",
+          "correctOptions": [
+            "Screen Flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1984,6 +2601,10 @@
             "Platform Event‑Triggered Flow."
           ],
           "correctText": "Before‑save Record‑Triggered Flow.",
+          "correctOptions": [
+            "Before‑save Record‑Triggered Flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -1998,6 +2619,10 @@
             "Debug logs only to external files."
           ],
           "correctText": "Debug shows details of each step, including inputs, outputs, and errors, helping identify issues.",
+          "correctOptions": [
+            "Debug shows details of each step, including inputs, outputs, and errors, helping identify issues."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2012,6 +2637,10 @@
             "They are used only for external integrations."
           ],
           "correctText": "They allow users to interact with the process between automated backend steps, completing work items before the orchestration moves on.",
+          "correctOptions": [
+            "They allow users to interact with the process between automated backend steps, completing work items before the orchestration moves on."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2026,6 +2655,10 @@
             "Apex triggers only."
           ],
           "correctText": "Subflows called from a parent flow.",
+          "correctOptions": [
+            "Subflows called from a parent flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2040,6 +2673,10 @@
             "Flow Orchestration only."
           ],
           "correctText": "Schedule‑Triggered Flow.",
+          "correctOptions": [
+            "Schedule‑Triggered Flow."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2054,6 +2691,10 @@
             "No declarative automation at all."
           ],
           "correctText": "Salesforce Flow (Flow Builder).",
+          "correctOptions": [
+            "Salesforce Flow (Flow Builder)."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2068,6 +2709,10 @@
             "Only cloned versions."
           ],
           "correctText": "The most recently saved version of the flow, even if it is not active.",
+          "correctOptions": [
+            "The most recently saved version of the flow, even if it is not active."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2082,6 +2727,10 @@
             "In an autonomous AI component."
           ],
           "correctText": "In an Interactive Step within a Flow Orchestration.",
+          "correctOptions": [
+            "In an Interactive Step within a Flow Orchestration."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2096,6 +2745,10 @@
             "Big Objects."
           ],
           "correctText": "External Services with imported OpenAPI specifications.",
+          "correctOptions": [
+            "External Services with imported OpenAPI specifications."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2110,6 +2763,10 @@
             "Apex Batch only."
           ],
           "correctText": "Flow Orchestration.",
+          "correctOptions": [
+            "Flow Orchestration."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2124,6 +2781,10 @@
             "Ignore errors; the system will self‑adjust."
           ],
           "correctText": "Clone the flow to a sandbox, reproduce the scenario using Debug, then adjust logic.",
+          "correctOptions": [
+            "Clone the flow to a sandbox, reproduce the scenario using Debug, then adjust logic."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2138,6 +2799,10 @@
             "Use RPA only to interact with Salesforce."
           ],
           "correctText": "Separate UI logic into Screen Flows, business logic into autolaunched flows, and integrations into reusable APIs.",
+          "correctOptions": [
+            "Separate UI logic into Screen Flows, business logic into autolaunched flows, and integrations into reusable APIs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2152,6 +2817,10 @@
             "Run uses sample data; Debug uses only real data."
           ],
           "correctText": "Run executes the flow normally; Debug shows detailed information per element (inputs, outputs, errors) for troubleshooting.",
+          "correctOptions": [
+            "Run executes the flow normally; Debug shows detailed information per element (inputs, outputs, errors) for troubleshooting."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2166,6 +2835,10 @@
             "Flow Orchestration only."
           ],
           "correctText": "MuleSoft RPA to interact with the website UI and MuleSoft Composer to orchestrate with Salesforce.",
+          "correctOptions": [
+            "MuleSoft RPA to interact with the website UI and MuleSoft Composer to orchestrate with Salesforce."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2180,6 +2853,10 @@
             "Passwords in plain text."
           ],
           "correctText": "Documentation of the UI elements used (buttons, fields, etc.).",
+          "correctOptions": [
+            "Documentation of the UI elements used (buttons, fields, etc.)."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2194,6 +2871,10 @@
             "Create a Composer flow."
           ],
           "correctText": "Create the API specification (RAML) in Design Center, defining resources, methods, and contracts.",
+          "correctOptions": [
+            "Create the API specification (RAML) in Design Center, defining resources, methods, and contracts."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2208,6 +2889,10 @@
             "Einstein Bots."
           ],
           "correctText": "MUnit within Anypoint Studio/Platform.",
+          "correctOptions": [
+            "MUnit within Anypoint Studio/Platform."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2222,6 +2907,10 @@
             "Manual runtimes on isolated VMs without orchestration."
           ],
           "correctText": "Runtime Fabric on AWS infrastructure.",
+          "correctOptions": [
+            "Runtime Fabric on AWS infrastructure."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2236,6 +2925,10 @@
             "Delete the process and recreate it."
           ],
           "correctText": "Download the analysis package from RPA Manager, revert the process to the Build phase, import the package into RPA Builder, and debug there.",
+          "correctOptions": [
+            "Download the analysis package from RPA Manager, revert the process to the Build phase, import the package into RPA Builder, and debug there."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2250,6 +2943,10 @@
             "Use local spreadsheets only."
           ],
           "correctText": "Create System APIs for Customer and Loyalty, a Process API that combines the data, and an Experience API for business consumers.",
+          "correctOptions": [
+            "Create System APIs for Customer and Loyalty, a Process API that combines the data, and an Experience API for business consumers."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2264,6 +2961,10 @@
             "Sync API."
           ],
           "correctText": "Experience API.",
+          "correctOptions": [
+            "Experience API."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2278,6 +2979,10 @@
             "When only reporting is needed."
           ],
           "correctText": "When the system lacks APIs or direct data access but has a stable user interface.",
+          "correctOptions": [
+            "When the system lacks APIs or direct data access but has a stable user interface."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2292,6 +2997,10 @@
             "Senior integration architects only."
           ],
           "correctText": "Admins and business analysts who need to build SaaS‑to‑SaaS integrations quickly with a visual interface.",
+          "correctOptions": [
+            "Admins and business analysts who need to build SaaS‑to‑SaaS integrations quickly with a visual interface."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2306,6 +3015,10 @@
             "12:00 PM."
           ],
           "correctText": "11:45 AM, because the next run can only start 45 minutes after the first job completes.",
+          "correctOptions": [
+            "11:45 AM, because the next run can only start 45 minutes after the first job completes."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2320,6 +3033,10 @@
             "RPA Manager."
           ],
           "correctText": "Anypoint API Manager.",
+          "correctOptions": [
+            "Anypoint API Manager."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2334,6 +3051,10 @@
             "RPA Builder."
           ],
           "correctText": "Anypoint Exchange.",
+          "correctOptions": [
+            "Anypoint Exchange."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2348,6 +3069,10 @@
             "Leaving security entirely to the network team."
           ],
           "correctText": "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager.",
+          "correctOptions": [
+            "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2362,6 +3087,10 @@
             "Disable multi‑factor authentication."
           ],
           "correctText": "Control access via Salesforce profiles/permission sets, limit who can configure Composer connections, and use access control in RPA Manager.",
+          "correctOptions": [
+            "Control access via Salesforce profiles/permission sets, limit who can configure Composer connections, and use access control in RPA Manager."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2376,6 +3105,10 @@
             "RPA processes."
           ],
           "correctText": "Process APIs.",
+          "correctOptions": [
+            "Process APIs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2390,6 +3123,10 @@
             "Situations where a visual interface is not desired."
           ],
           "correctText": "Simple SaaS‑to‑SaaS integrations that must be delivered quickly with minimal coding.",
+          "correctOptions": [
+            "Simple SaaS‑to‑SaaS integrations that must be delivered quickly with minimal coding."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2404,6 +3141,10 @@
             "Reports only."
           ],
           "correctText": "Composer orchestrates the process, calling an RPA bot for the legacy system, updating Salesforce, and sending Slack notifications.",
+          "correctOptions": [
+            "Composer orchestrates the process, calling an RPA bot for the legacy system, updating Salesforce, and sending Slack notifications."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2418,6 +3159,10 @@
             "Number of dashboards created."
           ],
           "correctText": "Cycle‑time reduction, decrease in manual errors, increase in process/case throughput, and user satisfaction.",
+          "correctOptions": [
+            "Cycle‑time reduction, decrease in manual errors, increase in process/case throughput, and user satisfaction."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2432,6 +3177,10 @@
             "Focus only on internal integrations, ignoring customer experience."
           ],
           "correctText": "Run process discovery sessions, map end‑to‑end journeys, and prioritize high‑impact use cases aligned with the API and automation roadmap.",
+          "correctOptions": [
+            "Run process discovery sessions, map end‑to‑end journeys, and prioritize high‑impact use cases aligned with the API and automation roadmap."
+          ],
+          "isMultiple": false,
           "explanation": ""
         }
       ]
@@ -2455,6 +3204,10 @@
             "Use a record‑triggered Flow with direct HTTP callouts and keep it as the long‑term solution."
           ],
           "correctText": "Start with Composer to validate the use case, then introduce API‑led services on Anypoint and move the integration to those APIs when non‑functional requirements appear.",
+          "correctOptions": [
+            "Start with Composer to validate the use case, then introduce API‑led services on Anypoint and move the integration to those APIs when non‑functional requirements appear."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2469,6 +3222,10 @@
             "Use only an Einstein Bot that collects information and closes the Case."
           ],
           "correctText": "Use Flow Orchestration with Stages and Steps to manage long‑running work items and SLAs.",
+          "correctOptions": [
+            "Use Flow Orchestration with Stages and Steps to manage long‑running work items and SLAs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2483,6 +3240,10 @@
             "Create an Apex batch that emails billing with invoice details."
           ],
           "correctText": "Use a record‑triggered Flow or Composer flow to call the REST API and create invoices.",
+          "correctOptions": [
+            "Use a record‑triggered Flow or Composer flow to call the REST API and create invoices."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2497,6 +3258,10 @@
             "Disable authentication so calls are not counted by the provider."
           ],
           "correctText": "Reduce the frequency, adjust page sizes, and add filters to stay within rate limits.",
+          "correctOptions": [
+            "Reduce the frequency, adjust page sizes, and add filters to stay within rate limits."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2511,6 +3276,10 @@
             "Rename v1 to v3 and keep both versions stable."
           ],
           "correctText": "Mark v1 as deprecated while leaving it available during the migration period.",
+          "correctOptions": [
+            "Mark v1 as deprecated while leaving it available during the migration period."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2525,6 +3294,10 @@
             "Disable the APIs in API Manager and keep the Orchestration unchanged."
           ],
           "correctText": "Introduce a feature flag (custom setting/metadata) and check it in entry conditions or evaluation flows to prevent new runs.",
+          "correctOptions": [
+            "Introduce a feature flag (custom setting/metadata) and check it in entry conditions or evaluation flows to prevent new runs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2539,6 +3312,10 @@
             "Daily emails sent by a scheduled Flow summarizing average response times."
           ],
           "correctText": "API Manager policies and monitoring to enforce and observe SLA compliance.",
+          "correctOptions": [
+            "API Manager policies and monitoring to enforce and observe SLA compliance."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2553,6 +3330,10 @@
             "Idempotent APIs eliminate the need for any error handling in the Flow."
           ],
           "correctText": "If the Flow retries the call after a failure, repeated requests will not create duplicate side effects.",
+          "correctOptions": [
+            "If the Flow retries the call after a failure, repeated requests will not create duplicate side effects."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2567,6 +3348,10 @@
             "Flow Orchestration run history per Stage."
           ],
           "correctText": "The Usage Summary section on the MuleSoft Composer home page.",
+          "correctOptions": [
+            "The Usage Summary section on the MuleSoft Composer home page."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2581,6 +3366,10 @@
             "Allow business users to build directly in production as long as they keep a spreadsheet."
           ],
           "correctText": "Provide governed APIs in Exchange, curated Composer templates, training, and central ownership for core security and platform policies.",
+          "correctOptions": [
+            "Provide governed APIs in Exchange, curated Composer templates, training, and central ownership for core security and platform policies."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2595,6 +3384,10 @@
             "A scheduled Flow that runs nightly to process created Cases."
           ],
           "correctText": "A record‑triggered Flow with Screen Flow subflows for agent interaction.",
+          "correctOptions": [
+            "A record‑triggered Flow with Screen Flow subflows for agent interaction."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2609,6 +3402,10 @@
             "Rebuild the Process API as an Experience API and remove the original."
           ],
           "correctText": "Move core business rules into the Process API and keep Experience APIs focused on channel‑specific transformations.",
+          "correctOptions": [
+            "Move core business rules into the Process API and keep Experience APIs focused on channel‑specific transformations."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2623,6 +3420,10 @@
             "Use only RPA bots; avoid API‑based integration to reduce complexity."
           ],
           "correctText": "Use Composer for early proofs of concept, then replace key integrations with Anypoint APIs tested via MUnit and CI/CD.",
+          "correctOptions": [
+            "Use Composer for early proofs of concept, then replace key integrations with Anypoint APIs tested via MUnit and CI/CD."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2637,6 +3438,10 @@
             "Org‑wide email logs for reminder notifications."
           ],
           "correctText": "Salesforce reports and dashboards on orchestration run and work‑item objects.",
+          "correctOptions": [
+            "Salesforce reports and dashboards on orchestration run and work‑item objects."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2651,6 +3456,10 @@
             "Keep the monolith and only add Composer flows on top."
           ],
           "correctText": "Split the integration into System, Process, and Experience APIs following API‑led patterns.",
+          "correctOptions": [
+            "Split the integration into System, Process, and Experience APIs following API‑led patterns."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2665,6 +3474,10 @@
             "Use email‑based approval processes instead of any automation."
           ],
           "correctText": "Implement RPA against the UI as a transitional solution, with clear plans to move to APIs once they are available.",
+          "correctOptions": [
+            "Implement RPA against the UI as a transitional solution, with clear plans to move to APIs once they are available."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2679,6 +3492,10 @@
             "Increase bot execution speed to find issues faster."
           ],
           "correctText": "Export the production analysis package, revert the process to a Build/Test phase, adjust in a lower environment, then redeploy.",
+          "correctOptions": [
+            "Export the production analysis package, revert the process to a Build/Test phase, adjust in a lower environment, then redeploy."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2693,6 +3510,10 @@
             "An API call from an external system only."
           ],
           "correctText": "A button that starts a Screen Flow, which then launches a Flow Orchestration.",
+          "correctOptions": [
+            "A button that starts a Screen Flow, which then launches a Flow Orchestration."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2707,6 +3528,10 @@
             "Decommission Anypoint Platform and standardize on direct callouts."
           ],
           "correctText": "Require Flows and Composer to use published System/Process APIs from Exchange when available.",
+          "correctOptions": [
+            "Require Flows and Composer to use published System/Process APIs from Exchange when available."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2721,6 +3546,10 @@
             "Rename the old version and reuse its URL for the new behavior."
           ],
           "correctText": "Create a new major version of the API, keep the old version running, and coordinate consumer migrations.",
+          "correctOptions": [
+            "Create a new major version of the API, keep the old version running, and coordinate consumer migrations."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2735,6 +3564,10 @@
             "Run the Composer flow from a Screen Flow instead of a trigger."
           ],
           "correctText": "Move testing to sandbox orgs and non‑production ERP endpoints before activating in production.",
+          "correctOptions": [
+            "Move testing to sandbox orgs and non‑production ERP endpoints before activating in production."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2749,6 +3582,10 @@
             "Replace the API with an RPA process calling the same service."
           ],
           "correctText": "Configure Composer error notifications and work with the API team on retries or resilience at the API layer.",
+          "correctOptions": [
+            "Configure Composer error notifications and work with the API team on retries or resilience at the API layer."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2763,6 +3600,10 @@
             "Create a custom object and manually track tasks there."
           ],
           "correctText": "Use Work Guide and related list views so agents see all assigned work items in Salesforce.",
+          "correctOptions": [
+            "Use Work Guide and related list views so agents see all assigned work items in Salesforce."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2777,6 +3618,10 @@
             "Use MuleSoft Composer to send emails instead of Screen Flows."
           ],
           "correctText": "Build a Flow Orchestration with Stages and Steps that centralizes assignments and progress tracking.",
+          "correctOptions": [
+            "Build a Flow Orchestration with Stages and Steps that centralizes assignments and progress tracking."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2791,6 +3636,10 @@
             "Increase org limits by requesting more DML operations from support."
           ],
           "correctText": "Refactor the Flow to perform DML on collections outside loops wherever possible.",
+          "correctOptions": [
+            "Refactor the Flow to perform DML on collections outside loops wherever possible."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2805,6 +3654,10 @@
             "Add a manual checkbox on the main record and require agents to mark it when done."
           ],
           "correctText": "Add an Evaluation Flow that checks conditions and determines when the Stage can finish.",
+          "correctOptions": [
+            "Add an Evaluation Flow that checks conditions and determines when the Stage can finish."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2819,6 +3672,10 @@
             "Workflow Rules and outbound messages only."
           ],
           "correctText": "MuleSoft Composer using Salesforce connectors for both orgs.",
+          "correctOptions": [
+            "MuleSoft Composer using Salesforce connectors for both orgs."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2833,6 +3690,10 @@
             "An Einstein Bot interacting with the inventory UI."
           ],
           "correctText": "MuleSoft RPA to automate the web UI, orchestrated by Composer or Flow from Salesforce.",
+          "correctOptions": [
+            "MuleSoft RPA to automate the web UI, orchestrated by Composer or Flow from Salesforce."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2847,6 +3708,10 @@
             "RPA processes cannot call APIs lacking Exchange entries."
           ],
           "correctText": "Without Exchange, there is no single catalog for discovery, reuse, and lifecycle states.",
+          "correctOptions": [
+            "Without Exchange, there is no single catalog for discovery, reuse, and lifecycle states."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2861,6 +3726,10 @@
             "Email reminders sent to developers at project kick‑off."
           ],
           "correctText": "Design‑time governance rules and CI checks integrated with API Designer and source control.",
+          "correctOptions": [
+            "Design‑time governance rules and CI checks integrated with API Designer and source control."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2875,6 +3744,10 @@
             "A single on‑prem runtime without environment separation."
           ],
           "correctText": "Separate API instances in API Manager per environment, all pointing to the same implementation.",
+          "correctOptions": [
+            "Separate API instances in API Manager per environment, all pointing to the same implementation."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2889,6 +3762,10 @@
             "Keep both versions undocumented and let teams pick one."
           ],
           "correctText": "Keep v1 running, document differences in Exchange, and coordinate a planned migration of each consumer to v2.",
+          "correctOptions": [
+            "Keep v1 running, document differences in Exchange, and coordinate a planned migration of each consumer to v2."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2903,6 +3780,10 @@
             "A weekly report summarizing approximate health."
           ],
           "correctText": "Tool‑specific monitoring (Flow/Orchestration logs, API Manager metrics, RPA Manager analytics) plus centralized alerting where possible.",
+          "correctOptions": [
+            "Tool‑specific monitoring (Flow/Orchestration logs, API Manager metrics, RPA Manager analytics) plus centralized alerting where possible."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2917,6 +3798,10 @@
             "Create a new process that ignores the failing step."
           ],
           "correctText": "Download the analysis package from RPA Manager, import it into RPA Builder, and debug step by step.",
+          "correctOptions": [
+            "Download the analysis package from RPA Manager, import it into RPA Builder, and debug step by step."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2931,6 +3816,10 @@
             "A report on MuleSoft API invocations."
           ],
           "correctText": "The Work Guide interface showing assigned work items per user.",
+          "correctOptions": [
+            "The Work Guide interface showing assigned work items per user."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2945,6 +3834,10 @@
             "A nightly batch job."
           ],
           "correctText": "A Screen Flow launched from a button.",
+          "correctOptions": [
+            "A Screen Flow launched from a button."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2959,6 +3852,10 @@
             "An Apex batch running once a week."
           ],
           "correctText": "MuleSoft Composer using Salesforce and SaaS connectors.",
+          "correctOptions": [
+            "MuleSoft Composer using Salesforce and SaaS connectors."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2973,6 +3870,10 @@
             "Move the Flow to another org."
           ],
           "correctText": "Convert the core complex logic into Apex actions or invocable methods and call them from Flows.",
+          "correctOptions": [
+            "Convert the core complex logic into Apex actions or invocable methods and call them from Flows."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -2987,6 +3888,10 @@
             "Use a scheduled Flow with no external calls."
           ],
           "correctText": "Use External Services to import the OpenAPI definition and register invocable actions.",
+          "correctOptions": [
+            "Use External Services to import the OpenAPI definition and register invocable actions."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3001,6 +3906,10 @@
             "Build separate Mule apps per consumer to isolate policies."
           ],
           "correctText": "Move security and rate limiting policies into API Manager and simplify the Mule implementation.",
+          "correctOptions": [
+            "Move security and rate limiting policies into API Manager and simplify the Mule implementation."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3015,6 +3924,10 @@
             "Rely on code comments to describe dependencies."
           ],
           "correctText": "Maintain a central catalog that includes Flows, Orchestrations, APIs, Composer flows, and RPA processes, with owners and lifecycle states.",
+          "correctOptions": [
+            "Maintain a central catalog that includes Flows, Orchestrations, APIs, Composer flows, and RPA processes, with owners and lifecycle states."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3029,6 +3942,10 @@
             "It guarantees there will be no incidents in production."
           ],
           "correctText": "It surfaces dependencies, security impacts, and reuse opportunities early, before design and build.",
+          "correctOptions": [
+            "It surfaces dependencies, security impacts, and reuse opportunities early, before design and build."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3043,6 +3960,10 @@
             "A/B testing between two orchestration designs."
           ],
           "correctText": "Phased rollout with pilot regions first and staged expansion.",
+          "correctOptions": [
+            "Phased rollout with pilot regions first and staged expansion."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3057,6 +3978,10 @@
             "Increase the number of automations to compensate."
           ],
           "correctText": "Introduce a review and sunsetting process to retire or consolidate low‑value automations.",
+          "correctOptions": [
+            "Introduce a review and sunsetting process to retire or consolidate low‑value automations."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3071,6 +3996,10 @@
             "Assume internal systems are out of scope for privacy rules."
           ],
           "correctText": "Classify data and design APIs/automations with minimization, masking, and regional residency controls, aligned with regulations.",
+          "correctOptions": [
+            "Classify data and design APIs/automations with minimization, masking, and regional residency controls, aligned with regulations."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3085,6 +4014,10 @@
             "Keep both versions undocumented and let teams discover them organically."
           ],
           "correctText": "Create a new major version, keep the old one running, and migrate consumers in a coordinated plan.",
+          "correctOptions": [
+            "Create a new major version, keep the old one running, and migrate consumers in a coordinated plan."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3099,6 +4032,10 @@
             "Delete the flow and rebuild separate automations from scratch."
           ],
           "correctText": "Analyze all consumers; if needs diverge, create a new flow or parameterize behavior instead of breaking existing usage.",
+          "correctOptions": [
+            "Analyze all consumers; if needs diverge, create a new flow or parameterize behavior instead of breaking existing usage."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3113,6 +4050,10 @@
             "Count of RPA bots deployed."
           ],
           "correctText": "Percentage of targeted processes automated, average time‑to‑value, reuse rate, incident reduction, and ROI vs baseline.",
+          "correctOptions": [
+            "Percentage of targeted processes automated, average time‑to‑value, reuse rate, incident reduction, and ROI vs baseline."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3127,6 +4068,10 @@
             "Block business users from using templates at all."
           ],
           "correctText": "Publish templates, restrict sensitive connections, and provide guidance and training on when and how each template should be used.",
+          "correctOptions": [
+            "Publish templates, restrict sensitive connections, and provide guidance and training on when and how each template should be used."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3141,6 +4086,10 @@
             "Rely on user complaints to detect failures."
           ],
           "correctText": "Use RPA Manager analytics and logs, plus API Manager metrics, and correlate them in incident analysis.",
+          "correctOptions": [
+            "Use RPA Manager analytics and logs, plus API Manager metrics, and correlate them in incident analysis."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3155,6 +4104,10 @@
             "Flow Orchestration stages for every Contact update."
           ],
           "correctText": "A record‑triggered Flow with possible calls to invocable Apex.",
+          "correctOptions": [
+            "A record‑triggered Flow with possible calls to invocable Apex."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3169,6 +4122,10 @@
             "Manual imports and exports coordinated by email."
           ],
           "correctText": "Mule APIs built in Anypoint Studio, managed via API Manager and tested with MUnit.",
+          "correctOptions": [
+            "Mule APIs built in Anypoint Studio, managed via API Manager and tested with MUnit."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3183,6 +4140,10 @@
             "Call the page via API instead of UI without changing anything else."
           ],
           "correctText": "Add robust waits, timeouts, and retry logic around element interactions.",
+          "correctOptions": [
+            "Add robust waits, timeouts, and retry logic around element interactions."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3197,6 +4158,10 @@
             "An Einstein Bot that requests approvals via chat."
           ],
           "correctText": "A Flow Orchestration with Stages per team and Interactive Steps for each approval.",
+          "correctOptions": [
+            "A Flow Orchestration with Stages per team and Interactive Steps for each approval."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3211,6 +4176,10 @@
             "Disable error notifications to reduce noise."
           ],
           "correctText": "Add error handling and compensation logic at each layer, and ensure monitoring can identify which part failed.",
+          "correctOptions": [
+            "Add error handling and compensation logic at each layer, and ensure monitoring can identify which part failed."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3225,6 +4194,10 @@
             "A nightly batch job that updates approval status."
           ],
           "correctText": "Flow Orchestration coordinating multiple approver Steps and deadlines.",
+          "correctOptions": [
+            "Flow Orchestration coordinating multiple approver Steps and deadlines."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3239,6 +4212,10 @@
             "Log only in production and not in lower environments."
           ],
           "correctText": "Mask or omit sensitive fields in logs and restrict access to detailed traces.",
+          "correctOptions": [
+            "Mask or omit sensitive fields in logs and restrict access to detailed traces."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3253,6 +4230,10 @@
             "A scheduled CSV export/import process."
           ],
           "correctText": "MuleSoft Composer using the SaaS connector or HTTP actions.",
+          "correctOptions": [
+            "MuleSoft Composer using the SaaS connector or HTTP actions."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3267,6 +4248,10 @@
             "Replace the rules with manual review steps."
           ],
           "correctText": "Centralize eligibility logic in a Process API or shared service and let automation tools call it.",
+          "correctOptions": [
+            "Centralize eligibility logic in a Process API or shared service and let automation tools call it."
+          ],
+          "isMultiple": false,
           "explanation": ""
         },
         {
@@ -3281,6 +4266,10 @@
             "Focus solely on RPA ideas to show quick wins."
           ],
           "correctText": "Re‑evaluate use cases based on impact, feasibility, reuse potential, and align them with API and platform capabilities.",
+          "correctOptions": [
+            "Re‑evaluate use cases based on impact, feasibility, reuse potential, and align them with API and platform capabilities."
+          ],
+          "isMultiple": false,
           "explanation": ""
         }
       ]
