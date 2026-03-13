@@ -28,6 +28,7 @@ function getUserProgress(userId) {
 }
 
 const OFFICIAL_EXAMS_BASE_PATH = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Questões';
+const OFFICIAL_EXAMS_BASE_PATH_SAFE = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Quest\u00f5es';
 const OFFICIAL_EXAMS = [
   { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Simulado oficial' },
   { title: 'Simulado V3', file: 'Simulado V3.md', version: 'V3', kind: 'Simulado oficial' },
@@ -201,13 +202,13 @@ async function loadOfficialExamCatalog() {
       if (OFFICIAL_EXAM_CATALOG[item.file]) return;
 
       try {
-        const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${item.file}`);
+        const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${item.file}`);
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const markdown = await response.text();
 
         const questions = parseOfficialExamMarkdown(markdown, item.file);
-        const totalQuestions = countOfficialQuestionsInMarkdown(markdown) || questions.length;
+        const totalQuestions = questions.length || countOfficialQuestionsInMarkdown(markdown);
 
         OFFICIAL_EXAM_CATALOG[item.file] = {
           title: item.title,
@@ -236,7 +237,7 @@ async function startOfficialExam(file, title) {
   try {
     let questions = OFFICIAL_EXAM_CATALOG[file]?.questions || [];
     if (!questions.length) {
-      const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${file}`);
+      const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${file}`);
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const markdown = await response.text();
@@ -245,7 +246,7 @@ async function startOfficialExam(file, title) {
         title,
         markdown,
         questions,
-        totalQuestions: countOfficialQuestionsInMarkdown(markdown) || questions.length,
+        totalQuestions: questions.length || countOfficialQuestionsInMarkdown(markdown),
       };
     }
     if (!questions.length) {
@@ -281,7 +282,7 @@ async function startOfficialExam(file, title) {
 
 async function openOfficialExam(file, title) {
   try {
-    const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${file}`);
+    const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${file}`);
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const markdown = await response.text();
@@ -319,7 +320,7 @@ function renderOfficialExamsLegacy() {
       <div style="font-size:0.82rem;color:#bbb;">${escapeHtml(item.kind)} • ${escapeHtml(item.version)}</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="btn btn-primary" data-official-open="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Abrir</button>
-        <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
+        <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
       </div>
     </div>
   `).join('');
@@ -381,7 +382,7 @@ function renderOfficialExams() {
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="btn btn-primary" data-official-start="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Iniciar</button>
         <button class="btn btn-primary" data-official-open="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Abrir</button>
-        <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
+        <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
       </div>
     </div>
   `;
