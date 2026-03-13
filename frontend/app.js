@@ -38,6 +38,10 @@ function setView(viewId) {
     initDashboard();
   }
 
+  if (viewId === 'official-exams' && typeof renderOfficialExams === 'function') {
+    renderOfficialExams();
+  }
+
   closeMobileSidebar();
 }
 
@@ -771,6 +775,11 @@ async function initAuth() {
       if (!hasRecoveryType && (url.hash || '').includes('access_token=')) {
         showInfo('E-mail confirmado com sucesso. Você já pode usar sua conta.', 'success');
         history.replaceState({}, document.title, `${window.location.origin}${window.location.pathname}`);
+        supabase.auth.signOut().finally(() => {
+          CURRENT_USER = null;
+          showLogin();
+        });
+        return;
       }
     }
 

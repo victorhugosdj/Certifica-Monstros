@@ -27,14 +27,13 @@ function getUserProgress(userId) {
   }
 }
 
-const OFFICIAL_EXAMS_BASE_PATH = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Questões';
 const OFFICIAL_EXAMS_BASE_PATH_SAFE = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Quest\u00f5es';
+const OFFICIAL_EXAMS_JSON_PATH = 'data/simulados_oficiais.json';
 const OFFICIAL_EXAMS = [
   { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Simulado oficial' },
   { title: 'Simulado V3', file: 'Simulado V3.md', version: 'V3', kind: 'Simulado oficial' },
   { title: 'Simulado V3 Port', file: 'Simulado V3 Port.md', version: 'V3-PT', kind: 'Simulado oficial' },
   { title: 'Simulado V4', file: 'Simulado V4.md', version: 'V4', kind: 'Simulado oficial' },
-  { title: 'Revisão Exame Hyper', file: 'RevisãoExameHyper.md', version: 'Apoio', kind: 'Material' },
 ];
 let selectedOfficialExamFilter = 'Todas';
 const SIMULADO_EXAMS = OFFICIAL_EXAMS.filter(item => /simulado/i.test(item.title) || /simulado/i.test(item.file));
@@ -101,7 +100,7 @@ function countOfficialQuestionsInMarkdown(markdown) {
 }
 
 function resolveOfficialCorrectOption(rawAnswer, options) {
-  const answerText = String(rawAnswer || '').trim();
+  const answerText = String(rawAnswer || '').replace(/[*`>_]/g, '').trim();
   if (!answerText) return '';
 
   const singleLetter = answerText.match(/^([A-E])$/i);
@@ -111,7 +110,7 @@ function resolveOfficialCorrectOption(rawAnswer, options) {
   }
 
   const multipleLetters = answerText.match(/[A-E]/gi);
-  if (multipleLetters && multipleLetters.length > 1) {
+  if (multipleLetters && multipleLetters.length >= 1) {
     const firstIndex = multipleLetters[0].toUpperCase().charCodeAt(0) - 65;
     return options[firstIndex] || answerText;
   }
@@ -141,6 +140,7 @@ function parseOfficialExamMarkdown(markdown, fileName) {
   for (const rawLine of lines) {
     const line = rawLine.trim();
     if (!line) continue;
+    if (line === '---') continue;
 
     const qMatch = line.match(/^(?:#{1,6}\s*)?\*{0,2}(\d+)[\.\)]\*{0,2}\s*(.*)$/);
     if (qMatch) {
@@ -198,6 +198,40 @@ async function loadOfficialExamCatalog() {
   isLoadingOfficialCatalog = true;
 
   try {
+    try {
+      const jsonResponse = await fetch(OFFICIAL_EXAMS_JSON_PATH);
+      if (jsonResponse.ok) {
+        const payload = await jsonResponse.json();
+        const exams = Array.isArray(payload?.exams) ? payload.exams : [];
+        exams.forEach((exam) => {
+          const questions = Array.isArray(exam.questions)
+            ? exam.questions.map((q, index) => ({
+                id: q.id || `official:${exam.file}:${index + 1}`,
+                modulo: Number(q.module || 9),
+                pergunta: q.question || '',
+                opcoes: Array.isArray(q.options) ? q.options : [],
+                correta_texto: q.correctText || '',
+                justificativa: q.explanation || '',
+              })).filter(q => q.pergunta && q.opcoes.length && q.correta_texto)
+            : [];
+
+          OFFICIAL_EXAM_CATALOG[exam.file] = {
+            title: exam.title,
+            markdown: '',
+            questions,
+            totalQuestions: Number(exam.totalQuestions || questions.length || 0),
+          };
+        });
+
+        if (Object.keys(OFFICIAL_EXAM_CATALOG).length > 0) {
+          isOfficialCatalogLoaded = true;
+          return;
+        }
+      }
+    } catch (jsonError) {
+      console.warn('Falha ao carregar JSON dos simulados oficiais. Usando Markdown.', jsonError);
+    }
+
     await Promise.all(SIMULADO_EXAMS.map(async (item) => {
       if (OFFICIAL_EXAM_CATALOG[item.file]) return;
 
@@ -823,7 +857,6 @@ async function initDashboard() {
       const detailedSection = statsTable.closest('.dashboard-section');
       if (detailedSection) detailedSection.style.display = 'none';
     }
-    renderOfficialExams();
 
   } catch (error) {
     console.error('Erro ao carregar dashboard:', error);
