@@ -14,6 +14,7 @@ const STATE = {
 
 let moduleActionsBound = false;
 let navigationBound = false;
+let registerInFlight = false;
 
 function getSupabaseClient() {
   if (SUPABASE) return SUPABASE;
@@ -160,6 +161,18 @@ function saveErrors(userId, data) {
 
 function getProgressKey(userId) {
   return `certifica_progress_${userId}`;
+}
+
+function showInfo(message, type = 'info') {
+  if (typeof notify === 'function') {
+    notify(message, type);
+    return;
+  }
+  alert(message);
+}
+
+function getAuthRedirectUrl() {
+  return `${window.location.origin}/`;
 }
 
 function loadProgress(userId) {
@@ -321,7 +334,11 @@ function resolveEditalInfo(moduleData, moduleNumber) {
 
 function getModuleProgress(moduleNumber) {
   const provas = STATE.provas || [];
-  const progress = loadProgress(CURRENT_USER?.id || 'unknown');
+  if (!CURRENT_USER?.id) {
+    return { percentage: 0, correct: 0, total: 0 };
+  }
+
+  const progress = loadProgress(CURRENT_USER.id);
 
   const moduleQuestions = provas.filter(q => Number(q.modulo) === moduleNumber);
   if (!moduleQuestions.length) {
@@ -474,7 +491,7 @@ async function gerarSimulado(moduloId, apenasErros = false) {
   renderExamModal(modNumber, questions);
 }
 
-function renderExamModal(moduloId, questions) {
+function renderExamModal(moduloId, questions, modalOptions = {}) {
   const state = {
     currentIndex: 0,
     answers: {},
@@ -484,7 +501,7 @@ function renderExamModal(moduloId, questions) {
 
   function renderCurrentQuestion() {
     const question = questions[state.currentIndex];
-    const options = question.opcoes || [];
+    const questionOptions = question.opcoes || [];
     const selected = state.answers[question.id] || '';
     const isConfirmed = Boolean(state.confirmed[question.id]);
     const isRevealed = Boolean(state.revealCorrect[question.id]);
@@ -506,7 +523,7 @@ function renderExamModal(moduloId, questions) {
         <div class="question" style="margin:0;">
           <div class="question-title">${state.currentIndex + 1}. ${question.pergunta}</div>
           <div class="options">
-            ${options.map((opt, idx) => `
+            ${questionOptions.map((opt, idx) => `
               <label class="option" style="${selected === opt ? 'border-color:#2196F3;' : ''}">
                 <input type="radio" name="current_question" value="${opt}" ${selected === opt ? 'checked' : ''} ${isConfirmed ? 'disabled' : ''} />
                 ${String.fromCharCode(65 + idx)}. ${opt}
@@ -587,7 +604,14 @@ function renderExamModal(moduloId, questions) {
       nextBtn.onclick = async () => {
         if (!state.confirmed[question.id]) return;
         if (state.currentIndex === questions.length - 1) {
-          await gradeExam(questions, state.answers);
+          const result = await gradeExam(questions, state.answers);
+          if (typeof modalOptions.onComplete === 'function') {
+            try {
+              modalOptions.onComplete(result);
+            } catch (callbackError) {
+              console.warn('Falha no callback de conclusão do simulado:', callbackError);
+            }
+          }
           return;
         }
         state.currentIndex += 1;
@@ -669,6 +693,7 @@ async function gradeExam(questions, answersByQuestionId = {}) {
     <button id="close-result" class="btn btn-primary">Fechar</button>
   </div>`);
   document.getElementById('close-result').onclick = closeModal;
+  return { score, correctCount, total: questions.length, synced };
 }
 
 function bindNavigation() {
@@ -740,6 +765,15 @@ async function initAuth() {
       return;
     }
 
+    if (event === 'SIGNED_IN') {
+      const url = new URL(window.location.href);
+      const hasRecoveryType = (url.hash || '').includes('type=recovery');
+      if (!hasRecoveryType && (url.hash || '').includes('access_token=')) {
+        showInfo('E-mail confirmado com sucesso. Você já pode usar sua conta.', 'success');
+        history.replaceState({}, document.title, `${window.location.origin}${window.location.pathname}`);
+      }
+    }
+
     if (session?.user) {
       onLoginSuccess(session.user);
     } else {
@@ -761,37 +795,44 @@ async function signIn(email, password) {
 }
 
 async function signUp(email, password, name) {
-  const supabase = getSupabaseClient();
-  if (!supabase) return;
-  const { error, data } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { full_name: name },
-      emailRedirectTo: `${window.location.origin}${window.location.pathname}`
+  if (registerInFlight) return;
+  registerInFlight = true;
+  try {
+    const supabase = getSupabaseClient();
+    if (!supabase) return;
+    const { error, data } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name },
+        emailRedirectTo: getAuthRedirectUrl()
+      }
+    });
+    if (error) {
+      alert(error.message || 'Erro ao criar conta');
+      return;
     }
-  });
-  if (error) {
-    alert(error.message || 'Erro ao criar conta');
-    return;
-  }
-  if (data?.user) {
-    localStorage.setItem(`user_name_${data.user.id}`, name);
-    if (data.session) {
+    if (data?.user) {
+      localStorage.setItem(`user_name_${data.user.id}`, name);
       fecharModalCriarConta();
-    } else {
-      alert('Conta criada. Verifique seu email para confirmar o cadastro.');
+      if (data.session) {
+        showInfo('Conta criada com sucesso.', 'success');
+      } else {
+        showInfo('Conta criada. Verifique seu e-mail para confirmar o cadastro.', 'info');
+      }
     }
-  }
 
-  return data;
+    return data;
+  } finally {
+    registerInFlight = false;
+  }
 }
 
 async function resetPassword(email) {
   const supabase = getSupabaseClient();
   if (!supabase) return;
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}${window.location.pathname}`
+    redirectTo: getAuthRedirectUrl()
   });
   if (error) {
     alert(error.message || 'Erro ao enviar link de recuperação');
@@ -836,7 +877,10 @@ function bindLoginForm() {
   });
 
   // Botão de registrar na modal
-  document.getElementById('register-btn').addEventListener('click', async () => {
+  const registerBtn = document.getElementById('register-btn');
+  const registerBtnDefaultLabel = registerBtn.textContent;
+  registerBtn.addEventListener('click', async () => {
+    if (registerInFlight) return;
     const name = document.getElementById('register-name').value.trim();
     const email = document.getElementById('register-email').value.trim();
     const password = document.getElementById('register-password').value.trim();
@@ -857,7 +901,14 @@ function bindLoginForm() {
       return;
     }
 
-    await signUp(email, password, name);
+    registerBtn.disabled = true;
+    registerBtn.textContent = 'Criando...';
+    try {
+      await signUp(email, password, name);
+    } finally {
+      registerBtn.disabled = false;
+      registerBtn.textContent = registerBtnDefaultLabel;
+    }
   });
 
   // Botão de reset de senha

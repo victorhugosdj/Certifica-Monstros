@@ -38,6 +38,9 @@ const OFFICIAL_EXAMS = [
 let selectedOfficialExamFilter = 'Todas';
 const SIMULADO_EXAMS = OFFICIAL_EXAMS.filter(item => /simulado/i.test(item.title) || /simulado/i.test(item.file));
 const SIMULADO_EXAM_FILTERS = ['Todas', ...new Set(SIMULADO_EXAMS.map(item => item.version))];
+const OFFICIAL_EXAM_CATALOG = {};
+let isLoadingOfficialCatalog = false;
+let isOfficialCatalogLoaded = false;
 
 function escapeHtml(text) {
   return String(text || '')
@@ -53,6 +56,227 @@ function markdownToHtmlSafe(markdown) {
     return window.ModuleViewer.markdownToHtml(markdown);
   }
   return `<pre style="white-space:pre-wrap;line-height:1.5;">${escapeHtml(markdown)}</pre>`;
+}
+
+function getOfficialExamStatsKey(userId) {
+  if (!userId) return null;
+  return `certifica_official_exam_stats_${userId}`;
+}
+
+function loadOfficialExamStats(userId) {
+  const key = getOfficialExamStatsKey(userId);
+  if (!key) return {};
+  try {
+    return JSON.parse(localStorage.getItem(key) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function saveOfficialExamStats(userId, stats) {
+  const key = getOfficialExamStatsKey(userId);
+  if (!key) return;
+  localStorage.setItem(key, JSON.stringify(stats));
+}
+
+function formatAttemptDate(isoDate) {
+  if (!isoDate) return 'Nunca tentado';
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) return 'Nunca tentado';
+  return date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function countOfficialQuestionsInMarkdown(markdown) {
+  const lines = String(markdown || '').split(/\r?\n/);
+  let count = 0;
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+    if (/^(?:#{1,6}\s*)?\*{0,2}(\d+)[\.\)]\*{0,2}\s*(.*)$/.test(line)) {
+      count += 1;
+    }
+  }
+  return count;
+}
+
+function resolveOfficialCorrectOption(rawAnswer, options) {
+  const answerText = String(rawAnswer || '').trim();
+  if (!answerText) return '';
+
+  const singleLetter = answerText.match(/^([A-E])$/i);
+  if (singleLetter) {
+    const optionIndex = singleLetter[1].toUpperCase().charCodeAt(0) - 65;
+    return options[optionIndex] || answerText;
+  }
+
+  const multipleLetters = answerText.match(/[A-E]/gi);
+  if (multipleLetters && multipleLetters.length > 1) {
+    const firstIndex = multipleLetters[0].toUpperCase().charCodeAt(0) - 65;
+    return options[firstIndex] || answerText;
+  }
+
+  return answerText;
+}
+
+function parseOfficialExamMarkdown(markdown, fileName) {
+  const lines = String(markdown || '').split(/\r?\n/);
+  const questions = [];
+  let current = null;
+  let mode = null;
+
+  const flushCurrent = () => {
+    if (!current || !current.pergunta || !current.opcoes.length || !current.correta_texto) return;
+    current.correta_texto = resolveOfficialCorrectOption(current.correta_texto, current.opcoes);
+    questions.push({
+      id: `official:${fileName}:${current.numero}`,
+      modulo: 9,
+      pergunta: current.pergunta,
+      opcoes: current.opcoes,
+      correta_texto: current.correta_texto,
+      justificativa: current.justificativa || '',
+    });
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    const qMatch = line.match(/^(?:#{1,6}\s*)?\*{0,2}(\d+)[\.\)]\*{0,2}\s*(.*)$/);
+    if (qMatch) {
+      flushCurrent();
+      current = {
+        numero: Number(qMatch[1]),
+        pergunta: (qMatch[2] || '').trim(),
+        opcoes: [],
+        correta_texto: '',
+        justificativa: ''
+      };
+      mode = 'question';
+      continue;
+    }
+
+    if (!current) continue;
+
+    const optionMatch = line.match(/^([A-E])[\.\)]\s+(.+)$/i);
+    if (optionMatch) {
+      current.opcoes.push(optionMatch[2].trim());
+      mode = null;
+      continue;
+    }
+
+    const answerMatch = line.match(/^(?:>\s*)?\*{0,2}(Correct Answers?|Answers?|Resposta(?:s)?(?:\s+Correta(?:s)?)?)\*{0,2}:\s*(.+)$/i);
+    if (answerMatch) {
+      current.correta_texto = answerMatch[2].trim();
+      mode = null;
+      continue;
+    }
+
+    const explanationMatch = line.match(/^(?:>\s*)?\*{0,2}(Explanation|Explicaç[ãa]o|Justificativa)\*{0,2}:\s*(.*)$/i);
+    if (explanationMatch) {
+      current.justificativa = explanationMatch[2].trim();
+      mode = 'justification';
+      continue;
+    }
+
+    if (mode === 'question' && !current.pergunta) {
+      current.pergunta = line.replace(/^(\*\*)?/, '').replace(/(\*\*)?$/, '').trim();
+      continue;
+    }
+
+    if (mode === 'justification') {
+      current.justificativa = `${current.justificativa} ${line}`.trim();
+    }
+  }
+
+  flushCurrent();
+  return questions;
+}
+
+async function loadOfficialExamCatalog() {
+  if (isOfficialCatalogLoaded || isLoadingOfficialCatalog) return;
+  isLoadingOfficialCatalog = true;
+
+  try {
+    await Promise.all(SIMULADO_EXAMS.map(async (item) => {
+      if (OFFICIAL_EXAM_CATALOG[item.file]) return;
+
+      try {
+        const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${item.file}`);
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const markdown = await response.text();
+
+        const questions = parseOfficialExamMarkdown(markdown, item.file);
+        const totalQuestions = countOfficialQuestionsInMarkdown(markdown) || questions.length;
+
+        OFFICIAL_EXAM_CATALOG[item.file] = {
+          title: item.title,
+          markdown,
+          questions,
+          totalQuestions,
+        };
+      } catch (error) {
+        console.warn(`Falha ao carregar catálogo do simulado ${item.file}:`, error);
+        OFFICIAL_EXAM_CATALOG[item.file] = {
+          title: item.title,
+          markdown: '',
+          questions: [],
+          totalQuestions: 0,
+          error: true,
+        };
+      }
+    }));
+  } finally {
+    isLoadingOfficialCatalog = false;
+    isOfficialCatalogLoaded = true;
+  }
+}
+
+async function startOfficialExam(file, title) {
+  try {
+    let questions = OFFICIAL_EXAM_CATALOG[file]?.questions || [];
+    if (!questions.length) {
+      const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${file}`);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const markdown = await response.text();
+      questions = parseOfficialExamMarkdown(markdown, file);
+      OFFICIAL_EXAM_CATALOG[file] = {
+        title,
+        markdown,
+        questions,
+        totalQuestions: countOfficialQuestionsInMarkdown(markdown) || questions.length,
+      };
+    }
+    if (!questions.length) {
+      alert(`Não foi possível identificar questões em "${title}".`);
+      return;
+    }
+
+    if (typeof renderExamModal !== 'function') {
+      alert('Motor de simulado indisponível no momento.');
+      return;
+    }
+
+    renderExamModal(`Oficial • ${title}`, questions, {
+      onComplete: (result) => {
+        const userId = CURRENT_USER?.id;
+        if (!userId) return;
+        const stats = loadOfficialExamStats(userId);
+        stats[file] = {
+          score: Number(result?.score || 0),
+          lastAttemptAt: new Date().toISOString(),
+          totalQuestions: OFFICIAL_EXAM_CATALOG[file]?.totalQuestions || questions.length,
+          title,
+        };
+        saveOfficialExamStats(userId, stats);
+        renderOfficialExams();
+      }
+    });
+  } catch (error) {
+    console.error('Erro ao iniciar simulado oficial:', error);
+    alert(`Não foi possível iniciar ${title}.`);
+  }
 }
 
 async function openOfficialExam(file, title) {
@@ -116,6 +340,13 @@ function renderOfficialExamsLegacy() {
 function renderOfficialExams() {
   const container = document.getElementById('official-exams-container');
   if (!container) return;
+  if (!isOfficialCatalogLoaded && !isLoadingOfficialCatalog) {
+    loadOfficialExamCatalog()
+      .then(() => renderOfficialExams())
+      .catch((error) => console.warn('Falha ao atualizar catálogo de simulados oficiais:', error));
+  }
+  const userId = CURRENT_USER?.id;
+  const officialStats = loadOfficialExamStats(userId);
 
   const filtersHtml = SIMULADO_EXAM_FILTERS.map(filter => `
     <button
@@ -132,16 +363,29 @@ function renderOfficialExams() {
     ? SIMULADO_EXAMS
     : SIMULADO_EXAMS.filter(item => item.version === selectedOfficialExamFilter);
 
-  const cardsHtml = filteredExams.map(item => `
+  const cardsHtml = filteredExams.map(item => {
+    const catalogQuestions = OFFICIAL_EXAM_CATALOG[item.file]?.totalQuestions;
+    const questionsLabel = parseInt(
+      (officialStats[item.file]?.totalQuestions || catalogQuestions || item.totalQuestions || 0),
+      10
+    ) || (isLoadingOfficialCatalog ? 'Carregando...' : '--');
+    return `
     <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;">
       <div style="font-weight:700;color:#fff;">${escapeHtml(item.title)}</div>
       <div style="font-size:0.82rem;color:#bbb;">${escapeHtml(item.kind)} • ${escapeHtml(item.version)}</div>
+      <div style="font-size:0.78rem;color:#9fb3d7;">
+        Questões: ${questionsLabel}<br>
+        Acerto: <strong style="color:#8ef3a1;">${officialStats[item.file]?.score ?? 0}%</strong><br>
+        Última tentativa: ${escapeHtml(formatAttemptDate(officialStats[item.file]?.lastAttemptAt))}
+      </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary" data-official-start="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Iniciar</button>
         <button class="btn btn-primary" data-official-open="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Abrir</button>
         <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   container.innerHTML = `
     <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
@@ -160,6 +404,12 @@ function renderOfficialExams() {
   container.querySelectorAll('button[data-official-open="true"]').forEach(btn => {
     btn.addEventListener('click', () => {
       openOfficialExam(btn.dataset.file, btn.dataset.title);
+    });
+  });
+
+  container.querySelectorAll('button[data-official-start="true"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      startOfficialExam(btn.dataset.file, btn.dataset.title);
     });
   });
 }
@@ -688,6 +938,7 @@ window.refazerModulo = function(moduleId, tipo) {
  * Função auxiliar para abrir a sidebar com detalhes do módulo
  */
 window.abrirSidebarModulo = function(moduleId) {
-  const userId = CURRENT_USER?.id || 'unknown';
+  const userId = CURRENT_USER?.id;
+  if (!userId) return;
   renderModuleErrorsDetail(userId, moduleId, window.allProvasGlobal);
 };
