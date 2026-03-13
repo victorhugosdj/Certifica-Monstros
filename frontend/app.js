@@ -562,7 +562,15 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:14px;margin-top:14px;align-items:start;">
+      <div style="margin-top:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+          <div style="font-size:.78rem;color:#bbb;">Progresso</div>
+          <div style="font-weight:700;">${state.currentIndex + 1}/${questions.length}</div>
+        </div>
+        <div style="height:8px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden;margin-bottom:16px;">
+          <div style="height:100%;width:${progressPct}%;background:#4CAF50;"></div>
+        </div>
+
         <div class="question" style="margin:0;">
           <div class="question-title">${state.currentIndex + 1}. ${question.pergunta}</div>
           ${isMultiQuestion ? '<div style="font-size:.82rem;color:#9fb3d7;margin-top:4px;">Selecione mais de uma opção quando necessário.</div>' : ''}
@@ -578,14 +586,6 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
             `).join('')}
           </div>
         </div>
-
-        <aside style="padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.03);">
-          <div style="font-size:.78rem;color:#bbb;">Progresso</div>
-          <div style="font-weight:700;margin:4px 0 8px;">${state.currentIndex + 1}/${questions.length}</div>
-          <div style="height:8px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden;">
-            <div style="height:100%;width:${progressPct}%;background:#4CAF50;"></div>
-          </div>
-        </aside>
       </div>
 
       ${isConfirmed ? `
