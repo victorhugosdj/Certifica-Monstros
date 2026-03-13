@@ -681,6 +681,10 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
 
 async function recordResponses(responses) {
   try {
+    const base = getApiBaseUrl();
+    if (!base) {
+      return { ok: false, reason: 'no-backend' };
+    }
     const headers = {
       'Content-Type': 'application/json',
       ...(await getAuthHeaders()),
@@ -693,11 +697,11 @@ async function recordResponses(responses) {
     if (!response.ok) {
       throw new Error(`Falha ao sincronizar respostas (HTTP ${response.status})`);
     }
-    return true;
+    return { ok: true };
   } catch (err) {
     // Não bloqueia a experiência do usuário se houver problemas de rede.
     console.warn('Não foi possível enviar respostas ao backend:', err);
-    return false;
+    return { ok: false, reason: 'network' };
   }
 }
 
@@ -743,14 +747,18 @@ async function gradeExam(questions, answersByQuestionId = {}) {
 
   saveErrors(CURRENT_USER.id, errors);
   saveProgress(CURRENT_USER.id, progress);
-  const synced = await recordResponses(payload);
+  const syncResult = await recordResponses(payload);
+  const synced = syncResult.ok;
+  const syncMessage = syncResult.reason === 'no-backend'
+    ? 'Respostas salvas localmente. Sincronização indisponível no momento.'
+    : (synced ? 'Respostas sincronizadas com o servidor.' : 'Respostas salvas localmente. A sincronização com o servidor falhou.');
 
   const score = Math.round((totalPoints / questions.length) * 100);
   openModal(`<div style="text-align:center;">
     <h3>Resultado: ${score}%</h3>
     <p>Pontuação: ${totalPoints.toFixed(1)} de ${questions.length}.</p>
     <p>Acertos completos: ${correctCount}.</p>
-    <p style="color:${synced ? '#4CAF50' : '#FFB74D'};">${synced ? 'Respostas sincronizadas com o servidor.' : 'Respostas salvas localmente. A sincronização com o servidor falhou.'}</p>
+    <p style="color:${synced ? '#4CAF50' : '#FFB74D'};">${syncMessage}</p>
     <button id="close-result" class="btn btn-primary">Fechar</button>
   </div>`);
   document.getElementById('close-result').onclick = closeModal;
