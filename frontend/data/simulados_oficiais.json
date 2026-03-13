@@ -1,7 +1,798 @@
 {
-  "generatedAt": "2026-03-13T12:21:55.976Z",
+  "generatedAt": "2026-03-13T12:55:29.492Z",
   "sourceFolder": "frontend/data/modules/conteudos e provas/Hyperautomation/Simulados e Questões",
   "exams": [
+    {
+      "title": "Simulado V1",
+      "file": "SimuladoV1.md",
+      "version": "V1",
+      "kind": "Simulado oficial",
+      "totalQuestions": 60,
+      "questions": [
+        {
+          "id": "official:SimuladoV1.md:1",
+          "module": 9,
+          "question": "Northern Trail Outfitters needs to update multiple systems outside of Salesforce based on record updates within Salesforce. A hyperautomation practitioner needs to configure Salesforce to call several APIs created by the MuleSoft development team from within a Salesforce flow. What specifications must be imported into Salesforce to make external services available to a Salesforce flow that enables external invokable actions?",
+          "options": [
+            "Open API specifications",
+            "External API specifications",
+            "RAML API specifications",
+            "Anypoint API specifications"
+          ],
+          "correctText": "Open API specifications",
+          "explanation": "To enable Salesforce to call external services within a flow, the appropriate specifications must be imported to make these external services available as invokable actions. The correct specification is Open API specifications. OpenAPI Specification (formerly known as Swagger) is a standard for defining APIs which can be easily imported into Salesforce to facilitate the integration and invocation of external services. Salesforce allows the import of OpenAPI specifications, which define the available endpoints and operations of an API, making them accessible as invocable actions in a Salesforce flow."
+        },
+        {
+          "id": "official:SimuladoV1.md:2",
+          "module": 9,
+          "question": "For a MuleSoft Composer flow, errors can be noted in its Flow Details page. What other way can MuleSoft Composer send notifications when errors occur?",
+          "options": [
+            "It posts to a configured Chatter profile.",
+            "It generates a notification in the flow.",
+            "It sends a message to a configured Slack channel.",
+            "It sends a notification to the configured email address."
+          ],
+          "correctText": "It sends a notification to the configured email address.",
+          "explanation": "MuleSoft Composer provides a way to handle errors and notify users when something goes wrong in a flow. Aside from viewing errors on the Flow Details page, MuleSoft Composer can also send notifications to alert users about the errors. MuleSoft Composer can be configured to send notifications to a specified email address. This allows users to be promptly informed of any issues without having to constantly monitor the Flow Details page."
+        },
+        {
+          "id": "official:SimuladoV1.md:3",
+          "module": 9,
+          "question": "Northern Trail Outfitters wants to run a bidirectional sync of data between two Salesforce orgs. They want to perform real-time updates between both systems so that if either system is updated, the other one is automatically updated with the new data. What is the minimum number of MuleSoft Composer flows needed to meet this requirement?",
+          "options": [
+            "3",
+            "1",
+            "2",
+            "4"
+          ],
+          "correctText": "2",
+          "explanation": "To achieve a bidirectional sync between two Salesforce orgs using MuleSoft Composer, you would need a minimum of two flows. Flow 1 (Sync from Org A to Org B): This flow monitors changes in Org A and updates Org B with the new data whenever a change occurs. Flow 2 (Sync from Org B to Org A): Similarly, this flow monitors changes in Org B and updates Org A with the new data whenever a change occurs. This setup ensures that any change in either Salesforce org is reflected in the other."
+        },
+        {
+          "id": "official:SimuladoV1.md:4",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) is building a hyperautomation solution using Salesforce and MuleSoft. Their Salesforce admin needs to automate a comprehensive, multi-step process that a single user will execute after a case record is created. How should the Salesforce Flow solution be structured to meet this requirement?",
+          "options": [
+            "An autolaunched flow that will process user inputs and conditional logic to automate the process in Salesforce",
+            "A single flow Orchestration that uses Stages and Steps to organize automated actions and process user inputs",
+            "A screen flow to process user inputs and an autolaunched flow to process backend steps automatically",
+            "A parent flow with subflows to help organize automated actions and generate reusable components"
+          ],
+          "correctText": "A single flow Orchestration that uses Stages and Steps to organize automated actions and process user inputs",
+          "explanation": "To address the comprehensive, multi-step process automation requirement, a single flow orchestration that uses Stages and Steps is the best solution. Flow Orchestration allows Salesforce admins to build sophisticated automations by structuring the flow into Stages and Steps. By leveraging Stages and Steps, Salesforce Flow Orchestration can handle both user inputs and backend automated steps seamlessly. Given that a single user will execute the process, Flow Orchestration is ideal as it can manage the end-to-end process in a structured manner."
+        },
+        {
+          "id": "official:SimuladoV1.md:5",
+          "module": 9,
+          "question": "AnyAirlines is attempting to automate a process that triggers when a case is created in Salesforce but requires data to be extracted from a website without an API. It plans to automate the process using MuleSoft Composer and MuleSoft RPA. During the design phase, it uses RPA Recorder to gather the steps required to interact with the website. What will automatically be gathered by RPA Recorder when recording a manual activity?",
+          "options": [
+            "Variable information used by the user during the process",
+            "Conditional decisions made by the user during the process",
+            "Comments on the purpose of the different steps carried out by the user",
+            "Documentation on the elements used by the user during the process"
+          ],
+          "correctText": "Documentation on the elements used by the user during the process",
+          "explanation": "When using MuleSoft RPA Recorder to gather steps required for interacting with a website, it automatically collects documentation on the elements used by the user during the process. The RPA Recorder captures all the elements (e.g., buttons, fields, and other UI components) that the user interacts with during the manual process recording. It collects metadata such as element IDs, types, and positions."
+        },
+        {
+          "id": "official:SimuladoV1.md:6",
+          "module": 9,
+          "question": "Any Airlines is developing a new integration and wants built-in automated testing. Which tool must be used to satisfy this requirement?",
+          "options": [
+            "MuleSoft RPA",
+            "MuleSoft Composer",
+            "Flow Orchestration",
+            "Anypoint Platform"
+          ],
+          "correctText": "Anypoint Platform",
+          "explanation": "To implement built-in automated testing for new integrations, the Anypoint Platform is the appropriate tool. Anypoint Platform includes various tools such as MUnit for automated testing of Mule applications. MUnit allows developers to create, design, and run tests natively within Anypoint Studio. It supports comprehensive testing features including unit tests and integration tests."
+        },
+        {
+          "id": "official:SimuladoV1.md:7",
+          "module": 9,
+          "question": "Northern Trail Outfitters developed an integration between its two Salesforce orgs using MuleSoft Composer. Which two actions should be taken before testing the Composer flow? (Choose two.)",
+          "options": [
+            "Ensure the flow trigger is connected to a sandbox instance of Salesforce.",
+            "Ensure action steps are connected to a sandbox instance of Salesforce.",
+            "Ensure the credentials to the target production org are still valid.",
+            "Ensure MuleSoft Composer is installed on both the source and target orgs."
+          ],
+          "correctText": "Ensure the flow trigger is connected to a sandbox instance of Salesforce.",
+          "explanation": "Flow Trigger Connection: Before testing any Composer flow, it is crucial to connect the flow trigger to a sandbox instance of Salesforce. This ensures that testing does not impact the production environment. Action Steps Connection: Similar to the flow trigger, action steps within the Composer flow should also be connected to a sandbox instance. This allows comprehensive testing of the flow's functionality without affecting production data."
+        },
+        {
+          "id": "official:SimuladoV1.md:8",
+          "module": 9,
+          "question": "A MuleSoft developer at AnyAirlines is tasked with creating a new API for an integration. According to best practices, what is the first step they need to perform?",
+          "options": [
+            "Create a new project in Anypoint Studio.",
+            "Install a standalone Mule runtime on their local machine.",
+            "Create a case in Salesforce.",
+            "Create a RAML definition in Design Center."
+          ],
+          "correctText": "Create a RAML definition in Design Center.",
+          "explanation": "The first step in creating a new API as per MuleSoft best practices is to create a RAML (RESTful API Modeling Language) definition in the Design Center. This step is critical as it outlines the API's structure, endpoints, methods, and data types, providing a clear blueprint for subsequent development."
+        },
+        {
+          "id": "official:SimuladoV1.md:9",
+          "module": 9,
+          "question": "AnyAirlines uses an Einstein bot for their customer support. They want it to display a message when a user provides an incorrect answer to a particular question. Which dialog option should be selected?",
+          "options": [
+            "Message",
+            "Action",
+            "Question",
+            "Rules"
+          ],
+          "correctText": "Message",
+          "explanation": "When configuring an Einstein bot to respond to incorrect answers, the 'Message' dialog option should be selected. This allows the bot to display a predefined message to the user, guiding them appropriately or informing them of the incorrect input."
+        },
+        {
+          "id": "official:SimuladoV1.md:10",
+          "module": 9,
+          "question": "AnyAirlines has an RPA process that is failing in Production. According to best practices, how should they debug the failure?",
+          "options": [
+            "Download the analysis package from RPA Manager, open it in a text editor, then determine the root cause.",
+            "Download the analysis package from RPA Manager. revert the RPA process to the Test phase, then import the analysis package to RPA Builder and debug.",
+            "Download the analysis package from RPA Manager. revert the RPA process to the Build phase, then import the analysis package to RPA Builder and debug.",
+            "Deactivate the RPA process, enter the inputs manually, the monitor the execution to determine the root cause."
+          ],
+          "correctText": "Download the analysis package from RPA Manager. revert the RPA process to the Build phase, then import the analysis package to RPA Builder and debug.",
+          "explanation": "The first step is to download the analysis package from the RPA Manager. Reverting the RPA process to the Build phase allows developers to make changes and debug the process. Import the analysis package into RPA Builder, which is the tool used to develop and debug RPA processes. This allows for a detailed investigation using logs and execution data within RPA Builder to step through the process."
+        },
+        {
+          "id": "official:SimuladoV1.md:11",
+          "module": 9,
+          "question": "AnyAirlines wants to create a new marketing campaign that sends customers special offers every month based on their accrued loyalty points. There is an existing integration for customer data using MuleSoft's API-led three-tier strategy. Loyalty information exists in an external system that can be accessed via an HTTP endpoint provided by the system, but has no current integration. The external ID used will be email address. The desired output is a CSV file containing customers that includes only the top 10 percent of loyalty point holders. What is the most efficient way to meet this requirement?",
+          "options": [
+            "1. Have the MuleSoft team develop a new integration that includes a System API to the Loyalty system and uses the existing Customer System API. 2. Create a Process API to output the final results. 3. Create an Experience API for the business consumers to initiate the integration.",
+            "1. Create a MuleSoft Composer flow that utilizes the current Customer integration to select all customers. 2. Create an additional MuleSoft Composer flow that retrieves all the Loyalty information. 3. Create a MuleSoft Composer flow that combines the two previous results and outputs the top 10 percent to a CSV file.",
+            "1. Have the MuleSoft team develop a new integration that includes a new System API to both the Customer and Loyally systems. 2. Create a Process API to output the final results. 3. Create an Experience API for the business consumers to initiate the integration.",
+            "1. Create a Salesforce Flow that retrieves the Contact data. 2. Create a Salesforce Flow that retrieves the Loyalty data. 3. Create a Flow Orchestration that uses the two flows and outputs the result to a CSV file."
+          ],
+          "correctText": "1. Have the MuleSoft team develop a new integration that includes a System API to the Loyalty system and uses the existing Customer System API. 2. Create a Process API to output the final results. 3. Create an Experience API for the business consumers to initiate the integration.",
+          "explanation": "The first step is to develop a new System API that integrates with the Loyalty system. Use the existing System API for customer data to retrieve necessary customer information (reuse). Create a Process API that combines data from both the Customer and Loyalty System APIs to process data and apply business logic. Create an Experience API to serve the business consumers, providing a user-friendly interface for initiating the integration."
+        },
+        {
+          "id": "official:SimuladoV1.md:12",
+          "module": 9,
+          "question": "AnyAirlines selected AWS Cloud services as their infrastructure platform. They need to implement Anypoint Platform as the integration solution along with existing cloud capabilities like vertical/horizontal scalability and zero downtime redeployments. Which type of deployment strategy is needed?",
+          "options": [
+            "Cloudhub",
+            "Runtime Fabric",
+            "Hybrid",
+            "Private Cloud Edition"
+          ],
+          "correctText": "Runtime Fabric",
+          "explanation": "Anypoint Runtime Fabric (RTF) is designed for deploying Mule applications on any cloud infrastructure, including AWS. It supports vertical and horizontal scalability and enables zero-downtime deployments, which aligns with AnyAirlines' requirements. RTF allows scaling applications both vertically and horizontally and supports zero-downtime deployments by utilizing rolling updates."
+        },
+        {
+          "id": "official:SimuladoV1.md:13",
+          "module": 9,
+          "question": "Northern Trail Outfitters is developing an API that connects to a vendor's database. Which two strategies should their Ops team use to monitor the overall health of the API and database using API Functional Monitoring? (Choose two.)",
+          "options": [
+            "Monitor the CloudHub worker logs for JDBC database connection exceptions.",
+            "Make a call to a health-check endpoint, and then verify that the endpoint is still running.",
+            "Monitor the Mule worker logs for \"ERROR\" statements and verify that the results match expected errors.",
+            "Make a GET call to an existing API endpoint, and then verify that the results match expected data."
+          ],
+          "correctText": "Make a call to a health-check endpoint, and then verify that the endpoint is still running.",
+          "explanation": "Creating and regularly calling a health-check endpoint is a common strategy to ensure that the API and its underlying systems are operational. Additionally, making a GET call to an existing API endpoint and verifying that the results match expected data helps ensure that the API is not only running but also functioning correctly."
+        },
+        {
+          "id": "official:SimuladoV1.md:14",
+          "module": 9,
+          "question": "A Salesforce administrator asks for advice on how to build their Salesforce flow. They need to complete several DML actions as part of their Salesforce flow and are running into DML governor limits during testing. Which two pieces of advice should be given to the Salesforce administrator to improve their flow? (Choose two.)",
+          "options": [
+            "Avoid putting DML statements inside of For Loop occurrences.",
+            "Use the upsert action to reduce the amount of DML statements required during the flow runtime.",
+            "Loop through a collection variable to save more records with a single DML statement.",
+            "Use DML statements at the end of the flow wherever possible."
+          ],
+          "correctText": "Avoid putting DML statements inside of For Loop occurrences.",
+          "explanation": "Placing DML operations inside a loop can quickly exceed Salesforce governor limits, as each iteration performs a separate DML operation. It's best to collect records in a list and perform DML operations outside the loop. By looping through a collection variable and adding records to it, you can perform bulk DML operations, which are more efficient."
+        },
+        {
+          "id": "official:SimuladoV1.md:15",
+          "module": 9,
+          "question": "AnyAirlines has MuleSoft Composer installed on their production Salesforce environment. To test flows with data in multiple non-production environments, what does the hyperautomation specialist need to do?",
+          "options": [
+            "Create a connection to each of the non-production environments within the Composer UI.",
+            "Install MuleSoft Composer in each of the non-production Salesforce environments.",
+            "Install MuleSoft Composer in only one non-production Salesforce environment and create a proxy to all other non-production environments.",
+            "Use mocked data because non-production data is not available to MuleSoft Composer."
+          ],
+          "correctText": "Create a connection to each of the non-production environments within the Composer UI.",
+          "explanation": "To test flows with data in multiple non-production environments, creating connections to each environment within the MuleSoft Composer UI is necessary. This allows the Composer to access and manipulate data across different environments, ensuring comprehensive testing."
+        },
+        {
+          "id": "official:SimuladoV1.md:16",
+          "module": 9,
+          "question": "Northern Trail Outfitters is concerned about security in their Salesforce org regarding their newly created hyperautomation flow that calls a MuleSoft API. A mechanism needs to be implemented that restricts which users can invoke the flow. Which setting is available to a hyperautomation practitioner that meets this security requirement?",
+          "options": [
+            "Configure OAuth 2.0 in the connected app.",
+            "Assign an appropriate profile or permission set to users in the external service.",
+            "Assign an appropriate profile or permission set to users in the connected app.",
+            "Configure OAuth 2.0 in the external service."
+          ],
+          "correctText": "Assign an appropriate profile or permission set to users in the connected app.",
+          "explanation": "Assigning the appropriate profile or permission set to users in the connected app restricts access to the MuleSoft API. This method ensures that only authorized users can invoke the hyperautomation flow. Properly securing the connected app by configuring user profiles and permission sets ensures compliance with security policies."
+        },
+        {
+          "id": "official:SimuladoV1.md:17",
+          "module": 9,
+          "question": "An RPA developer is building the implementation of an RPA process based on the BPMN created by a colleague. In the BPMN, they see the symbol below (a diamond with an \"X\" inside). What does the symbol represent?",
+          "options": [
+            "An activity that is performed if an error occurs during processing",
+            "A point in the process where different activities are performed under different circumstances",
+            "One possible endpoint for the process",
+            "A cleanup activity that is performed at the end of the process to ensure all running applications are closed"
+          ],
+          "correctText": "A point in the process where different activities are performed under different circumstances",
+          "explanation": "The symbol shown is a diamond with an \"X\" inside, which represents an exclusive gateway in BPMN. This gateway is used to control the flow of the process based on certain conditions or circumstances. When an exclusive gateway is encountered, the process evaluates the conditions on each outgoing sequence flow and chooses the path that meets the conditions."
+        },
+        {
+          "id": "official:SimuladoV1.md:18",
+          "module": 9,
+          "question": "A Salesforce admin for AnyAirlines constructs a MuleSoft Composer flow that retrieves a record based on a unique ID using the Get Records action from a Salesforce connector. They will use the result to send a Slack message. How can they achieve this task?",
+          "options": [
+            "1. Add a Slack action step after the Salesforce action step. 2. Use the first record from the collection of Salesforce records to construct the message.",
+            "1. Add a For Each loop after the Salesforce action step iterating over the collection of Salesforce records. 2. Use a Slack action step to construct the messages from the record being processed.",
+            "1. Add an If/Else Block after the Salesforce action step, which contains a branch checking if the Salesforce action step returned exactly one record. 2. In the branch, add a Slack action step and use the record to construct the message.",
+            "1. Add a Slack action step after the Salesforce action step. 2. Use the record to construct the message."
+          ],
+          "correctText": "1. Add a Slack action step after the Salesforce action step. 2. Use the record to construct the message.",
+          "explanation": "Start by adding a Salesforce action step that uses the Get Records action to retrieve the record based on a unique ID. After retrieving the record, add a Slack action step. Use the retrieved record directly to construct the message in the Slack action step. Since the Get Records action retrieves a single record based on a unique ID, there is no need to handle collections or iterate through records."
+        },
+        {
+          "id": "official:SimuladoV1.md:19",
+          "module": 9,
+          "question": "Northern Trail Outfitters needs to develop an application network that follows a MuleSoft-recommended, API-led connectivity approach and meets the following requirements: provides data to mobile and web interfaces, aggregates and transforms data, and retrieves data from databases. In which API tier should the data aggregation and transformation take place?",
+          "options": [
+            "Experience",
+            "Process",
+            "Business",
+            "System"
+          ],
+          "correctText": "Process",
+          "explanation": "Process APIs are responsible for orchestrating and executing business logic. They aggregate, transform, and process data from multiple sources before passing it to Experience APIs or other downstream systems. Given the requirements to aggregate and transform data, the Process tier is the appropriate place."
+        },
+        {
+          "id": "official:SimuladoV1.md:20",
+          "module": 9,
+          "question": "A Salesforce flow needs to connect to external APIs provided by Northern Trail Outfitters (NTO) and AnyAirlines to retrieve data. Which three steps should be taken to connect to the external APIs? (Choose three.)",
+          "options": [
+            "Use an Action element to call and consume the appropriate API in the Salesforce flow.",
+            "Create External Services in Salesforce for NTO and AnyAirlines.",
+            "Create Named Credentials in Anypoint for NTO and AnyAirlines.",
+            "Use a Virtual service to call and consume the appropriate API in the Salesforce flow.",
+            "Create Named Credentials in Salesforce for NTO and AnyAirlines."
+          ],
+          "correctText": "Use an Action element to call and consume the appropriate API in the Salesforce flow.",
+          "explanation": "To connect a Salesforce flow to external APIs, you should: 1) Create Named Credentials in Salesforce to store the URL and authentication details. 2) Create External Services in Salesforce to register the external APIs (using OpenAPI/Swagger or RAML). 3) Use an Action element within the Salesforce Flow to call the registered external services."
+        },
+        {
+          "id": "official:SimuladoV1.md:21",
+          "module": 9,
+          "question": "AnyAirlines wants to share the Flight Path API through their public Anypoint Exchange Portal. What should be configured before the API can be shared?",
+          "options": [
+            "The visibility level of API instances should be set to public.",
+            "The users that need access to the API should be added to the appropriate role in Anypoint Platform.",
+            "The API should be secured using one of the supported authentication/authorization mechanisms.",
+            "The API should be functional and accessible for users to interact with."
+          ],
+          "correctText": "The visibility level of API instances should be set to public.",
+          "explanation": "Before sharing an API on the public Anypoint Exchange Portal, the API's visibility level must be configured as public within the Anypoint Platform so that it can be shared and accessed by external users."
+        },
+        {
+          "id": "official:SimuladoV1.md:22",
+          "module": 9,
+          "question": "Northern Trail Outfitters recently purchased another company. Both companies have separate Salesforce orgs. One business user wants to automate a workflow which requires data transfer between both orgs and automates a distinct multi-user workflow within one of the orgs. According to best practices, which two hyperautomation tools should these workflows use? (Choose two.)",
+          "options": [
+            "Flow Orchestration",
+            "Anypoint Platform",
+            "MuleSoft RPA",
+            "MuleSoft Composer"
+          ],
+          "correctText": "Flow Orchestration",
+          "explanation": "MuleSoft Composer is recommended for easy and quick integration between multiple systems, including different Salesforce orgs (data transfer). Flow Orchestration is ideal for automating complex, multi-step business processes involving multiple users within a single org (distinct multi-user workflow)."
+        },
+        {
+          "id": "official:SimuladoV1.md:23",
+          "module": 9,
+          "question": "A non-technical employee from AnyAirlines creates a hyperautomation solution. The solution needs to meet the following criteria: The process needs to begin when a record is created in Salesforce. Then, it needs to pass data to a pre-existing RPA process which includes a User Task for data integrity purposes. The output of the RPA process needs to be used to create a record in NetSuite. According to best practices, how should this automated process be structured?",
+          "options": [
+            "1. A MuleSoft Composer flow triggers on the creation of the record and calls the RPA process. 2. Then, the same flow uses the response to create a record in NetSuite.",
+            "1. A Salesforce flow triggers on the creation of the record and calls too RPA process. 2. Then, the same flow uses the response to create a record in NetSuite.",
+            "1. A MuleSoft Composer flow triggers on the creation of the record and calls the RPA process. 2. Then, a second MuleSoft Composer flow triggers when the RPA process is completed and creates a record in NetSuite.",
+            "1. A Salesforce flow triggers on the creation of the record and makes an outbound request to a MuleSoft Composer flow. 2. Then, the same MuleSoft Composer flow calls the RPA process and uses the result to create a record in NetSuite."
+          ],
+          "correctText": "1. A MuleSoft Composer flow triggers on the creation of the record and calls the RPA process. 2. Then, the same flow uses the response to create a record in NetSuite.",
+          "explanation": "Use MuleSoft Composer to create a flow that is triggered when a new record is created in Salesforce. Once the flow is triggered, it should call the pre-existing RPA process. After the RPA process completes, the MuleSoft Composer flow can capture the output from the RPA process and use it to create a record in NetSuite."
+        },
+        {
+          "id": "official:SimuladoV1.md:24",
+          "module": 9,
+          "question": "Northern Trail Outfitters set up a MuleSoft Composer integration between Salesforce and NetSuite that updates the Order object in Salesforce with data from NetSuite. When an order in Salesforce is updated as complete, the Last Order Date custom field on the related account should automatically update with the date the order was marked complete. What is the best practice to achieve this outcome?",
+          "options": [
+            "Update the MuleSoft Composer integration to also update the related account when the order is marked complete.",
+            "Replace the MuleSoft Composer integration with a three-tier API integration between Salesforce and NetSuite using Anypoint Platform.",
+            "Create a record-triggered flow on the Order object that updates the related account when the order is marked complete.",
+            "Create a MuleSoft RPA bot that updates the related account when the order is marked complete."
+          ],
+          "correctText": "Create a record-triggered flow on the Order object that updates the related account when the order is marked complete.",
+          "explanation": "To update the Last Order Date custom field on the related account when an order is marked complete in Salesforce, the best practice is to use a record-triggered flow on the Order object. Set the flow to trigger when the order status is updated to complete. Use an Update Records element to update the related Account. This ensures that the data remains within Salesforce and is updated immediately."
+        },
+        {
+          "id": "official:SimuladoV1.md:25",
+          "module": 9,
+          "question": "An AnyAirlines employee regularly performs a manual process to extract customer and flight information from multiple legacy systems. AnyAirlines recently purchased MuleSoft automation and wants to automate this process using MuleSoft RPA. During an evaluation of the candidate RPA process, which two key qualifiers should be considered? (Choose two.)",
+          "options": [
+            "Is the process rule-based?",
+            "Is the process risky?",
+            "Is the process data-driven?",
+            "Is the process speed-sensitive?"
+          ],
+          "correctText": "Is the process rule-based?",
+          "explanation": "When evaluating a candidate process for RPA automation, consider if the process is rule-based and data-driven. RPA is well-suited for processes that follow clear, predefined rules. Data-driven processes involve manipulating, transferring, and extracting data, making them ideal for RPA automation."
+        },
+        {
+          "id": "official:SimuladoV1.md:26",
+          "module": 9,
+          "question": "Which type of integration project should be implemented with MuleSoft Composer?",
+          "options": [
+            "Automating UI interactions using image recognition",
+            "Data transformation from a source system to a target system by a non-technical user",
+            "Batch processing of larger-than-memory files with conditional logic within the batch steps",
+            "Long running workflows that require manual steps and approvals by users"
+          ],
+          "correctText": "Data transformation from a source system to a target system by a non-technical user",
+          "explanation": "MuleSoft Composer is designed for business users to create integrations without deep technical knowledge. It is ideal for scenarios that involve data transformation and integration where non-technical users can easily connect different systems, automate data transfers, and transform data from one system to another using a no-code interface."
+        },
+        {
+          "id": "official:SimuladoV1.md:27",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) has a new business channel that requires exposing their existing non-MuleSoft APIs to the public. They do not have an Anypoint Flex Gateway. The NTO digital channel team wants to leverage Anypoint Platform as its API management tool. What is the most time-efficient mechanism of securing their backend systems?",
+          "options": [
+            "Rewrite the existing APIs using MuleSoft.",
+            "Create a proxy in front of each existing API.",
+            "Expose each endpoint as a basic endpoint.",
+            "Use a basic endpoint with a configured consumer endpoint."
+          ],
+          "correctText": "Create a proxy in front of each existing API.",
+          "explanation": "To expose existing non-MuleSoft APIs and secure them efficiently using Anypoint Platform, you can create API proxies. This approach involves setting up an intermediary that forwards requests to the existing backend APIs, allowing you to leverage Anypoint Platform's API management capabilities without rewriting the existing APIs."
+        },
+        {
+          "id": "official:SimuladoV1.md:28",
+          "module": 9,
+          "question": "Northern Trail Outfitters is building a hyperautomation solution using Salesforce and MuleSoft. They need to use Salesforce Flow to automate a multi-departmental process in an external system and capture the outcome in Salesforce. How should the Salesforce Flow solution be structured to meet this requirement?",
+          "options": [
+            "An autolaunched flow invoked by REST API to update Salesforce after the process is completed",
+            "A Flow Orchestration to automate the multi-departmental process and update Salesforce records",
+            "Parent and subflows invoked by REST API to capture user inputs and update Salesforce records",
+            "An evaluation flow which evaluates when the process is completed and updates Salesforce records"
+          ],
+          "correctText": "A Flow Orchestration to automate the multi-departmental process and update Salesforce records",
+          "explanation": "Salesforce Flow Orchestration is designed to manage complex, multi-step business processes that span multiple departments and systems. It allows you to break down the process into stages and define the sequence of actions and approvals required. After completing the external process, Flow Orchestration can be configured to update Salesforce records with the outcome."
+        },
+        {
+          "id": "official:SimuladoV1.md:29",
+          "module": 9,
+          "question": "AnyAirlines releases a new REST API that exposes access to an RPA process. The RPA process can only handle a limited number of interactions per second before the API begins returning errors. Which policy should AnyAirlines apply to prevent the API from being overloaded?",
+          "options": [
+            "JSON threat protection",
+            "Rate Limiting - SLA",
+            "Spike Control",
+            "Client ID Enforcement"
+          ],
+          "correctText": "Spike Control",
+          "explanation": "To prevent an API from being overloaded, the Spike Control policy is suitable. It helps manage sudden bursts of traffic by limiting the rate at which requests are processed. Spike Control smooths out bursts of incoming requests by enforcing a rate limit over a short period, protecting backend systems from being overwhelmed."
+        },
+        {
+          "id": "official:SimuladoV1.md:30",
+          "module": 9,
+          "question": "The customer support team at Northern Trail Outfitters manages and maintains customer service cases using Service Cloud. The team collaborates with other stakeholders such as the sales, product, and technical support teams to resolve cases using Slack. The team needs to use a MuleSoft Composer flow to automatically trigger when a case is created or modified in Service Cloud with notifications in Slack. Based on these specific case requirements, the team routes the cases to the sales, product, or the technical support team. What flow component must the customer support team use to route the cases?",
+          "options": [
+            "For Each",
+            "If/Else",
+            "Switch/Case",
+            "Swimlane"
+          ],
+          "correctText": "Switch/Case",
+          "explanation": "To route cases based on specific criteria to different teams (sales, product, or technical support) using MuleSoft Composer, the Switch/Case component is the most appropriate choice. This component allows you to define multiple conditions and route the flow based on these conditions (e.g., case type, priority)."
+        },
+        {
+          "id": "official:SimuladoV1.md:31",
+          "module": 9,
+          "question": "AnyAirlines is creating a hyperautomation solution that will run any time a record is created in NetSuite and will update a record in Salesforce. Many records present in Salesforce need to be related to the updated record. AnyAirlines wants to automatically update each of these dependent records. When combined, which two hyperautomation solutions should be used to automate this process without involving IT? (Choose two.)",
+          "options": [
+            "Anypoint Platform",
+            "Salesforce Flow",
+            "MuleSoft RPA",
+            "MuleSoft Composer"
+          ],
+          "correctText": "Salesforce Flow",
+          "explanation": "Combine MuleSoft Composer for integration and Salesforce Flow for in-Salesforce automation. Use MuleSoft Composer to create a flow that triggers when a new record is created in NetSuite and updates the corresponding record in Salesforce. Use Salesforce Flow to create a record-triggered flow that updates all dependent records whenever the primary Salesforce record is updated."
+        },
+        {
+          "id": "official:SimuladoV1.md:32",
+          "module": 9,
+          "question": "AnyAirlines implements a credit card program that requires customer applications to go through a review process before approval. They want to develop a series of hyperautomation solutions that will integrate to process the applications and enter the customer's information into a legacy system once approved. They want to complete the following components: An Einstein bot, A Salesforce flow, An RPA process, A simple MuleSoft Composer flow. Which component will likely require the most effort to complete?",
+          "options": [
+            "A simple MuleSoft Composer flow that triggers if a credit card application is approved and then invokes an RPA process",
+            "A Salesforce flow that marks the credit card application as approved in Salesforce",
+            "An RPA process that interacts with multiple applications and websites",
+            "An Einstein bot that will initiate the credit card application and create a record of an existing Salesforce Custom Object"
+          ],
+          "correctText": "An RPA process that interacts with multiple applications and websites",
+          "explanation": "Developing an RPA process that interacts with multiple applications and websites typically requires the most effort due to the complexity of interaction (navigating web pages, filling forms), integration challenges with different systems, and the need for maintenance and updates as applications change."
+        },
+        {
+          "id": "official:SimuladoV1.md:33",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) has outgrown its custom Extract-Transform-Load (ETL) solution and needs to migrate its ETL jobs to a new tool. One of the requirements is a single interface to view and manage the ETL jobs. Some of these ETL jobs interact with systems that are hosted on-premises. According to Salesforce's hyperautomation best practices, how should Salesforce's various hyperautomation solutions be combined to meet NTO's requirements?",
+          "options": [
+            "Migrate all integrations to MuleSoft Compose. Use the Salesforce UI to view all MuleSoft Composer integrations. Leverage MuleSoft RPA for on-premises systems.",
+            "Implement a three-tier API-led strategy to migrate its ETL jobs to a new tool. Use Anypoint API Manager to view and manage all API integrations.",
+            "Migrate integrations with simple transformations to MuleSoft Composer and complex integrations to Anypoint Platform. Use Anypoint Exchange to view and manage all API integrations.",
+            "Use External Services in Salesforce to connect with Anypoint Platform. Use Orchestrator to coordinate the different ETL jobs in a single UI. Leverage MuleSoft RPA for on-premises systems."
+          ],
+          "correctText": "Migrate integrations with simple transformations to MuleSoft Composer and complex integrations to Anypoint Platform. Use Anypoint Exchange to view and manage all API integrations.",
+          "explanation": "Migrate simple integrations to MuleSoft Composer and complex integrations (involving intricate logic or large data volumes) to Anypoint Platform. Use Anypoint Exchange as a centralized repository to view and manage all API integrations, providing a single interface."
+        },
+        {
+          "id": "official:SimuladoV1.md:34",
+          "module": 9,
+          "question": "Northern Trail Outfitters wants to create an automation which runs on a fixed schedule to enter sales data into NetSuite running as a process in the background. The business product owner chose MuleSoft Composer as the tool for this task. The Salesforce admin wants to advise the product owner about how the MuleSoft Composer scheduling functionality works. Which two options are available for use as the time mechanism within MuleSoft Composer? (Choose two.)",
+          "options": [
+            "Schedule based on a formula",
+            "Every 30 minutes",
+            "Every 30 days",
+            "Every 5 minutes"
+          ],
+          "correctText": "Every 30 minutes",
+          "explanation": "MuleSoft Composer provides scheduling functionality that allows you to set up automated flows to run at specified intervals. The available options for scheduling within MuleSoft Composer include \"Every 30 minutes\" and \"Every 5 minutes\"."
+        },
+        {
+          "id": "official:SimuladoV1.md:35",
+          "module": 9,
+          "question": "Which API policy can be applied to limit the number of requests an individual client can make to an API?",
+          "options": [
+            "Client ID Enforcement",
+            "Spike Control",
+            "Rate limiting - SLA-Based",
+            "OAuth 2.0 access token enforcement"
+          ],
+          "correctText": "Rate limiting - SLA-Based",
+          "explanation": "The Rate Limiting - SLA-Based policy in Anypoint Platform is designed to control the number of requests an individual client can make to an API. This policy helps protect APIs from being overwhelmed by too many requests by enforcing a limit on the number of requests a client can make within a specified time frame."
+        },
+        {
+          "id": "official:SimuladoV1.md:36",
+          "module": 9,
+          "question": "Northern Trail Outfitters evaluates multiple standards for the exit criteria of a stage in their Flow Orchestration. Based on their criteria, they want the flow to go down one of three paths. How should this be built in Flow Orchestration to meet this requirement?",
+          "options": [
+            "Use the evaluation flow to determine the exit criteria for the current stage. Then, use a separate evaluation flow to determine the entry criteria for each of the three paths.",
+            "Have the evaluation flow return a number variable, and use a decision element to determine which path to execute.",
+            "Create two evaluation flows, and execute the second evaluation flow if the first evaluation flow returns false.",
+            "Evaluate the criteria for the first two paths in an evaluation flow. Then, use the default path functionality of the decision element for the third path."
+          ],
+          "correctText": "Have the evaluation flow return a number variable, and use a decision element to determine which path to execute.",
+          "explanation": "To implement branching logic based on multiple criteria in Flow Orchestration, create an evaluation flow that assesses the exit criteria and returns a number variable indicating which path to take. Then, use a decision element in Flow Orchestration to evaluate the number variable and determine which path to execute next."
+        },
+        {
+          "id": "official:SimuladoV1.md:37",
+          "module": 9,
+          "question": "AnyAirlines is developing an RPA process and is implementing testing best practices. They want to take the RPA process through rigorous testing. During these tests, where do RPA process test plans execute?",
+          "options": [
+            "On a configured RPA Bot",
+            "In RPA Manager",
+            "In RPA Builder",
+            "In an RPA process runtime"
+          ],
+          "correctText": "On a configured RPA Bot",
+          "explanation": "During testing of an RPA process, test plans are executed on a configured RPA Bot. This allows you to simulate real-world scenarios and verify the functionality and performance of the RPA process in an environment that closely mirrors production."
+        },
+        {
+          "id": "official:SimuladoV1.md:38",
+          "module": 9,
+          "question": "AnyAirlines needs to select a tool for developing an integration between Salesforce and an ERP system in the cloud. The requirements state that the systems must communicate bidirectionally and as close to real time as possible. The ERP system can be accessed via a SOAP-based web service. Which tool meets the requirements of this integration?",
+          "options": [
+            "Anypoint Studio",
+            "MuleSoft Composer",
+            "Orchestrator",
+            "MuleSoft RPA"
+          ],
+          "correctText": "Anypoint Studio",
+          "explanation": "Anypoint Studio is the most suitable tool for this integration. It supports SOAP-based web services, which is essential for the ERP system. It allows for complex integrations with bidirectional communication and can design integrations that process data in near real-time."
+        },
+        {
+          "id": "official:SimuladoV1.md:39",
+          "module": 9,
+          "question": "The current date and time is September 28, 2022, at 9:00 a.m. A process running in a single Secured Session is scheduled to start September 28, 2022, at 10:00 a.m., and run every 45 minutes. If the process takes one hour to complete when it runs for the first time, when will it run for the second time?",
+          "options": [
+            "September 28, 2022, at 11:30 a.m.",
+            "September 28, 2022, at 10:45 a.m.",
+            "After the first execution is complete",
+            "September 28, 2022, at 10:30 a.m."
+          ],
+          "correctText": "After the first execution is complete",
+          "explanation": "The process is running in a single Secured Session. Since the first run takes 1 hour (finishing at 11:00 a.m.), the next execution can only start after the first one completes. The subsequent run will then start 45 minutes after the completion of the first run (11:00 a.m. + 45 minutes = 11:45 a.m.). Therefore, it waits until after the first execution is complete."
+        },
+        {
+          "id": "official:SimuladoV1.md:40",
+          "module": 9,
+          "question": "What is the difference between Run and Debug modes in Flow Builder?",
+          "options": [
+            "Debug mode displays details for debugging the flow.",
+            "Debug mode uses AI to fix any bugs in the flow.",
+            "Run mode uses the latest version of the flow.",
+            "Run mode is only available for active flows."
+          ],
+          "correctText": "Debug mode displays details for debugging the flow.",
+          "explanation": "Debug mode provides detailed information for each step of the flow, including input and output data, and any errors encountered. It is specifically designed to aid in diagnosing and fixing issues by providing a granular view of the flow's execution. Run mode executes the flow as it is, typically to verify it works under normal conditions."
+        },
+        {
+          "id": "official:SimuladoV1.md:41",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) wants to automate a multi-step process that spans several departments. How do Interactive Steps in Flow Orchestration help NTO involve users at key steps of the process?",
+          "options": [
+            "They allow the user to interact directly with external systems through the Salesforce UI.",
+            "They allow the user to interact with the process in between automated backend steps.",
+            "They enable users to collaborate on specific work items.",
+            "They leverage AI processing to automatically interact with the customer and collect customer data."
+          ],
+          "correctText": "They allow the user to interact with the process in between automated backend steps.",
+          "explanation": "Interactive Steps in Flow Orchestration enable users to engage with the process during key stages. These steps are inserted between automated tasks to require human input or decision-making. Once the user completes the required interaction, the process can automatically proceed to the next step."
+        },
+        {
+          "id": "official:SimuladoV1.md:42",
+          "module": 9,
+          "question": "An RPA process is invoked by a MuleSoft Composer flow. The RPA process has a User Task that can take up to 24 hours to complete. Using best practices, how should the results be consumed by MuleSoft Composer?",
+          "options": [
+            "(Note: Option A text missing in source, implied context suggests alternative method or wait)",
+            "Wait for the RPA process to complete and invoke a second MuleSoft Composer flow via REST API.",
+            "Create a second MuleSoft Composer flow that starts when the RPA process is complete.",
+            "Wait for the RPA process to complete and use the results in the same MuleSoft Composer flow.",
+            "Create a second MuleSoft Composer flow that runs on a schedule and checks if the RPA process is complete."
+          ],
+          "correctText": "Create a second MuleSoft Composer flow that starts when the RPA process is complete.",
+          "explanation": "When an RPA process involves a User Task that can take a significant amount of time, it is best to create a second MuleSoft Composer flow that is triggered when the RPA process completes. This ensures that the first flow is not held up while waiting. The second flow can start based on an event, such as the completion status of the RPA process."
+        },
+        {
+          "id": "official:SimuladoV1.md:43",
+          "module": 9,
+          "question": "AnyAirlines has a MuleSoft Composer flow between NetSuite and Salesforce. One of the data elements coming from NetSuite is a string that needs to be put into a Boolean field in a Salesforce object. Which Composer function should be used to change the datatype of the value?",
+          "options": [
+            "today()",
+            "from BooleanToString()",
+            "fromStringToBoolean()",
+            "substitute()"
+          ],
+          "correctText": "fromStringToBoolean()",
+          "explanation": "To convert a string from NetSuite into a Boolean field in a Salesforce object within MuleSoft Composer, you should use the fromStringToBoolean() function. This function interprets common Boolean strings like \"true\", \"false\", \"yes\", \"no\" and converts them into their corresponding Boolean values."
+        },
+        {
+          "id": "official:SimuladoV1.md:44",
+          "module": 9,
+          "question": "Northern Trail Outfitters develops an API to look up manufacturer rebates. This API will be consumed internally by the website's backend and the RPA boots used by its customer service representatives. How should this API be shared within the organization?",
+          "options": [
+            "The API's RAML specification should be stored in a SharePoint repository.",
+            "The API asset should be published to the private Exchange portal.",
+            "Example assets should be published to the private Exchange.",
+            "The API asset should be published to the public Exchange portal."
+          ],
+          "correctText": "The API asset should be published to the private Exchange portal.",
+          "explanation": "To effectively share an API internally within an organization, publishing the API asset to the private Exchange portal is the best approach. The private Exchange portal is designed for sharing APIs and assets within an organization, allowing you to control access so that only authorized internal users can consume it."
+        },
+        {
+          "id": "official:SimuladoV1.md:45",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) has a complicated process that involves several departments. How should stages be used in Flow Orchestration to organize this process?",
+          "options": [
+            "Organizing individual steps to be run in parallel to one another throughout the process.",
+            "Assigning individual steps to specific users or groups that interact with the process.",
+            "Grouping steps based on the systems and tools that will be used to implement the process.",
+            "Grouping steps of the process based on hand-offs or key branches of the process."
+          ],
+          "correctText": "Grouping steps of the process based on hand-offs or key branches of the process.",
+          "explanation": "In Flow Orchestration, stages should be used to organize a complicated process by grouping steps based on hand-offs or key branches of the process. Each stage can represent a major phase in the process involving a transition of responsibility or a significant decision point."
+        },
+        {
+          "id": "official:SimuladoV1.md:46",
+          "module": 9,
+          "question": "AnyAirlines is developing an RPA process to extract information from a legacy system. To capture the manual workflow, they leverage RPA Recorder. Which two best practices should they be aware of when working with the autogenerated workflow code? (Choose two.)",
+          "options": [
+            "All autocaptured information is for documentation purposes only.",
+            "Some autogenerated code must be replaced with more robust or specialized action steps.",
+            "The autogenerated workflows may contain sensitive information that must be removed.",
+            "All keystrokes and mouse clicks in the autogenerated code must be disabled before deploying to production."
+          ],
+          "correctText": "Some autogenerated code must be replaced with more robust or specialized action steps.",
+          "explanation": "When working with autogenerated workflow code from RPA Recorder: Replace Autogenerated Code: Some code may not be optimized for robustness, so it is necessary to review and replace parts with more robust or specialized action steps. Remove Sensitive Information: Autogenerated workflows might capture sensitive information (usernames, passwords), which must be removed or masked before deploying to production."
+        },
+        {
+          "id": "official:SimuladoV1.md:47",
+          "module": 9,
+          "question": "A MuleSoft developer at AnyAirlines wants to retrieve customer data from an external system. Before designing a new integration, what should they use to determine if the integration exists and can be reused?",
+          "options": [
+            "Design Center",
+            "Anypoint Studio",
+            "Anypoint Exchange",
+            "MuleSoft Composer"
+          ],
+          "correctText": "Anypoint Exchange",
+          "explanation": "Anypoint Exchange is a repository where developers can publish, share, and discover reusable assets such as APIs, connectors, and templates. By searching Anypoint Exchange, the developer can find existing integrations or assets, avoiding the need to develop a new integration from scratch."
+        },
+        {
+          "id": "official:SimuladoV1.md:48",
+          "module": 9,
+          "question": "Which component of Anypoint Platform is responsible for enforcing API policies?",
+          "options": [
+            "API Analytics",
+            "API Runtime",
+            "API Gateway",
+            "API Manager"
+          ],
+          "correctText": "API Gateway",
+          "explanation": "The API Gateway is the runtime component responsible for enforcing API policies. It acts as an intermediary that manages API traffic, security, and performance by applying the policies configured in API Manager (such as rate limiting and security)."
+        },
+        {
+          "id": "official:SimuladoV1.md:49",
+          "module": 9,
+          "question": "Northern Trail Outfitters publishes REST APIs to Anypoint Exchange. They write the REST APIs using RAML and share these APIs with internal and external users. In which language or languages can a user download these APIs?",
+          "options": [
+            "RAML and OAS only",
+            "RAML, OAS, and Apiary",
+            "RAML only",
+            "RAML and Apiary only"
+          ],
+          "correctText": "RAML and OAS only",
+          "explanation": "Users can download REST APIs published to Anypoint Exchange in RAML (RESTful API Modeling Language) and OAS (OpenAPI Specification). MuleSoft supports both formats, allowing users to choose between these two widely-used standards."
+        },
+        {
+          "id": "official:SimuladoV1.md:50",
+          "module": 9,
+          "question": "The MuleSoft development team at Northern Trail Outfitters creates a Mule application that interacts with several APIs and RPA processes. The team needs to share this application with other teams to help them create similar applications. How should the Mule application be published in Anypoint Exchange to meet this requirement?",
+          "options": [
+            "Template asset",
+            "Custom asset",
+            "Connector asset",
+            "API asset"
+          ],
+          "correctText": "Template asset",
+          "explanation": "To share a Mule application as a starting point for similar applications, it should be published as a Template asset. A Template includes predefined integration logic and configurations that can be used as a starting point for new projects, allowing other teams to leverage the pre-built solution and ensure consistency."
+        },
+        {
+          "id": "official:SimuladoV1.md:51",
+          "module": 9,
+          "question": "Northern Trail Outfitters must create a near real-time inventory API that can be used within its retail POS systems, across its mobile and online stores, and by its strategic B2B e-commerce partners. The API must provide accurate and up-to-date product inventory levels. The data currently resides in both SAP and NetSuite. According to best practices, which hyperautomation tool should be used to build this solution?",
+          "options": [
+            "Salesforce Flow",
+            "MuleSoft Composer",
+            "MuleSoft RPA",
+            "Anypoint Platform"
+          ],
+          "correctText": "Anypoint Platform",
+          "explanation": "The Anypoint Platform provides comprehensive integration capabilities, including real-time data processing, API management, and connectivity to systems like SAP and NetSuite. It supports building robust, scalable APIs that can handle near real-time data synchronization."
+        },
+        {
+          "id": "official:SimuladoV1.md:52",
+          "module": 9,
+          "question": "Which MuleSoft deployment strategy consists of the control plane and runtime plan hosted by the client?",
+          "options": [
+            "Private Cloud Edition",
+            "CloudHub",
+            "Runtime Fabric",
+            "Hybrid"
+          ],
+          "correctText": "Hybrid",
+          "explanation": "A hybrid deployment strategy involves hosting the control plane (Anypoint Platform management) in the cloud, while the runtime plane (where Mule applications run) is hosted by the client, either on-premises or in their own private cloud. (Note: The question asks for the strategy where runtime is hosted by the client; Private Cloud Edition hosts both control and runtime on client premises, but the context of the answer points to Hybrid as the intended distinction in many MuleSoft contexts, or the question phrasing implies a mix where client hosting is the key differentiator for the runtime part. However, based strictly on the provided text's explanation for answer D: \"Runtime plane is hosted by the client... Control plane is managed by MuleSoft\")."
+        },
+        {
+          "id": "official:SimuladoV1.md:53",
+          "module": 9,
+          "question": "An employee at AnyAirlines uses RPA Recorder to capture actions performed when carrying out a business process automation. How does this help expedite RPA process development?",
+          "options": [
+            "BPMN is autogenerated, including documentation in the form of images and a fully functional RPA process with workflows and conditional branching.",
+            "BPMN is autogenerated, which includes documentation in the form of images and a complete recording of keyboard actions and wait times.",
+            "BPMN is autogenerated with complete test plans and run configurations that can be executed in the test and production phases.",
+            "BPMN is autogenerated with documentation and workflows containing the recorded actions that are automatically created during the build phase."
+          ],
+          "correctText": "BPMN is autogenerated, which includes documentation in the form of images and a complete recording of keyboard actions and wait times.",
+          "explanation": "The RPA Recorder captures the business process and autogenerates a BPMN diagram. Along with the BPMN, it generates detailed documentation that includes images of the steps performed, as well as a complete recording of keyboard actions and wait times. This significantly reduces the time required to document and design the process."
+        },
+        {
+          "id": "official:SimuladoV1.md:54",
+          "module": 9,
+          "question": "The MuleSoft team at Northern Trail Outfitters wants to create a project skeleton that developers can use as a starting point when creating API implementations with Anypoint Studio. This will help drive consistent use of best practices within the team. Which type of Anypoint Exchange artifact should be added to Exchange to publish the project skeleton?",
+          "options": [
+            "RAML trail definitions to be reused across API implementations",
+            "A custom asset with the default API implementation",
+            "A MuleSoft application template with key components",
+            "An example of an API implementation following best practices"
+          ],
+          "correctText": "A MuleSoft application template with key components",
+          "explanation": "A MuleSoft application template includes key components and configurations that follow best practices. It provides a consistent starting point for new projects. Publishing this template to Anypoint Exchange allows developers to kickstart their API projects while adhering to uniform standards."
+        },
+        {
+          "id": "official:SimuladoV1.md:55",
+          "module": 9,
+          "question": "Northern Trail Outfitters (NTO) uses Flow Orchestration to automate quote development. The \"Review Quote\" work item is performed by their team of technical writers but can be fulfilled by any technical writer on the team. How can NTO ensure the \"Review Quote\" work item is assigned to the correct Salesforce user?",
+          "options": [
+            "Use backend steps to automate work item assignment to the next available technical writer.",
+            "Create a Group for the team of Salesforce Users and assign the work item to the group.",
+            "Use MuleSoft RPAto review the document and submit it for approval if no issues are found.",
+            "Create a user collection variable and assign the work item to the user collection."
+          ],
+          "correctText": "Create a Group for the team of Salesforce Users and assign the work item to the group.",
+          "explanation": "Create a Group in Salesforce that includes all the technical writers. When the \"Review Quote\" work item is created, assign it to the group rather than an individual user. This allows any available technical writer within the group to pick up and complete the task, providing flexibility."
+        },
+        {
+          "id": "official:SimuladoV1.md:56",
+          "module": 9,
+          "question": "AnyAirlines needs to automatically sync Salesforce accounts with NetSuite customers using a MuleSoft Composer flow. The Address field in the Salesforce Account object is a compound field consisting of the simple fields: Street, City, State, Zip, and Country. However, the Address field in the NetSuite Customer entity is a list consisting of the simple fields: Street, City, State, Zip, and Country. Which task must be performed to map fields of the Salesforce Address compound field to the corresponding fields of the NetSuite Address list in the flow?",
+          "options": [
+            "Combine the Salesforce address-related fields into a list using a custom formula field in Salesforce.",
+            "Combine the Salesforce address-related fields into a list using a custom expression in Composer.",
+            "Combine the Salesforce address-related fields into a list using the Get records action in Composer.",
+            "Break up the NetSuite Address list into fields that match Salesforce address-related fields using a custom formula field in NetSuite."
+          ],
+          "correctText": "Combine the Salesforce address-related fields into a list using a custom expression in Composer.",
+          "explanation": "Use a custom expression in MuleSoft Composer to combine the individual address-related fields from Salesforce (Street, City, State, etc.) into a format that matches the NetSuite Address list. This custom expression will concatenate the individual simple fields into a structured format that can be mapped directly to the NetSuite Address list."
+        },
+        {
+          "id": "official:SimuladoV1.md:57",
+          "module": 9,
+          "question": "The Ops team at AnyAirlines needs to periodically check the status of an API to see it the connected database is down for maintenance. Where should the Ops team set up a scheduled API call and view the status history?",
+          "options": [
+            "API Manager Analytics",
+            "API Functional Monitoring",
+            "API Manager Alerts",
+            "API Monitoring Dashboard"
+          ],
+          "correctText": "API Functional Monitoring",
+          "explanation": "API Functional Monitoring allows you to set up scheduled tests and monitor the functional performance of your APIs. It can be configured to periodically make API calls to check for specific conditions and provides a dashboard where you can view the history of these tests, including results and failures."
+        },
+        {
+          "id": "official:SimuladoV1.md:58",
+          "module": 9,
+          "question": "An AnyAirlines employee determines that an RPA process is a strong candidate for automation. When approving the process, the employee needs to specify a group of potential users to manage the RPA process throughout its lifecycle. According to best practices, which group should the employee choose?",
+          "options": [
+            "Scrum team",
+            "Center for Enablement",
+            "Center of Excellence",
+            "Multiple project managers"
+          ],
+          "correctText": "Center of Excellence",
+          "explanation": "The best practice is to choose the Center of Excellence (COE). The CoE is a team of experts responsible for overseeing the implementation, governance, and management of RPA processes. They ensure best practices are followed and manage the RPA process from development through deployment and maintenance."
+        },
+        {
+          "id": "official:SimuladoV1.md:59",
+          "module": 9,
+          "question": "Which Connected App scope should be used to connect RPA Manager with an Anypoint Platform account?",
+          "options": [
+            "Application Creator",
+            "API Catalog Contributor",
+            "RPA Integrator",
+            "Exchange Administrator"
+          ],
+          "correctText": "RPA Integrator",
+          "explanation": "The appropriate Connected App scope is RPA Integrator. This scope is designed to provide the necessary permissions for integrating RPA Manager with Anypoint Platform, allowing the connected app to interact with the RPA Manager and manage RPA processes."
+        },
+        {
+          "id": "official:SimuladoV1.md:60",
+          "module": 9,
+          "question": "Northern Trail Outfitters has deployed a MuleSoft RPA process to automate the extraction of sales data from CSV files. To integrate this RPA process with Sales Cloud, an action step is created that calls this RPA process in a MuleSoft Composer flow. Which next step must be added to the flow to make use of the RPA process results?",
+          "options": [
+            "Create Record action in Sales Cloud",
+            "If/Else block",
+            "Create or Update Record action in Sales Cloud",
+            "For Each loop"
+          ],
+          "correctText": "Create or Update Record action in Sales Cloud",
+          "explanation": "After the RPA process completes and returns the extracted data, the next step in the flow should be to update Sales Cloud. Use the Create or Update Record action to insert the new sales data into Sales Cloud. This action ensures that existing records are updated if they already exist, or new records are created if they don't."
+        }
+      ]
+    },
     {
       "title": "Simulado V2",
       "file": "Simulado V2.md",
@@ -326,7 +1117,7 @@
         {
           "id": "official:Simulado V2.md:25",
           "module": 9,
-          "question": "AnyAirlines must extract data from a legacy website with no API. Best tool?",
+          "question": "AnyAirlines must extract data from a legacy website with no API.Best tool?",
           "options": [
             "MuleSoft RPA",
             "MuleSoft Composer",
@@ -921,12 +1712,12 @@
           "question": "An architect is evaluating the use of API‑led connectivity in a hyperautomation initiative. What is the main benefit of this approach for Salesforce + MuleSoft?",
           "options": [
             "Providing a single giant API that covers all systems.",
-            "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems.[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+            "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems.",
             "Eliminating the need for any logic in Salesforce Flow.",
             "Completely replacing MuleSoft Composer.",
             "Forcing all processes to be synchronous."
           ],
-          "correctText": "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems.[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+          "correctText": "Splitting integrations into System, Process, and Experience APIs to promote reuse, governance, and decoupling between channels and systems.",
           "explanation": ""
         },
         {
@@ -974,7 +1765,7 @@
         {
           "id": "official:Simulado V3.md:13",
           "module": 9,
-          "question": "An admin is creating a new MuleSoft Composer flow. After selecting a Salesforce‑based connection, what should they configure as the first step of the flow, according to the documentation?[](https://docs.mulesoft.com/composer/mscomposeroverview)​",
+          "question": "An admin is creating a new MuleSoft Composer flow. After selecting a Salesforce‑based connection, what should they configure as the first step of the flow, according to the documentation?​",
           "options": [
             "An integration template.",
             "A trigger that defines which Salesforce event will start the flow.",
@@ -1058,7 +1849,7 @@
         {
           "id": "official:Simulado V3.md:19",
           "module": 9,
-          "question": "On the MuleSoft Composer home page, the Usage Summary section appears. What is its main purpose?[](https://docs.mulesoft.com/composer/mscomposeroverview)​",
+          "question": "On the MuleSoft Composer home page, the Usage Summary section appears. What is its main purpose?",
           "options": [
             "Show only the number of logged‑in users.",
             "Display monthly tasks and credit usage per flow for the organization.",
@@ -1086,7 +1877,7 @@
         {
           "id": "official:Simulado V3.md:21",
           "module": 9,
-          "question": "A critical Composer flow runs important integrations. The team wants to be notified of failures in addition to checking the Flow Details page. Which mechanism can be configured to send error notifications?[](https://www.pantherschools.com/what-is-mulesoft-composer/)​",
+          "question": "A critical Composer flow runs important integrations. The team wants to be notified of failures in addition to checking the Flow Details page. Which mechanism can be configured to send error notifications?",
           "options": [
             "Post to a Chatter feed by default.",
             "Send emails to a configured address.",
@@ -1394,7 +2185,7 @@
         {
           "id": "official:Simulado V3.md:43",
           "module": 9,
-          "question": "A company needs to create a new API‑based integration with MuleSoft. According to API‑led best practices, what should the developer’s first step be?[](https://onlineitguru.com/blog/mulesoft-composer)​",
+          "question": "A company needs to create a new API‑based integration with MuleSoft. According to API‑led best practices, what should the developer’s first step be?",
           "options": [
             "Create a project directly in Anypoint Studio with no specification.",
             "Install Mule runtime locally and start coding.",
@@ -1450,7 +2241,7 @@
         {
           "id": "official:Simulado V3.md:47",
           "module": 9,
-          "question": "A marketing team wants to run a monthly campaign for the top 10% customers with the highest loyalty points. The scenario uses API‑led connectivity and an external HTTP loyalty system. Which approach best aligns with API‑led best practices?[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+          "question": "A marketing team wants to run a monthly campaign for the top 10% customers with the highest loyalty points. The scenario uses API‑led connectivity and an external HTTP loyalty system. Which approach best aligns with API‑led best practices?",
           "options": [
             "Create a single giant API accessing all systems.",
             "Create System APIs for Customer and Loyalty, a Process API that combines the data, and an Experience API for business consumers.",
@@ -1520,7 +2311,7 @@
         {
           "id": "official:Simulado V3.md:52",
           "module": 9,
-          "question": "An integration team must monitor and manage APIs, including security policies, SLAs, and analytics. Which Anypoint Platform component is most appropriate for this function?[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+          "question": "An integration team must monitor and manage APIs, including security policies, SLAs, and analytics. Which Anypoint Platform component is most appropriate for this function?",
           "options": [
             "Anypoint Runtime Manager.",
             "Anypoint Exchange.",
@@ -1552,11 +2343,11 @@
           "options": [
             "Creating manual tests only.",
             "Configuring open, unauthenticated access for ease of use.",
-            "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager.[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+            "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager.",
             "Avoiding documentation to speed delivery.",
             "Leaving security entirely to the network team."
           ],
-          "correctText": "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager.[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+          "correctText": "Defining authentication standards, restricting access with policies, and monitoring usage via API Manager.",
           "explanation": ""
         },
         {
@@ -1576,7 +2367,7 @@
         {
           "id": "official:Simulado V3.md:56",
           "module": 9,
-          "question": "In a hyperautomation scenario, the team wants to reduce coupling between front ends and backend systems so internal changes do not break external channels. Which API‑led layer directly supports this objective?[](https://www.reddit.com/r/Preparationtips/comments/1m3pe3s/howtoprepareforthesalesforcecertified/)​",
+          "question": "In a hyperautomation scenario, the team wants to reduce coupling between front ends and backend systems so internal changes do not break external channels. Which API‑led layer directly supports this objective?",
           "options": [
             "System APIs.",
             "Process APIs.",
@@ -1641,855 +2432,6 @@
             "Focus only on internal integrations, ignoring customer experience."
           ],
           "correctText": "Run process discovery sessions, map end‑to‑end journeys, and prioritize high‑impact use cases aligned with the API and automation roadmap.",
-          "explanation": ""
-        }
-      ]
-    },
-    {
-      "title": "Simulado V3 Port",
-      "file": "Simulado V3 Port.md",
-      "version": "V3-PT",
-      "kind": "Simulado oficial",
-      "totalQuestions": 60,
-      "questions": [
-        {
-          "id": "official:Simulado V3 Port.md:1",
-          "module": 9,
-          "question": "A Northern Trail Outfitters quer modernizar seus processos substituindo tarefas manuais repetitivas por automações que combinam várias tecnologias (Flow, RPA, Composer e APIs). Segundo o posicionamento da Salesforce, o que melhor descreve Hyperautomation nesse contexto?",
-          "options": [
-            "Uso exclusivo de RPA para eliminar toda intervenção humana.",
-            "Combinação de múltiplas tecnologias de automação para orquestrar processos ponta a ponta.",
-            "Substituição de todos os sistemas legados por um único sistema ERP.",
-            "Execução de fluxos autolançados em lote toda noite.",
-            "Implantação de um único bot Einstein para todos os canais."
-          ],
-          "correctText": "Combinação de múltiplas tecnologias de automação para orquestrar processos ponta a ponta.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:2",
-          "module": 9,
-          "question": "Um arquiteto precisa explicar a diferença entre automação isolada e hyperautomation para a diretoria. Qual afirmação está mais alinhada ao entendimento recomendado pela Salesforce?",
-          "options": [
-            "Automação isolada foca em bots; hyperautomation foca apenas em APIs.",
-            "Automação isolada usa Composer; hyperautomation sempre usa Flow Orchestration.",
-            "Automação isolada resolve tarefas pontuais; hyperautomation conecta pessoas, dados e sistemas em jornadas completas de negócios.",
-            "Automação isolada é sempre síncrona; hyperautomation é sempre assíncrona.",
-            "Automação isolada roda na nuvem; hyperautomation roda apenas on‑premises."
-          ],
-          "correctText": "Automação isolada resolve tarefas pontuais; hyperautomation conecta pessoas, dados e sistemas em jornadas completas de negócios.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:3",
-          "module": 9,
-          "question": "Uma empresa quer reduzir o tempo de atendimento ao cliente conectando canais digitais, Salesforce Service Cloud, sistemas legados sem API e integrações em tempo real com parceiros. Qual combinação de componentes representa uma arquitetura típica de hyperautomation no ecossistema Salesforce?",
-          "options": [
-            "Flow Builder, MuleSoft Composer, MuleSoft RPA, APIs no Anypoint Platform e Flow Orchestration.",
-            "Apenas Apex e Lightning Web Components.",
-            "Apenas Einstein Bots e Digital Engagement.",
-            "Apenas MuleSoft APIs sem qualquer automação em Salesforce.",
-            "Apenas relatórios e dashboards em Analytics."
-          ],
-          "correctText": "Flow Builder, MuleSoft Composer, MuleSoft RPA, APIs no Anypoint Platform e Flow Orchestration.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:4",
-          "module": 9,
-          "question": "Um CIO quer escolher a melhor tecnologia de automação para cada tipo de tarefa. Qual mapeamento está mais alinhado com as recomendações para um cenário de hyperautomation?",
-          "options": [
-            "Salesforce Flow para qualquer integração externa, MuleSoft RPA para relatórios.",
-            "MuleSoft Composer para integrações SaaS a SaaS, MuleSoft RPA para tarefas em sistemas sem API, Flow Orchestration para coordenar etapas humanas e automáticas.",
-            "Apenas RPA para tudo, pois é mais flexível.",
-            "Apenas APIs REST para qualquer tipo de interação do usuário.",
-            "Apenas Apex por ser linguagem de programação completa."
-          ],
-          "correctText": "MuleSoft Composer para integrações SaaS a SaaS, MuleSoft RPA para tarefas em sistemas sem API, Flow Orchestration para coordenar etapas humanas e automáticas.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:5",
-          "module": 9,
-          "question": "Durante uma avaliação de maturidade em automação, o time percebe que tem dezenas de automações construídas por áreas distintas, sem governança. Qual prática está mais alinhada à visão de hyperautomation da Salesforce para corrigir esse problema?",
-          "options": [
-            "Centralizar tudo em um único desenvolvedor Apex.",
-            "Desligar automações existentes e começar do zero.",
-            "Criar um Center of Excellence (CoE) de automação com padrões de design, catálogo de ativos e monitoramento centralizado.",
-            "Migrar todas as automações para um único fluxo em Flow Builder.",
-            "Mover todas as integrações para planilhas."
-          ],
-          "correctText": "Criar um Center of Excellence (CoE) de automação com padrões de design, catálogo de ativos e monitoramento centralizado.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:6",
-          "module": 9,
-          "question": "Um consultor está definindo uma estratégia de governança para hyperautomation. Qual elemento é mais importante para garantir escalabilidade e reutilização?",
-          "options": [
-            "Criar apenas automações em ambiente de produção.",
-            "Evitar documentação para ganhar velocidade.",
-            "Estabelecer naming conventions, padrões de integração (API-led), versionamento e ambientes de teste.",
-            "Permitir que qualquer usuário ative automações diretamente em produção.",
-            "Desabilitar logs para reduzir custos."
-          ],
-          "correctText": "Estabelecer naming conventions, padrões de integração (API-led), versionamento e ambientes de teste.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:7",
-          "module": 9,
-          "question": "Uma empresa deseja implementar hyperautomation com foco em segurança de dados. Qual abordagem está mais alinhada às boas práticas?",
-          "options": [
-            "Expor dados sensíveis em logs de fluxo para facilitar troubleshooting.",
-            "Usar apenas usuários genéricos de integração, com permissões de administrador em todos os sistemas.",
-            "Aplicar princípio de menor privilégio nas integrações, mascarar dados sensíveis em logs e usar autenticação forte para conexões.",
-            "Armazenar tokens de acesso em campos de texto em objetos personalizados.",
-            "Compartilhar credenciais de integração por e‑mail."
-          ],
-          "correctText": "Aplicar princípio de menor privilégio nas integrações, mascarar dados sensíveis em logs e usar autenticação forte para conexões.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:8",
-          "module": 9,
-          "question": "Ao desenhar um roadmap de hyperautomation, o time de negócios quer priorizar iniciativas. Qual critério é mais adequado para definir quais processos automatizar primeiro?",
-          "options": [
-            "Quantidade de campos no objeto.",
-            "Complexidade técnica das integrações.",
-            "Combinação de impacto de negócio (economia de tempo, redução de erros) e viabilidade técnica.",
-            "Número de usuários que trabalham no processo, independentemente do valor gerado.",
-            "Escolher apenas processos que envolvam RPA."
-          ],
-          "correctText": "Combinação de impacto de negócio (economia de tempo, redução de erros) e viabilidade técnica.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:9",
-          "module": 9,
-          "question": "Um arquiteto está avaliando o uso de API-led connectivity em uma iniciativa de hyperautomation. Qual é o principal benefício dessa abordagem dentro do contexto Salesforce + MuleSoft?",
-          "options": [
-            "Fornecer uma única API gigante que cobre todos os sistemas.",
-            "Dividir integrações em System, Process e Experience APIs, promovendo reutilização, governança e desacoplamento entre canais e sistemas.",
-            "Eliminar a necessidade de qualquer lógica em Salesforce Flow.",
-            "Substituir completamente o uso de MuleSoft Composer.",
-            "Forçar que todos os processos sejam síncronos."
-          ],
-          "correctText": "Dividir integrações em System, Process e Experience APIs, promovendo reutilização, governança e desacoplamento entre canais e sistemas.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:10",
-          "module": 9,
-          "question": "A diretoria quer entender o papel da IA em hyperautomation com Salesforce. Qual opção representa um uso típico de IA no contexto da certificação Hyperautomation Specialist?",
-          "options": [
-            "IA substitui todas as regras de negócio em flows.",
-            "Einstein Next Best Action recomenda ações enquanto Flow Orchestration e integrações executam os próximos passos.",
-            "IA é usada apenas para criar dashboards.",
-            "IA é usada somente em bots Einstein, sem integração com processos.",
-            "IA é obrigatória para qualquer automação."
-          ],
-          "correctText": "Einstein Next Best Action recomenda ações enquanto Flow Orchestration e integrações executam os próximos passos.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:11",
-          "module": 9,
-          "question": "A Northern Trail Outfitters quer automatizar a sincronização de contatos entre Salesforce e Google Sheets usando uma interface no‑code. Segundo a documentação oficial, qual ferramenta deve ser usada?",
-          "options": [
-            "Anypoint Studio.",
-            "MuleSoft Composer.",
-            "Mule runtime on‑premises.",
-            "Salesforce CLI.",
-            "Apex REST."
-          ],
-          "correctText": "MuleSoft Composer.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:12",
-          "module": 9,
-          "question": "Em MuleSoft Composer, qual elemento representa as credenciais e URL usadas para acessar um sistema como Salesforce, Slack ou NetSuite?",
-          "options": [
-            "Trigger.",
-            "Action.",
-            "Connection.",
-            "Template.",
-            "Orchestration."
-          ],
-          "correctText": "Connection.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:13",
-          "module": 9,
-          "question": "Um administrador está criando um fluxo no MuleSoft Composer. Após escolher uma conexão baseada em Salesforce, o que ele deve configurar como primeiro passo do fluxo, de acordo com a documentação?",
-          "options": [
-            "Um template de integração.",
-            "Um trigger que define qual evento em Salesforce iniciará o fluxo.",
-            "Uma ação de escrita em outro sistema.",
-            "Um monitor de uso.",
-            "Uma etapa de teste unitário."
-          ],
-          "correctText": "Um trigger que define qual evento em Salesforce iniciará o fluxo.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:14",
-          "module": 9,
-          "question": "Um fluxo do Composer precisa ser executado a cada 15 minutos, independentemente de eventos em sistemas externos. O que deve ser configurado?",
-          "options": [
-            "Um trigger do tipo \"record created\" em Salesforce.",
-            "Um trigger de evento de plataforma.",
-            "Um agendamento (schedule) como início do fluxo, sem conexão específica.",
-            "Uma ação assíncrona de Apex.",
-            "Um template de automação."
-          ],
-          "correctText": "Um agendamento (schedule) como início do fluxo, sem conexão específica.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:15",
-          "module": 9,
-          "question": "Durante a criação de um fluxo no MuleSoft Composer, o administrador vê dados de exemplo passando pelos passos do fluxo. Qual é o principal objetivo dessa funcionalidade de sample data?",
-          "options": [
-            "Registrar logs definitivos de produção.",
-            "Permitir testar cada mudança em tempo quase real, facilitando validação das etapas antes da ativação.",
-            "Gerar relatórios analíticos automáticos.",
-            "Reduzir custos de licenciamento.",
-            "Criar novos objetos personalizados."
-          ],
-          "correctText": "Permitir testar cada mudança em tempo quase real, facilitando validação das etapas antes da ativação.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:16",
-          "module": 9,
-          "question": "Após configurar triggers e ações em um fluxo do Composer, o que o administrador deve fazer antes de ativar o fluxo em produção, conforme a documentação?",
-          "options": [
-            "Exportar o fluxo para Anypoint Studio.",
-            "Testar o fluxo em um único registro para validar o comportamento.",
-            "Compilar o fluxo em código Java.",
-            "Converter o fluxo em um template gerenciado.",
-            "Migrar o fluxo para um org de produção separado."
-          ],
-          "correctText": "Testar o fluxo em um único registro para validar o comportamento.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:17",
-          "module": 9,
-          "question": "Um fluxo do Composer foi ativado, mas os usuários suspeitam que ele não está atualizando um sistema de destino corretamente. Onde o administrador deve verificar a execução e eventuais erros?",
-          "options": [
-            "Na página de detalhes do fluxo (Flow Details) em MuleSoft Composer.",
-            "Apenas nos logs do Salesforce Debug.",
-            "Apenas no Anypoint Monitoring.",
-            "Apenas no Setup Audit Trail.",
-            "Em relatórios do Data Cloud."
-          ],
-          "correctText": "Na página de detalhes do fluxo (Flow Details) em MuleSoft Composer.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:18",
-          "module": 9,
-          "question": "Uma empresa deseja começar rapidamente com automações comuns, como sincronizar contatos entre dois sistemas. Na home do MuleSoft Composer, qual recurso pode ser usado para acelerar a criação do fluxo?",
-          "options": [
-            "Usage Summary.",
-            "Templates pré‑construídos.",
-            "Help Center.",
-            "Flow Orchestration.",
-            "RPA Manager."
-          ],
-          "correctText": "Templates pré‑construídos.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:19",
-          "module": 9,
-          "question": "O painel inicial do MuleSoft Composer exibe uma seção Usage Summary. Qual é o propósito principal dessa funcionalidade?",
-          "options": [
-            "Mostrar apenas o número de usuários logados.",
-            "Exibir tarefas mensais e uso de créditos por fluxo para a organização.",
-            "Configurar licenças de usuários do Salesforce.",
-            "Criar novos objetos personalizados.",
-            "Gerar relatórios financeiros."
-          ],
-          "correctText": "Exibir tarefas mensais e uso de créditos por fluxo para a organização.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:20",
-          "module": 9,
-          "question": "Um administrador está planejando um fluxo Composer que copia registros modificados em Salesforce para um sistema de faturamento. Qual boa prática ele deve seguir ao configurar as ações?",
-          "options": [
-            "Copiar todos os registros da tabela, independentemente de mudanças.",
-            "Copiar apenas registros novos ou alterados desde a última execução, reduzindo processamento.",
-            "Sempre copiar todos os campos, mesmo os irrelevantes.",
-            "Evitar filtros para simplificar o fluxo.",
-            "Configurar múltiplos triggers para o mesmo evento."
-          ],
-          "correctText": "Copiar apenas registros novos ou alterados desde a última execução, reduzindo processamento.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:21",
-          "module": 9,
-          "question": "Um fluxo MuleSoft Composer está realizando integrações críticas. O time deseja ser avisado se ocorrerem falhas, além de consultar a página de Flow Details. Qual mecanismo pode ser configurado para enviar notificações de erro?",
-          "options": [
-            "Publicar em um feed do Chatter.",
-            "Enviar e‑mails para um endereço configurado.",
-            "Enviar notificações push no aplicativo móvel Salesforce.",
-            "Criar um registro de caso automaticamente.",
-            "Enviar mensagem para canal do Slack por padrão, sem configuração."
-          ],
-          "correctText": "Enviar e‑mails para um endereço configurado.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:22",
-          "module": 9,
-          "question": "Uma empresa deseja sincronizar dados em tempo quase real entre dois orgs Salesforce usando MuleSoft Composer. Quantos fluxos são necessários para um cenário de sincronização bidirecional?",
-          "options": [
-            "1.",
-            "2.",
-            "3.",
-            "4.",
-            "5."
-          ],
-          "correctText": "2.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:23",
-          "module": 9,
-          "question": "Em um projeto de integração com Composer, a equipe de TI orienta que todos os testes devem ser feitos em orgs sandbox antes de ir para produção. Quais conexões devem apontar para sandbox durante testes?",
-          "options": [
-            "Apenas o trigger.",
-            "Apenas a última ação do fluxo.",
-            "Tanto o trigger quanto todas as ações que interagem com Salesforce.",
-            "Apenas ações que escrevem em sistemas externos.",
-            "Não é recomendável testar em sandbox."
-          ],
-          "correctText": "Tanto o trigger quanto todas as ações que interagem com Salesforce.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:24",
-          "module": 9,
-          "question": "Um administrador acessa o MuleSoft Composer e deseja criar um novo fluxo. Na página inicial, qual opção ele deve selecionar para começar do zero?",
-          "options": [
-            "Usage Summary.",
-            "Flows Create new flow.",
-            "Help Create flow.",
-            "Templates Activate.",
-            "Settings New."
-          ],
-          "correctText": "Flows Create new flow.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:25",
-          "module": 9,
-          "question": "Um analista quer entender como o MuleSoft Composer auxilia na quebra da complexidade de integrações entre sistemas. Como a documentação descreve esse benefício?",
-          "options": [
-            "Ao ocultar completamente a lógica de integração do usuário.",
-            "Ao permitir que o usuário experimente e itere sobre um fluxo, dividindo a lógica em passos claros e ajustando conforme descobre novos casos de uso.",
-            "Ao gerar automaticamente código Apex.",
-            "Ao substituir todos os sistemas legados por Salesforce.",
-            "Ao impedir que flows sejam modificados após ativados."
-          ],
-          "correctText": "Ao permitir que o usuário experimente e itere sobre um fluxo, dividindo a lógica em passos claros e ajustando conforme descobre novos casos de uso.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:26",
-          "module": 9,
-          "question": "A Northern Trail Outfitters precisa automatizar uma série de ações em Salesforce que será executada por um único usuário após a criação de um registro de caso. A solução precisa organizar ações em etapas lógicas e permitir entrada de dados do usuário durante o processo. Qual recurso é mais adequado?",
-          "options": [
-            "Um único fluxo autolançado com Apex invocado.",
-            "Uma Flow Orchestration com Stages e Steps para organizar ações automatizadas e interações do usuário.",
-            "Um processo no Process Builder.",
-            "Um fluxo em lote executado diariamente.",
-            "Um workflow rule."
-          ],
-          "correctText": "Uma Flow Orchestration com Stages e Steps para organizar ações automatizadas e interações do usuário.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:27",
-          "module": 9,
-          "question": "Um administrador quer automatizar um processo guiado, em que o usuário interage com telas e toma decisões. Qual tipo de flow é mais adequado?",
-          "options": [
-            "Screen Flow.",
-            "Record‑Triggered Flow.",
-            "Schedule‑Triggered Flow.",
-            "Autolaunched Flow sem tela.",
-            "Before‑save Flow."
-          ],
-          "correctText": "Screen Flow.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:28",
-          "module": 9,
-          "question": "Uma empresa precisa executar um fluxo automaticamente quando um registro de Conta é criado ou atualizado, antes de ser salvo no banco de dados, para atualizar um campo calculado. Qual tipo de Flow deve ser usado?",
-          "options": [
-            "Screen Flow.",
-            "Record‑Triggered Flow antes da gravação (before‑save).",
-            "Schedule‑Triggered Flow.",
-            "Flow Orchestration Step.",
-            "Platform Event‑Triggered Flow."
-          ],
-          "correctText": "Record‑Triggered Flow antes da gravação (before‑save).",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:29",
-          "module": 9,
-          "question": "Em Flow Builder, ao clicar em Debug, o que o administrador obtém que é diferente de Run?",
-          "options": [
-            "Debug executa versão antiga do fluxo.",
-            "Debug mostra detalhes de cada etapa, incluindo entradas, saídas e eventuais erros, ajudando a identificar problemas.",
-            "Debug executa apenas para usuários administradores.",
-            "Debug desativa todas as validações.",
-            "Debug publica logs apenas em arquivos externos."
-          ],
-          "correctText": "Debug mostra detalhes de cada etapa, incluindo entradas, saídas e eventuais erros, ajudando a identificar problemas.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:30",
-          "module": 9,
-          "question": "Uma Flow Orchestration precisa envolver múltiplos times em diferentes etapas de um processo de aprovação de projeto. Como Interactive Steps ajudam nesse cenário?",
-          "options": [
-            "Permitem que usuários interajam com o processo entre etapas automatizadas, concluindo tarefas atribuídas antes que a orquestração siga para o próximo passo.",
-            "Eliminam a necessidade de licenças Salesforce.",
-            "Substituem completamente qualquer ação automatizada.",
-            "Criam automaticamente relatórios de Analytics.",
-            "São usadas apenas para integrações externas."
-          ],
-          "correctText": "Permitem que usuários interajam com o processo entre etapas automatizadas, concluindo tarefas atribuídas antes que a orquestração siga para o próximo passo.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:31",
-          "module": 9,
-          "question": "Um administrador quer reutilizar lógica comum em vários flows, como validações e atualizações de campos. Qual recurso é recomendado?",
-          "options": [
-            "Flow Orchestration.",
-            "Subflows chamados a partir de um flow principal.",
-            "Workflow Rules.",
-            "Process Builder.",
-            "Apex Triggers."
-          ],
-          "correctText": "Subflows chamados a partir de um flow principal.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:32",
-          "module": 9,
-          "question": "Uma empresa deseja automatizar um processo em que um conjunto de registros deve ser processado em lote diariamente às 23h. Qual tipo de flow é mais adequado?",
-          "options": [
-            "Screen Flow.",
-            "Schedule‑Triggered Flow.",
-            "Record‑Triggered Flow.",
-            "Autolaunched Flow acionado manualmente.",
-            "Flow Orchestration."
-          ],
-          "correctText": "Schedule‑Triggered Flow.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:33",
-          "module": 9,
-          "question": "Um arquiteto está revisando o uso de automações em um org. A recomendação atual da Salesforce é priorizar qual tecnologia para novas automações declarativas?",
-          "options": [
-            "Workflow Rules.",
-            "Process Builder.",
-            "Salesforce Flow (Flow Builder).",
-            "Apex Triggers para tudo.",
-            "Nenhuma automação declarativa."
-          ],
-          "correctText": "Salesforce Flow (Flow Builder).",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:34",
-          "module": 9,
-          "question": "Um administrador está testando um fluxo que ainda está inativo. O que o modo Run em Flow Builder utiliza ao executar o fluxo?",
-          "options": [
-            "Sempre a versão ativa.",
-            "A versão mais recente salva do fluxo, mesmo que ainda não esteja ativa.",
-            "Uma versão aleatória.",
-            "Apenas versões implantadas via change set.",
-            "Apenas versões clonadas."
-          ],
-          "correctText": "A versão mais recente salva do fluxo, mesmo que ainda não esteja ativa.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:35",
-          "module": 9,
-          "question": "Um processo de hyperautomation exige que um usuário analise dados e tome uma decisão manual em determinado ponto, após várias ações automáticas. Onde esse tipo de interação humana se encaixa melhor?",
-          "options": [
-            "Em um Interactive Step de uma Flow Orchestration.",
-            "Em um SOQL dentro de Apex.",
-            "Em um relatório estático.",
-            "Em um template de Composer.",
-            "Em uma função de IA autônoma."
-          ],
-          "correctText": "Em um Interactive Step de uma Flow Orchestration.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:36",
-          "module": 9,
-          "question": "Uma empresa quer expor uma ação externa (fornecida por um serviço REST) para ser chamada dentro de um fluxo Salesforce de forma declarativa. Que recurso da plataforma deve ser usado para registrar essa ação?",
-          "options": [
-            "Named Credentials apenas.",
-            "External Services com especificações OpenAPI importadas.",
-            "Apex Managed Sharing.",
-            "Platform Events.",
-            "Big Objects."
-          ],
-          "correctText": "External Services com especificações OpenAPI importadas.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:37",
-          "module": 9,
-          "question": "Em um fluxo de hyperautomation, o time quer coordenar a execução de múltiplos flows e etapas humanas em um processo de vários dias, com SLAs e dependências. Qual recurso é mais apropriado?",
-          "options": [
-            "Um único autolaunched flow.",
-            "Flow Orchestration.",
-            "MuleSoft Composer.",
-            "Um fluxo de tela simples.",
-            "Apex Batch."
-          ],
-          "correctText": "Flow Orchestration.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:38",
-          "module": 9,
-          "question": "Um administrador está recebendo erros frequentes em um fluxo record‑triggered em produção. Qual prática é recomendada para depurar o problema sem impactar usuários finais?",
-          "options": [
-            "Desativar o fluxo em produção e esperar.",
-            "Clonar o fluxo para um sandbox, reproduzir o cenário com Debug e ajustar a lógica.",
-            "Alterar o fluxo diretamente em produção sem testes.",
-            "Apagar o fluxo e recriá‑lo do zero.",
-            "Ignorar os erros, pois o sistema se ajustará com o tempo."
-          ],
-          "correctText": "Clonar o fluxo para um sandbox, reproduzir o cenário com Debug e ajustar a lógica.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:39",
-          "module": 9,
-          "question": "Um desenvolvedor criou um flow complexo que mistura lógica de interface com integrações externas. Para torná‑lo mais sustentável, qual abordagem está alinhada às boas práticas?",
-          "options": [
-            "Manter tudo em um único fluxo para facilitar a leitura.",
-            "Separar lógica de interface em Screen Flows, lógica de negócio em autolaunched flows e integrações em APIs reutilizáveis.",
-            "Converter todo o fluxo em Apex.",
-            "Mover a lógica para Process Builder.",
-            "Usar apenas RPA para interagir com Salesforce."
-          ],
-          "correctText": "Separar lógica de interface em Screen Flows, lógica de negócio em autolaunched flows e integrações em APIs reutilizáveis.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:40",
-          "module": 9,
-          "question": "Em Flow Builder, qual é a principal diferença de propósito entre Run e Debug?",
-          "options": [
-            "Run usa sempre a versão ativa; Debug usa sempre a versão antiga.",
-            "Run executa o fluxo normalmente; Debug exibe detalhes de cada etapa (inputs, outputs e erros) para fins de depuração.",
-            "Run só funciona em produção; Debug só funciona em sandbox.",
-            "Run ignora validações; Debug aplica todas as validações.",
-            "Run usa dados de exemplo; Debug usa apenas dados reais."
-          ],
-          "correctText": "Run executa o fluxo normalmente; Debug exibe detalhes de cada etapa (inputs, outputs e erros) para fins de depuração.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:41",
-          "module": 9,
-          "question": "A AnyAirlines precisa automatizar um processo que obtém dados de um site antigo que não expõe APIs. Qual combinação de ferramentas é mais apropriada na estratégia de hyperautomation?",
-          "options": [
-            "Apenas MuleSoft Composer.",
-            "MuleSoft RPA para interagir com o site e MuleSoft Composer para orquestrar a automação com Salesforce.",
-            "Apenas Apex.",
-            "Apenas relatórios em Salesforce.",
-            "Somente Flow Orchestration."
-          ],
-          "correctText": "MuleSoft RPA para interagir com o site e MuleSoft Composer para orquestrar a automação com Salesforce.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:42",
-          "module": 9,
-          "question": "Durante o uso do RPA Recorder em MuleSoft RPA, um analista está gravando uma atividade manual em um sistema legado. Que tipo de informação o Recorder coleta automaticamente para suportar a automação?",
-          "options": [
-            "Comentários de negócio sobre cada passo.",
-            "Decisões condicionais tomadas pelo usuário.",
-            "Documentação dos elementos de interface usados (botões, campos, etc.).",
-            "Valores de variáveis de ambiente.",
-            "Senhas em texto plano."
-          ],
-          "correctText": "Documentação dos elementos de interface usados (botões, campos, etc.).",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:43",
-          "module": 9,
-          "question": "Uma empresa precisa criar uma nova integração baseada em APIs usando MuleSoft. De acordo com as boas práticas de API‑led connectivity, qual deve ser o primeiro passo do desenvolvedor?",
-          "options": [
-            "Criar um projeto diretamente no Anypoint Studio sem especificação.",
-            "Instalar runtime Mule localmente e começar a codar.",
-            "Criar a especificação da API (RAML) no Design Center, definindo recursos, métodos e contratos.",
-            "Abrir um caso de suporte na Salesforce.",
-            "Criar um fluxo Composer."
-          ],
-          "correctText": "Criar a especificação da API (RAML) no Design Center, definindo recursos, métodos e contratos.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:44",
-          "module": 9,
-          "question": "A AnyAirlines está desenvolvendo uma nova integração e quer ter testes automatizados integrados ao processo de desenvolvimento de APIs. Qual componente do Anypoint Platform atende melhor a essa necessidade?",
-          "options": [
-            "MuleSoft RPA.",
-            "MuleSoft Composer.",
-            "MUnit dentro do Anypoint Studio e Anypoint Platform.",
-            "Salesforce Flow Debug.",
-            "Einstein Bots."
-          ],
-          "correctText": "MUnit dentro do Anypoint Studio e Anypoint Platform.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:45",
-          "module": 9,
-          "question": "Uma empresa quer implantar o Anypoint Platform aproveitando serviços da AWS, com escalabilidade vertical/horizontal e zero downtime em implantações. Que estratégia de deployment é mais adequada?",
-          "options": [
-            "Apenas Runtime local standalone.",
-            "CloudHub.",
-            "Runtime Fabric em infraestrutura AWS.",
-            "Private Cloud Edition em datacenter próprio.",
-            "Instalação manual de runtimes em VMs isoladas sem orquestração."
-          ],
-          "correctText": "Runtime Fabric em infraestrutura AWS.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:46",
-          "module": 9,
-          "question": "Um processo de RPA em produção da AnyAirlines começou a falhar. Segundo as práticas recomendadas, qual é a melhor forma de depurar o problema?",
-          "options": [
-            "Desativar o processo e analisar manualmente prints de tela.",
-            "Baixar o pacote de análise no RPA Manager, reverter o processo para a fase de Build, importar o pacote no RPA Builder e depurar.",
-            "Modificar o processo diretamente em produção.",
-            "Ignorar as falhas até que parem.",
-            "Deletar o processo e recriá‑lo."
-          ],
-          "correctText": "Baixar o pacote de análise no RPA Manager, reverter o processo para a fase de Build, importar o pacote no RPA Builder e depurar.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:47",
-          "module": 9,
-          "question": "Um time de marketing quer rodar uma campanha mensal para os 10% clientes com mais pontos de fidelidade. O cenário usa API‑led connectivity e dados de lealdade em sistema externo HTTP. Qual abordagem é mais alinhada às boas práticas de API‑led?",
-          "options": [
-            "Criar uma única API gigante que acesse todos os sistemas.",
-            "Criar System APIs para Cliente e Fidelidade, um Process API que combine os dados e um Experience API para os consumidores de negócio.",
-            "Fazer tudo em RPA.",
-            "Fazer tudo em relatórios Salesforce.",
-            "Usar planilhas locais."
-          ],
-          "correctText": "Criar System APIs para Cliente e Fidelidade, um Process API que combine os dados e um Experience API para os consumidores de negócio.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:48",
-          "module": 9,
-          "question": "Em um pipeline de hyperautomation, o time quer expor uma API para um canal móvel, outra para um portal web, ambas consumindo as mesmas capacidades de backend. Que camada da abordagem API‑led normalmente atende a esses canais?",
-          "options": [
-            "System API.",
-            "Process API.",
-            "Experience API.",
-            "Batch API.",
-            "Sync API."
-          ],
-          "correctText": "Experience API.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:49",
-          "module": 9,
-          "question": "Um arquiteto está desenhando o uso de MuleSoft RPA em conjunto com APIs. Em qual situação RPA é mais indicado, segundo a visão de hyperautomation?",
-          "options": [
-            "Sempre que houver APIs REST bem definidas.",
-            "Quando o sistema não tem APIs ou acesso direto a dados, mas possui interface de usuário estável.",
-            "Quando o cliente prefere não usar Salesforce.",
-            "Quando se deseja substituir todos os flows declarativos.",
-            "Quando se quer apenas relatórios."
-          ],
-          "correctText": "Quando o sistema não tem APIs ou acesso direto a dados, mas possui interface de usuário estável.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:50",
-          "module": 9,
-          "question": "Uma empresa utiliza MuleSoft Composer, Flow e RPA em sua estratégia de hyperautomation. Quem normalmente é o principal público‑alvo do MuleSoft Composer dentro dessa combinação?",
-          "options": [
-            "Desenvolvedores de baixo nível que codificam em Java.",
-            "Admins e analistas de negócio que precisam construir integrações SaaS a SaaS de forma rápida, com interface visual.",
-            "Usuários finais sem permissão de edição.",
-            "Equipe de segurança apenas.",
-            "Somente arquitetos de integração seniores."
-          ],
-          "correctText": "Admins e analistas de negócio que precisam construir integrações SaaS a SaaS de forma rápida, com interface visual.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:51",
-          "module": 9,
-          "question": "Um analista está configurando um fluxo de RPA para executar diariamente às 10h com duração de uma hora. O job é reexecutado em intervalo fixo de 45 minutos. Em qual horário o processo será executado pela segunda vez, assumindo que não há falhas?",
-          "options": [
-            "10h45.",
-            "11h00.",
-            "11h45, pois a próxima execução só inicia 45 minutos após a conclusão do primeiro job.",
-            "10h15.",
-            "12h00."
-          ],
-          "correctText": "11h45, pois a próxima execução só inicia 45 minutos após a conclusão do primeiro job.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:52",
-          "module": 9,
-          "question": "Um time de integração precisa monitorar e gerenciar APIs, incluindo políticas de segurança, SLAs e analytics. Qual componente do Anypoint Platform é mais apropriado para essa função?",
-          "options": [
-            "Anypoint Runtime Manager.",
-            "Anypoint Exchange.",
-            "Anypoint API Manager.",
-            "Design Center.",
-            "RPA Manager."
-          ],
-          "correctText": "Anypoint API Manager.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:53",
-          "module": 9,
-          "question": "Uma organização deseja publicar ativos reutilizáveis, como especificações de API, templates e conectores, para consumo por outros times. Qual recurso deve ser utilizado?",
-          "options": [
-            "Anypoint Runtime Manager.",
-            "Anypoint Exchange.",
-            "MUnit.",
-            "DataWeave.",
-            "RPA Builder."
-          ],
-          "correctText": "Anypoint Exchange.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:54",
-          "module": 9,
-          "question": "No contexto da certificação Hyperautomation Specialist, qual é uma responsabilidade típica do profissional ao trabalhar com governança de APIs?",
-          "options": [
-            "Criar apenas testes manuais.",
-            "Configurar acesso aberto (sem autenticação) para facilitar consumo.",
-            "Definir padrões de autenticação, limitar acesso por políticas e monitorar consumo via API Manager.",
-            "Evitar documentação para agilizar entregas.",
-            "Deixar a segurança sob responsabilidade exclusiva da área de redes."
-          ],
-          "correctText": "Definir padrões de autenticação, limitar acesso por políticas e monitorar consumo via API Manager.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:55",
-          "module": 9,
-          "question": "Uma empresa quer garantir que apenas usuários autorizados consigam disparar automações que envolvem dados sensíveis em Salesforce, Composer e RPA. Qual estratégia é mais apropriada?",
-          "options": [
-            "Dar perfil System Administrator para todos.",
-            "Controlar permissões via perfis/permisson sets em Salesforce, limitar credenciais de conexões do Composer e usar controle de acesso em RPA Manager.",
-            "Compartilhar credenciais em um documento.",
-            "Usar apenas logins genéricos.",
-            "Desativar autenticação multifator."
-          ],
-          "correctText": "Controlar permissões via perfis/permisson sets em Salesforce, limitar credenciais de conexões do Composer e usar controle de acesso em RPA Manager.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:56",
-          "module": 9,
-          "question": "Em um cenário de hyperautomation, a equipe quer reduzir o acoplamento entre front‑ends e sistemas de backend, garantindo que mudanças internas não quebrem canais externos. Qual camada da abordagem API‑led ajuda diretamente nesse objetivo?",
-          "options": [
-            "System APIs.",
-            "Process APIs.",
-            "Experience APIs.",
-            "Batch APIs.",
-            "RPA processes."
-          ],
-          "correctText": "Process APIs.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:57",
-          "module": 9,
-          "question": "Um arquiteto está decidindo entre usar MuleSoft Composer ou desenvolver uma integração completa via Anypoint Platform. Em qual cenário Composer é mais indicado?",
-          "options": [
-            "Integrações altamente customizadas com requisitos complexos de performance e governança.",
-            "Integrações simples SaaS a SaaS, com necessidade de rapidez de entrega e baixo esforço de codificação.",
-            "Implementações on‑premises sem acesso à nuvem.",
-            "Processos que exigem testes unitários aprofundados via MUnit.",
-            "Situações em que não se deseja interface visual."
-          ],
-          "correctText": "Integrações simples SaaS a SaaS, com necessidade de rapidez de entrega e baixo esforço de codificação.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:58",
-          "module": 9,
-          "question": "Uma empresa quer usar MuleSoft RPA e Composer para um processo de atendimento que envolve captura de dados em um sistema legado, atualização de registros em Salesforce e notificação em Slack. Qual desenho representa melhor a abordagem de hyperautomation?",
-          "options": [
-            "RPA faz tudo, sem Composer ou Salesforce.",
-            "Composer orquestra o processo, chamando um bot RPA para interagir com o sistema legado, atualizando Salesforce e enviando mensagens ao Slack.",
-            "Apenas um fluxo record‑triggered em Salesforce.",
-            "Somente uma API REST.",
-            "Apenas relatórios."
-          ],
-          "correctText": "Composer orquestra o processo, chamando um bot RPA para interagir com o sistema legado, atualizando Salesforce e enviando mensagens ao Slack.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:59",
-          "module": 9,
-          "question": "Um time está definindo KPIs para medir o sucesso de iniciativas de hyperautomation. Qual conjunto de métricas é mais relevante?",
-          "options": [
-            "Número de objetos personalizados criados, número de triggers Apex.",
-            "Redução de tempo de ciclo, diminuição de erros manuais, aumento de throughput de casos/processos e satisfação dos usuários.",
-            "Tamanho do código Apex, volume de logs.",
-            "Quantidade de perfis de usuário.",
-            "Número de dashboards criados."
-          ],
-          "correctText": "Redução de tempo de ciclo, diminuição de erros manuais, aumento de throughput de casos/processos e satisfação dos usuários.",
-          "explanation": ""
-        },
-        {
-          "id": "official:Simulado V3 Port.md:60",
-          "module": 9,
-          "question": "Um arquiteto de hyperautomation precisa alinhar stakeholders de negócio e TI sobre o escopo das próximas ondas de automação. Qual prática é mais adequada?",
-          "options": [
-            "Deixar cada área criar automações isoladas, sem alinhamento.",
-            "Conduzir sessões de descoberta de processos (“process discovery”), mapear jornadas de ponta a ponta e priorizar casos de uso com alto impacto, alinhando‑os ao roadmap de APIs e automações.",
-            "Começar diretamente pela implementação técnica sem envolver o negócio.",
-            "Escolher apenas processos fáceis, independentemente do valor.",
-            "Focar apenas em integrações internas, ignorando experiência do cliente."
-          ],
-          "correctText": "Conduzir sessões de descoberta de processos (“process discovery”), mapear jornadas de ponta a ponta e priorizar casos de uso com alto impacto, alinhando‑os ao roadmap de APIs e automações.",
           "explanation": ""
         }
       ]

@@ -30,9 +30,9 @@ function getUserProgress(userId) {
 const OFFICIAL_EXAMS_BASE_PATH_SAFE = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Quest\u00f5es';
 const OFFICIAL_EXAMS_JSON_PATH = 'data/simulados_oficiais.json';
 const OFFICIAL_EXAMS = [
+  { title: 'Simulado V1', file: 'SimuladoV1.md', version: 'V1', kind: 'Simulado oficial' },
   { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Simulado oficial' },
   { title: 'Simulado V3', file: 'Simulado V3.md', version: 'V3', kind: 'Simulado oficial' },
-  { title: 'Simulado V3 Port', file: 'Simulado V3 Port.md', version: 'V3-PT', kind: 'Simulado oficial' },
   { title: 'Simulado V4', file: 'Simulado V4.md', version: 'V4', kind: 'Simulado oficial' },
 ];
 let selectedOfficialExamFilter = 'Todas';
@@ -92,7 +92,7 @@ function countOfficialQuestionsInMarkdown(markdown) {
   for (const rawLine of lines) {
     const line = rawLine.trim();
     if (!line) continue;
-    if (/^(?:#{1,6}\s*)?\*{0,2}(\d+)[\.\)]\*{0,2}\s*(.*)$/.test(line)) {
+    if (/^(?:#{1,6}\s*)?(?:question\s*)?\*{0,2}(\d+)[\.\)]?\*{0,2}\s*(.*)$/i.test(line)) {
       count += 1;
     }
   }
@@ -142,7 +142,7 @@ function parseOfficialExamMarkdown(markdown, fileName) {
     if (!line) continue;
     if (line === '---') continue;
 
-    const qMatch = line.match(/^(?:#{1,6}\s*)?\*{0,2}(\d+)[\.\)]\*{0,2}\s*(.*)$/);
+    const qMatch = line.match(/^(?:#{1,6}\s*)?(?:question\s*)?\*{0,2}(\d+)[\.\)]?\*{0,2}\s*(.*)$/i);
     if (qMatch) {
       flushCurrent();
       current = {
