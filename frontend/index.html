@@ -266,7 +266,7 @@
             <!-- RANKING (TOPO) -->
             <div class="dashboard-section" id="ranking-section">
               <h3 style="margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-                🏆 <span>Ranking por Notas de Simulados (TOP 3)</span>
+                🏆 <span>Ranking de Usuários (clique para ver progresso)</span>
               </h3>
               <div id="ranking-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                 <p style="color: #aaa; text-align: center;">Carregando ranking...</p>
@@ -380,6 +380,16 @@
           <button id="close-exam" class="btn btn-icon">✕</button>
         </div>
         <div id="exam-content" class="modal-content"></div>
+      </div>
+    </div>
+    
+    <div id="user-progress-modal" class="modal-overlay" style="display:none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="user-progress-title">Progresso do Usuário</h3>
+          <button class="btn btn-icon" onclick="closeUserProgressModal()">✕</button>
+        </div>
+        <div id="user-progress-body" class="modal-content"></div>
       </div>
     </div>
   </div>

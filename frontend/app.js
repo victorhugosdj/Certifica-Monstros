@@ -681,10 +681,6 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
 
 async function recordResponses(responses) {
   try {
-    const base = getApiBaseUrl();
-    if (!base) {
-      return { ok: false, reason: 'no-backend' };
-    }
     const headers = {
       'Content-Type': 'application/json',
       ...(await getAuthHeaders()),

@@ -39,6 +39,7 @@ let selectedOfficialExamFilter = 'Todas';
 const SIMULADO_EXAMS = OFFICIAL_EXAMS.filter(item => /simulado/i.test(item.title) || /simulado/i.test(item.file));
 const SIMULADO_EXAM_FILTERS = ['Todas', ...new Set(SIMULADO_EXAMS.map(item => item.version))];
 const OFFICIAL_EXAM_CATALOG = {};
+let OFFICIAL_EXAM_PROGRESS_REMOTE = null;
 let isLoadingOfficialCatalog = false;
 let isOfficialCatalogLoaded = false;
 
@@ -83,6 +84,13 @@ function formatAttemptDate(isoDate) {
   if (!isoDate) return 'Nunca tentado';
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) return 'Nunca tentado';
+  return date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function formatLastAccess(isoDate) {
+  if (!isoDate) return 'Sem acesso';
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) return 'Sem acesso';
   return date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 }
 
@@ -311,6 +319,10 @@ async function startOfficialExam(file, title) {
           title,
         };
         saveOfficialExamStats(userId, stats);
+        fetchOfficialExamProgress(userId).then((payload) => {
+          OFFICIAL_EXAM_PROGRESS_REMOTE = payload?.progress || OFFICIAL_EXAM_PROGRESS_REMOTE;
+          renderOfficialExams();
+        });
         renderOfficialExams();
       }
     });
@@ -388,6 +400,13 @@ function renderOfficialExams() {
   }
   const userId = CURRENT_USER?.id;
   const officialStats = loadOfficialExamStats(userId);
+  const currentName = document.getElementById('user-name')?.textContent || 'Usuario';
+  if (!OFFICIAL_EXAM_PROGRESS_REMOTE && userId) {
+    fetchOfficialExamProgress(userId).then((payload) => {
+      OFFICIAL_EXAM_PROGRESS_REMOTE = payload?.progress || {};
+      renderOfficialExams();
+    });
+  }
 
   const filtersHtml = SIMULADO_EXAM_FILTERS.map(filter => `
     <button
@@ -410,19 +429,21 @@ function renderOfficialExams() {
       (officialStats[item.file]?.totalQuestions || catalogQuestions || item.totalQuestions || 0),
       10
     ) || (isLoadingOfficialCatalog ? 'Carregando...' : '--');
+    const remote = OFFICIAL_EXAM_PROGRESS_REMOTE?.[item.file];
+    const progressPercent = remote?.percentage ?? (officialStats[item.file]?.score ?? 0);
+    const lastAccess = remote?.last_access || officialStats[item.file]?.lastAttemptAt || null;
     return `
     <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;">
       <div style="font-weight:700;color:#fff;">${escapeHtml(item.title)}</div>
       <div style="font-size:0.82rem;color:#bbb;">${escapeHtml(item.kind)} • ${escapeHtml(item.version)}</div>
       <div style="font-size:0.78rem;color:#9fb3d7;">
+        Nome: <strong style="color:#fff;">${escapeHtml(currentName)}</strong><br>
         Questões: ${questionsLabel}<br>
-        Acerto: <strong style="color:#8ef3a1;">${officialStats[item.file]?.score ?? 0}%</strong><br>
-        Última tentativa: ${escapeHtml(formatAttemptDate(officialStats[item.file]?.lastAttemptAt))}
+        Progresso: <strong style="color:#8ef3a1;">${progressPercent}%</strong><br>
+        Último acesso: ${escapeHtml(formatAttemptDate(lastAccess))}
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="btn btn-primary" data-official-start="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Iniciar</button>
-        <button class="btn btn-primary" data-official-open="true" data-file="${escapeHtml(item.file)}" data-title="${escapeHtml(item.title)}">Abrir</button>
-        <a class="btn btn-secondary" href="${encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${item.file}`)}" target="_blank" rel="noopener noreferrer">Nova guia</a>
       </div>
     </div>
   `;
@@ -442,12 +463,6 @@ function renderOfficialExams() {
     });
   });
 
-  container.querySelectorAll('button[data-official-open="true"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      openOfficialExam(btn.dataset.file, btn.dataset.title);
-    });
-  });
-
   container.querySelectorAll('button[data-official-start="true"]').forEach(btn => {
     btn.addEventListener('click', () => {
       startOfficialExam(btn.dataset.file, btn.dataset.title);
@@ -458,16 +473,132 @@ function renderOfficialExams() {
 async function fetchRanking() {
   try {
     const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
-    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/ranking?limit=3`);
+    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/ranking?limit=0`);
     if (!res.ok) throw new Error('Falha ao buscar ranking do backend');
     const data = await res.json();
-    return data.map(u => ({ userId: u.user_id || u.userId, userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12), correct: u.correct, total: u.total, percentage: u.percentage }));
+    return data.map(u => ({
+      userId: u.user_id || u.userId,
+      userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12),
+      correct: u.correct,
+      total: u.total,
+      percentage: u.percentage,
+      progress: u.progress_percentage ?? 0,
+      lastAccess: u.last_access || null
+    }));
   } catch (err) {
     console.error('Erro ao buscar ranking:', err);
     return [];
   }
 }
 
+async function getAuthHeadersForPublicProgress() {
+  try {
+    if (typeof window.getSupabaseClient !== 'function') return {};
+    const supabase = window.getSupabaseClient();
+    if (!supabase) return {};
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data?.session?.access_token;
+    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  } catch (err) {
+    console.warn('Falha ao obter token para progresso público:', err);
+    return {};
+  }
+}
+
+async function fetchPublicProgress(userId) {
+  try {
+    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+    const headers = await getAuthHeadersForPublicProgress();
+    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/public-progress/${encodeURIComponent(userId)}`, { headers });
+    if (!res.ok) throw new Error('Falha ao buscar progresso público');
+    return await res.json();
+  } catch (err) {
+    console.error('Erro ao buscar progresso público:', err);
+    return null;
+  }
+}
+
+async function fetchOfficialExamProgress(userId) {
+  try {
+    if (!userId) return null;
+    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+    const headers = await getAuthHeadersForPublicProgress();
+    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/official-exams/progress/${encodeURIComponent(userId)}`, { headers });
+    if (!res.ok) throw new Error('Falha ao buscar progresso de simulados oficiais');
+    return await res.json();
+  } catch (err) {
+    console.warn('Nao foi possivel buscar progresso remoto dos simulados oficiais:', err);
+    return null;
+  }
+}
+
+async function fetchUserMetrics(userId) {
+  try {
+    if (!userId) return null;
+    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+    const headers = await getAuthHeadersForPublicProgress();
+    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/metrics/${encodeURIComponent(userId)}`, { headers });
+    if (!res.ok) throw new Error('Falha ao buscar metricas do usuario');
+    return await res.json();
+  } catch (err) {
+    console.warn('Nao foi possivel buscar metricas remotas:', err);
+    return null;
+  }
+}
+
+function buildStatsFromBackend(metrics, allProvas) {
+  const stats = {
+    byModule: {},
+    overall: { correct: 0, total: 0, attempted: 0, percentage: 0 }
+  };
+
+  const totalByModule = {};
+  (allProvas || []).forEach(prova => {
+    const mod = Number(prova.modulo);
+    if (!totalByModule[mod]) totalByModule[mod] = 0;
+    totalByModule[mod] += 1;
+  });
+
+  const byModuleMap = {};
+  (metrics?.per_module || []).forEach(item => {
+    const mod = Number(item.module);
+    if (!Number.isNaN(mod)) {
+      byModuleMap[mod] = {
+        total: Number(item.total || 0),
+        errors: Number(item.errors || 0)
+      };
+    }
+  });
+
+  for (let i = 1; i <= 8; i++) {
+    const totalQuestions = totalByModule[i] || 0;
+    const attempted = byModuleMap[i]?.total || 0;
+    const errors = byModuleMap[i]?.errors || 0;
+    const correct = Math.max(attempted - errors, 0);
+
+    stats.byModule[i] = {
+      total: totalQuestions,
+      attempted,
+      correct,
+      wrong: errors,
+      notStarted: Math.max(totalQuestions - attempted, 0),
+      percentage: totalQuestions > 0 ? Math.min(100, Math.round((correct / totalQuestions) * 100)) : 0,
+      errorCount: errors,
+      questions: [],
+      errorQuestions: []
+    };
+
+    stats.overall.correct += correct;
+    stats.overall.total += totalQuestions;
+    stats.overall.attempted += attempted;
+  }
+
+  stats.overall.percentage = stats.overall.total > 0
+    ? Math.round((stats.overall.correct / stats.overall.total) * 100)
+    : 0;
+
+  return stats;
+}
 /**
  * Calcular estatísticas por módulo
  */
@@ -553,17 +684,94 @@ function renderRanking(currentUserId, ranking) {
     const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
     const isCurrentUser = user.userId === currentUserId;
     
-    html.push(`<div class="ranking-card" style="${isCurrentUser ? 'background: rgba(76, 175, 80, 0.1); border-color: rgba(76, 175, 80, 0.3);' : ''}">`);
+    html.push(`<div class="ranking-card clickable" data-ranking-user="${escapeHtml(user.userId)}" data-ranking-name="${escapeHtml(user.userName)}" style="${isCurrentUser ? 'background: rgba(76, 175, 80, 0.1); border-color: rgba(76, 175, 80, 0.3);' : ''}">`);
     html.push(`<div class="ranking-medal">${medal}</div>`);
     html.push(`<div class="ranking-info">`);
     html.push(`<div class="ranking-name">${user.userName}${isCurrentUser ? ' (você)' : ''}</div>`);
     html.push(`<div class="ranking-stats">${user.correct}/${user.total} • ${user.percentage}%</div>`);
+    html.push(`<div class="ranking-stats">Progresso: ${user.progress}% • Último acesso: ${formatLastAccess(user.lastAccess)}</div>`);
     html.push('</div>');
     html.push('</div>');
   });
 
   container.innerHTML = html.join('');
+
+  container.querySelectorAll('[data-ranking-user]').forEach(card => {
+    card.addEventListener('click', async () => {
+      const userId = card.dataset.rankingUser;
+      const userName = card.dataset.rankingName || 'Usuário';
+      if (!userId) return;
+      await openUserProgressModal(userId, userName);
+    });
+  });
 }
+
+async function openUserProgressModal(userId, userName) {
+  const modal = document.getElementById('user-progress-modal');
+  const title = document.getElementById('user-progress-title');
+  const body = document.getElementById('user-progress-body');
+  if (!modal || !title || !body) return;
+
+  title.textContent = `Progresso de ${userName}`;
+  body.innerHTML = '<p style="color:#aaa;">Carregando progresso...</p>';
+  modal.style.display = 'flex';
+
+  const data = await fetchPublicProgress(userId);
+  if (!data) {
+    body.innerHTML = '<p style="color:#ff9d9d;">Não foi possível carregar o progresso deste usuário.</p>';
+    return;
+  }
+
+  const overall = data.overall || { correct: 0, total: 0, percentage: 0 };
+  const perModule = Array.isArray(data.per_module) ? data.per_module : [];
+
+  const statsHtml = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
+      <div class="metric-card">
+        <div class="metric-value">${overall.total}</div>
+        <div class="metric-label">Questões Respondidas</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">${overall.correct}</div>
+        <div class="metric-label">Acertos</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">${overall.percentage}%</div>
+        <div class="metric-label">Taxa Geral</div>
+      </div>
+    </div>
+  `;
+
+  const modulesHtml = perModule.map(mod => {
+    const percentage = Number(mod.percentage || 0);
+    const badgeColor = percentage >= 80 ? '#4CAF50' : (percentage >= 60 ? '#FFC107' : (percentage > 0 ? '#FF9800' : '#888'));
+    return `
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;">
+        <div>
+          <div style="font-weight:700;">Módulo ${mod.module}</div>
+          <div style="color:#aaa;font-size:0.85rem;">${mod.correct}/${mod.total} • ${percentage}%</div>
+        </div>
+        <div style="min-width:46px;height:46px;border-radius:12px;background:${badgeColor}22;border:1px solid ${badgeColor}55;display:flex;align-items:center;justify-content:center;font-weight:700;color:${badgeColor};">
+          ${percentage}%
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  body.innerHTML = `
+    ${statsHtml}
+    <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+      ${modulesHtml || '<p style="color:#aaa;">Sem respostas registradas ainda.</p>'}
+    </div>
+  `;
+}
+
+function closeUserProgressModal() {
+  const modal = document.getElementById('user-progress-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+window.closeUserProgressModal = closeUserProgressModal;
 
 /**
  * Renderizar métricas gerais
@@ -848,7 +1056,10 @@ async function initDashboard() {
     const allProvas = await loadProvas();
     window.allProvasGlobal = allProvas;
     
-    const stats = calculateModuleStats(CURRENT_USER.id, allProvas);
+    const remoteMetrics = await fetchUserMetrics(CURRENT_USER.id);
+    const stats = remoteMetrics
+      ? buildStatsFromBackend(remoteMetrics, allProvas)
+      : calculateModuleStats(CURRENT_USER.id, allProvas);
     const ranking = await fetchRanking();
 
     // Renderizar todos os componentes
@@ -982,3 +1193,12 @@ window.abrirSidebarModulo = function(moduleId) {
   if (!userId) return;
   renderModuleErrorsDetail(userId, moduleId, window.allProvasGlobal);
 };
+
+
+
+
+
+
+
+
+
