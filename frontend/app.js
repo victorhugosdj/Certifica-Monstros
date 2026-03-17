@@ -602,8 +602,7 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
           <button id="show-correct" class="btn btn-secondary" ${!isConfirmed ? 'disabled' : ''}>Mostrar correta</button>
         </div>
         <div style="display:flex;gap:8px;">
-          <button id="confirm-answer" class="btn btn-primary" ${!hasSelection || isConfirmed ? 'disabled' : ''}>Confirmar resposta</button>
-          <button id="next-question" class="btn btn-primary" ${!isConfirmed ? 'disabled' : ''}>${state.currentIndex === questions.length - 1 ? 'Finalizar' : 'Próxima'}</button>
+          <button id="primary-action" class="btn btn-primary" ${!hasSelection && !isConfirmed ? 'disabled' : ''}>${isConfirmed ? (state.currentIndex === questions.length - 1 ? 'Finalizar' : 'Próxima') : 'Confirmar resposta'}</button>
         </div>
       </div>
     `;
@@ -638,15 +637,6 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
       };
     }
 
-    const confirmBtn = document.getElementById('confirm-answer');
-    if (confirmBtn) {
-      confirmBtn.onclick = () => {
-        if (!state.answers[question.id]) return;
-        state.confirmed[question.id] = true;
-        renderCurrentQuestion();
-      };
-    }
-
     const showCorrectBtn = document.getElementById('show-correct');
     if (showCorrectBtn) {
       showCorrectBtn.onclick = () => {
@@ -655,10 +645,16 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
       };
     }
 
-    const nextBtn = document.getElementById('next-question');
-    if (nextBtn) {
-      nextBtn.onclick = async () => {
-        if (!state.confirmed[question.id]) return;
+    const primaryBtn = document.getElementById('primary-action');
+    if (primaryBtn) {
+      primaryBtn.onclick = async () => {
+        if (!state.confirmed[question.id]) {
+          if (!state.answers[question.id]) return;
+          state.confirmed[question.id] = true;
+          renderCurrentQuestion();
+          return;
+        }
+
         if (state.currentIndex === questions.length - 1) {
           const result = await gradeExam(questions, state.answers);
           if (typeof modalOptions.onComplete === 'function') {
@@ -670,6 +666,7 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
           }
           return;
         }
+
         state.currentIndex += 1;
         renderCurrentQuestion();
       };
