@@ -1,3 +1,9 @@
+# Modulo 4: Salesforce Flow
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 4.md` (questoes em ingles).
+
+---
 # 📚 Módulo 4
 
 # **⚡ Módulo 4: Salesforce Flow (Conteúdo Extendido)**
@@ -7,6 +13,15 @@
 **Foco:** Automação declarativa no CRM, integração via External Services, Einstein Bots e Testes de Fluxo.
 
 O **Salesforce Flow** é o motor de automação central dentro da Salesforce. Para o exame de Hiperautomação, o foco não é apenas "criar um registro", mas sim como o Flow atua como a **interface humana** e o **gatilho de eventos** que acionam o MuleSoft RPA e o Composer.
+
+Na certificação, Flow aparece sempre que o cenário fala em:
+
+- **telas para agentes ou funcionários** coletarem dados;
+- regras de negócio **declarativas** dentro do CRM;
+- chamadas para APIs MuleSoft sem código (External Services / HTTP Callout);
+- coordenação com RPA e outros sistemas a partir de eventos de negócio (ex.: oportunidade ganha, caso criado, contrato aprovado).
+
+As questões usam Flow para testar se você sabe separar o que é responsabilidade da **camada de experiência (UI/CRM)** e o que deve ficar em APIs ou RPA.
 
 ---
 
@@ -93,3 +108,12 @@ Para ser eficiente em um projeto de hiperautomação, o Flow deve seguir estas b
 * Lembre os passos para criar testes declarativos de Record-Triggered Flows, incluindo configuração de dados de entrada, condições esperadas e validação de resultados.
 * Em cada integração descrita, decida entre External Services (quando já existe especificação de API) e HTTP Callout (quando você apenas conhece o endpoint), considerando governança e facilidade de manutenção.
 * Avalie se o fluxo está preparado para hiperautomação: caminhos de erro bem definidos, uso de subflows para lógica reutilizável e preocupação com bulkification para não atingir limites da plataforma.
+
+---
+
+## **7. Como este módulo ajuda você na certificação**
+
+- Ao estudar os tipos de Flow e os exemplos deste módulo, tente sempre responder: **“Este cenário é mais sobre interface humana ou sobre integração pesada?”**. Se for interface e regras de CRM, a tendência da prova é apontar para Flow.  
+- Em questões que misturam Flow e MuleSoft, identifique qual parte pertence ao Flow (tela, gatilho, decisão simples) e qual parte deve ser delegada a uma API ou a um processo de RPA. Alternativas que colocam toda a lógica no Flow costumam ser pegadinhas.  
+- Use os cenários de exemplo como modelos: recrie mentalmente versões parecidas (troque “estoque” por “sinistro”, “cliente” por “aluno”) e veja se você ainda escolheria o mesmo tipo de Flow e o mesmo ponto de integração.  
+- Antes da prova, revise os termos Screen Flow, Record-Triggered Flow, Autolaunched Flow, External Services, HTTP Callout, Fault Path e Subflow. Se você consegue explicar cada um em 1–2 frases e dar um exemplo, está pronto para acertar a maioria das questões deste módulo.

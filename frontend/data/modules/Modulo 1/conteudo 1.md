@@ -1,3 +1,9 @@
+# Modulo 1: Melhores Praticas de Hiperautomacao (Deep Dive)
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 1.md` (questoes em ingles).
+
+---
 # 📚 Módulo 1
 
 ---

@@ -1,3 +1,9 @@
+# Modulo 3: MuleSoft Composer
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 3.md` (questoes em ingles).
+
+---
 # 📚 Módulo 3
 
 # **🎼 Módulo 3: MuleSoft Composer** 
@@ -7,6 +13,15 @@
 **Foco:** Integração No-Code, Conectores SaaS, Lógica de Fluxo e Transformação de Dados.
 
 O **MuleSoft Composer** é a ferramenta de "cidadão integrador" (Business User). O foco aqui é a velocidade e a simplicidade, mas a prova exige que você entenda as nuances de **lógica, funções e tratamento de erros** dentro dessa interface simplificada.
+
+Na certificação, Composer aparece em cenários onde:
+
+- o dono do processo é um **administrador de negócio** (ex.: admin de Salesforce), não um time de desenvolvimento;
+- o volume de dados é **baixo ou moderado**;
+- o objetivo é integrar **SaaS com SaaS** rapidamente (Salesforce, NetSuite, Slack, ServiceNow, Google Sheets etc.);
+- não há necessidade imediata de um design API‑led completo com múltiplos consumidores.
+
+As questões te testam justamente na fronteira: saber **quando Composer é suficiente** e quando você deve recusar essa alternativa e escolher Anypoint APIs ou RPA.
 
 ---
 
@@ -103,3 +118,12 @@ A prova vai te colocar em um dilema: **Quando usar o conector de RPA dentro do C
 * Treine mentalmente transformações comuns com fórmulas de texto, número e data, como cálculos de vencimento, normalização de nomes, criação de IDs compostos e arredondamentos.
 * Para cada fluxo, defina como testá-lo: qual dado real dispara o gatilho, como validar os resultados e como usar o Run History para inspecionar cada etapa e cada data pill.
 * Quando estiver em dúvida entre Composer e Anypoint, use o critério de complexidade e reutilização: integrações simples, com poucos sistemas e baixo volume favorecem Composer; integrações críticas, com várias equipes e múltiplos consumidores favorecem APIs no Anypoint.
+
+---
+
+## **8. Como este módulo ajuda diretamente na prova**
+
+- Leia cada seção deste módulo com a pergunta mental: **“O exame usaria este conceito para justificar Composer ou para descartá‑lo?”**. Isso treina você a identificar alternativas‑armadilha.  
+- Ao revisar cenários de prova, marque palavras‑chave como *low volume*, *business admins*, *prebuilt connectors*, *quick integration*: quase sempre apontam para Composer como resposta correta.  
+- Quando o enunciado mencionar **reutilização em larga escala**, **múltiplos consumidores** ou **políticas avançadas de segurança**, desconfie de Composer e considere que a resposta deve ser um desenho com APIs na Anypoint Platform.  
+- Use as provas do módulo para praticar essa decisão: depois de responder, volte ao texto e localize onde a justificativa da alternativa correta aparece. Isso cria um vínculo forte entre teoria e prática, aumentando a chance de você reconhecer o padrão imediatamente no dia da certificação.

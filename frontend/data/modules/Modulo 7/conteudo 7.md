@@ -1,3 +1,9 @@
+# Modulo 7: Anypoint Exchange
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 7.md` (questoes em ingles).
+
+---
 # 📚 Módulo 7
 
 # **📦 Módulo 7: Anypoint Exchange**
@@ -7,6 +13,13 @@
 **Foco:** Catálogo de Ativos, Compartilhamento, Reutilização e Mocking Service.
 
 O **Anypoint Exchange** é o "mercado central" de uma estratégia de hiperautomação. Sem ele, a reutilização se torna impossível e cada desenvolvedor acaba criando integrações duplicadas. Para a prova, o foco é como publicar ativos e como usá-los para acelerar os testes.
+
+Os enunciados da certificação usam Exchange principalmente para verificar se você:
+
+- procura **primeiro** por ativos já existentes (APIs, conectores, processos);
+- entende que a documentação e os exemplos do Exchange substituem “mandar mensagem para o time de integração”;
+- sabe usar **Mocking Service** para permitir desenvolvimento em paralelo;
+- enxerga o Exchange como peça central da estratégia de C4E e reutilização.
 
 ---
 
@@ -70,3 +83,12 @@ O Exchange permite criar um portal público ou privado para desenvolvedores exte
 * Explique como o Mocking Service acelera o desenvolvimento paralelo: equipes de front-end (Flow, Composer) consomem mocks enquanto as APIs reais ainda estão sendo implementadas.
 * Use sempre o Exchange como primeira fonte de verdade em cenários de prova: antes de criar integração do zero, procure especificações, exemplos e dependências existentes.
 * Relacione o uso de portais de API e o fluxo de "Request Access" com governança de clientes externos e controle de chaves (Client ID/Secret).
+
+---
+
+## **7. Como usar este módulo para aumentar suas chances na prova**
+
+- Em qualquer questão que sugira “criar algo do zero”, pergunte-se se não faria mais sentido **reutilizar um asset existente no Exchange**. Muitas alternativas erradas ignoram essa possibilidade de propósito.  
+- Pratique mentalmente o fluxo: *“Publicar especificação → testar com Mocking Service → consumir no Flow/Composer →, depois, substituir pela API real”*. Esse é exatamente o tipo de sequência que o exame gosta de descrever.  
+- Antes da prova, revise os conceitos de Asset, API Specification, Fragment, Template, Mocking Service e API Portal, garantindo que você sabe dar um exemplo rápido de uso para cada um.  
+- Nos simulados, se a pergunta envolver “outro time precisa entender como usar uma API”, a resposta mais alinhada normalmente passa por **consultar o Exchange** ou **criar um portal de API**, e não por mandar documentação manual em e‑mail ou planilha.

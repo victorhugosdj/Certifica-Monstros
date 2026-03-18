@@ -1,3 +1,9 @@
+# Modulo 8: Salesforce Flow Orchestration
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 8.md` (questoes em ingles).
+
+---
 # 📚 Módulo 8
 
 # **🎼 Módulo 8: Salesforce Flow Orchestration (Conteúdo Extendido)**
@@ -7,6 +13,15 @@
 **Foco: Coordenação de Processos Complexos, Etapas (Steps), Estágios (Stages) e Atribuição de Tarefas.**
 
 **O Flow Orchestration é o nível mais alto da hiperautomação. Enquanto um Flow comum resolve uma tarefa rápida, o Orchestrator resolve um processo de negócio inteiro que pode durar dias ou semanas e envolver diferentes departamentos.**
+
+Na certificação, este módulo aparece quando o cenário fala de:
+
+- aprovações em múltiplos níveis (gestor, compliance, compras, jurídico);
+- processos que ficam **em espera** aguardando ação humana;
+- necessidade de rastrear quem fez o quê, e quando;
+- coordenação entre vários Flows e chamadas a APIs MuleSoft em momentos diferentes do processo.
+
+As perguntas querem verificar se você sabe quando um simples Screen Flow já resolve e quando é necessário subir o nível para uma Orchestration multiestágio.
 
 ---
 
@@ -85,3 +100,12 @@
 * Escolha corretamente se uma etapa interativa deve ser atribuída a um usuário específico, grupo ou fila, de acordo com a forma como o cenário descreve responsabilidades organizacionais.
 * Relacione problemas descritos em cenários (processos travados, etapas pendentes, usuários sem tarefas) com as ferramentas de debug, monitoramento e gerenciamento de Orchestration Runs.
 * Descreva como você versionaria, implantaria e ajustaria uma orquestração já em produção, mantendo rastreabilidade e minimizando impacto sobre execuções em andamento.
+
+---
+
+## **7. Como estudar este módulo com foco na prova**
+
+- Ao ler cenários de múltiplos passos e aprovações, tente desenhar mentalmente a orquestração em estágios e steps (quem faz o quê, em qual ordem, e com qual tipo de Step).  
+- Em questões que falam de processos parados ou usuários sem tarefas, pense em **Work Items**, atribuição e Orchestration Runs como pontos chave da solução.  
+- Revise os conceitos de Interactive Step, Background Step, Stage, Entry Condition, Exit Condition e Work Guide, garantindo que você consegue dar um exemplo simples de cada um.  
+- Use o cenário de compras deste módulo como base e crie variantes na sua cabeça (por exemplo, onboarding de cliente, abertura de sinistro, admissão de funcionário), sempre tentando decidir quais partes seriam orquestradas via Flow Orchestration e quais apenas com Flows normais e APIs.

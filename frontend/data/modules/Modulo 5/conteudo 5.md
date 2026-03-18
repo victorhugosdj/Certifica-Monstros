@@ -1,3 +1,9 @@
+# Modulo 5: Anypoint Platform & APIs
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 5.md` (questoes em ingles).
+
+---
 # 📚 Módulo 5
 
 # **🌐 Módulo 5: Anypoint Platform & APIs**
@@ -7,6 +13,15 @@
 **Foco:** Ciclo de Vida de APIs, API-Led Connectivity, Especificações (RAML/OAS) e Componentes da Plataforma.
 
 Se o Composer é a ponte e o RPA é o braço, a **Anypoint Platform** é o sistema nervoso central. Para a hiperautomação, o foco aqui é como as APIs servem de base para que todas as outras ferramentas (Flow, RPA, Composer) funcionem de forma escalável e segura.
+
+Na prova, este módulo é o que mais diferencia alguém que **pensa em integrações pontuais** de alguém que **pensa em arquitetura reutilizável**. Quase sempre que o enunciado mencionar:
+
+- múltiplos consumidores (apps, bots, flows, parceiros),
+- necessidade de governança e segurança,
+- evitar duplicação de integrações,
+- ou “estratégia de longo prazo”,
+
+a alternativa correta estará relacionada a desenhar ou reutilizar APIs bem modeladas na Anypoint Platform, e não a criar integrações isoladas em cada ferramenta.
 
 ---
 
@@ -79,3 +94,12 @@ Para o exame, entenda como um aplicativo Mule (Mule App) se comporta em um cená
 * Relacione quando usar cada opção de deploy (CloudHub, On-Premises, Runtime Fabric) com base em requisitos de segurança, conectividade com legados e governança.
 * Demonstre como APIs e especificações são compartilhadas com outras ferramentas de hiperautomação via Anypoint Exchange e External Services no Salesforce.
 * Ao ler um cenário, pense em como você mediria sucesso e reutilização dessa API: número de consumidores, redução de integrações ponto a ponto e facilidade de mudança.
+
+---
+
+## **7. Estratégia de estudo para a certificação neste módulo**
+
+- Releia os exemplos de API-led sempre tentando classificar rapidamente cada API em **System, Process ou Experience**. Esse reflexo é muito cobrado nas perguntas de múltipla escolha.  
+- Ao fazer as provas, para cada questão de arquitetura, responda mentalmente: *“Esta opção aumenta ou reduz reutilização?”*; opções que recriam integrações do zero quase sempre são as erradas.  
+- Use o conteúdo deste módulo para justificar as respostas das questões que falam de Mocking Service, Exchange, políticas de API Manager e tipos de deploy: localize no texto exatamente onde essa decisão é sustentada.  
+- Antes da prova, revise os termos RAML, OAS, API Designer, Exchange, Runtime Manager, API Manager, vCore e Rate Limiting. Entender como essas peças se conectam torna muito mais fácil eliminar alternativas que ignoram a plataforma e sugerem soluções manuais ou não governadas.

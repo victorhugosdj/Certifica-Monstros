@@ -1,3 +1,9 @@
+# Modulo 6: Anypoint Monitoring & API Manager
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 6.md` (questoes em ingles).
+
+---
 # 📚 Módulo 6
 
 # **📊 Módulo 6: Anypoint Monitoring & API Manager**
@@ -7,6 +13,15 @@
 **Foco:** Visibilidade, Saúde do Ecossistema, Governança de Endpoints e Resolução de Problemas.
 
 Este módulo foca na fase de **Operação**. Em projetos de hiperautomação, onde várias ferramentas estão encadeadas, o monitoramento é o que diferencia uma solução robusta de uma que "quebra e ninguém sabe o porquê".
+
+Na prova, Monitoring e API Manager aparecem em cenários de:
+
+- **degradação de performance** ao longo do tempo;
+- sistemas legados entrando em colapso por excesso de requisições;
+- necessidade de provar, com métricas, que a arquitetura está saudável;
+- proteção de APIs consumidas por Flows, Composer e RPA.
+
+Saber ler essas situações e traduzir em políticas ou ajustes de monitoramento é o que o examinador quer avaliar aqui.
 
 ---
 
@@ -72,3 +87,12 @@ A prova pode questionar como identificar onde a automação está lenta:
 * Relacione tipos de endpoint (Basic x Proxy) com cenários de modernização: quando é viável colocar um proxy na frente de um sistema legado sem alterar o código original.
 * Demonstre como usar functional monitoring para validar continuamente se as APIs críticas para hiperautomação continuam respondendo com a carga e os dados esperados.
 * Em cenários de "sistema em choque", descreva como você ajustaria políticas, escalaria recursos e notificaria equipes usando alertas integrados com e-mail ou Slack.
+
+---
+
+## **7. Como estudar este módulo pensando na prova**
+
+- Ao revisar os conceitos, tente sempre ligar cada um a um tipo de problema: *“Quando eu pensaria em Rate Limiting? Quando eu pensaria em aumentar vCores? Quando eu olharia para logs?”*. Isso ajuda a responder cenários rapidamente.  
+- Leia de novo o cenário “O Sistema em Choque” e crie variações mentais (por exemplo, Flow → Composer, estoque → faturamento) mantendo a mesma solução com políticas no API Manager.  
+- Nos simulados, sempre que uma questão falar que “ninguém sabe por que a automação falha”, pense em **Monitoring, Visualizer e Functional Monitoring** como candidatos à resposta.  
+- Antes da certificação, revise os nomes das políticas mais comuns (Rate Limiting, SLA-Based, Client ID Enforcement, IP Whitelisting) e tenha claro o que cada uma protege; isso evita cair em alternativas que trocam os papéis dessas políticas.

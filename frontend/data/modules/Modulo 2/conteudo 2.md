@@ -1,3 +1,9 @@
+# Modulo 2: MuleSoft RPA
+
+Este arquivo contem o guia teorico do modulo em portugues.
+Para praticar, use o arquivo `questoes 2.md` (questoes em ingles).
+
+---
 # 📚 Módulo 2
 
 # **🤖 Módulo 2: MuleSoft RPA (Conteúdo Extendido)**
@@ -6,7 +12,14 @@
 
 **Foco:** Ciclo de vida de automação, ferramentas de desenvolvimento, lógica de robôs e gestão de ambientes.
 
-Neste módulo, o exame avalia sua capacidade técnica de transformar um processo manual em um fluxo automatizado funcional, utilizando os três pilares do MuleSoft RPA: **Manager, Builder e Bot.**
+Este módulo mede se você sabe **pensar como designer de automação**, não apenas se sabe “apertar botões” no Builder. As questões usam cenários de processos reais (financeiro, atendimento, backoffice) para testar se você:
+
+- escolhe **bem** o candidato a RPA (estável, repetitivo, baseado em regras);
+- entende **onde** configurar cada coisa (Manager, Builder, Recorder, agentes);
+- sabe diferenciar **erro técnico** de **exceção de negócio**;
+- evita usar RPA onde uma **API simples** já resolveria melhor.
+
+Se você dominar estes pontos, vai conseguir eliminar rapidamente as alternativas “tentadoras, mas erradas” que aparecem na prova.
 
 ---
 
@@ -104,3 +117,12 @@ Este é um ponto técnico avançado que diferencia o MuleSoft RPA:
 * Diferencie bem erros técnicos (como alteração de layout, tempo de resposta, janela não encontrada) de exceções de negócio (como dados inválidos ou ausência de registro) e escolha a abordagem correta para cada tipo.
 * Decida quando usar UI Automation baseada em objeto, em imagem ou OCR, e quando é melhor substituir cliques por chamadas de API via Anypoint.
 * Demonstre entendimento de como publicar, versionar, agendar, monitorar e reiniciar processos pelo RPA Manager, interpretando métricas e logs de execução.
+
+---
+
+## **7. Como usar este módulo para estudar para a certificação**
+
+- Leia primeiro a **visão de arquitetura** (Manager, Builder, Recorder, ciclo de vida) pensando em um processo real que você conhece no seu trabalho. Pergunte-se: “Se eu fosse automatizar isso, quais etapas virariam Bot Task e quais ficariam como User Task?”  
+- Sempre que encontrar um conceito (por exemplo, *Secure Session* ou *Business Exception*), tente imaginar uma **pergunta de prova** em cima dele. Isso ajuda a fixar por que o tema é importante.  
+- Volte nas questões das provas do Módulo 1 e Módulo 2 que envolvem RPA e tente justificar, em voz alta, por que as alternativas erradas violam alguma boa prática explicada neste texto.  
+- Antes da prova oficial, revise este módulo procurando palavras‑chave que frequentemente aparecem nos enunciados: *Evaluation, Design, Build, Test, Production, Secure Session, OCR, Business Exception, RPA Manager, RPA Builder*. Se você souber explicar cada uma em 2 frases, está no caminho certo para acertar as questões deste assunto.
