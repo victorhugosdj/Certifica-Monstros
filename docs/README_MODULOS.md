@@ -127,6 +127,17 @@ Exemplo:
   - `m1_q46`
   - `m8_q12`
 
+## Atualizacao rapida (conteudo + questoes)
+
+Se voce precisa atualizar rapido um modulo inteiro, siga este fluxo:
+
+1. Edite `conteudo N.md` com o texto teorico.
+2. Edite `questoes N.md` com as perguntas em ingles.
+3. Atualize `frontend/data/provas.json` com as mesmas perguntas (mesmos IDs).
+4. Garanta que `modulos.json` tenha o titulo e objetivo corretos.
+
+Dica: os arquivos `questoes N.md` devem ser tratados como fonte de verdade das perguntas em ingles. Sempre que mudar as questoes ali, replique o texto em `provas.json` para manter o simulado e o dashboard alinhados.
+
 ## Estrutura esperada por modulo
 
 - Conteudo:
