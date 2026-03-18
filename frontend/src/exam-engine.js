@@ -109,7 +109,8 @@ const ExamEngine = {
           pergunta: q.pergunta,
           corretaText: q.correta_texto,
           respostaText: answerText || "Não respondida",
-          justificativa: q.justificativa
+          justificativa: q.justificativa,
+          refs: Array.isArray(q.refs) ? q.refs : []
         });
       }
     });

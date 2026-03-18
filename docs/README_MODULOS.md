@@ -100,6 +100,16 @@ Campos obrigatorios por questao:
 
 Campos recomendados:
 - `justificativa` (explicacao curta da resposta)
+- `refs` (lista de URLs da documentacao, por questao)
+
+Regras para `justificativa`:
+- Deve estar em ingles.
+- Deve explicar *por que* a alternativa correta faz sentido no contexto do enunciado (1-3 frases).
+- Deve se orientar pela documentacao oficial da MuleSoft (ex: `docs.mulesoft.com`) e por boas praticas do produto.
+- Evite copiar texto literal da documentacao; prefira parafrasear.
+- Sempre que possivel, inclua tambem `refs` com 1-3 links do `docs.mulesoft.com` que sustentem a justificativa.
+
+No app, as `refs` aparecem como links clicaveis no resumo de erros do simulado.
 
 Exemplo:
 
@@ -107,17 +117,31 @@ Exemplo:
 {
   "id": "m2_q46",
   "modulo": 2,
-  "pergunta": "Qual componente e usado para construir automacoes no desktop no MuleSoft RPA?",
+  "pergunta": "Which component is used to build desktop automations in MuleSoft RPA?",
   "opcoes": [
     "RPA Manager",
     "RPA Builder",
     "Anypoint Studio",
     "Flow Orchestrator"
   ],
-  "justificativa": "O RPA Builder e a ferramenta de construcao desktop dos processos de RPA.",
+  "justificativa": "RPA Builder is the desktop authoring tool used to create and edit RPA processes, while RPA Manager focuses on orchestration, scheduling, and governance.",
+  "refs": [
+    "https://docs.mulesoft.com/rpa-home/",
+    "https://docs.mulesoft.com/rpa-manager/"
+  ],
   "correta_texto": "RPA Builder"
 }
 ```
+
+## Gerar/atualizar justificativas rapidamente
+
+Quando voce atualizar as questoes (ou quando precisar padronizar justificativas), use o gerador:
+
+```powershell
+python tools/generate_justificativas.py
+```
+
+O script reescreve `frontend/data/provas.json` preenchendo `justificativa` com explicacoes curtas em ingles, guiadas por palavras-chave do enunciado e do gabarito (orientadas pelos conceitos da documentacao da MuleSoft). Ainda assim, revise as justificativas de questoes criticas antes de publicar.
 
 ## Convencao para IDs de questao
 

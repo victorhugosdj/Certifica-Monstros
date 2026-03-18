@@ -3,6 +3,14 @@
  */
 
 const ExamUI = {
+  escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  },
   /**
    * Abre o modal de prova e prepara o container
    */
@@ -113,6 +121,15 @@ const ExamUI = {
             <p>Sua resposta: <span class="text-danger">${w.respostaText}</span></p>
             <p>Correta: <span class="text-success">${w.corretaText}</span></p>
             <p class="justification"><em>${w.justificativa}</em></p>
+            ${Array.isArray(w.refs) && w.refs.length ? `
+              <p class="justification">
+                <span>References:</span>
+                ${w.refs.map(r => {
+                  const url = this.escapeHtml(r);
+                  return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+                }).join(" • ")}
+              </p>
+            ` : ""}
           </div>
         </li>
       `).join("") + "</ul>";
