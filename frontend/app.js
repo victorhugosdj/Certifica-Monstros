@@ -9,7 +9,9 @@ let CURRENT_USER = null;
 
 const STATE = {
   modules: null,
-  provas: null
+  provas: null,
+  userProgress: null,
+  userErrors: null,
 };
 
 let moduleActionsBound = false;
@@ -152,6 +154,9 @@ async function getAuthHeaders() {
 }
 
 function loadErrors(userId) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id && STATE.userErrors) {
+    return STATE.userErrors;
+  }
   try {
     return JSON.parse(localStorage.getItem(getErrorKey(userId)) || '{}');
   } catch {
@@ -160,6 +165,9 @@ function loadErrors(userId) {
 }
 
 function saveErrors(userId, data) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id) {
+    STATE.userErrors = data;
+  }
   localStorage.setItem(getErrorKey(userId), JSON.stringify(data));
 }
 
@@ -204,6 +212,9 @@ function isEmailConfirmationCallback() {
 }
 
 function loadProgress(userId) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id && STATE.userProgress) {
+    return STATE.userProgress;
+  }
   try {
     return JSON.parse(localStorage.getItem(getProgressKey(userId)) || '{}');
   } catch {
@@ -212,6 +223,9 @@ function loadProgress(userId) {
 }
 
 function saveProgress(userId, data) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id) {
+    STATE.userProgress = data;
+  }
   localStorage.setItem(getProgressKey(userId), JSON.stringify(data));
 }
 
@@ -279,17 +293,36 @@ async function syncUserProgressFromRemote(userId) {
     return { progress: loadProgress(userId), errors: loadErrors(userId) };
   }
 
+  const remotePayload = await fetchRemoteProgress(userId);
+  if (remotePayload?.progress || remotePayload?.errors) {
+    const remoteProgress = remotePayload?.progress || {};
+    const remoteErrors = remotePayload?.errors || {};
+    STATE.userProgress = remoteProgress;
+    STATE.userErrors = remoteErrors;
+    localStorage.setItem(getProgressKey(userId), JSON.stringify(remoteProgress));
+    localStorage.setItem(getErrorKey(userId), JSON.stringify(remoteErrors));
+    return { progress: remoteProgress, errors: remoteErrors };
+  }
+
   const localProgress = loadProgress(userId);
   const localErrors = loadErrors(userId);
-  const remotePayload = await fetchRemoteProgress(userId);
-  const remoteProgress = remotePayload?.progress || {};
-  const remoteErrors = remotePayload?.errors || {};
-  const merged = mergeProgress(localProgress, remoteProgress);
-  const mergedErrors = mergeErrors(localErrors, remoteErrors);
+  STATE.userProgress = localProgress;
+  STATE.userErrors = localErrors;
+  return { progress: localProgress, errors: localErrors };
+}
 
-  saveProgress(userId, merged);
-  saveErrors(userId, mergedErrors);
-  return { progress: merged, errors: mergedErrors };
+async function refreshUserDataFromBackend() {
+  if (!CURRENT_USER?.id) return;
+
+  await syncUserProgressFromRemote(CURRENT_USER.id);
+  if (STATE.modules) {
+    renderModulesGrid(STATE.modules);
+  }
+
+  const dashboardView = document.getElementById('view-dashboard');
+  if (dashboardView?.classList.contains('active') && typeof initDashboard === 'function') {
+    initDashboard();
+  }
 }
 
 async function loadModules() {
@@ -848,6 +881,9 @@ async function gradeExam(questions, answersByQuestionId = {}) {
     : (synced ? 'Respostas sincronizadas com o servidor.' : 'Respostas salvas localmente. A sincronização com o servidor falhou.');
 
   const score = Math.round((totalPoints / questions.length) * 100);
+  if (synced) {
+    await refreshUserDataFromBackend();
+  }
   openModal(`<div style="text-align:center;">
     <h3>Resultado: ${score}%</h3>
     <p>Pontuação: ${totalPoints.toFixed(1)} de ${questions.length}.</p>
@@ -946,6 +982,8 @@ async function initAuth() {
         clearAuthUrlState();
         supabase.auth.signOut().finally(() => {
           CURRENT_USER = null;
+          STATE.userProgress = null;
+          STATE.userErrors = null;
           showLogin();
         });
         return;
@@ -956,6 +994,8 @@ async function initAuth() {
       onLoginSuccess(session.user);
     } else {
       CURRENT_USER = null;
+      STATE.userProgress = null;
+      STATE.userErrors = null;
       showLogin();
     }
   });
@@ -1040,6 +1080,8 @@ async function signOut() {
   if (!supabase) return;
   await supabase.auth.signOut();
   CURRENT_USER = null;
+  STATE.userProgress = null;
+  STATE.userErrors = null;
   showLogin();
 }
 
@@ -1190,3 +1232,5 @@ window.salvarRespostasNoBackend = salvarRespostasNoBackend;
 window.getSupabaseClient = getSupabaseClient;
 window.loadProvas = loadProvas;
 window.setView = setView;
+window.getCurrentUserProgress = () => (CURRENT_USER?.id ? loadProgress(CURRENT_USER.id) : {});
+window.getCurrentUserErrors = () => (CURRENT_USER?.id ? loadErrors(CURRENT_USER.id) : {});

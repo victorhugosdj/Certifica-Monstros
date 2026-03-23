@@ -12,6 +12,9 @@
 // ========== DADOS AUXILIARES ==========
 
 function getUserErrors(userId) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id && typeof window.getCurrentUserErrors === 'function') {
+    return window.getCurrentUserErrors();
+  }
   try {
     return JSON.parse(localStorage.getItem(`certifica_errors_${userId}`) || '{}');
   } catch {
@@ -20,6 +23,9 @@ function getUserErrors(userId) {
 }
 
 function getUserProgress(userId) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id && typeof window.getCurrentUserProgress === 'function') {
+    return window.getCurrentUserProgress();
+  }
   try {
     return JSON.parse(localStorage.getItem(`certifica_progress_${userId}`) || '{}');
   } catch {

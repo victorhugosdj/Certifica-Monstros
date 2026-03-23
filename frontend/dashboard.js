@@ -24,53 +24,17 @@ async function fetchUserMetrics(userId) {
 }
 
 /**
- * Busca ranking de usuários (TOP 10) do Supabase
+ * Busca ranking de usuários (TOP 3) do Supabase
  * @returns {Promise<Array>} Array com { user, score, totalCorrected, totalAttempted }
  */
 async function fetchRanking() {
   try {
-    if (!supabase) {
-      console.warn('Supabase não disponível');
-      return [];
-    }
-
-    // Buscar TOP 10 usuários por número de acertos
-    const { data, error } = await supabase
-      .from('responses')
-      .select('user_id, is_correct')
-      .order('user_id', { ascending: true });
-
-    if (error) throw error;
-
-    // Processar dados
-    const userStats = {};
-    data?.forEach(response => {
-      if (!userStats[response.user_id]) {
-        userStats[response.user_id] = { correct: 0, total: 0 };
-      }
-      userStats[response.user_id].total += 1;
-      if (response.is_correct) {
-        userStats[response.user_id].correct += 1;
-      }
-    });
-
-    // Converter para array e ordenar
-    const ranking = Object.entries(userStats)
-      .map(([userId, stats]) => ({
-        userId,
-        correct: stats.correct,
-        total: stats.total,
-        percentage: stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0,
-        userName: userId.substring(0, 12) // Usar primeiros 12 caracteres do ID
-      }))
-      .sort((a, b) => {
-        // Ordenar por: 1) percentage DESC, 2) total DESC
-        if (b.percentage !== a.percentage) return b.percentage - a.percentage;
-        return b.total - a.total;
-      })
-      .slice(0, 10); // TOP 10
-
-    return ranking;
+    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/ranking?limit=3`);
+    if (!res.ok) throw new Error('Falha ao buscar ranking do backend');
+    const data = await res.json();
+    // backend already returns userName, correct, total, percentage
+    return data.map(u => ({ userId: u.user_id || u.userId, userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12), correct: u.correct, total: u.total, percentage: u.percentage }));
   } catch (err) {
     console.error('Erro ao buscar ranking:', err);
     return [];
@@ -78,6 +42,9 @@ async function fetchRanking() {
 }
 
 function getUserErrors(userId) {
+  if (CURRENT_USER?.id && userId === CURRENT_USER.id && typeof window.getCurrentUserErrors === 'function') {
+    return window.getCurrentUserErrors();
+  }
   try {
     return JSON.parse(localStorage.getItem(`certifica_errors_${userId}`) || '{}');
   } catch {
@@ -131,14 +98,14 @@ function renderMetricsSummary(userId, stats) {
 }
 
 /**
- * Renderizar ranking de usuários (TOP 10)
+ * Renderizar ranking de usuários (TOP 3)
  */
 function renderRankingTable(currentUserId, ranking) {
   const container = document.getElementById('dashboard-root');
   
   const html = [];
   html.push('<div class="card" style="margin-bottom:20px;">');
-  html.push('<h3>🏆 Ranking de Usuários (TOP 10)</h3>');
+  html.push('<h3>🏆 Ranking de Usuários (TOP 3)</h3>');
   
   if (!ranking || ranking.length === 0) {
     html.push('<p style="color:#aaa;">Sem dados de ranking ainda. Faça mais simulados!</p>');
@@ -282,40 +249,173 @@ function calculateModuleStats(userId, allProvas) {
 }
 
 /**
- * Renderizar tabela de desempenho por módulo
+ * Buscar questões erradas de um módulo específico
+ */
+function getModuleErrors(userId, moduleId, allProvas) {
+  const errors = getUserErrors(userId);
+  const errorQuestions = [];
+  
+  allProvas.forEach(prova => {
+    if (Number(prova.modulo) === moduleId && errors[prova.id]) {
+      errorQuestions.push({
+        id: prova.id,
+        titulo: prova.titulo || prova.pergunta || 'Questão sem título',
+        erros: errors[prova.id],
+        opcoes: prova.opcoes || [],
+        respostaCorreta: prova.respostaCorreta || prova.resposta || null
+      });
+    }
+  });
+  
+  return errorQuestions.sort((a, b) => b.erros - a.erros);
+}
+
+/**
+ * Renderizar detalhes de erros de um módulo em uma SIDEBAR
+ */
+function renderModuleErrorsDetail(userId, moduleId, allProvas) {
+  const errorQuestions = getModuleErrors(userId, moduleId, allProvas);
+  const stats = calculateModuleStats(userId, allProvas);
+  const modStats = stats.byModule[moduleId];
+  
+  const sidebar = document.getElementById('module-sidebar');
+  const title = document.getElementById('sidebar-title');
+  const body = document.getElementById('sidebar-body');
+  
+  // Atualizar título
+  title.textContent = `Módulo ${moduleId} — Detalhes`;
+  
+  // Construir conteúdo
+  const html = [];
+  
+  // Estatísticas do módulo no topo
+  html.push('<div class="module-stats">');
+  html.push(`<div class="stat-item"><div class="stat-value" style="color: #4CAF50;">${modStats.correct}</div><div class="stat-label">Acertos</div></div>`);
+  
+  const erradas = modStats.total - modStats.correct;
+  html.push(`<div class="stat-item"><div class="stat-value" style="color: #FF5722;">${erradas}</div><div class="stat-label">Erros</div></div>`);
+  
+  html.push(`<div class="stat-item"><div class="stat-value" style="color: #FFC107;">${modStats.percentage}%</div><div class="stat-label">Taxa</div></div>`);
+  html.push('</div>');
+  
+  // Lista de questões com erros
+  if (errorQuestions.length > 0) {
+    html.push(`<div style="margin-bottom: 12px;"><strong style="font-size: 0.95rem; display: block; margin-bottom: 8px; color: #FF9800;">❌ Questões com Erros (${errorQuestions.length})</strong></div>`);
+    
+    errorQuestions.forEach((q, idx) => {
+      html.push(`<div class="error-question-item">`);
+      
+      html.push(`<div class="error-question-header">`);
+      html.push(`<span class="error-question-number">#${idx + 1}</span>`);
+      html.push(`<span class="error-count">${q.erros}x erros</span>`);
+      html.push('</div>');
+      
+      html.push(`<div class="error-question-title">${q.titulo}</div>`);
+      html.push(`<div class="error-question-id">ID: ${q.id}</div>`);
+      
+      html.push(`<div class="error-action-buttons">`);
+      html.push(`<button class="btn-refazer" onclick="refazerQuestaoEspecifica('${q.id}', ${moduleId})">🔄 Refazer</button>`);
+      html.push('</div>');
+      
+      html.push('</div>');
+    });
+  } else {
+    html.push(`<div style="padding: 16px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border-left: 4px solid #4CAF50; text-align: center; color: #A5D6A7;">`);
+    html.push(`<strong>✅ Parabéns!</strong><br>Você acertou todas as questões deste módulo!`);
+    html.push('</div>');
+  }
+  
+  // Botões de ação finais
+  html.push(`<div style="display: flex; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">`);
+  html.push(`<button class="btn btn-secondary" onclick="refazerModulo(${moduleId}, 'errors')" style="flex: 1; background: #FF9800; color: white; border: none; padding: 10px;">🔄 Refazer Erros</button>`);
+  html.push(`<button class="btn btn-primary" onclick="refazerModulo(${moduleId}, 'all')" style="flex: 1; background: #2196F3; color: white; border: none; padding: 10px;">📚 Refazer Tudo</button>`);
+  html.push('</div>');
+  
+  body.innerHTML = html.join('');
+  
+  // Mostrar sidebar com animação
+  sidebar.style.display = 'flex';
+}
+
+/**
+ * Renderizar tabela de desempenho por módulo com barras de progresso
  */
 function renderModuleStatsTable(userId, allProvas) {
   const container = document.getElementById('dashboard-root');
   const stats = calculateModuleStats(userId, allProvas);
 
   const html = [];
-  html.push('<div class="card" style="overflow-x:auto;">');
-  html.push('<h3>📊 Desempenho por Módulo</h3>');
-  html.push('<table class="table" style="min-width:400px;"><thead><tr>');
-  html.push('<th>Módulo</th><th>Certas</th><th>Erradas</th><th>Acerto %</th><th>Status</th>');
-  html.push('</tr></thead><tbody>');
+  html.push('<div class="card">');
+  html.push('<h3 style="margin-bottom:20px;">📊 Análise por Módulo</h3>');
+  html.push('<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;">');
 
   for (let i = 1; i <= 8; i++) {
     const mod = stats.byModule[i];
-    const erradas = Math.max(0, mod.total - mod.correct);
-    const status = mod.percentage >= 80 ? '✅ Excelent' :
-                   mod.percentage >= 70 ? '🟢 Bom' :
-                   mod.percentage >= 50 ? '🟡 Médio' :
-                   mod.total === 0 ? '⏳ Sem dados' : '🔴 Baixo';
-
-    html.push(`<tr style="border-bottom:1px solid rgba(255,255,255,0.1);">`);
-    html.push(`<td><strong>Módulo ${i}</strong></td>`);
-    html.push(`<td>${mod.correct}</td>`);
-    html.push(`<td>${erradas}</td>`);
-    html.push(`<td style="font-weight:700;color:#4CAF50;">${mod.percentage}%</td>`);
-    html.push(`<td>${status}</td>`);
-    html.push(`</tr>`);
+    const totalRespondidas = mod.total;
+    const acertos = mod.correct;
+    const errados = Math.max(0, mod.total - mod.correct);
+    const percentual = mod.percentage;
+    
+    // Cores baseadas no percentual
+    const progressColor = percentual >= 80 ? '#4CAF50' :
+                         percentual >= 60 ? '#FFC107' :
+                         percentual > 0 ? '#FF9800' : '#999';
+    
+    const statusEmoji = percentual >= 80 ? '✅' :
+                       percentual >= 60 ? '🟡' :
+                       percentual > 0 ? '⚠️' : '⏳';
+    
+    html.push(`<div class="card" style="background:rgba(255,255,255,0.05);border-left:4px solid ${progressColor};padding:16px;cursor:pointer;transition:all 0.3s;" onclick="abrirSidebarModulo(${i})">`);
+    
+    // Header do módulo
+    html.push(`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">`);
+    html.push(`<h4 style="margin:0;">Módulo ${i}</h4>`);
+    html.push(`<span style="font-size:20px;">${statusEmoji}</span>`);
+    html.push('</div>');
+    
+    // Barra de progresso
+    html.push(`<div style="background:rgba(255,255,255,0.1);height:8px;border-radius:4px;overflow:hidden;margin-bottom:12px;">`);
+    html.push(`<div style="height:100%;width:${Math.min(100, percentual)}%;background:linear-gradient(90deg, ${progressColor}, ${progressColor}dd);transition:width 0.3s;"></div>`);
+    html.push('</div>');
+    
+    // Estatísticas
+    html.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;font-size:13px;">`);
+    html.push(`<div style="background:rgba(76,175,80,0.15);padding:8px;border-radius:4px;text-align:center;border-left:3px solid #4CAF50;">`);
+    html.push(`<div style="font-weight:bold;color:#4CAF50;">${acertos}</div>`);
+    html.push(`<div style="color:#aaa;font-size:11px;">Acertos</div>`);
+    html.push('</div>');
+    
+    html.push(`<div style="background:rgba(255,87,34,0.15);padding:8px;border-radius:4px;text-align:center;border-left:3px solid #FF5722;">`);
+    html.push(`<div style="font-weight:bold;color:#FF5722;">${errados}</div>`);
+    html.push(`<div style="color:#aaa;font-size:11px;">Erros</div>`);
+    html.push('</div>');
+    html.push('</div>');
+    
+    // Percentual grande
+    html.push(`<div style="text-align:center;padding:12px;background:rgba(255,255,255,0.07);border-radius:4px;margin-bottom:12px;border-left:4px solid ${progressColor};">`);
+    html.push(`<div style="font-size:28px;font-weight:bold;color:${progressColor};">${percentual}%</div>`);
+    html.push(`<div style="font-size:12px;color:#aaa;">Taxa de Acerto</div>`);
+    html.push('</div>');
+    
+    // Status de respostas
+    html.push(`<div style="font-size:12px;color:#bbb;margin-bottom:12px;">`);
+    if (totalRespondidas === 0) {
+      html.push(`Nenhuma questão respondida ainda`);
+    } else {
+      html.push(`${totalRespondidas} questão${totalRespondidas !== 1 ? 's' : ''} respondida${totalRespondidas !== 1 ? 's' : ''}`);
+    }
+    html.push('</div>');
+    
+    // Botão de ação
+    html.push(`<button class="btn" style="width:100%;background:${progressColor};padding:10px;" onclick="renderModuleErrorsDetail('${userId}', ${i}, window.allProvasGlobal); event.stopPropagation();">📋 Ver Detalhes</button>`);
+    
+    html.push('</div>');
   }
 
-  html.push('</tbody></table>');
-  html.push('<div style="margin-top:16px;padding:12px;background:rgba(76, 175, 80, 0.1);border-radius:4px;">');
-  html.push(`<strong>Desempenho Geral:</strong> ${stats.overall.percentage}% `);
-  html.push(`(${stats.overall.correct} certas de ${stats.overall.total})`);
+  html.push('</div>');
+  html.push('<div style="margin-top:20px;padding:14px;background:rgba(76, 175, 80, 0.1);border-radius:6px;border-left:4px solid #4CAF50;">');
+  html.push(`<strong>📈 Desempenho Geral:</strong> <span style="color:#4CAF50;font-weight:700;font-size:18px;">${stats.overall.percentage}%</span> `);
+  html.push(`<span style="color:#aaa;">(${stats.overall.correct} acertos de ${stats.overall.total} questões)</span>`);
   html.push('</div>');
   html.push('</div>');
 
@@ -323,6 +423,32 @@ function renderModuleStatsTable(userId, allProvas) {
   wrapper.innerHTML = html.join('');
   container.insertBefore(wrapper.firstElementChild, container.firstChild.nextSibling);
 }
+
+/**
+ * Funções de ação para refazer questões e módulos
+ */
+window.refazerQuestaoEspecifica = function(questionId, moduleId) {
+  alert(`Refazer questão: ${questionId}\n(Implementar redirecionamento para simulado com essa questão)`);
+};
+
+window.refazerModulo = function(moduleId, tipo) {
+  if (typeof gerarSimulado === 'function') {
+    if (tipo === 'errors') {
+      alert(`Refazer apenas erros do Módulo ${moduleId}`);
+      // Implementar lógica para gerar simulado apenas com questões erradas
+    } else {
+      gerarSimulado(moduleId, false);
+    }
+  }
+};
+
+/**
+ * Função auxiliar para abrir a sidebar com detalhes do módulo
+ */
+window.abrirSidebarModulo = function(moduleId) {
+  const userId = CURRENT_USER?.id || 'unknown';
+  renderModuleErrorsDetail(userId, moduleId, window.allProvasGlobal);
+};
 
 /**
  * Renderizar recomendações personalizadas
@@ -453,6 +579,8 @@ async function initDashboard() {
 
     // Carregar dados
     const allProvas = await loadProvas();
+    window.allProvasGlobal = allProvas; // Guardar globalmente para acesso nos detalhes
+    
     const stats = calculateModuleStats(CURRENT_USER.id, allProvas);
     const ranking = await fetchRanking();
 
@@ -467,7 +595,7 @@ async function initDashboard() {
     // 2. RANKING DE USUÁRIOS
     renderRankingTable(CURRENT_USER.id, ranking);
     
-    // 3. DESEMPENHO POR MÓDULO
+    // 3. DESEMPENHO POR MÓDULO (novo layout com cards clicáveis)
     renderModuleStatsTable(CURRENT_USER.id, allProvas);
     
     // 4. RECOMENDAÇÕES
