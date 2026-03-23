@@ -2,6 +2,13 @@
   function getClient() {
     return window.SUPABASE || null;
   }
+
+  function getAuthRedirectUrl() {
+    const redirectUrl = new URL('frontend/index.html', window.location.origin);
+    redirectUrl.searchParams.set('auth_mode', 'login');
+    return redirectUrl.toString();
+  }
+
   async function signUp(email, password, name) {
     const sb = getClient();
     if (!sb) throw new Error("Supabase não configurado.");
@@ -12,7 +19,7 @@
       password,
       options: {
         data: { name },
-        emailRedirectTo: window.location.origin
+        emailRedirectTo: getAuthRedirectUrl()
       }
     });
     if (authError) throw new Error(authError.message);
@@ -41,7 +48,7 @@
     const sb = getClient();
     if (!sb) throw new Error("Supabase não configurado.");
     const { data, error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin
+      redirectTo: getAuthRedirectUrl()
     });
     if (error) throw new Error(error.message);
     return data;

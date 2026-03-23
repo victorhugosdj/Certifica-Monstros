@@ -486,6 +486,75 @@ def official_exam_progress(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/api/progress/{user_id}")
+def user_progress(
+    user_id: str,
+    current_user: Dict[str, Any] = Security(get_authenticated_user),
+) -> Dict[str, Any]:
+    """Return the latest saved progress and error counters for the authenticated user."""
+
+    if current_user["id"] != user_id:
+        raise HTTPException(status_code=403, detail="You can only access your own progress")
+
+    service_client = get_supabase_service_client()
+    if not service_client:
+        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+
+    try:
+        res = (
+            service_client
+            .table("respostas_usuario")
+            .select("module,question_id,correto,created_at")
+            .eq("user_id", user_id)
+            .execute()
+        )
+        if res.error:
+            raise HTTPException(status_code=500, detail=str(res.error))
+
+        rows = res.data or []
+        latest_rows_by_question: Dict[str, Dict[str, Any]] = {}
+        attempts_by_question: Dict[str, int] = {}
+        errors_by_question: Dict[str, int] = {}
+
+        for row in rows:
+            question_id = row.get("question_id")
+            if not question_id:
+                continue
+
+            attempts_by_question[question_id] = attempts_by_question.get(question_id, 0) + 1
+            if not row.get("correto"):
+                errors_by_question[question_id] = errors_by_question.get(question_id, 0) + 1
+
+            created_at = row.get("created_at") or ""
+            existing = latest_rows_by_question.get(question_id)
+            if existing and created_at <= (existing.get("created_at") or ""):
+                continue
+            latest_rows_by_question[question_id] = row
+
+        latest_by_question: Dict[str, Dict[str, Any]] = {}
+        for question_id, row in latest_rows_by_question.items():
+            latest_by_question[question_id] = {
+                "module": row.get("module"),
+                "correct": bool(row.get("correto")),
+                "points": 1 if row.get("correto") else 0,
+                "attempts": attempts_by_question.get(question_id, 1),
+                "wrong_attempts": errors_by_question.get(question_id, 0),
+                "lastAnsweredAt": row.get("created_at") or "",
+            }
+
+        return {
+            "user_id": user_id,
+            "progress": latest_by_question,
+            "errors": errors_by_question,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Error computing user progress for %s: %s", user_id, e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/api/responses")
 def record_responses(
     payload: ResponseRecords,

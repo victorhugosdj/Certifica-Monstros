@@ -175,8 +175,32 @@ function showInfo(message, type = 'info') {
   alert(message);
 }
 
+function getCanonicalAppUrl() {
+  return new URL('frontend/index.html', window.location.origin).toString();
+}
+
 function getAuthRedirectUrl() {
-  return `${window.location.origin}/`;
+  const redirectUrl = new URL(getCanonicalAppUrl());
+  redirectUrl.searchParams.set('auth_mode', 'login');
+  return redirectUrl.toString();
+}
+
+function clearAuthUrlState() {
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.hash = '';
+  cleanUrl.searchParams.delete('auth_mode');
+  history.replaceState({}, document.title, cleanUrl.toString());
+}
+
+function shouldForceLoginView() {
+  const url = new URL(window.location.href);
+  return url.searchParams.get('auth_mode') === 'login';
+}
+
+function isEmailConfirmationCallback() {
+  const url = new URL(window.location.href);
+  const hash = url.hash || '';
+  return shouldForceLoginView() && hash.includes('access_token=') && !hash.includes('type=recovery');
 }
 
 function loadProgress(userId) {
@@ -189,6 +213,83 @@ function loadProgress(userId) {
 
 function saveProgress(userId, data) {
   localStorage.setItem(getProgressKey(userId), JSON.stringify(data));
+}
+
+function mergeProgress(localProgress = {}, remoteProgress = {}) {
+  const merged = { ...localProgress };
+
+  Object.entries(remoteProgress || {}).forEach(([questionId, remoteEntry]) => {
+    const localEntry = merged[questionId];
+    const remoteDate = remoteEntry?.lastAnsweredAt || '';
+    const localDate = localEntry?.lastAnsweredAt || '';
+
+    if (!localEntry || remoteDate >= localDate) {
+      merged[questionId] = {
+        correct: Boolean(remoteEntry?.correct),
+        points: Number(remoteEntry?.points ?? (remoteEntry?.correct ? 1 : 0)),
+        attempts: Number(remoteEntry?.attempts || localEntry?.attempts || 1),
+        lastAnsweredAt: remoteDate || localDate || new Date().toISOString(),
+      };
+      return;
+    }
+
+    merged[questionId] = {
+      ...localEntry,
+      attempts: Math.max(
+        Number(localEntry?.attempts || 0),
+        Number(remoteEntry?.attempts || 0),
+      ),
+    };
+  });
+
+  return merged;
+}
+
+function mergeErrors(localErrors = {}, remoteErrors = {}) {
+  const merged = { ...localErrors };
+
+  Object.entries(remoteErrors || {}).forEach(([questionId, remoteCount]) => {
+    merged[questionId] = Math.max(
+      Number(localErrors?.[questionId] || 0),
+      Number(remoteCount || 0),
+    );
+  });
+
+  return merged;
+}
+
+async function fetchRemoteProgress(userId) {
+  if (!userId) return null;
+
+  try {
+    const headers = await getAuthHeaders();
+    const response = await apiFetch(`/api/progress/${encodeURIComponent(userId)}`, { headers });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.warn('Nao foi possivel carregar o progresso remoto:', error);
+    return null;
+  }
+}
+
+async function syncUserProgressFromRemote(userId) {
+  if (!userId) {
+    return { progress: loadProgress(userId), errors: loadErrors(userId) };
+  }
+
+  const localProgress = loadProgress(userId);
+  const localErrors = loadErrors(userId);
+  const remotePayload = await fetchRemoteProgress(userId);
+  const remoteProgress = remotePayload?.progress || {};
+  const remoteErrors = remotePayload?.errors || {};
+  const merged = mergeProgress(localProgress, remoteProgress);
+  const mergedErrors = mergeErrors(localErrors, remoteErrors);
+
+  saveProgress(userId, merged);
+  saveErrors(userId, mergedErrors);
+  return { progress: merged, errors: mergedErrors };
 }
 
 async function loadModules() {
@@ -805,6 +906,12 @@ async function onLoginSuccess(user) {
     console.warn('Falha ao carregar provas antes dos módulos:', e);
   }
 
+  try {
+    await syncUserProgressFromRemote(user.id);
+  } catch (e) {
+    console.warn('Falha ao sincronizar progresso remoto:', e);
+  }
+
   await loadModules().then(renderModulesGrid).catch(console.error);
   bindModuleActions();
   bindNavigation();
@@ -816,8 +923,12 @@ async function initAuth() {
   const supabase = getSupabaseClient();
   if (!supabase) return;
 
+  if (shouldForceLoginView()) {
+    showLogin();
+  }
+
   const { data } = await supabase.auth.getSession();
-  if (data?.session?.user) {
+  if (data?.session?.user && !isEmailConfirmationCallback()) {
     onLoginSuccess(data.session.user);
   }
 
@@ -832,7 +943,7 @@ async function initAuth() {
       const hasRecoveryType = (url.hash || '').includes('type=recovery');
       if (!hasRecoveryType && (url.hash || '').includes('access_token=')) {
         showInfo('E-mail confirmado com sucesso. Você já pode usar sua conta.', 'success');
-        history.replaceState({}, document.title, `${window.location.origin}${window.location.pathname}`);
+        clearAuthUrlState();
         supabase.auth.signOut().finally(() => {
           CURRENT_USER = null;
           showLogin();
