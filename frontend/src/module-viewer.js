@@ -94,7 +94,7 @@ const ModuleViewer = {
 
         // Headings (# ## ###)
         .replace(/^### (.*?)$/gm, '<h3 style="margin-top:16px;margin-bottom:8px;font-weight:700;font-size:1.17em;">$1</h3>')
-        .replace(/^## (.*?)$/gm, '<h2 style="margin-top:20px;margin-bottom:12px;font-weight:700;font-size:1.5em;color:#1a1a1a;">$2</h2>')
+        .replace(/^## (.*?)$/gm, '<h2 style="margin-top:20px;margin-bottom:12px;font-weight:700;font-size:1.5em;color:#1a1a1a;">$1</h2>')
         .replace(/^# (.*?)$/gm, '<h1 style="margin-top:24px;margin-bottom:16px;font-weight:700;font-size:2em;color:#0066cc;">$1</h1>')
 
         // Bold e Italic
