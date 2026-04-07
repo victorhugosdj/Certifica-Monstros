@@ -1,0 +1,897 @@
+﻿[
+    {
+        "id":  "m1_q1",
+        "modulo":  1,
+        "pergunta":  "AnyAirlines wants to automatically check customer loyalty status in a legacy green-screen system with no APIs. What is the most appropriate primary technology?",
+        "opcoes":  [
+                       "MuleSoft Composer calling REST API",
+                       "MuleSoft RPA with screen automation",
+                       "Salesforce Flow with HTTP Callout",
+                       "Anypoint Platform Experience API only"
+                   ],
+        "justificativa":  "MuleSoft RPA is the right fit when you must automate a user interface or a legacy system without usable APIs. AnyAirlines wants to automatically check customer loyalty status in a legacy green-screen system with no APIs. It operates via screen-level interactions, whereas API-based approaches require stable endpoints.",
+        "correta_texto":  "MuleSoft RPA with screen automation",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q2",
+        "modulo":  1,
+        "pergunta":  "Northern Trail Outfitters (NTO) wants to quickly sync standard objects between Salesforce and NetSuite using clicks, not code. Which solution best fits the requirement?",
+        "opcoes":  [
+                       "Anypoint Studio with custom DataWeave transformations",
+                       "MuleSoft RPA recording user actions in both systems",
+                       "MuleSoft Composer with prebuilt SaaS connectors",
+                       "Salesforce Flow with Scheduled Path and custom Apex"
+                   ],
+        "justificativa":  "MuleSoft Composer is the best fit when the requirement is a fast no-code or low-code integration between SaaS applications using standard connectors and simple mappings. In this scenario, the priority is speed and ease of maintenance rather than custom transformation logic.",
+        "correta_texto":  "MuleSoft Composer with prebuilt SaaS connectors",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q3",
+        "modulo":  1,
+        "pergunta":  "A company needs to process millions of transaction records nightly, aggregating data from multiple databases. Which component should be the core of this integration?",
+        "opcoes":  [
+                       "MuleSoft RPA with multiple bots in parallel",
+                       "MuleSoft Composer flow triggered every 5 minutes",
+                       "Anypoint Platform APIs with batch processing",
+                       "Salesforce Flow invoked by Platform Events only"
+                   ],
+        "justificativa":  "For very high-volume nightly processing that aggregates data from multiple sources, Anypoint Platform with batch-capable APIs is the most appropriate core integration layer. It is designed for scalable back-end processing in a way that Composer, Flow, or RPA are not.",
+        "correta_texto":  "Anypoint Platform APIs with batch processing",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "id":  "m1_q4",
+        "modulo":  1,
+        "pergunta":  "A project team wants to avoid building multiple logins to the same legacy ERP for different automations. What is the best practice aligned with C4E?",
+        "opcoes":  [
+                       "Embed login logic inside every bot individually",
+                       "Reuse a shared RPA process published in Anypoint Exchange",
+                       "Implement login logic in a Salesforce Screen Flow",
+                       "Configure separate credentials in each Composer flow"
+                   ],
+        "justificativa":  "The best practice aligned with C4E is to reuse shared assets instead of duplicating them across automations. Publishing a reusable RPA login process in Anypoint Exchange reduces maintenance effort, improves consistency and accelerates delivery for other teams.",
+        "correta_texto":  "Reuse a shared RPA process published in Anypoint Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q5",
+        "modulo":  1,
+        "pergunta":  "A customer asks: \"We need the fastest no-code way to connect Salesforce and ServiceNow with simple field maps.\" Which two dimensions from the tool selection matrix are most relevant to justify using Composer?",
+        "opcoes":  [
+                       "Volume and Interface",
+                       "Complexity and User Profile",
+                       "Volume and Protocol Complexity",
+                       "Governance and Advanced Security"
+                   ],
+        "justificativa":  "Composer is usually justified when the use case is simple to moderate in complexity and is intended for a business user or admin profile rather than a developer-heavy integration team. Those two dimensions explain why a no-code SaaS integration is preferred here.",
+        "correta_texto":  "Complexity and User Profile",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q6",
+        "modulo":  1,
+        "pergunta":  "NTO wants to minimize the impact of a flaky on-premises database during request/response lookups in Anypoint APIs. What is the most efficient way to protect the consumer experience?",
+        "opcoes":  [
+                       "Use RPA to read database screens instead of APIs",
+                       "Exponential backoff and retries in the API",
+                       "Move all logic into Salesforce Flows",
+                       "Call the database directly from Composer on every request"
+                   ],
+        "justificativa":  "When a downstream dependency is unstable, the integration layer should protect the consumer experience with retries, exponential backoff and controlled timeout behavior. This approach is more resilient than moving the problem into Flow, Composer or UI automation.",
+        "correta_texto":  "Exponential backoff and retries in the API",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q7",
+        "modulo":  1,
+        "pergunta":  "A solution architect wants to ensure end-to-end testing of a new hyperautomation scenario before the legacy system is ready. Which component should be used to simulate backend APIs?",
+        "opcoes":  [
+                       "MuleSoft RPA Recorder",
+                       "Anypoint Exchange Mocking Service",
+                       "Salesforce Sandbox with only partial data",
+                       "Production database with masked records"
+                   ],
+        "justificativa":  "Mocking Service is the right choice when backend systems are not ready but end-to-end testing must continue. It allows teams to simulate API behavior and proceed with Flow, Composer or frontend validation in parallel with backend development.",
+        "correta_texto":  "Anypoint Exchange Mocking Service",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "id":  "m1_q8",
+        "modulo":  1,
+        "pergunta":  "In a complex flow involving Salesforce, RPA and Composer, one transaction failed. Logs show that the robot could not open a desktop window. How would the error be classified?",
+        "opcoes":  [
+                       "Business exception",
+                       "Integration exception",
+                       "Technical exception in the RPA layer",
+                       "Data quality exception"
+                   ],
+        "justificativa":  "This is a technical exception in the RPA layer because the failure happened while the bot was trying to interact with a desktop application window. It is not a business-rule problem or a data-quality issue; it is an execution failure in the automation layer.",
+        "correta_texto":  "Technical exception in the RPA layer",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q9",
+        "modulo":  1,
+        "pergunta":  "A retail company already exposes a stable Customer System API on Anypoint. A new chatbot experience must reuse this data. What is the most efficient way to design the solution?",
+        "opcoes":  [
+                       "Build a new System API specifically for the chatbot",
+                       "Call the database directly from Einstein Bot",
+                       "Create an Experience API on top of the existing System API",
+                       "Use RPA to read the database through a headless client"
+                   ],
+        "justificativa":  "In API-led connectivity, the right move is to reuse the existing System API and shape the data for the new consumer with an Experience API when needed. This preserves reuse, reduces coupling and avoids rebuilding capabilities that already exist.",
+        "correta_texto":  "Create an Experience API on top of the existing System API",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "id":  "m1_q10",
+        "modulo":  1,
+        "pergunta":  "A bank wants to avoid duplicate processing if the same request is accidentally sent twice to an API that triggers an RPA process. Which concept is most important here?",
+        "opcoes":  [
+                       "Idempotency of API operations",
+                       "Horizontal scaling of workers",
+                       "API proxying with Flex Gateway",
+                       "Scheduler-based throttling only"
+                   ],
+        "justificativa":  "Idempotency is essential when the same request may be submitted more than once. It ensures the operation reaches the same end result without creating duplicate side effects, which is especially important when an API triggers downstream automation such as RPA.",
+        "correta_texto":  "Idempotency of API operations",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "In an end-to-end test of a hyperautomation flow, what is the most effective way to isolate where an error occurred?",
+        "opcoes":  [
+                       "Disable logs and enable only monitoring dashboards",
+                       "Test the entire chain only from the user interface",
+                       "Validate RPA, integration APIs and target systems independently",
+                       "Retry the entire flow repeatedly until it passes"
+                   ],
+        "justificativa":  "The most effective way to isolate failures in a hyperautomation solution is to validate each layer independently and then verify the full flow. This makes it possible to determine whether the issue came from RPA, APIs, Composer, Salesforce or the target system.",
+        "id":  "m1_q23",
+        "correta_texto":  "Validate RPA, integration APIs and target systems independently",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A process involves a long-running human approval plus a short, technical API call. When designing the architecture, which tool should handle the long-running orchestration?",
+        "opcoes":  [
+                       "Salesforce Flow Orchestration",
+                       "MuleSoft Composer only",
+                       "Anypoint Experience API",
+                       "MuleSoft RPA Manager"
+                   ],
+        "justificativa":  "Flow Orchestration is designed to coordinate multi-step, multi-user processes with stages, assignments, and visibility into progress. A process involves a long-running human approval plus a short, technical API call.",
+        "id":  "m1_q24",
+        "correta_texto":  "Salesforce Flow Orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A candidate proposals putting all heavy data transformations into System APIs to keep Process APIs “thin”. Why is this not aligned with MuleSoft best practices?",
+        "opcoes":  [
+                       "System APIs must not connect to any databases",
+                       "Process APIs are responsible for orchestration and business logic",
+                       "Experience APIs cannot perform transformations",
+                       "RPA bots should handle transformations instead"
+                   ],
+        "justificativa":  "A Process API centralizes business logic and orchestration across one or more System APIs, enabling reuse and consistent rules. A candidate proposals putting all heavy data transformations into System APIs to keep Process APIs “thin”. This is the typical place for cross-system aggregation and business-level transformations.",
+        "id":  "m1_q25",
+        "correta_texto":  "Process APIs are responsible for orchestration and business logic",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "Which option best describes API-led connectivity in the context of hyperautomation?",
+        "opcoes":  [
+                       "Direct point-to-point integrations between all systems",
+                       "A layered model with System, Process and Experience APIs promoting reuse",
+                       "A set of UI flows built only in Salesforce",
+                       "A network of ungoverned webhooks between services"
+                   ],
+        "justificativa":  "API-led connectivity is a layered model that separates System, Process and Experience APIs so teams can maximize reuse and reduce point-to-point coupling. This is one of the core architectural principles behind scalable hyperautomation.",
+        "id":  "m1_q26",
+        "correta_texto":  "A layered model with System, Process and Experience APIs promoting reuse",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "During an exam question, a scenario offers four valid-sounding options. Which one is most likely correct according to MuleSoft strategy?",
+        "opcoes":  [
+                       "The option that recreates existing integrations from scratch",
+                       "The option that maximizes reuse of existing APIs and assets",
+                       "The option that adds the greatest number of new components",
+                       "The option that ignores API-led layers for speed"
+                   ],
+        "justificativa":  "In MuleSoft architecture questions, the strongest answer often favors reuse over rebuilding. An option that reuses existing APIs and shared assets usually aligns better with long-term maintainability, governance and delivery speed.",
+        "id":  "m1_q27",
+        "correta_texto":  "The option that maximizes reuse of existing APIs and assets",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "AnyAirlines already has several point-to-point integrations between SaaS systems. They now want a more governed and reusable architecture. Which approach best aligns with MuleSoft recommendations?",
+        "opcoes":  [
+                       "Add more scheduled jobs between systems as needed",
+                       "Replace all integrations with a single monolithic API",
+                       "Implement API-led connectivity with System, Process and Experience APIs",
+                       "Move all integrations into Salesforce Flow only"
+                   ],
+        "justificativa":  "MuleSoft best practice is to replace brittle point-to-point integrations with a layered API-led model. System, Process and Experience APIs improve governance, reuse and maintainability over time.",
+        "id":  "m1_q28",
+        "correta_texto":  "Implement API-led connectivity with System, Process and Experience APIs",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "NTO wants to expose product prices to multiple channels (web, mobile app, Salesforce). What is the most efficient way to design this according to API-led principles?",
+        "opcoes":  [
+                       "One Process API that all channels call directly",
+                       "Separate System APIs for each channel",
+                       "A shared Product System API plus dedicated Experience APIs per channel",
+                       "Multiple duplicated APIs per consumer team"
+                   ],
+        "justificativa":  "In API-led connectivity, a System API abstracts the underlying system of record and provides a stable, reusable interface. NTO wants to expose product prices to multiple channels (web, mobile app, Salesforce). This reduces coupling and keeps back-end changes from leaking into multiple consumers.",
+        "id":  "m1_q29",
+        "correta_texto":  "A shared Product System API plus dedicated Experience APIs per channel",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "The scenario describes the Composer flow calling an API that performs heavy aggregations across systems. Where should the complex business logic primarily reside?",
+        "opcoes":  [
+                       "Inside the Composer formula editor",
+                       "Inside the Salesforce Flow screen logic",
+                       "Inside the Process API on Anypoint Platform",
+                       "Inside the RPA bot actions"
+                   ],
+        "justificativa":  "A Process API centralizes business logic and orchestration across one or more System APIs, enabling reuse and consistent rules. The scenario describes the Composer flow calling an API that performs heavy aggregations across systems. This is the typical place for cross-system aggregation and business-level transformations.",
+        "id":  "m1_q30",
+        "correta_texto":  "Inside the Process API on Anypoint Platform",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A candidate suggests using RPA to automate a system that already exposes robust, secure REST APIs. Which statement best reflects MuleSoft best practice?",
+        "opcoes":  [
+                       "Acceptable, because RPA is always simple to configure",
+                       "Not ideal; prefer API-based integration first and use RPA for no-API cases",
+                       "Required, because exam scenarios always prefer RPA",
+                       "Required, because APIs cannot be reused in other channels"
+                   ],
+        "justificativa":  "When robust APIs already exist, API-based integration should be preferred over UI automation. RPA is most appropriate as a fallback for systems without usable APIs, not as the first choice for a well-exposed service.",
+        "id":  "m1_q31",
+        "correta_texto":  "Not ideal; prefer API-based integration first and use RPA for no-API cases",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A retail customer wants near real-time inventory updates between their ERP and Salesforce. Which tool combination best balances speed and maintainability?",
+        "opcoes":  [
+                       "Only RPA bots reading ERP screens",
+                       "Anypoint Platform System API for ERP plus Composer for light orchestration",
+                       "Composer polling ERP database directly every second",
+                       "Manual CSV uploads by users"
+                   ],
+        "justificativa":  "In API-led connectivity, a System API abstracts the underlying system of record and provides a stable, reusable interface. A retail customer wants near real-time inventory updates between their ERP and Salesforce. This reduces coupling and keeps back-end changes from leaking into multiple consumers.",
+        "id":  "m1_q32",
+        "correta_texto":  "Anypoint Platform System API for ERP plus Composer for light orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "The scenario describes a complex multi-step process where a human underwriter reviews cases over several days. Which component should coordinate long-running steps while still carrying APIs and RPA where needed?",
+        "opcoes":  [
+                       "Single large RPA process with embedded decision logic",
+                       "Salesforce Flow Orchestration with background and interactive steps",
+                       "A large Composer flow with nested If/Else branches",
+                       "A single Process API with many synchronous calls"
+                   ],
+        "justificativa":  "Flow Orchestration is designed to coordinate multi-step, multi-user processes with stages, assignments, and visibility into progress. The scenario describes a complex multi-step process where a human underwriter reviews cases over several days.",
+        "id":  "m1_q33",
+        "correta_texto":  "Salesforce Flow Orchestration with background and interactive steps",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "In a hyperautomation project, who is primarily responsible for promoting reuse of assets like APIs, RPA processes and fragments according to the C4E model?",
+        "opcoes":  [
+                       "Only project managers",
+                       "The Center for Enablement acting as an enablement and governance team",
+                       "Individual developers working in isolation",
+                       "External vendors only"
+                   ],
+        "justificativa":  "In the C4E model, the Center for Enablement is responsible for encouraging reuse, defining standards and helping teams adopt shared assets effectively. It acts as both an enablement function and a governance function.",
+        "id":  "m1_q34",
+        "correta_texto":  "The Center for Enablement acting as an enablement and governance team",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A scenario describes repeated failures in a hyperautomation chain whenever a legacy system is under heavy load. Which combination best addresses resilience at the integration layer?",
+        "opcoes":  [
+                       "Remove logs to save processing time",
+                       "Implement retries with exponential backoff and timeouts in the APIs",
+                       "Move all logic to RPA bots to hide the problem",
+                       "Increase Salesforce govern limits"
+                   ],
+        "justificativa":  "Resilience at the integration layer usually requires timeouts, retries and exponential backoff when downstream dependencies become slow or unstable. That keeps failures controlled and prevents the entire chain from degrading unnecessarily.",
+        "id":  "m1_q35",
+        "correta_texto":  "Implement retries with exponential backoff and timeouts in the APIs",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A company wants to test a new orchestration between Salesforce Flow and RPA while the final production credentials are not yet available. What is the safest test data strategy?",
+        "opcoes":  [
+                       "Use real customer data in production systems",
+                       "Use synthetic/mock data defined in API specifications",
+                       "Export CSVs from production and mask only names",
+                       "Duplicate production environment without any anonymization"
+                   ],
+        "justificativa":  "Synthetic and mock data are the safest strategy because they let teams test orchestration behavior without exposing real customer information or depending on production credentials. This is especially important during early end-to-end validation.",
+        "id":  "m1_q36",
+        "correta_texto":  "Use synthetic/mock data defined in API specifications",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "The exam presents four tool choices for a simple SaaS-to-SaaS integration with low volume and business admin ownership. Which one is most aligned with MuleSoft guidance?",
+        "opcoes":  [
+                       "Anypoint Platform with full custom APIs",
+                       "MuleSoft Composer with out-of-the-box connectors",
+                       "RPA bots simulating all user clicks",
+                       "Custom Java microservices on Kubernetes"
+                   ],
+        "justificativa":  "Composer is the best fit for simple SaaS-to-SaaS integrations owned by business admins because it offers fast delivery through prebuilt connectors and guided configuration. It is a better choice than custom APIs or RPA when the integration is straightforward.",
+        "id":  "m1_q37",
+        "correta_texto":  "MuleSoft Composer with out-of-the-box connectors",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "An architect proposes centralizing all error handling in the RPA layer. Why is this approach problematic for hyperautomation?",
+        "opcoes":  [
+                       "APIs never fail, so this is unnecessary",
+                       "Each layer (APIs, RPA, Flow, Composer) should handle its own technical concerns",
+                       "RPA does not log any errors",
+                       "Composer has no way to react to failures"
+                   ],
+        "justificativa":  "In hyperautomation, each layer should handle its own technical concerns and expose failures clearly. Pushing all error handling into RPA hides problems that belong in APIs, Flow or Composer and makes diagnosis harder.",
+        "id":  "m1_q38",
+        "correta_texto":  "Each layer (APIs, RPA, Flow, Composer) should handle its own technical concerns",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "The scenario lies “avoiding duplicate login implementations across multiple teams”. Which platform capability directly supports this goal?",
+        "opcoes":  [
+                       "Publishing shared RPA processes and API specs in Anypoint Exchange",
+                       "Creating separate logins in each project for independence",
+                       "Storing credentials in local text files",
+                       "Embedding passwords into hard-coded scripts"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. The scenario lies “avoiding duplicate login implementations across multiple teams”. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m1_q39",
+        "correta_texto":  "Publishing shared RPA processes and API specs in Anypoint Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "NTO wants to quickly pilot a new customer journey using mocked APIs while backend systems are still under design. Which combination best supports this parallel development?",
+        "opcoes":  [
+                       "RPA Recorder plus production database",
+                       "Anypoint API Designer + Mocking Service consumed by Flow/Composer",
+                       "Manual JSON files exchanged over email",
+                       "Only Salesforce custom objects with no external connectivity"
+                   ],
+        "justificativa":  "This combination supports parallel development because teams can define the API contract, mock backend behavior and continue validating Flow or Composer before the real systems are finished.",
+        "id":  "m1_q40",
+        "correta_texto":  "Anypoint API Designer + Mocking Service consumed by Flow/Composer",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A question describes a flow where Salesforce Screen Flows collect data from agents, which is then processed by RPA in a legacy system. Where should the primary user experience be built?",
+        "opcoes":  [
+                       "In desktop RPA dialogs",
+                       "In Salesforce Screen Flows integrated with APIs/RPA",
+                       "In custom Java Swing applications",
+                       "In raw database client tools"
+                   ],
+        "justificativa":  "The primary user experience should remain in Salesforce Screen Flows because users interact there directly, while RPA should stay behind the scenes handling the legacy system. That preserves a better user experience and a cleaner separation of responsibilities.",
+        "id":  "m1_q41",
+        "correta_texto":  "In Salesforce Screen Flows integrated with APIs/RPA",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "An exam item shows multiple design options. Which is the strong sign that one option is a “trap” rather than the recommended architecture?",
+        "opcoes":  [
+                       "It emphasizes reuse of existing APIs and assets",
+                       "It replaces three integrations with a single well-designed Process API",
+                       "It adds unnecessary components and ignores existing reusable services",
+                       "It ignores C4E and governance practices"
+                   ],
+        "justificativa":  "This option is the trap because it adds unnecessary components and ignores reusable services that already exist. The more mature answer is the simpler architecture that preserves reuse.",
+        "id":  "m1_q42",
+        "correta_texto":  "It adds unnecessary components and ignores existing reusable services",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "AnyAirlines wants to expose flight status to partners, mobile apps and internal portals. What is the most efficient high-level design?",
+        "opcoes":  [
+                       "One monolithic API mixing database calls and UI logic",
+                       "Separate, duplicated APIs for each consumer",
+                       "System APIs for core data plus Process and Experience APIs for each channel",
+                       "Only RPA bots reading from the reservation system"
+                   ],
+        "justificativa":  "In API-led connectivity, a System API abstracts the underlying system of record and provides a stable, reusable interface. AnyAirlines wants to expose flight status to partners, mobile apps and internal portals. This reduces coupling and keeps back-end changes from leaking into multiple consumers.",
+        "id":  "m1_q43",
+        "correta_texto":  "System APIs for core data plus Process and Experience APIs for each channel",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A scenario offers the option to rebuild a Customer System API from scratch even though one already exists. Why is this typically wrong?",
+        "opcoes":  [
+                       "Existing APIs cannot be reused",
+                       "MuleSoft discourages versioning of APIs",
+                       "It violates the principle of reuse and increases maintenance",
+                       "System APIs are not allowed to expose customer data"
+                   ],
+        "justificativa":  "Rebuilding a System API that already exists violates the principle of reuse and creates unnecessary maintenance overhead. A better design reuses the existing capability and extends it only when there is a genuine gap.",
+        "id":  "m1_q44",
+        "correta_texto":  "It violates the principle of reuse and increases maintenance",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "NTO needs a quick proof-of-concept integration from Salesforce to a legacy mainframe with no APIs. Which answer best reflects MuleSoft guidance?",
+        "opcoes":  [
+                       "Start with MuleSoft RPA to simulate user interactions",
+                       "Wait until a new REST API is built before doing anything",
+                       "Use Composer directly against the database tables",
+                       "Only manual rekeying is acceptable"
+                   ],
+        "justificativa":  "When a legacy system has no usable APIs, MuleSoft RPA is an appropriate bridge for a proof of concept because it can automate the existing user interface. It is faster than waiting for a new API to be built before validating the business flow.",
+        "id":  "m1_q45",
+        "correta_texto":  "Start with MuleSoft RPA to simulate user interactions",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "In an exam question, one option suggests performing complex aggregations in the Experience API, while another suggests doing that work in the Process API. Which is more aligned with API-led architecture?",
+        "opcoes":  [
+                       "Experience API, because consumer-facing APIs should also own the orchestration",
+                       "Process API, because it centralizes business logic and orchestration",
+                       "Either Experience or Process API, depending mainly on which team owns the integration",
+                       "System API, because all reusable logic should stay closest to the source system"
+                   ],
+        "justificativa":  "Process APIs are designed to centralize orchestration and business logic across systems. Complex aggregations belong there rather than in Experience APIs, which should stay focused on shaping data for a specific consumer.",
+        "id":  "m1_q46",
+        "correta_texto":  "Process API, because it centralizes business logic and orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A flow uses RPA to match data from a legacy claims system and then sends the result to Salesforce. Where should retries and timeouts for unstable connectivity primarily be configured?",
+        "opcoes":  [
+                       "Inside the Salesforce page layout",
+                       "In the integration/API layer that receives or calls the RPA process",
+                       "Inside the user’s browser",
+                       "Nowhere; failures should be ignored"
+                   ],
+        "justificativa":  "Retries and timeouts should primarily be handled in the integration or API layer that invokes or receives the RPA process. That keeps resilience logic centralized and prevents UI-specific automation concerns from absorbing responsibilities they should not own.",
+        "id":  "m1_q47",
+        "correta_texto":  "In the integration/API layer that receives or calls the RPA process",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A candidate chooses an option that adds Salesforce Flow Orchestration plus multiple new APIs when a simple synchronous API call from a Screen Flow would suffice. What kind of trap is this?",
+        "opcoes":  [
+                       "An option that improves channel-specific flexibility",
+                       "An option that adds unnecessary complexity",
+                       "An option that centralizes reusable logic in fewer layers",
+                       "An option that reduces coupling between Salesforce and downstream APIs"
+                   ],
+        "justificativa":  "A classic trap in architecture questions is an answer that introduces more tools and layers than the scenario actually needs. If a simple synchronous API from a Screen Flow would solve the case, adding Orchestration and extra APIs is unnecessary complexity.",
+        "id":  "m1_q48",
+        "correta_texto":  "An option that adds unnecessary complexity",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "An exam item describes a need for one-time data migration from a CSV file into Salesforce. Which is the most appropriate integration approach?",
+        "opcoes":  [
+                       "Full API-led architecture with three layers",
+                       "Complex RPA automation mimicking user input",
+                       "Native Salesforce data import tools or simple integration",
+                       "Building long-running orchestrations with many stages"
+                   ],
+        "justificativa":  "A one-time CSV migration does not usually justify a full hyperautomation architecture. Native Salesforce import tools or a simple integration are more appropriate because they match the scale and temporary nature of the need.",
+        "id":  "m1_q49",
+        "correta_texto":  "Native Salesforce data import tools or simple integration",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A scenario gives two options: call a Process API that orchestrates multiple System APIs, or let Composer call each underlying system separately. Which is typically preferred?",
+        "opcoes":  [
+                       "Composer calling all systems directly to speed up delivery for one channel",
+                       "The Process API orchestrating System APIs, reused by Composer and other clients",
+                       "An Experience API orchestrating the underlying systems for consumer-specific reuse",
+                       "Separate point-to-point integrations for each consumer to keep teams autonomous"
+                   ],
+        "justificativa":  "The preferred approach is to reuse a Process API that orchestrates the underlying System APIs. That preserves API-led layering, reduces coupling, and lets Composer and other clients consume the same reusable business capability.",
+        "id":  "m1_q50",
+        "correta_texto":  "The Process API orchestrating System APIs, reused by Composer and other clients",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A hyperautomation design includes Composer, RPA, Flow and multiple APIs. Which guiding principle helps keep this architecture maintainable?",
+        "opcoes":  [
+                       "Push every responsibility to a single tool",
+                       "Use each tool for the role it is strong at and maximize reuse",
+                       "Duplicate logic in each layer for redundantness",
+                       "Prefer UI automation over APIs whenever possible"
+                   ],
+        "justificativa":  "Maintainable hyperautomation depends on assigning each tool to the role it handles best and maximizing reuse across layers. That avoids duplicated logic, reduces coupling and keeps the architecture easier to evolve.",
+        "id":  "m1_q51",
+        "correta_texto":  "Use each tool for the role it is strong at and maximize reuse",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "An option claims that creating separate APIs for each consumer application improves reuse. Why is this misleading?",
+        "opcoes":  [
+                       "MuleSoft does not support multiple APIs",
+                       "True reuse comes from generic System/Process APIs with Experience APIs only when needed",
+                       "Experience APIs cannot be consumer-specific",
+                       "Reuse is unrelated to API design"
+                   ],
+        "justificativa":  "True reuse comes from shared System and Process APIs that serve multiple consumers consistently. Creating separate APIs for every consumer usually increases duplication and maintenance rather than improving reuse.",
+        "id":  "m1_q52",
+        "correta_texto":  "True reuse comes from generic System/Process APIs with Experience APIs only when needed",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A company wants to validate that its architecture still follows best practices one year after go-live. Which practice best supports this?",
+        "opcoes":  [
+                       "Letting each team evolve integrations independently and reviewing issues only when they appear",
+                       "Reviewing assets published in Anypoint Exchange and enforcing reuse policies",
+                       "Rewriting the integration portfolio on a fixed annual cycle",
+                       "Moving older integrations to RPA wherever possible to simplify governance"
+                   ],
+        "justificativa":  "Reviewing assets in Anypoint Exchange and enforcing reuse policies helps teams verify whether architecture standards are still being followed over time. It is a practical way to check consistency, reuse and governance after go-live.",
+        "id":  "m1_q53",
+        "correta_texto":  "Reviewing assets published in Anypoint Exchange and enforcing reuse policies",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "In a multi-choice question, two options look good, but one ignores API-led layers and directly couples front-end to databases. How would this influence the choice?",
+        "opcoes":  [
+                       "Prefer the option that respects API-led separation, even if more subtle",
+                       "Prefer the option that bypasses layers for performance",
+                       "Both are equally acceptable",
+                       "Choose randomly if both see possible"
+                   ],
+        "justificativa":  "When two options seem reasonable, the one that preserves API-led separation is usually stronger. Respecting clear layering reduces coupling and keeps consumer-specific concerns out of lower-level services.",
+        "id":  "m1_q54",
+        "correta_texto":  "Prefer the option that respects API-led separation, even if more subtle",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "A scenario describes a business user who must maintain a simple integration without developer support. Which integration tool is the exam most likely to expect?",
+        "opcoes":  [
+                       "Anypoint Studio with complex DataWeave scripts",
+                       "MuleSoft Composer with guided interface",
+                       "Custom Java microservices",
+                       "Low-level HTTP clients"
+                   ],
+        "justificativa":  "MuleSoft Composer is designed for no-code integrations using prebuilt SaaS connectors, triggers, and simple mappings. A scenario describes a business user who must maintain a simple integration without developer support. It is typically preferred over custom code when requirements are straightforward and speed-to-delivery matters.",
+        "id":  "m1_q55",
+        "correta_texto":  "MuleSoft Composer with guided interface",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "NTO needs a fast temporary workaround using RPA while the proper APIs are being built. Which statement best matches MuleSoft best practice?",
+        "opcoes":  [
+                       "RPA should permanently replace API-based integrations",
+                       "RPA can act as a bridge, but long-term strategy should be API-led",
+                       "RPA and APIs should never coexist",
+                       "APIs are only for external consumers"
+                   ],
+        "justificativa":  "RPA can be a useful bridge when APIs are not ready yet, especially for short-term delivery pressure. However, the long-term target should still be an API-led architecture rather than making UI automation the permanent integration strategy.",
+        "id":  "m1_q56",
+        "correta_texto":  "RPA can act as a bridge, but long-term strategy should be API-led",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  1,
+        "pergunta":  "An exam option describes calling the same System API from multiple Experience APIs and from RPA or Composer flows. How should this be interpreted?",
+        "opcoes":  [
+                       "As an anti-pattern that must be avoided",
+                       "As strong evidence of reuse and correct layering",
+                       "As a sign that the System API is too generic",
+                       "As a violation of security principles"
+                   ],
+        "justificativa":  "Using the same System API across multiple consumers is usually strong evidence of reuse and correct layering. It shows that shared capabilities are being exposed once and consumed consistently instead of being rebuilt for every channel or tool.",
+        "id":  "m1_q57",
+        "correta_texto":  "As strong evidence of reuse and correct layering",
+        "refs":  [
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    }
+]

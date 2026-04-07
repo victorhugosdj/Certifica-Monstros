@@ -1,0 +1,872 @@
+﻿[
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants to orchestrate a complete employee onboarding process across multiple stages and departments. Which component is more appropriate?",
+        "opcoes":  [
+                       "A single simple Screen Flow",
+                       "Salesforce Flow Orchestration",
+                       "Only MuleSoft RPA",
+                       "Composer Only"
+                   ],
+        "justificativa":  "Flow Orchestration is the right fit because employee onboarding is a long-running, multi-stage process that often crosses teams such as HR, IT, and training. It provides stage control, work assignment, and visibility into progress in a way that a single Flow or isolated automation would not.",
+        "id":  "m8_q343",
+        "correta_texto":  "Salesforce Flow Orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "Northern Trail Outfitters (NTO) needs to understand the basic structure of an orchestration. What is the correct hierarchy?",
+        "opcoes":  [
+                       "Step → Stage → Orchestration",
+                       "Orchestration → Stages → Steps",
+                       "Stage → Orchestration → Steps",
+                       "Steps → Orchestration → Stages"
+                   ],
+        "justificativa":  "The hierarchy is Orchestration -\u003e Stages -\u003e Steps. The orchestration is the top-level process, stages represent major business phases, and steps are the executable units inside each stage, whether interactive or background.",
+        "id":  "m8_q344",
+        "correta_texto":  "Orchestration → Stages → Steps",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "In one scenario, an employee onboarding process is divided into Documentation, IT, and Training. How should this be modeled?",
+        "opcoes":  [
+                       "Each activity as a separate Orchestration",
+                       "Stages representing each logical grouping",
+                       "Only Steps without Stages",
+                       "A single giant Step"
+                   ],
+        "justificativa":  "Those groupings should be modeled as stages because they represent clear business phases inside one larger process. Using stages makes ownership, progress tracking, and sequencing easier than splitting the process into separate orchestrations or flattening everything into one giant step list.",
+        "id":  "m8_q345",
+        "correta_texto":  "Stages representing each logical grouping",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "The orchestration has stages that perform Autolaunched Flows without human interaction. What are these steps called?",
+        "opcoes":  [
+                       "Interactive Steps",
+                       "Background Steps",
+                       "User Tasks",
+                       "Bot Tasks"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. The orchestration has stages that perform Autolaunched Flows without human interaction.",
+        "id":  "m8_q346",
+        "correta_texto":  "Background Steps",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A step requires a manager to approve a discount on a screen. What kind of Step is that?",
+        "opcoes":  [
+                       "Background Step",
+                       "Interactive Step",
+                       "System Step",
+                       "Async Step"
+                   ],
+        "justificativa":  "An Interactive Step is the right choice when a user must review information and make a decision on screen, such as approving a discount.",
+        "id":  "m8_q347",
+        "correta_texto":  "Interactive Step",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A scenario talks about “Work Items” that appear to users in a work queue, associating a specific Flow to be filled out. What does that represent?",
+        "opcoes":  [
+                       "Application logs only",
+                       "Orchestration Work Items",
+                       "Platform Events",
+                       "Apex Jobs"
+                   ],
+        "justificativa":  "Work Items are the pending pieces of orchestration work assigned to users or queues. They appear in the work queue because someone needs to complete the associated Flow or action before the process can continue.",
+        "id":  "m8_q348",
+        "correta_texto":  "Orchestration Work Items",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO wants an interactive stage to be assigned to a group of approvers. What does Orchestration support?",
+        "opcoes":  [
+                       "Assignment to individual users only",
+                       "Assignment to user, group, or queue",
+                       "Assignment to queues only",
+                       "Assignment only to the record owner"
+                   ],
+        "justificativa":  "Flow Orchestration supports assigning interactive work to an individual user, a group, or a queue. That flexibility is important when any qualified approver should be able to pick up the next pending task.",
+        "id":  "m8_q349",
+        "correta_texto":  "Assignment to user, group, or queue",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "An exam scenario describes a process that can take days, with multiple actions at different times. Why is Flow Orchestration suitable here?",
+        "opcoes":  [
+                       "Because it only runs in batch",
+                       "Because it manages long-running state, steps, and assignees",
+                       "Because it replaces APIs",
+                       "Because no other automation pattern can span time"
+                   ],
+        "justificativa":  "Flow Orchestration is a strong fit for long-running processes with multiple participants and actions over time because it keeps track of stages, steps, assignees, and status.",
+        "id":  "m8_q350",
+        "correta_texto":  "Because it manages long-running state, steps, and assignees",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "In a Stage, two steps must take at the same time: HR prepares the contract and IT creates the email. How is this modeled?",
+        "opcoes":  [
+                       "Sequential Steps within Stage",
+                       "Parallel steps within the same Stage, which only ends when both conclude",
+                       "Separate Orchestrations",
+                       "A single step with conditional logic"
+                   ],
+        "justificativa":  "Parallel steps in the same stage are the correct model when two teams can work at the same time and the process should move on only after both are done.",
+        "id":  "m8_q351",
+        "correta_texto":  "Parallel steps within the same Stage, which only ends when both conclude",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One candidate suggests using only isolated Flows for a process that requires coordination between multiple teams and spaced human tasks. Why can that be inefficient?",
+        "opcoes":  [
+                       "Because standard Flows do not support autolaunched logic",
+                       "Because Orchestration provides an explicit model of stages, steps, and long-running work items",
+                       "Because Flows cannot call APIs",
+                       "Because Flows cannot show screens"
+                   ],
+        "justificativa":  "When the process spans time, teams, and human tasks, Flow Orchestration provides structure that isolated Flows do not. It makes coordination, visibility, and ownership much clearer.",
+        "id":  "m8_q352",
+        "correta_texto":  "Because Orchestration provides an explicit model of stages, steps, and long-running work items",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants to ensure audit trail: who approved what, at which stage. What resource helps with that?",
+        "opcoes":  [
+                       "Apex Logs Only",
+                       "Status and history of Orchestration Runs and Work Items",
+                       "Legacy system logs only",
+                       "Only saved emails"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. AnyAirlines wants to ensure audit trail: who approved what, at which stage.",
+        "id":  "m8_q353",
+        "correta_texto":  "Status and history of Orchestration Runs and Work Items",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "The same Orchestration will be used across several similar processes with small variations. What does the exam tend to value in that case?",
+        "opcoes":  [
+                       "Create a whole new Orchestration for each variation",
+                       "Reuse orchestration and subflows where it makes sense, avoiding duplication",
+                       "Place all in Apex",
+                       "Use only RPA"
+                   ],
+        "justificativa":  "The exam tends to value reuse here. Subflows and reusable orchestration patterns reduce duplication and make it easier to support multiple similar processes with small variations.",
+        "id":  "m8_q354",
+        "correta_texto":  "Reuse orchestration and subflows where it makes sense, avoiding duplication",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO wants certain steps to be optional and others mandatory within a Stage. What defines the Stage conclusion?",
+        "opcoes":  [
+                       "When any Step ends",
+                       "When all mandatory Steps end",
+                       "When the first user opens the Work Guide",
+                       "When the administrator manually marks it complete"
+                   ],
+        "justificativa":  "A stage finishes when all required steps for that stage are complete. Optional steps may exist, but they do not define stage completion if the required path has not finished yet.",
+        "id":  "m8_q355",
+        "correta_texto":  "When all mandatory Steps end",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "An alternate says that “Flow Orchestration is just a new name for any Screen Flow”. How would this be evaluated?",
+        "opcoes":  [
+                       "Correct.",
+                       "Wrong; Orchestration adds a multistage process layer, not just UI",
+                       "True only in Sandbox",
+                       "True only in production"
+                   ],
+        "justificativa":  "That statement is incorrect because Flow Orchestration is not just another screen experience. Its value is coordinating stages, handoffs, work items, and long-running progress across a larger business process.",
+        "id":  "m8_q356",
+        "correta_texto":  "Wrong; Orchestration adds a multistage process layer, not just UI",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A process described in the exam involves a short sequence, no human interaction, and fully synchronous execution. Which tool will probably be preferred instead of Orchestration?",
+        "opcoes":  [
+                       "An autolaunched Flow",
+                       "A multistage Orchestration with stage tracking",
+                       "An RPA bot automating the user interface end to end",
+                       "A Composer flow coordinating several SaaS actions"
+                   ],
+        "justificativa":  "If the process is short, synchronous, and has no human steps or waiting states, a regular autolaunched Flow is usually simpler and more appropriate than Flow Orchestration.",
+        "id":  "m8_q357",
+        "correta_texto":  "An autolaunched Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants Stage \"IT\" to start only after Stage \"Documentation\" is successfully approved. What concept applies?",
+        "opcoes":  [
+                       "Work Items",
+                       "Entry Conditions",
+                       "Exit Conditions",
+                       "Platform Events"
+                   ],
+        "justificativa":  "Entry conditions control whether a stage or step can begin based on the current state of the record or process. In this scenario, the IT stage should start only after the documentation stage satisfies the approval condition.",
+        "id":  "m8_q358",
+        "correta_texto":  "Entry Conditions",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "Northern Trail Outfitters (NTO) needs to define when a Step is considered completed. In an interactive stage, what is the typical criterion?",
+        "opcoes":  [
+                       "When the user completes the associated Screen Flow",
+                       "When the administrator clicks \"approve everything\"",
+                       "When the system sends an email",
+                       "When the record is created"
+                   ],
+        "justificativa":  "In an interactive step, completion usually depends on the assigned user finishing the associated Screen Flow or guided task. That is the action that tells Orchestration the human step is done and the process can continue.",
+        "id":  "m8_q359",
+        "correta_texto":  "When the user completes the associated Screen Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "In a Background Step, which event usually determines Exit Condition?",
+        "opcoes":  [
+                       "User click “Save”",
+                       "The completion of Autolaunched Flow implementing logic",
+                       "End of business day",
+                       "The execution of an Apex Trigger"
+                   ],
+        "justificativa":  "Autolaunched Flows are reusable background flows that can be invoked from Apex, other flows (subflows), or orchestrations, and they do not require a UI. In a Background Step, which event usually determines Exit Condition?",
+        "id":  "m8_q360",
+        "correta_texto":  "The completion of Autolaunched Flow implementing logic",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A scenario describes a Step that should be started only when a certain field of the record is in “Approved” status. Where\u0027s this set up?",
+        "opcoes":  [
+                       "In Work Guide",
+                       "In Step/Stage Entry Condition",
+                       "In Apex only",
+                       "In Process Builder"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. A scenario describes a Step that should be started only when a certain field of the record is in “Approved” status.",
+        "id":  "m8_q361",
+        "correta_texto":  "In Step/Stage Entry Condition",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A manager wants certain tasks to go to a queue rather than to a specific user so any team member can pick them up. How is that supported?",
+        "opcoes":  [
+                       "Assignment per user only",
+                       "Interactive Step Assignment to Queue",
+                       "Direct allocation to the RPA",
+                       "Assignment to API Manager"
+                   ],
+        "justificativa":  "Queue assignment is exactly what supports shared ownership of interactive work. It lets any qualified team member pick up the next pending task.",
+        "id":  "m8_q362",
+        "correta_texto":  "Interactive Step Assignment to Queue",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO needs a user to clearly see which pending tasks exist for them on a given record. Which UI component is used?",
+        "opcoes":  [
+                       "Work Guide on the Salesforce record",
+                       "Default task list only",
+                       "RPA Screen",
+                       "Exchange console"
+                   ],
+        "justificativa":  "Work Guide is the Salesforce UI component that surfaces pending orchestration work directly on the record so users can understand and act on their tasks.",
+        "id":  "m8_q363",
+        "correta_texto":  "Work Guide on the Salesforce record",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "In a test scenario, two steps must run in parallel within the same Stage. When is Stage considered finished?",
+        "opcoes":  [
+                       "When any one of them ends",
+                       "When all parallel mandatory Steps are completed",
+                       "When the administrator decides",
+                       "When an API returns 200"
+                   ],
+        "justificativa":  "If steps run in parallel inside the same stage, the stage should wait until all required parallel work is complete. That is what preserves coordination across teams before the process moves to the next stage.",
+        "id":  "m8_q364",
+        "correta_texto":  "When all parallel mandatory Steps are completed",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants to pause a process until an external event is completed. How does Orchestration handle that?",
+        "opcoes":  [
+                       "Does not support pauses",
+                       "Maintains orchestration state and waits for the responsible step or flow to complete",
+                       "Automatically cancels the process",
+                       "Moves everything to Apex"
+                   ],
+        "justificativa":  "Flow Orchestration is designed for long-running processes, so it can keep state while waiting for a human action or external event. That ability to pause and resume is one of its main advantages over simpler synchronous flows.",
+        "id":  "m8_q365",
+        "correta_texto":  "Maintains orchestration state and waits for the responsible step or flow to complete",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A candidate confuses an Orchestration Run with an individual Flow. What is the best definition of an Orchestration Run?",
+        "opcoes":  [
+                       "Flow source code",
+                       "A specific execution of the complete orchestration, with all its Stages and Steps",
+                       "An API Manager log",
+                       "An Apex execution"
+                   ],
+        "justificativa":  "An Orchestration Run is one concrete execution of the whole orchestration instance, including its stages, steps, assignees, and status over time. It is not the source code of a single Flow but the runtime record of one process execution.",
+        "id":  "m8_q366",
+        "correta_texto":  "A specific execution of the complete orchestration, with all its Stages and Steps",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One scenario shows that several executions of the same Orchestration are in different states (in progress, paused, completed). Where\u0027s this viewed?",
+        "opcoes":  [
+                       "Raw logs only",
+                       "On the Orchestration Runs page",
+                       "In RPA Manager",
+                       "In Exchange"
+                   ],
+        "justificativa":  "The Orchestration Runs page is where teams monitor individual executions and see whether each run is in progress, paused, completed, or failed. That view is meant for operational visibility into the lifecycle of each orchestration instance.",
+        "id":  "m8_q367",
+        "correta_texto":  "On the Orchestration Runs page",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO needs to debug why a purchasing process got stuck in a specific Stage. What resource helps?",
+        "opcoes":  [
+                       "Debug from Orchestration, inspecting variables between Stages",
+                       "Apex logs only",
+                       "Exchange Only",
+                       "RPA logs only"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. NTO needs to debug why a purchasing process got stuck in a specific Stage.",
+        "id":  "m8_q368",
+        "correta_texto":  "Debug from Orchestration, inspecting variables between Stages",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "An example process has Stage 1 - Request, Stage 2 - Approval, Stage 3 - Inventory check (background), and Stage 4 - Procurement. Which stage would most likely call a MuleSoft API?",
+        "opcoes":  [
+                       "Stage 1",
+                       "Stage 2",
+                       "Stage 3 (Inventory check) via a Background Step",
+                       "Stage 4"
+                   ],
+        "justificativa":  "A MuleSoft API is most likely to be called from the background stage that performs system work without human interaction. In this example, the inventory check is the part that naturally fits an automated API call.",
+        "id":  "m8_q369",
+        "correta_texto":  "Stage 3 (Inventory check) via a Background Step",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants a “Compliance Review” step to be required only if the order value is greater than a limit. Where would this logic be configured?",
+        "opcoes":  [
+                       "In API Policy",
+                       "In the Entry Condition of the Compliance Step/Stage",
+                       "In Monitoring logs",
+                       "In a manual email"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. AnyAirlines wants a “Compliance Review” step to be required only if the order value is greater than a limit.",
+        "id":  "m8_q370",
+        "correta_texto":  "In the Entry Condition of the Compliance Step/Stage",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option says that \u0027Background Steps cannot call APIs; they only update local fields.\u0027 Based on the module, how should this be evaluated?",
+        "opcoes":  [
+                       "True",
+                       "False; Background Steps run Flows, which can call MuleSoft APIs and other services",
+                       "True only in Sandbox",
+                       "True only for Experience Cloud"
+                   ],
+        "justificativa":  "That statement is false because Background Steps run Flows, and those Flows can call MuleSoft APIs and other external services when needed.",
+        "id":  "m8_q371",
+        "correta_texto":  "False; Background Steps run Flows, which can call MuleSoft APIs and other services",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO wants to know who currently owns a stalled process. What information combination does Orchestration provide?",
+        "opcoes":  [
+                       "System logs only",
+                       "Orchestration Runs and Work Items, showing which step, user, or queue currently owns the process",
+                       "Only the creation date",
+                       "Only the final status"
+                   ],
+        "justificativa":  "Orchestration Runs and Work Items together show both where the process is paused and who currently owns the next action, whether that owner is a user or a queue. That combination is what helps teams diagnose stalled human steps quickly.",
+        "id":  "m8_q372",
+        "correta_texto":  "Orchestration Runs and Work Items, showing which step, user, or queue currently owns the process",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines has a purchasing process: an employee requests an item, a manager approves it, stock is checked through an API, and purchasing approves an external buy if needed. Why is Flow Orchestration indicated?",
+        "opcoes":  [
+                       "Because it is just a simple batch process",
+                       "Because it coordinates multiple human and automated steps over time",
+                       "Because it replaces all APIs",
+                       "Because no Flow should be used"
+                   ],
+        "justificativa":  "This is a classic orchestration scenario because it combines human approvals, API-driven checks, and conditional branching across a longer business process.",
+        "id":  "m8_q373",
+        "correta_texto":  "Because it coordinates multiple human and automatic steps over time",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option suggests using only RPA to coordinate all human approvals and systems in a week-long process. What is wrong with that approach?",
+        "opcoes":  [
+                       "RPA does not support UI",
+                       "Orchestration is designed for long-running coordination and human tasks in Salesforce",
+                       "RPA cannot call APIs",
+                       "Flow does not interact with humans"
+                   ],
+        "justificativa":  "RPA can automate system interactions, but long-running coordination with approvals, ownership, and process visibility is where Flow Orchestration is the better fit.",
+        "id":  "m8_q374",
+        "correta_texto":  "Orchestration is designed for long-term coordination and human tasks in Salesforce",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO needs to choose between Flow Orchestration and a single Screen Flow for a quick service process that ends in a few minutes within one session. Which option is typically preferred?",
+        "opcoes":  [
+                       "Flow Orchestration because it gives more visibility for any process",
+                       "A simple Screen Flow without over-engineering",
+                       "An RPA bot started from Salesforce",
+                       "A Composer flow replacing the screen interaction"
+                   ],
+        "justificativa":  "Screen Flows are built for guided, interactive user experiences where users must enter or confirm data. NTO wants to decide between Flow Orchestration and a single Screen Flow for a quick service process that ends in a fe... Background flows are better when no UI is needed.",
+        "id":  "m8_q375",
+        "correta_texto":  "A simple Screen Flow without over-engineering",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option uses Orchestration for a scenario with no human steps and no waits, where everything is short and synchronous. What kind of mistake is this?",
+        "opcoes":  [
+                       "An alternative that adds unnecessary complexity",
+                       "A technically impossible alternative",
+                       "An alternative that ignores APIs",
+                       "An alternative that violates DML limits"
+                   ],
+        "justificativa":  "Using Orchestration for a short synchronous process with no waiting or human work is usually overengineering. A simpler Flow would be more appropriate.",
+        "id":  "m8_q376",
+        "correta_texto":  "An alternative that adds unnecessary complexity",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants a manager to monitor the progress of a complex process directly on the Account record. What combination supports that?",
+        "opcoes":  [
+                       "API logs only",
+                       "Orchestration plus Work Guide displayed on the record",
+                       "RPA only",
+                       "Composer only"
+                   ],
+        "justificativa":  "Work Guide is useful when a user needs visibility and interaction directly from the Salesforce record while the orchestration is still in progress.",
+        "id":  "m8_q377",
+        "correta_texto":  "Orchestration plus Work Guide displayed on the record",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option suggests scattering the application logic across several Flows instead of centralizing it in Orchestration and reusable subflows. Why is that a bad practice?",
+        "opcoes":  [
+                       "Because Flows cannot have approval logic",
+                       "Because it duplicates logic and makes maintenance and auditing harder",
+                       "Because Orchestration cannot call subflows",
+                       "Because approval APIs are not supported"
+                   ],
+        "justificativa":  "Splitting related logic across too many isolated Flows increases duplication and makes the process harder to maintain, audit, and evolve.",
+        "id":  "m8_q378",
+        "correta_texto":  "Because it duplicates logic and makes maintenance and auditing harder",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO sees several processes stopped at different stages and needs to prioritize where to act. What artifact helps you get this high-level vision?",
+        "opcoes":  [
+                       "Apex Class List",
+                       "List of Orchestration Runs with status (in progress, paused, failed, completed)",
+                       "Local user machine logs",
+                       "Case reports only"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. NTO sees several processes stopped at different stages and needs to prioritize where to act.",
+        "id":  "m8_q379",
+        "correta_texto":  "List of Orchestration Runs with status (in progress, paused, failed, completed)",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "A process lets HR validate documents while IT prepares the environment in parallel. Which answer shows the correct understanding?",
+        "opcoes":  [
+                       "Orchestration must always be sequential",
+                       "Orchestration allows parallel steps within a stage, and the stage completes only when both finish",
+                       "Multiple orchestrations are mandatory",
+                       "Only RPA can run in parallel"
+                   ],
+        "justificativa":  "Parallel steps are the correct pattern when two workstreams can happen at the same time and the next stage depends on both of them being completed.",
+        "id":  "m8_q380",
+        "correta_texto":  "Orchestration allows parallel steps within a stage, and the stage completes only when both finish",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option says: \u0027In case of error, it is best to cancel the whole orchestration without recording any status information.\u0027 Why is that inappropriate?",
+        "opcoes":  [
+                       "Because it is not technically possible",
+                       "Because it loses traceability; it is better to record status, allow resume, and maintain history",
+                       "Because errors never occur",
+                       "Because RPA always manages errors"
+                   ],
+        "justificativa":  "Good orchestration design preserves traceability. Recording status and maintaining history are important for recovery, auditing, and user visibility.",
+        "id":  "m8_q381",
+        "correta_texto":  "Because it loses traceability; it is better to record status, allow resume, and maintain history",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants to apply processes to evolve over time, keeping version history. Which combination is more aligned?",
+        "opcoes":  [
+                       "Apex hard-coded",
+                       "Versioned Flows and Orchestrations, with careful migration between versions",
+                       "Local Scripts",
+                       "Emails only"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. AnyAirlines wants to apply processes to evolve over time, keeping version history.",
+        "id":  "m8_q382",
+        "correta_texto":  "Versioned Flows and Orchestrations, with careful migration between versions",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One option suggests building all process logic in Apex and leaving Orchestration as an empty shell. Why does that not reflect the focus of the module?",
+        "opcoes":  [
+                       "Because Apex is not supported",
+                       "Because Flow Orchestrator should coordinate the process, and Apex should be used only when needed",
+                       "Because Orchestration cannot call Apex actions",
+                       "Because the exam does not consider Apex"
+                   ],
+        "justificativa":  "The module focuses on using Orchestration as the coordinating layer for multi-step processes. Apex may still be used when necessary, but it should not replace the orchestration model by default.",
+        "id":  "m8_q383",
+        "correta_texto":  "Because Flow Orchestrator should coordinate the process, and Apex should be used only when needed",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "NTO wants to use Orchestration, but also needs to call MuleSoft APIs at certain points in the process. What is the recommended architecture?",
+        "opcoes":  [
+                       "Orchestration calls Flows, which use External Services or HTTP Callout to consume APIs",
+                       "Orchestration directly calls the database",
+                       "APIs must always call Orchestration",
+                       "RPA replaces all APIs"
+                   ],
+        "justificativa":  "The recommended pattern is for Orchestration to coordinate Flows, and for those Flows to call MuleSoft APIs through External Services or callouts when needed.",
+        "id":  "m8_q384",
+        "correta_texto":  "Orchestration calls Flows, which use External Services or HTTP Callout to consume APIs",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "One question presents a process that is already well served by a Record-Triggered Flow and a few simple automations. One option suggests migrating everything to Orchestration just because it is new. How should this be evaluated?",
+        "opcoes":  [
+                       "Adopt Orchestration anyway to standardize on the newest tool",
+                       "Recognize this as overengineering; use Orchestration only when there is a clear benefit such as long duration, multiple stages, or human work",
+                       "Move to Orchestration mainly because monitoring will look cleaner",
+                       "Migrate first and decide later whether the process needed orchestration"
+                   ],
+        "justificativa":  "Orchestration should be introduced when the process truly benefits from stages, waits, parallel work, or human ownership. Using it only because it is newer adds complexity without solving a real problem.",
+        "id":  "m8_q385",
+        "correta_texto":  "Recognize this as overengineering; use Orchestration only when there is a clear benefit such as long duration, multiple stages, or human work",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "AnyAirlines wants the process to pause and route work to an analysis queue if the inventory check API fails. How can this be modeled?",
+        "opcoes":  [
+                       "Do not record the failure",
+                       "Use a Background Step that calls a Flow, handles the failure, and routes the Work Item to the appropriate queue",
+                       "Log the issue only",
+                       "Use only RPA"
+                   ],
+        "justificativa":  "A Background Step can call a Flow to perform the API check, handle errors, and route follow-up work to the right queue. That preserves both control flow and traceability.",
+        "id":  "m8_q386",
+        "correta_texto":  "Use a Background Step that calls a Flow, handles the failure, and routes the Work Item to the appropriate queue",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  8,
+        "pergunta":  "The final alternate states: “Flow Orchestration completely replaces the need for RPA, Composer and APIs in any hyperautomation scenario.” What answer is more aligned?",
+        "opcoes":  [
+                       "Agreement; Orchestration is enough for everything",
+                       "Disagree; Orchestration coordinates processes, but still depends on Flows, APIs, RPA and Composer to perform specialized tasks",
+                       "Agreement only for internal processes",
+                       "Depends on the volume"
+                   ],
+        "justificativa":  "Orchestration concepts focus on coordinating stages/steps, pausing for human or external events, and providing visibility into progress. The final alternate states: “Flow Orchestration completely replaces the need for RPA, Composer and APIs in any hypera...",
+        "id":  "m8_q387",
+        "correta_texto":  "Disagree; Orchestration coordinates processes, but still depends on Flows, APIs, RPA and Composer to perform specialized tasks",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    }
+]

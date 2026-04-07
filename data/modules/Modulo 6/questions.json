@@ -1,0 +1,932 @@
+﻿[
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants real-time visibility on response time, error rate, and CPU usage of APIs that support a hyperautomation flow. Which component is more appropriate?",
+        "opcoes":  [
+                       "Anypoint Studio",
+                       "Anypoint Monitoring",
+                       "Designer API",
+                       "RPA Manager"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. AnyAirlines wants real-time visibility on response time, error rate, and CPU usage of APIs that support a hyperautoma...",
+        "id":  "m6_q253",
+        "correta_texto":  "Anypoint Monitoring",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "Northern Trail Outfitters (NTO) needs to quickly search logs from a specific API to understand why a Salesforce Flow received a 500 error. What resource should be used?",
+        "opcoes":  [
+                       "Log Search at Anypoint Monitoring",
+                       "Only local log files on server",
+                       "End-user emails",
+                       "Browser Console"
+                   ],
+        "justificativa":  "Log Search in Anypoint Monitoring is the best resource because the team needs to inspect runtime logs for a specific API failure quickly. It supports filtering and investigation across environments, which is much more effective than checking local files or relying on user reports.",
+        "id":  "m6_q254",
+        "correta_texto":  "Log Search at Anypoint Monitoring",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One scenario describes dashboards with error charts, latency, and throughput for the credit APIs. What functionality is being used?",
+        "opcoes":  [
+                       "Anypoint Monitoring Custom Dashboards",
+                       "API Notebook",
+                       "Exchange Portal",
+                       "Visualforce Reports"
+                   ],
+        "justificativa":  "Anypoint Monitoring Custom Dashboards is correct because the scenario describes a visual view of operational metrics such as error trends, latency, and throughput. Dashboards are exactly what teams use to track those indicators together for a given API or service.",
+        "id":  "m6_q255",
+        "correta_texto":  "Anypoint Monitoring Custom Dashboards",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A company needs to apply security and traffic control policies (Rate Limiting, Client ID Enforcement) to existing APIs. Which component is responsible?",
+        "opcoes":  [
+                       "Runtime Manager",
+                       "API Manager",
+                       "Anypoint Studio",
+                       "RPA Manager"
+                   ],
+        "justificativa":  "API Manager is responsible because policies such as Rate Limiting and Client ID Enforcement are applied at the API governance layer. That keeps security and traffic controls consistent across APIs without changing each Mule implementation.",
+        "id":  "m6_q256",
+        "correta_texto":  "API Manager",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A question presents two endpoint options: Basic Endpoint and Proxy Endpoint. Why would someone choose Proxy Endpoint?",
+        "opcoes":  [
+                       "To avoid monitoring",
+                       "To put a proxy layer in front of the API and apply policies without changing the original code",
+                       "Because Basic Endpoint does not support HTTP",
+                       "Because Proxy only works with CloudHub"
+                   ],
+        "justificativa":  "Proxy Endpoint is the correct choice when you need to place a governance layer in front of an existing API without changing the original implementation. It is especially useful for adding security, rate limiting, and analytics while preserving the backend as it is.",
+        "id":  "m6_q257",
+        "correta_texto":  "To put a proxy layer in front of the API and apply policies without changing the original code",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO wants to protect critical APIs exposed to tools like Flow and Composer, requiring each consumer to identify itself. Which policy should be used?",
+        "opcoes":  [
+                       "IP Whitelisting",
+                       "Client ID Enforcement",
+                       "Rate Limiting only",
+                       "None; just use HTTP"
+                   ],
+        "justificativa":  "Client ID Enforcement is the correct policy because it requires each consumer application to present credentials before accessing the API. That creates accountability per client and is the normal control when Flow, Composer, or other consumers must identify themselves.",
+        "id":  "m6_q258",
+        "correta_texto":  "Client ID Enforcement",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A scenario talks about limiting requests to prevent a poor configured Composer from taking down a legacy system. What policy does that serve?",
+        "opcoes":  [
+                       "Client ID Enforcement",
+                       "Rate Limiting / Throttling",
+                       "IP Whitelisting",
+                       "JWT Validation"
+                   ],
+        "justificativa":  "To protect downstream systems from spikes, you typically enforce throttling/rate limits via API management policies and scale capacity when needed. A scenario talks about limiting requests to prevent a poor configured Composer from taking down a legacy system.",
+        "id":  "m6_q259",
+        "correta_texto":  "Rate Limiting / Throttling",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A company wants to ensure that only IP addresses from Salesforce infrastructure can access a given API. Which policy should be applied?",
+        "opcoes":  [
+                       "SLA Tiers",
+                       "IP Whitelisting",
+                       "COLORS",
+                       "Retry Policy"
+                   ],
+        "justificativa":  "IP Whitelisting is the right policy because the requirement is to restrict access based on source IP range. It is the standard control when only trusted network origins, such as Salesforce infrastructure, should be allowed to call the API.",
+        "id":  "m6_q260",
+        "correta_texto":  "IP Whitelisting",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants to see a visual map showing how APIs connect to each other in their ecosystem. Which resource is more appropriate?",
+        "opcoes":  [
+                       "Viewer",
+                       "Functional Monitoring",
+                       "Exchange Docs",
+                       "Designer API"
+                   ],
+        "justificativa":  "Viewer is the right choice when the goal is to visualize how APIs connect across the ecosystem and understand their relationships at a glance.",
+        "id":  "m6_q261",
+        "correta_texto":  "Viewer",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A question describes periodic automated tests that call APIs to verify not only availability but also correct responses. What is being described?",
+        "opcoes":  [
+                       "Unit tests in Studio",
+                       "Functional Monitoring",
+                       "Server logs",
+                       "Health System Check"
+                   ],
+        "justificativa":  "Functional Monitoring is used for synthetic checks that validate both API availability and expected behavior. It goes beyond simple uptime by testing whether the endpoint is returning the right result.",
+        "id":  "m6_q262",
+        "correta_texto":  "Functional Monitoring",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO needs to see, in one place, logs of all Mule applications to facilitate troubleshooting across flows involving multiple APIs. What advantage of Anypoint Monitoring is being highlighted?",
+        "opcoes":  [
+                       "Local logs in each worker",
+                       "Log Centralization with Log Search",
+                       "CPU dashboards only",
+                       "Notebook API Only"
+                   ],
+        "justificativa":  "Centralized log search is the key benefit here because incidents that cross multiple APIs are hard to diagnose from isolated application logs. Bringing logs into one searchable place makes correlation faster and improves root-cause analysis across the full integration chain.",
+        "id":  "m6_q263",
+        "correta_texto":  "Log Centralization with Log Search",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "An alternate states that “API Manager completely replaces Anypoint Monitoring”. How would this be evaluated?",
+        "opcoes":  [
+                       "Correct.",
+                       "Wrong; API Manager governments endpoints and policies, Monitoring focuses on observation and metrics",
+                       "True only in CloudHub",
+                       "True only on-premises"
+                   ],
+        "justificativa":  "API Manager is used to apply governance to APIs through policies, SLAs/tiers, and analytics/visibility. An alternate states that “API Manager completely replaces Anypoint Monitoring”. This is the correct layer for enforcing controls consistently, without changing each implementation.",
+        "id":  "m6_q264",
+        "correta_texto":  "Wrong; API Manager governments endpoints and policies, Monitoring focuses on observation and metrics",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A team wants to be automatically notified by Slack when the error rate of an API exceeds a certain limit. What functionality is used?",
+        "opcoes":  [
+                       "Anypoint Monitoring Alerts",
+                       "Local logs only",
+                       "API Designer comments",
+                       "RPA email step"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. A team wants to be automatically notified by Slack when the error rate of an API exceeds a certain limit.",
+        "id":  "m6_q265",
+        "correta_texto":  "Anypoint Monitoring Alerts",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A scenario shows that Flow receives “Too Many Requests” (429) from a managed API. What does that probably indicate?",
+        "opcoes":  [
+                       "Authentication error",
+                       "Rate Limiting or SLA Policy applied in API Manager",
+                       "Hardware failure",
+                       "DNS failure"
+                   ],
+        "justificativa":  "API Manager is used to apply governance to APIs through policies, SLAs/tiers, and analytics/visibility. A scenario shows that Flow receives “Too Many Requests” (429) from a managed API. This is the correct layer for enforcing controls consistently, without changing each implementation.",
+        "id":  "m6_q266",
+        "correta_texto":  "Rate Limiting or SLA Policy applied in API Manager",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One candidate says that internal APIs do not need monitoring, only public ones. What view is aligned with the exam?",
+        "opcoes":  [
+                       "Correct; only public-facing APIs require monitoring",
+                       "Mistake; Internal APIs are critical in hyperautomation chains and should be monitored",
+                       "It depends on whether the API is customer-facing",
+                       "Only user-facing automation tools such as RPA need monitoring"
+                   ],
+        "justificativa":  "That view is incorrect because internal APIs are often critical parts of hyperautomation chains. If they fail silently, end-to-end business processes still break.",
+        "id":  "m6_q267",
+        "correta_texto":  "Mistake; Internal APIs are critical in hyperautomation chains and should be monitored",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines notices that the response time of an API has greatly increased, but worker CPU usage is low. Which conclusion is more likely?",
+        "opcoes":  [
+                       "Problem with API infrastructure",
+                       "Destination system problem (e.g. slow database)",
+                       "API Manager Failed",
+                       "Network failure between CloudHub and internet"
+                   ],
+        "justificativa":  "High response time combined with low worker CPU usually suggests the delay is downstream, such as in a database or external dependency, not in the Mule runtime itself.",
+        "id":  "m6_q268",
+        "correta_texto":  "Destination system problem (e.g. slow database)",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "Northern Trail Outfitters (NTO) constantly sees CPU at 100% for a critical API. Which action is more aligned?",
+        "opcoes":  [
+                       "Throttle all consumers first, even if the demand is legitimate",
+                       "Increase vCores or the number of workers (vertical/horizontal scaling)",
+                       "Reduce logging detail to free runtime resources",
+                       "Wait until users report errors before scaling"
+                   ],
+        "justificativa":  "Sustained CPU saturation usually indicates the runtime needs more capacity. Increasing vCores or the number of workers is the most aligned response when the bottleneck is in the runtime itself.",
+        "id":  "m6_q269",
+        "correta_texto":  "Increase vCores or the number of workers (vertical/horizontal scaling)",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A hyperautomation stream starts in Salesforce Flow, calls for a MuleSoft API, which in turn calls for a legacy system. Flow gets 500. Where would the team look first?",
+        "opcoes":  [
+                       "Flow Logs Only",
+                       "Log Search in Anypoint Monitoring to understand error at API level",
+                       "End user logs only",
+                       "DNS Settings"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. A hyperautomation stream starts in Salesforce Flow, calls for a MuleSoft API, which in turn calls for a legacy system.",
+        "id":  "m6_q270",
+        "correta_texto":  "Log Search in Anypoint Monitoring to understand error at API level",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "In one scenario, RPA and Composer consume the same stock API. Suddenly, the legacy system begins to stop. Which combination is more appropriate?",
+        "opcoes":  [
+                       "Scale only RPA",
+                       "Apply Rate Limiting/SLA Tiers and, if necessary, adjust backend capacity",
+                       "Disable monitoring",
+                       "Allow unrestricted traffic"
+                   ],
+        "justificativa":  "To protect downstream systems from spikes, you typically enforce throttling/rate limits via API management policies and scale capacity when needed. In one scenario, RPA and Composer consume the same stock API.",
+        "id":  "m6_q271",
+        "correta_texto":  "Apply Rate Limiting/SLA Tiers and, if necessary, adjust backend capacity",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO wants to differentiate infrastructure problems (CPU/memory) from application problems. What set of views help?",
+        "opcoes":  [
+                       "Local logs only",
+                       "Infra + Application metric Dashboards in Anypoint Monitoring",
+                       "CPU graphics only",
+                       "Requests only count"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. NTO wants to differentiate infrastructure problems (CPU/memory) from application problems.",
+        "id":  "m6_q272",
+        "correta_texto":  "Infra + Application metric Dashboards in Anypoint Monitoring",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A graph shows the error rate increasing along with latency while CPU remains low. What does that suggest?",
+        "opcoes":  [
+                       "API infrastructure bottleneck",
+                       "Bottleneck in the destination system or an external dependency",
+                       "RPA error",
+                       "DNS problem"
+                   ],
+        "justificativa":  "If latency and error rate increase while Mule runtime CPU remains low, the issue is more likely in a downstream dependency than in the API infrastructure itself.",
+        "id":  "m6_q273",
+        "correta_texto":  "Bottleneck in the destination system or an external dependency",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A company wants to proactively detect when a critical API has stopped responding to a specific scenario before users complain. What resource to use?",
+        "opcoes":  [
+                       "Functional Monitoring with scheduled tests",
+                       "Log Console Only",
+                       "Only high CPU alerts",
+                       "Only occasional manual tests"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. A company wants to proactively detect when a critical API has stopped responding to a specific scenario before users...",
+        "id":  "m6_q274",
+        "correta_texto":  "Functional Monitoring with scheduled tests",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines observes traffic peaks generated by a rich configured Flow, causing batch failures. What more mature response?",
+        "opcoes":  [
+                       "Disable Flow without parsing",
+                       "Adjust Flow design and in parallel configure Rate Limiting and Alerts",
+                       "Duplicate API",
+                       "Ignore, wait for volume to drop"
+                   ],
+        "justificativa":  "To protect downstream systems from spikes, you typically enforce throttling/rate limits via API management policies and scale capacity when needed. AnyAirlines observes traffic peaks generated by a rich configured Flow, causing batch failures.",
+        "id":  "m6_q275",
+        "correta_texto":  "Adjust Flow design and in parallel configure Rate Limiting and Alerts",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO needs to investigate a specific case where an order failed in an API chain. Which approach is more efficient?",
+        "opcoes":  [
+                       "Ask the user for screen prints",
+                       "Correlate logs of the execution of that request via Anypoint Monitoring",
+                       "Uninstall API",
+                       "Read all logs every day manually"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. NTO needs to investigate a specific case where an order failed in an API chain.",
+        "id":  "m6_q276",
+        "correta_texto":  "Correlate logs of the execution of that request via Anypoint Monitoring",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One RPA botfires thousands of calls, generating 429 errors. What does this indicate and which action best combinations?",
+        "opcoes":  [
+                       "Indicates authentication problem; exchange credentials",
+                       "Indicates break of Rate Limit; review bot policy and call pattern",
+                       "Indicates API is offline",
+                       "DNS error indications"
+                   ],
+        "justificativa":  "To protect downstream systems from spikes, you typically enforce throttling/rate limits via API management policies and scale capacity when needed. One RPA botfires thousands of calls, generating 429 errors.",
+        "id":  "m6_q277",
+        "correta_texto":  "Indicates break of Rate Limit; review bot policy and call pattern",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One candidate states: \u0027It is not necessary to set up alerts, because the team checks dashboards every day.\u0027 How does the exam tend to evaluate that?",
+        "opcoes":  [
+                       "Correct",
+                       "Limited; automatic alerts are essential to respond quickly to incidents",
+                       "Valid only in production",
+                       "Enough for critical environments"
+                   ],
+        "justificativa":  "Dashboards are useful, but alerts are what reduce response time when incidents happen outside the team\u0027s active observation. Critical APIs should have automatic alerting.",
+        "id":  "m6_q278",
+        "correta_texto":  "Limited; automatic alerts are essential to respond quickly to incidents",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A scenario shows that an API is up, but calls to a specific endpoint fail. What combination of resources helps with the analysis?",
+        "opcoes":  [
+                       "Worker status only",
+                       "Detailed logs and Functional Monitoring for that endpoint",
+                       "CPU dashboards only",
+                       "RPA logs only"
+                   ],
+        "justificativa":  "When the API is up but a specific endpoint fails, you need both request-level visibility and synthetic checks for that endpoint. Detailed logs and Functional Monitoring help isolate whether the issue is intermittent, input-related, or downstream.",
+        "id":  "m6_q279",
+        "correta_texto":  "Detailed logs and Functional Monitoring for that endpoint",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants to reduce the MTTR (Mean Time To Solve) to integration failures. Which practice is more aligned?",
+        "opcoes":  [
+                       "Rely on user emails and support tickets",
+                       "Configure clear monitoring, alerts, and dashboards for key APIs",
+                       "Scale workers whenever an alert appears, before diagnosis",
+                       "Reduce logging to simplify the platform"
+                   ],
+        "justificativa":  "Reducing MTTR depends on visibility and fast detection. Clear dashboards, relevant alerts, and useful logs help teams identify incidents quickly and act before users escalate them.",
+        "id":  "m6_q280",
+        "correta_texto":  "Configure clear monitoring, alerts and dashboards for key APIs",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A team observes that failures began right after a deployment. What should be evaluated in Monitoring?",
+        "opcoes":  [
+                       "No metrics, because some instability is expected",
+                       "Compare metrics before and after the deploy (errors, latency, throughput)",
+                       "Local logs only",
+                       "Only the number of workers"
+                   ],
+        "justificativa":  "The team should compare monitoring metrics immediately before and after the deployment, especially error rate, latency, throughput, and alert spikes. That is the fastest way to confirm whether the release introduced the failures or whether the timing is only coincidental.",
+        "id":  "m6_q281",
+        "correta_texto":  "Compare metrics before and after the deploy (errors, latency, throughput)",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One option suggests that to solve performance problems, the best strategy is always to add more vCores without analyzing detailed metrics. How should this be seen?",
+        "opcoes":  [
+                       "Correct in all cases",
+                       "Misleading; you must first identify whether the bottleneck is in the application, infrastructure, or destination system",
+                       "Acceptable only on-premises",
+                       "Acceptable only in CloudHub"
+                   ],
+        "justificativa":  "Scaling blindly can waste money and leave the root cause untouched. The right approach is to inspect metrics first and confirm whether the bottleneck is inside Mule or in a downstream dependency.",
+        "id":  "m6_q282",
+        "correta_texto":  "Misleading; you must first identify whether the bottleneck is in the application, infrastructure, or destination system",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants to ensure that integrations from different teams do not bring down a legacy system via APIs. Which combination best reflections the recommended approach?",
+        "opcoes":  [
+                       "No limitations; relying on teams",
+                       "Apply Rate Limiting/SLA policies and monitor with dashboards and alerts",
+                       "Disable all integrations",
+                       "Use only RPA"
+                   ],
+        "justificativa":  "To protect downstream systems from spikes, you typically enforce throttling/rate limits via API management policies and scale capacity when needed. AnyAirlines wants to ensure that integrations from different teams do not bring down a legacy system via APIs.",
+        "id":  "m6_q283",
+        "correta_texto":  "Apply Rate Limiting/SLA policies and monitor with dashboards and alerts",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One option suggests exposing internal APIs without authentication to simplify access by RPA and Flow. Why is that a bad practice?",
+        "opcoes":  [
+                       "Because internal APIs cannot be used",
+                       "Because it ignores basic security; policies like Client ID Enforcement are recommended",
+                       "Because authentication APIs don\u0027t work with Flow",
+                       "Because Anypoint Monitoring does not support internal APIs"
+                   ],
+        "justificativa":  "This is a bad practice because internal APIs still need security and governance. Policies such as Client ID Enforcement help control access even when the consumers are trusted internal tools.",
+        "id":  "m6_q284",
+        "correta_texto":  "Because it ignores basic security; policies like Client ID Enforcement are recommended",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO has multiple critical APIs chained into a hyperautomation process. What best represents a mature strategy?",
+        "opcoes":  [
+                       "Monitor only the last API in the chain and infer the rest",
+                       "Monitor the main APIs and apply policies with awareness of each dependency\u0027s impact",
+                       "Reduce observability on intermediate APIs to save cost",
+                       "Rely only on RPA or front-end monitoring to detect failures"
+                   ],
+        "justificativa":  "In a chain of critical APIs, the mature strategy is to monitor the important services individually and apply governance where it matters, rather than watching only the last step.",
+        "id":  "m6_q285",
+        "correta_texto":  "Monitor the main APIs and apply policies with awareness of each dependency\u0027s impact",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A new external client needs access to an API. What is the expected flow on the MuleSoft platform?",
+        "opcoes":  [
+                       "The client accesses the API portal, requests access, and receives an approved Client ID and Secret",
+                       "The client receives direct access to the backend",
+                       "The client calls the API without authentication",
+                       "The client needs an administrative user in Anypoint Platform"
+                   ],
+        "justificativa":  "The governed flow is for the client to request access through the API portal and receive approved credentials. That keeps onboarding under policy control instead of exposing the backend directly.",
+        "id":  "m6_q286",
+        "correta_texto":  "Client accesses API Portal, requests access and receipts Client ID/Secret approved",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A candidate chooses an option that says: “To avoid limits, it is best to remove Rate Limiting from APIs that support RPA and Flows”. How would this be read?",
+        "opcoes":  [
+                       "Correct; limits hinder automations",
+                       "Trick; limits protection systems and help maintain stability",
+                       "Correct for internal systems only",
+                       "Correct if there are too many consumers"
+                   ],
+        "justificativa":  "This is a trap, not a best practice. Rate limiting protects shared APIs from overload and helps keep automations stable when many consumers or bursts of traffic hit the same backend. Removing it blindly may make failures worse rather than improving throughput.",
+        "id":  "m6_q287",
+        "correta_texto":  "Trick; limits protection systems and help maintain stability",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants to apply different consumer rules to Gold, Silver and Bronze customers. Which functionality fits best?",
+        "opcoes":  [
+                       "IP Whitelisting",
+                       "SLA-Based Policies in API Manager",
+                       "Static Limiting Rate Only",
+                       "Logs Only"
+                   ],
+        "justificativa":  "API Manager is used to apply governance to APIs through policies, SLAs/tiers, and analytics/visibility. AnyAirlines wants to apply different consumer rules to Gold, Silver and Bronze customers. This is the correct layer for enforcing controls consistently, without changing each implementation.",
+        "id":  "m6_q288",
+        "correta_texto":  "SLA-Based Policies in API Manager",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One option suggests creating duplicate copies of an API to separate internal and external traffic instead of using policies and management. Why is this usually wrong?",
+        "opcoes":  [
+                       "Because you can\u0027t have more than one API",
+                       "Because duplication increases complexity and decreases reuse, rather than using appropriate governance",
+                       "Because policies don\u0027t work on internal APIs",
+                       "Because only RPA can use internal APIs"
+                   ],
+        "justificativa":  "Duplicating APIs increases maintenance cost, introduces drift, and reduces reuse. In most cases, governance policies are the better way to differentiate access patterns without cloning the implementation.",
+        "id":  "m6_q289",
+        "correta_texto":  "Because duplication increases complexity and decreases reuse, rather than using appropriate governance",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO wants critical API incidents to be quickly reported to the correct teams. Which combination is more aligned?",
+        "opcoes":  [
+                       "Dashboards reviewed manually every morning",
+                       "Alerts configured in Channel-integrated Monitoring email or Slack",
+                       "Depend on customers to report incidents",
+                       "Weekly incident summary meeting"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. NTO wants critical API incidents to be quickly reported to the correct teams.",
+        "id":  "m6_q290",
+        "correta_texto":  "Alerts configured in Channel-integrated Monitoring email or Slack",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "An issue shows that an API is configured as Basic Endpoint, directly in runtime. In what situation does Proxy Endpoint make more sense?",
+        "opcoes":  [
+                       "When no policy is soight",
+                       "When you want to put a proxy between consumer and backend, without touching the original API code",
+                       "When you want to remove monitoring",
+                       "When API is in beta"
+                   ],
+        "justificativa":  "A proxy endpoint is useful when you need to place a governance layer between consumers and the backend without modifying the existing API implementation.",
+        "id":  "m6_q291",
+        "correta_texto":  "When you want to put a proxy between consumer and backend, without touching the original API code",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One candidate proposes disabling detailed logs as a primary solution to performance problems without any analysis. Why is that a weak answer?",
+        "opcoes":  [
+                       "Because logs never affect performance",
+                       "Because it treats symptoms blindly without understanding metrics or root causes",
+                       "Because Monitoring does not use logs",
+                       "Because API Manager ignores logs"
+                   ],
+        "justificativa":  "Disabling logs without analysis does not address the real cause of the problem. The exam expects candidates to investigate metrics and root causes before changing observability settings.",
+        "id":  "m6_q292",
+        "correta_texto":  "Because it treats symptoms blindly without understanding metrics or root causes",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "AnyAirlines wants evidence that their architecture is health: stable times, few failures, applied policies. Which tool combination supports this view?",
+        "opcoes":  [
+                       "Studio Only",
+                       "Anypoint Monitoring + API Manager (politics, analytics, SLAs)",
+                       "Exchange Only",
+                       "RPA Manager only"
+                   ],
+        "justificativa":  "API Manager is used to apply governance to APIs through policies, SLAs/tiers, and analytics/visibility. AnyAirlines wants evidence that their architecture is health: stable times, few failures, applied policies. This is the correct layer for enforcing controls consistently, without changing each implementation.",
+        "id":  "m6_q293",
+        "correta_texto":  "Anypoint Monitoring + API Manager (politics, analytics, SLAs)",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "One alternate states: “The APIs are internal, there is no need for security policies or control of those who consume.” How could the candidate respond?",
+        "opcoes":  [
+                       "Agree, because security is only for external APIs",
+                       "Disagree; even internal, critical APIs need governance and access control",
+                       "Depends on the network team",
+                       "True only in Sandbox"
+                   ],
+        "justificativa":  "That statement is incorrect because internal APIs can still be critical shared services. They need governance, access control, and security policies just like external-facing APIs.",
+        "id":  "m6_q294",
+        "correta_texto":  "Disagree; even internal, critical APIs need governance and access control",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "NTO wants a quick way to view, in production, who is consuming each API and what volume per consumer. What component helps?",
+        "opcoes":  [
+                       "API Manager (analytics and consumer metrics)",
+                       "Studio",
+                       "Exchange",
+                       "Flow Builder"
+                   ],
+        "justificativa":  "API Manager is the right component because it exposes analytics by API and by consumer application. That gives teams a quick production view of who is calling each API and how much traffic each consumer is generating.",
+        "id":  "m6_q295",
+        "correta_texto":  "API Manager (analytics and consumer metrics)",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "A question shows a flow where Flow -\u003e API -\u003e legacy system. One answer suggests disabling Rate Limiting to reduce error peaks. What is the exam trying to test?",
+        "opcoes":  [
+                       "That limits are always bad",
+                       "That removing Rate Limiting can worsen the problem and overload the legacy system",
+                       "That Flow does not support limits",
+                       "That APIs do not need protection"
+                   ],
+        "justificativa":  "Rate limiting exists to protect downstream systems from traffic spikes. Removing it can make peaks worse and overwhelm the legacy system, so the exam is testing whether the candidate recognizes protection policies as part of resilience.",
+        "id":  "m6_q296",
+        "correta_texto":  "That removing Rate Limiting can worsen the problem and overload the legacy system",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  6,
+        "pergunta":  "The final alternate says: “Good governance means never to touch policies or monitoring after the first configuration.” What is the vision of best practice?",
+        "opcoes":  [
+                       "Correct; initial setting is enough",
+                       "Mistake; governance and monitoring are continued, adjusted according to use and incidents",
+                       "Correct only in production",
+                       "Correct only for internal APIs"
+                   ],
+        "justificativa":  "Anypoint Monitoring provides observability (dashboards, metrics, logs, and alerts) to detect issues and measure performance across runtimes and APIs. The final alternate says: “Good governance means never to touch policies or monitoring after the first configuration....",
+        "id":  "m6_q297",
+        "correta_texto":  "Mistake; governance and monitoring are continued, adjusted according to use and incidents",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/monitoring/",
+                     "https://docs.mulesoft.com/monitoring/api-dashboard"
+                 ],
+        "difficulty":  "hard"
+    }
+]

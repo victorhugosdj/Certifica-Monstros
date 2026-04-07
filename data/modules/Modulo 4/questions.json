@@ -1,0 +1,961 @@
+﻿[
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants a guided screen for agents to capture claim details in Salesforce and then send the data to an API. Which type of Flow is more appropriate?",
+        "opcoes":  [
+                       "Autolaunched Flow",
+                       "Screen Flow",
+                       "Schedule-Triggered Flow",
+                       "Record-Triggered Flow"
+                   ],
+        "justificativa":  "Screen Flow is the right answer because the scenario requires a guided user experience where an agent enters or confirms data before the API call happens. Autolaunched or record-triggered flows are better for background automation, but they do not provide the interactive UI needed here.",
+        "id":  "m4_q157",
+        "correta_texto":  "Screen Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "Northern Trail Outfitters (NTO) requires that, when a new Agreement is created, automation runs immediately without a user interface. Which Flow type should be used?",
+        "opcoes":  [
+                       "Screen Flow",
+                       "Record-Triggered Flow",
+                       "Flow Orchestration",
+                       "Scheduled External Flow"
+                   ],
+        "justificativa":  "Record-Triggered Flow is the correct choice because the automation must start automatically from a data change and run with no user interaction. That is exactly the use case for immediate, event-driven automation on record create or update.",
+        "id":  "m4_q158",
+        "correta_texto":  "Record-Triggered Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A scenario describes a complex back-office flow that should be called both by Apex and by an Orchestration. Which Flow type is best suited as a reusable building block?",
+        "opcoes":  [
+                       "Screen Flow",
+                       "Autolaunched Flow",
+                       "Record-Triggered Flow",
+                       "Workflow Rule"
+                   ],
+        "justificativa":  "Autolaunched Flow is the strongest answer because it works as a reusable background component that can be invoked from Apex, subflows, or Flow Orchestration. It keeps shared logic in one place and avoids duplicating the same process in multiple entry points.",
+        "id":  "m4_q159",
+        "correta_texto":  "Autolaunched Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants that whenever an Opportunity is marked “Close Won”, a RPA process be called via External Services. Where should this call be?",
+        "opcoes":  [
+                       "In an independent Screen Flow",
+                       "In a Record-Triggered Flow in Opportunity",
+                       "In a Flow Orchestration without trigger",
+                       "In an Apex Trigger only"
+                   ],
+        "justificativa":  "Record-Triggered Flows run automatically when a record is created or updated, with no user interaction required. AnyAirlines wants that whenever an Opportunity is marked “Close Won”, a RPA process be called via External Services. They are the right choice for immediate, event-driven automation on data changes.",
+        "id":  "m4_q160",
+        "correta_texto":  "In a Record-Triggered Flow in Opportunity",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO wants to ensure that the same Record-Triggered Flow is reusable between environments (Sandbox → Production). What does this definition of flow represent?",
+        "opcoes":  [
+                       "Flow Metadata migrated by change sets or DevOps",
+                       "Salesforce Logs",
+                       "PDF Documentation",
+                       "External Java code"
+                   ],
+        "justificativa":  "Flows are metadata that can be promoted between environments through standard deployment practices such as change sets or DevOps pipelines. That is what makes the same automation reusable from sandbox to production.",
+        "id":  "m4_q161",
+        "correta_texto":  "Flow Metadata migrated by change sets or DevOps",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A candidate suggests using only Apex for all automations, ignoring Flows. Why isn\u0027t this aligned with Salesforce\u0027s current position?",
+        "opcoes":  [
+                       "Apex is obsolete.",
+                       "Salesforce encourages the use of Flow as the main declarative engine, reserving Apex for very complex logic",
+                       "Flow does not support integrations",
+                       "Flows cannot be tested"
+                   ],
+        "justificativa":  "Salesforce best practice is to use Flow as the primary declarative automation engine whenever possible. Apex is still important, but it should usually be reserved for scenarios that truly require custom code.",
+        "id":  "m4_q162",
+        "correta_texto":  "Salesforce encourages the use of Flow as the main declarative engine, reserving Apex for very complex logic",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Screen Flow collects customer data and then needs to call a MuleSoft API to validate credit limit. Which Flow feature should be used to declaratively use the specification of this API?",
+        "opcoes":  [
+                       "Platform Events",
+                       "External Services",
+                       "Inbound Email Services",
+                       "Apex REST Callout written manually"
+                   ],
+        "justificativa":  "External Services lets a Flow call an external API declaratively from an API specification, avoiding hand-written callout code. A Screen Flow collects customer data and then needs to call a MuleSoft API to validate credit limit.",
+        "id":  "m4_q163",
+        "correta_texto":  "External Services",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A scenario describes a Flow that needs to call a simple HTTP endpoint without having an OpenAPI or RAML file. What feature can be used?",
+        "opcoes":  [
+                       "HTTP Callout configured directly in Flow",
+                       "Apex HTTP classes only",
+                       "Workflow Rules Only",
+                       "Visualforce Pages"
+                   ],
+        "justificativa":  "An HTTP Callout in Flow is appropriate when you need to invoke a simple endpoint directly from Flow, especially when no formal API specification is available. A scenario describes a Flow that needs to call a simple HTTP endpoint without having an OpenAPI or RAML file.",
+        "id":  "m4_q164",
+        "correta_texto":  "HTTP Callout configured directly in Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants to use Einstein Bot to collect information from a passenger and then call a backoffice process via Flow. Which relationship is more correct?",
+        "opcoes":  [
+                       "Bot calls Flow, calling APIs/RPA",
+                       "Flow calls Bot, calling APIs",
+                       "RPA calls Bot, who calls Flow",
+                       "Composer calls Bot directly"
+                   ],
+        "justificativa":  "A common Salesforce-centered pattern is for Einstein Bot to collect input from the user and then invoke a Flow, which in turn can call APIs or RPA processes. This keeps the conversational experience separate from backend orchestration.",
+        "id":  "m4_q165",
+        "correta_texto":  "Bot calls Flow, calling APIs/RPA",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO wants part of the calculation logic to be reused in several Flows. What resource does Flow help with this reuse?",
+        "opcoes":  [
+                       "Subflows",
+                       "Process Builder",
+                       "Workflow Rules",
+                       "Approval Processes"
+                   ],
+        "justificativa":  "Subflows allow you to encapsulate and reuse logic across multiple flows, reducing duplication and simplifying maintenance. NTO wants part of the calculation logic to be reused in several Flows.",
+        "id":  "m4_q166",
+        "correta_texto":  "Subflows",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A scenario states that a Flow should process several records at once, but it is handling only one at a time and hitting governor limits. Which principle should be remembered?",
+        "opcoes":  [
+                       "Flow Bulkification",
+                       "Only use of Apex",
+                       "Disable platform boundaries",
+                       "Use RPA instead of Flow"
+                   ],
+        "justificativa":  "When a Flow processes many records, it must follow bulkification principles to avoid governor-limit problems. Designing with grouped operations instead of record-by-record logic is the key idea here.",
+        "id":  "m4_q167",
+        "correta_texto":  "Flow Bulkification",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A team wants a Flow to run in response to an external event published by MuleSoft. Which Salesforce resource is most appropriate for this case?",
+        "opcoes":  [
+                       "Email Services",
+                       "Platform Events as a trigger",
+                       "Custom Metadata Types",
+                       "Static Resources"
+                   ],
+        "justificativa":  "Platform Events are well suited for triggering Flow from external events because they support event-driven integration patterns cleanly inside Salesforce.",
+        "id":  "m4_q168",
+        "correta_texto":  "Platform Events as a trigger",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A candidate suggests using Screen Flow for all logic, including scenarios without user interaction. Why can this be a bad choice?",
+        "opcoes":  [
+                       "Screen Flow does not support integrations",
+                       "Autolaunched Flow is more suitable for logic without UI, facilitating reuse and orchestration",
+                       "Screen Flow does not support subflows",
+                       "Screen Flow cannot use External Services"
+                   ],
+        "justificativa":  "Autolaunched Flows are better for background logic because they do not require a user interface and can be reused more easily by other flows or orchestration components. Screen Flows should be reserved for user-facing interactions.",
+        "id":  "m4_q169",
+        "correta_texto":  "Autolaunched Flow is more suitable for logic without UI, facilitating reuse and orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Record-Triggered Flow performs mass updates but is failing because of DML limits. Which practice is more aligned with good design?",
+        "opcoes":  [
+                       "DML within loops without grouping records",
+                       "Use bulkification patterns and avoid DML in loops",
+                       "Always reduce the number of processed records",
+                       "Move everything to RPA"
+                   ],
+        "justificativa":  "When a Record-Triggered Flow hits DML limits, the recommended approach is to apply bulkification patterns and avoid DML inside loops. That keeps the automation scalable and aligned with Salesforce platform limits.",
+        "id":  "m4_q170",
+        "correta_texto":  "Use bulkification patterns and avoid DML in loops",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "An exam scenario shows simple CRM automation with declarative logic and no need for complex code. Which tool is typically preferred?",
+        "opcoes":  [
+                       "Apex triggers only",
+                       "Salesforce Flow",
+                       "MuleSoft RPA",
+                       "Custom Java Services"
+                   ],
+        "justificativa":  "For simple declarative CRM automation with no need for complex code, Salesforce Flow is the preferred tool because it matches the requirement with less implementation overhead.",
+        "id":  "m4_q171",
+        "correta_texto":  "Salesforce Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants a Screen Flow to consume an API published in Anypoint Platform using an OpenAPI contract. Which way is recommended?",
+        "opcoes":  [
+                       "Create Apex HTTP callout manually",
+                       "Import specification via External Services and use Action in Flow",
+                       "Use HTTP Callout only without contract",
+                       "Create RPA to call API"
+                   ],
+        "justificativa":  "External Services lets a Flow call an external API declaratively from an API specification, avoiding hand-written callout code. AnyAirlines wants a Screen Flow to consume an API published in Anypoint Platform using an OpenAPI contract.",
+        "id":  "m4_q172",
+        "correta_texto":  "Import specification via External Services and use Action in Flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO has a scenario where Flow needs to call an API whose contract is still under construction, but there is a Mocking Service available at Exchange. How can this be enjoyed?",
+        "opcoes":  [
+                       "You can\u0027t. Flow requirements real API",
+                       "External Services can point to the Mocking Service URL for testing",
+                       "Only Composer can use Mocking Service",
+                       "Only RPA can use Mocking Service"
+                   ],
+        "justificativa":  "External Services lets a Flow call an external API declaratively from an API specification, avoiding hand-written callout code. NTO has a scenario where Flow needs to call an API whose contract is still under construction, but there is a Mocking...",
+        "id":  "m4_q173",
+        "correta_texto":  "External Services can point to the Mocking Service URL for testing",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "An Einstein Bot collects the customer\u0027s order number and needs to get the status via MuleSoft. Which sequence is more aligned with the recommended architecture?",
+        "opcoes":  [
+                       "Bot → RPA → Database directly",
+                       "Bot → Flow → Anypoint API → Order system",
+                       "Bot → Composer → Sheet",
+                       "Bot → Apex batch anonymous"
+                   ],
+        "justificativa":  "This sequence keeps the conversational layer in Einstein Bot, uses Flow for orchestration inside Salesforce, and relies on a governed MuleSoft API to reach the order system. That is the cleanest layered pattern in the scenario.",
+        "id":  "m4_q174",
+        "correta_texto":  "Bot → Flow → Anypoint API → Order system",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Flow calling an External Service fails with a 500 error from the API. Which Flow feature should be used to handle this failure in a controlled manner?",
+        "opcoes":  [
+                       "Element default Path",
+                       "Fault Path",
+                       "Infinite Loop",
+                       "Debug feature only"
+                   ],
+        "justificativa":  "Fault Path is the right answer because it gives the Flow an explicit error-handling branch for failed actions such as callouts to external services.",
+        "id":  "m4_q175",
+        "correta_texto":  "Fault Path",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "In a scenario, Flow needs to log in and create an internal case whenever an external API call fails. Where should that logic be?",
+        "opcoes":  [
+                       "Inside Fault Path associated with callout action",
+                       "Outside Flow, only Apex",
+                       "In the client who called Flow",
+                       "In a Workflow Rule"
+                   ],
+        "justificativa":  "If the API call fails, the recovery logic should stay on the Fault Path associated with that callout. That keeps error handling close to the failure point and makes the Flow easier to maintain.",
+        "id":  "m4_q176",
+        "correta_texto":  "Inside Fault Path associated with callout action",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO wants to automate Record-Triggered Flows tests to ensure they don\u0027t break after changes. Which resource is more appropriate?",
+        "opcoes":  [
+                       "Flow Test (declarative tool)",
+                       "Debug manual testing only",
+                       "Production execution logs",
+                       "Apex Tests Only"
+                   ],
+        "justificativa":  "Flow Test is the best declarative resource for automating validation of Record-Triggered Flows after changes. It helps confirm that the automation still behaves correctly without relying only on manual testing.",
+        "id":  "m4_q177",
+        "correta_texto":  "Flow Test (declarative tool)",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "An exam scenario highlights the Debug Flow tool. What major advantage does it offer?",
+        "opcoes":  [
+                       "Replaces all automated tests",
+                       "Allows you to run the Flow as a specific user and inspect paths and variable values",
+                       "Shows text logs only",
+                       "Works only for Screen Flows"
+                   ],
+        "justificativa":  "The Debug tool helps you execute the Flow, follow the path it takes, and inspect variable values. That makes it especially useful for troubleshooting and understanding behavior during development.",
+        "id":  "m4_q178",
+        "correta_texto":  "Allows you to run the Flow as a specific user and inspect paths and variable values",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Flow Triggered by registration is intermittently failing because of an unstable API. Which combination is more appropriate?",
+        "opcoes":  [
+                       "Retry the same failed step indefinitely without capturing context",
+                       "Handle the failure via Fault Path and, if needed, record the error for reprocessing",
+                       "Pause the flow and require an administrator to restart it every time",
+                       "Move the integration into another tool without explicit error handling"
+                   ],
+        "justificativa":  "When the API is unstable, the mature approach is to handle errors explicitly and preserve enough information for reprocessing. That improves resilience without hiding failures.",
+        "id":  "m4_q179",
+        "correta_texto":  "Handle the failure via Fault Path and, if needed, record the error for reprocessing",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants to use Einstein Bot as the initial layer and, depending on the API response, direct the case to a human agent. Where should this decision be made?",
+        "opcoes":  [
+                       "In the database",
+                       "In the Flow that Bot invokes, based on API return",
+                       "Only in the RPA",
+                       "Only in Apex"
+                   ],
+        "justificativa":  "If Einstein Bot starts the interaction and the next action depends on the API response, the routing decision should happen in the Flow that the bot invokes. That keeps the branching logic explicit and maintainable.",
+        "id":  "m4_q180",
+        "correta_texto":  "In the Flow that Bot invokes, based on API return",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO needs to decide between External Services and HTTP Callout in a trial scenario. The API already has specification published in Exchange and needs to be reused in multiple Flows. What\u0027s the best choice?",
+        "opcoes":  [
+                       "HTTP Callout",
+                       "External Services, to take advantage of the contract and governance",
+                       "Apex only",
+                       "Composer Only"
+                   ],
+        "justificativa":  "External Services lets a Flow call an external API declaratively from an API specification, avoiding hand-written callout code. NTO needs to decide between External Services and HTTP Callout in a trial scenario.",
+        "id":  "m4_q181",
+        "correta_texto":  "External Services, to take advantage of the contract and governance",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Flow consumes an uncontracted API using only a URL and HTTP method. Later, the API gains an OAS specification. What improvement is now preferred?",
+        "opcoes":  [
+                       "Keep HTTP Callout for simplicity",
+                       "Migrate to External Services based on specification",
+                       "Swap Flow for RPA",
+                       "Swap Flow for Apex triggers"
+                   ],
+        "justificativa":  "Once the API has a formal specification, External Services becomes the better option because it lets Flow consume the API declaratively instead of relying on hand-written callout details.",
+        "id":  "m4_q182",
+        "correta_texto":  "Migrate to External Services based on specification",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One scenario describes that business analysis needs to simulate different inputs and quickly see Flow\u0027s behavior. Which combination is more appropriate?",
+        "opcoes":  [
+                       "Flow Test + Debug Tool",
+                       "Only logs in production",
+                       "Tests only Apex",
+                       "Only monitoring in Anypoint"
+                   ],
+        "justificativa":  "Flow Test plus the Debug tool is the strongest combination when business analysts need to simulate scenarios quickly and understand how the Flow behaves with different inputs.",
+        "id":  "m4_q183",
+        "correta_texto":  "Flow Test + Debug Tool",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "Integration between Flow and MuleSoft RPA is implemented via External Services calling the RPA Manager endpoint. What does this represent in terms of hyperautomation?",
+        "opcoes":  [
+                       "Use Flow as a human trigger calling RPA processes",
+                       "Use of RPA as user interface",
+                       "Replacing APIs with bots",
+                       "Elimination of Exchange Need"
+                   ],
+        "justificativa":  "This pattern represents Flow acting as the business-facing trigger while MuleSoft RPA executes work in systems that are not integrated through suitable APIs. It is a classic hyperautomation combination.",
+        "id":  "m4_q184",
+        "correta_texto":  "Use Flow as a human trigger calling RPA processes",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "In a test scenario, one option suggests deploying a Flow with no testing or debugging and relying only on production. How should this be evaluated?",
+        "opcoes":  [
+                       "Correct, because Flow is declarative",
+                       "Wrong, because Flow Test and Debug are important resources assessed in the exam",
+                       "Neutral, no impact",
+                       "Preferable to any automated testing strategy"
+                   ],
+        "justificativa":  "This option is wrong because Flow Test and the Debug tool are core practices for validating logic before production. The exam expects you to test paths, inspect variables, and confirm results instead of relying on production behavior.",
+        "id":  "m4_q185",
+        "correta_texto":  "Wrong, because Flow Test and Debug are important resources assessed in the exam",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A company wants to ensure that a Record-Triggered Flow calling external APIs does not break when it receives unexpected data. Which practice is more aligned?",
+        "opcoes":  [
+                       "Assume that the data is always valid",
+                       "Validate the data in Flow before calling the API and use Fault Paths to handle failures",
+                       "Trust API logs only",
+                       "Disable Flow when errors occur"
+                   ],
+        "justificativa":  "The safest design is to validate the input before the callout and use Fault Paths to handle failures gracefully. That reduces avoidable API errors and makes the Flow more resilient when bad or incomplete data appears.",
+        "id":  "m4_q186",
+        "correta_texto":  "Validate the data in Flow before calling the API and use Fault Paths to handle failures",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "AnyAirlines wants a Screen Flow to call a MuleSoft API that is already published as an Experience API. What is the most API-led-aligned approach?",
+        "opcoes":  [
+                       "Flow directly calls the database, ignoring the API",
+                       "Flow consumes the Experience API via External Services",
+                       "Flow uses RPA to check the system",
+                       "Flow uses only calculated fields without integration"
+                   ],
+        "justificativa":  "If an Experience API already exists for that consumer pattern, Flow should consume it instead of bypassing the API layer. That preserves API-led separation of concerns and reuses the contract that was already designed for this interaction.",
+        "id":  "m4_q187",
+        "correta_texto":  "Flow consumes the Experience API via External Services",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO already has a System API for ERP and a Process API for credit rules. One candidate suggests that Screen Flow should call the System API directly. What is the most aligned option?",
+        "opcoes":  [
+                       "Have Flow call the System API directly and rebuild the credit rules in Flow",
+                       "Have Flow consume a Process or Experience API, reusing the existing orchestration",
+                       "Use Composer as the main orchestration layer even though the APIs already exist",
+                       "Use RPA to query ERP screens for all credit validation logic"
+                   ],
+        "justificativa":  "If the orchestration and business rules already live in a Process API, Flow should reuse that layer instead of reaching directly into the System API. This keeps the UI layer thin and preserves reuse, governance, and separation of responsibilities.",
+        "id":  "m4_q188",
+        "correta_texto":  "Have Flow consume a Process or Experience API, reusing the existing orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Flow integration question presents two alternatives. If only option B preserves reuse and separation of concerns, which answer should the candidate choose?",
+        "opcoes":  [
+                       "A",
+                       "B",
+                       "Both",
+                       "None"
+                   ],
+        "justificativa":  "Choose B because it is the only option that keeps reusable integration logic outside the individual Flow and preserves clear separation of concerns. In exam scenarios, the stronger answer usually avoids embedding orchestration everywhere when a shared API or reusable service already exists.",
+        "id":  "m4_q189",
+        "correta_texto":  "B",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A Screen Flow collects claim data and triggers an RPA bot that updates a legacy system. What does the exam probably want to reinforce?",
+        "opcoes":  [
+                       "Flow as the human interaction layer in hyperautomation",
+                       "RPA as the main user interface",
+                       "Replacing APIs with Flow",
+                       "Composer replacing Flow"
+                   ],
+        "justificativa":  "This pattern reinforces that Screen Flow can act as the human interaction layer while RPA handles work in systems that lack suitable APIs. In hyperautomation, Flow often starts the process and passes the task to the right downstream tool.",
+        "id":  "m4_q190",
+        "correta_texto":  "Flow as the human interaction layer in hyperautomation",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One option suggests putting all data transformation logic into Screen Flow even though a Process API already exists for that purpose. Why is this usually a bad choice?",
+        "opcoes":  [
+                       "Flows cannot transform data",
+                       "API-led best practices place reusable business logic in the Process API, not in the UI layer",
+                       "Process APIs do not support multiple consumers",
+                       "Process APIs are not covered in the exam"
+                   ],
+        "justificativa":  "Reusable business logic and cross-system transformations should live in the Process API, not in the UI layer. Keeping that logic in Screen Flow reduces reuse and makes the implementation harder to govern and maintain.",
+        "id":  "m4_q191",
+        "correta_texto":  "API-led best practices place reusable business logic in the Process API, not in the UI layer",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One scenario says that when a sale is closed, Flow must 1) trigger RPA for a legacy logistics system, 2) call an SMS API, and 3) register logs. Which component should coordinate this automation?",
+        "opcoes":  [
+                       "Let the RPA bot orchestrate the SMS, logging, and legacy updates",
+                       "Record-Triggered Flow with integration calls",
+                       "Use Composer as the main coordinator by polling Salesforce for closed sales",
+                       "Implement the orchestration entirely in Apex triggers"
+                   ],
+        "justificativa":  "A Record-Triggered Flow is the right coordinator when the process starts from a Salesforce data change and must immediately trigger downstream actions. It can orchestrate integrations and external calls while keeping the entry point inside Salesforce.",
+        "id":  "m4_q192",
+        "correta_texto":  "Record-Triggered Flow with integration calls",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "In one question, an option proposes using Flow Orchestration for an extremely simple one-step process that a single Record-Triggered Flow could handle. What kind of mistake is this?",
+        "opcoes":  [
+                       "A technically impossible alternative",
+                       "An alternative that adds unnecessary complexity",
+                       "An alternative that ignores reuse",
+                       "An alternative that violates DML limits"
+                   ],
+        "justificativa":  "Using Flow Orchestration for a trivial one-step process is usually overengineering. The better answer is the simpler tool that solves the requirement without adding unnecessary design and operational complexity.",
+        "id":  "m4_q193",
+        "correta_texto":  "An alternative that adds unnecessary complexity",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "A company plans a Flow that, on record update, calls several subflows and multiple serial APIs, creating a risk of hitting limits. Which approach is more mature?",
+        "opcoes":  [
+                       "Keep the design and add more retries inside the same record-triggered Flow",
+                       "Rethink the architecture using Process APIs, bulkification, and, if necessary, Orchestration",
+                       "Shift the serial calls to RPA while keeping the orchestration unchanged",
+                       "Turn off validations to shorten execution time"
+                   ],
+        "justificativa":  "When a Flow starts accumulating too much orchestration and too many serial integrations, the mature response is to redesign the solution. Process APIs, bulkification, and selective orchestration help reduce limit pressure while preserving reuse and maintainability.",
+        "id":  "m4_q194",
+        "correta_texto":  "Rethink the architecture using Process APIs, bulkification, and, if necessary, Orchestration",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "NTO wants routing decisions such as which queue receives a case to remain configurable and reusable. What does the exam tend to prefer?",
+        "opcoes":  [
+                       "Logic spread across several Apex triggers",
+                       "Centralized reusable Flow logic or subflows",
+                       "Logic in local scripts",
+                       "Logic only in the external API"
+                   ],
+        "justificativa":  "Subflows are the best way to keep routing logic configurable and reusable across multiple automations. They reduce duplication and make updates easier when business rules change.",
+        "id":  "m4_q195",
+        "correta_texto":  "Centralized reusable Flow logic or subflows",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One option says: \u0027To ensure performance, connect Flow directly to the database, avoiding APIs and Exchange.\u0027 Why is that incorrect?",
+        "opcoes":  [
+                       "Salesforce cannot access databases",
+                       "This breaks API-led connectivity, governance, and asset reuse",
+                       "It does not support governed APIs",
+                       "Exchange is optional only for RPA"
+                   ],
+        "justificativa":  "Bypassing APIs and Exchange removes the governance, discoverability, and reuse that MuleSoft architecture is designed to provide. The recommended pattern is to keep Flow consuming governed APIs, not direct database integrations.",
+        "id":  "m4_q196",
+        "correta_texto":  "This breaks API-led connectivity, governance, and asset reuse",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One scenario shows: Flow -\u003e API without a contract -\u003e nobody knows who consumes the API. What improvement is more aligned with the MuleSoft strategy?",
+        "opcoes":  [
+                       "Leave it as it is",
+                       "Publish the specification in Exchange, use External Services, and apply policies in API Manager",
+                       "Replace the API with direct database queries",
+                       "Migrate all logic to RPA"
+                   ],
+        "justificativa":  "The better design is to publish the contract in Exchange, let Flow consume the API through External Services, and govern access in API Manager. That improves discoverability, reuse, and control over consumers.",
+        "id":  "m4_q197",
+        "correta_texto":  "Publish the specification in Exchange, use External Services, and apply policies in API Manager",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One question describes a team creating multiple Flows that make redundant calls to different APIs with duplicate logic. What response is more aligned with C4E vision?",
+        "opcoes":  [
+                       "Allow duplication for speed",
+                       "Create reusable Process and Experience APIs and document them in Exchange for Flow consumption",
+                       "Discontinue the use of Flow",
+                       "Create a separate Flow for each team without standards"
+                   ],
+        "justificativa":  "When multiple Flows duplicate the same integration logic, the C4E direction is to centralize that logic in reusable APIs and document them in Exchange. That increases reuse and keeps Flow focused on orchestration or UI concerns.",
+        "id":  "m4_q198",
+        "correta_texto":  "Create reusable Process and Experience APIs and document them in Exchange for Flow consumption",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One option suggests that when an API fails, it is best to let Flow break silently so the user does not notice. How would this be evaluated?",
+        "opcoes":  [
+                       "Acceptable if the user sees success while support is notified later",
+                       "Wrong; error should be handled via Fault Paths and appropriate feedback",
+                       "Acceptable only when the failing API is not business-critical",
+                       "Correct when the error comes from an external system"
+                   ],
+        "justificativa":  "Failing silently hides operational problems and creates a poor support experience. Flow should use Fault Paths and clear feedback so errors can be handled, surfaced, and retried appropriately.",
+        "id":  "m4_q199",
+        "correta_texto":  "Wrong; error should be handled via Fault Paths and appropriate feedback",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "In a typical scenario of hyperautomation, what role does Salesforce Flow play in relation to RPA, Composer and APIs?",
+        "opcoes":  [
+                       "Act as the UI layer and event trigger, consuming APIs, RPA, and Composer",
+                       "Replace all other components",
+                       "Just run nightly jobs",
+                       "Act only as a test tool"
+                   ],
+        "justificativa":  "In hyperautomation, Salesforce Flow often acts as the business-facing entry point or event trigger, then coordinates APIs, Composer, or RPA as needed. It does not replace those tools; it works with them.",
+        "id":  "m4_q200",
+        "correta_texto":  "Act as the UI layer and event trigger, consuming APIs, RPA, and Composer",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  4,
+        "pergunta":  "One option says: \u0027Build a new complex Flow that duplicates the behavior of an existing Experience API so the team does not depend on Integration.\u0027 Why is that probably wrong?",
+        "opcoes":  [
+                       "Flows cannot consume APIs",
+                       "It ignores reuse of existing APIs and increases technical debt",
+                       "Experience APIs cannot be called by Flow",
+                       "It has no meaningful architectural impact"
+                   ],
+        "justificativa":  "Duplicating behavior that already exists in an Experience API weakens reuse and adds unnecessary maintenance burden. The cleaner design is to consume the existing API instead of rebuilding it in Flow.",
+        "id":  "m4_q201",
+        "correta_texto":  "It ignores reuse of existing APIs and increases technical debt",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets",
+                     "https://docs.mulesoft.com/general/api-led-overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_invocable_flows",
+                     "https://docs.mulesoft.com/rpa-home/ms-automation-credits-2"
+                 ],
+        "difficulty":  "hard"
+    }
+]

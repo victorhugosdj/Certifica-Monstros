@@ -1,0 +1,787 @@
+[
+  {
+    "content": "AnyAirlines runs Mule apps on AWS and requires zero-downtime deployments, horizontal scaling, and the ability to deploy into a customer-managed Kubernetes cluster due to compliance requirements. Which deployment option best fits?",
+    "options": [
+      "CloudHub 1.0",
+      "CloudHub 2.0",
+      "Runtime Fabric",
+      "Anypoint Studio local runtime"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Runtime Fabric is designed for customer-managed infrastructure (including Kubernetes) and supports advanced deployment patterns like rolling updates and scaling. CloudHub is MuleSoft-managed (less control over underlying infra). Local runtime isn’t a deployment strategy for production.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Northern Trail Outfitters wants to choose between CloudHub and Runtime Fabric. Which two requirements most strongly indicate Runtime Fabric?",
+    "options": [
+      "Must deploy into a private network with strict control over ingress/egress",
+      "Needs MuleSoft-managed infrastructure with minimal ops overhead",
+      "Needs to run apps close to on-prem systems with network constraints",
+      "Wants the fastest “click-to-deploy” with default operational management"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Runtime Fabric fits when you need network control and proximity to restricted systems. CloudHub fits “MuleSoft-managed” and fast operations (B, D).",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO needs to expose inventory data to mobile and web channels. Data comes from SAP and NetSuite, and must be normalized, deduplicated, and enriched with business rules. Where should the normalization/enrichment logic primarily live?",
+    "options": [
+      "System API",
+      "Process API",
+      "Experience API",
+      "API Gateway policy layer"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Process APIs handle orchestration and business logic such as aggregation, normalization, and enrichment. System APIs should remain close to source capabilities. Experience APIs tailor responses per channel. Policies don’t implement business logic.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines is designing API-led connectivity for a loyalty program. Which three statements are aligned with best practice?",
+    "options": [
+      "System APIs should abstract and stabilize access to core systems of record",
+      "Experience APIs should implement complex cross-system aggregation logic",
+      "Process APIs should compose data from multiple System APIs and apply business rules",
+      "Experience APIs should tailor data shape to the consumer (mobile/web/partner)",
+      "System APIs should contain channel-specific formatting logic"
+    ],
+    "correctAnswer": "A, C, D",
+    "explanation": "A/C/D match the tier responsibilities. B and E invert responsibilities (common distractors).",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO publishes an Experience API to external partners. Partners must authenticate using OAuth 2.0 access tokens, and requests without a valid token must be rejected. Which policy best matches?",
+    "options": [
+      "OAuth 2.0 Access Token Enforcement",
+      "Client ID Enforcement",
+      "Spike Control",
+      "JSON Threat Protection"
+    ],
+    "correctAnswer": "A",
+    "explanation": "OAuth token enforcement validates access tokens. Client ID Enforcement is identification/contracting (often used with API Manager contracts), not token validation. Spike Control is traffic shaping; JSON Threat Protection is payload safety.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines wants: - to identify consuming applications and apply SLA tiers, and: - also require OAuth 2.0 tokens for user/app authorization. Which two policies together best satisfy this?",
+    "options": [
+      "Client ID Enforcement",
+      "OAuth 2.0 Access Token Enforcement",
+      "Spike Control",
+      "CORS"
+    ],
+    "correctAnswer": "A, B",
+    "explanation": "Client ID Enforcement supports consumer identification and contracts/tiers; OAuth token enforcement validates tokens. Spike Control/CORS don’t cover identity + authorization.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO exposes an API publicly. The security team is concerned about oversized JSON payloads, deeply nested JSON, and payloads designed to exhaust parsing resources. Which policy best addresses this?",
+    "options": [
+      "JSON Threat Protection",
+      "Spike Control",
+      "Rate Limiting – SLA-based",
+      "OAuth 2.0 Access Token Enforcement"
+    ],
+    "correctAnswer": "A",
+    "explanation": "JSON Threat Protection is designed to mitigate risks from malicious JSON structures (size, depth, arrays). Spike/Rate limiting control request rates, not payload structure. OAuth validates auth, not payload safety.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO routes Cases to Sales/Product/Support based on Case Type. Which component?",
+    "options": [
+      "For Each",
+      "If/Else",
+      "Switch/Case",
+      "Swimlane"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Multiple mutually exclusive routes → Switch/Case. If/Else is binary; For Each iterates; Swimlane isn’t a Composer control component.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Bidirectional near-real-time sync between two Salesforce orgs using Composer. Minimum flows?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correctAnswer": "B",
+    "explanation": "One flow per direction (Org A→B, Org B→A).",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "To prevent infinite loops in bidirectional sync, best approach?",
+    "options": [
+      "Remove one flow",
+      "Add a sync flag / “Last Synced By” condition to skip reprocessing",
+      "Replace Composer with RPA",
+      "Publish to Exchange"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Loop prevention via flags/timestamps is standard. Removing a flow breaks bidirectional requirement; RPA/Exchange don’t solve loop logic.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Test the same flow against DEV/QA/UAT Salesforce sandboxes. What should you do?",
+    "options": [
+      "Create separate connections per environment in Composer",
+      "Install Composer in each sandbox",
+      "Create Named Credentials in Anypoint",
+      "Use mock data because Composer can’t access sandboxes"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Composer uses connections. No per-sandbox installation required. Named Credentials in Anypoint isn’t relevant. Sandboxes are supported.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A Composer flow must update ~1,000 records each run and performance is poor. Best recommendation?",
+    "options": [
+      "Consider migrating to Anypoint Platform for higher volume/complexity needs",
+      "Use RPA Recorder to speed it up",
+      "Convert to a Screen Flow",
+      "Apply Client ID Enforcement"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Higher volume/robustness often suggests Anypoint. RPA/Screen Flow/policies don’t address integration throughput and design limits.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A non-critical step fails sometimes. The business wants to notify and continue processing. Best approach?",
+    "options": [
+      "Add error handling/branching + notify (email) and proceed for non-critical step",
+      "Use MUnit in Composer",
+      "Use Anypoint MQ to “ignore errors”",
+      "Rewrite in Apex"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Handle errors in-flow and notify. MUnit is for Mule apps, not Composer. MQ doesn’t “ignore errors.” Apex is unnecessary.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Business users want to start an integration “on demand” without a record-change trigger. Best trigger style?",
+    "options": [
+      "Schedule",
+      "Inbound Webhook trigger",
+      "Record Created",
+      "Record Updated"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Webhook enables external/on-demand invocation. Schedule is periodic; record triggers require data changes.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "For Slack notifications from Composer, which two increase reliability?",
+    "options": [
+      "Standardize message templates and channels",
+      "Send messages only inside For Each",
+      "Add error notifications for failed Slack actions",
+      "Apply Spike Control on the Slack connector"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Templates and error handling are best practice. For Each isn’t required. Spike Control is an API gateway policy, not a connector setting.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Retrieve a record by unique key; if not found, alert and stop. Best structure?",
+    "options": [
+      "If/Else checking for empty result before Slack step",
+      "Switch/Case based on priority",
+      "For Each always",
+      "Orchestration with stages"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Presence/absence is binary → If/Else. Switch/Case and For Each are mismatched; Orchestration is for process coordination, not this.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Destination system requires ISO datetime as a string. Best solution?",
+    "options": [
+      "Use Composer formatting/conversion functions before mapping",
+      "Build an RPA bot to format values",
+      "Build a System API only to format datetime",
+      "Use Flow Orchestration"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Simple transformation belongs in Composer mapping. RPA/API/Orchestration are unnecessary for trivial formatting.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO wants a job to run every 30 minutes in Composer. Which option is correct?",
+    "options": [
+      "Schedule every 30 minutes",
+      "Schedule every 30 days",
+      "Schedule based on formula only",
+      "Only possible through cron in Anypoint Studio"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Composer offers common intervals such as 30 minutes. Others are incorrect/overcomplicated.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Composer invokes an RPA process with a User Task that can take up to 24 hours. How should results be consumed?",
+    "options": [
+      "Use a second Composer flow triggered when the RPA completes",
+      "Wait inside the same Composer flow until completion",
+      "Poll status every minute forever",
+      "Replace with Flow Orchestration"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Long-running tasks should be decoupled via completion event/second flow. Waiting/polling is inefficient; Orchestration doesn’t replace RPA execution.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which two signals suggest Anypoint Platform may be preferable over Composer?",
+    "options": [
+      "Need API policies, governance, and broad reuse",
+      "Simple 2-step Salesforce-to-Slack automation",
+      "High volume + complex transformations + strict SLAs",
+      "Update a single Salesforce field"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Enterprise scale/governance/complexity → Anypoint. Simple tasks remain in Composer.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "To prevent unauthorized users from running an automation that creates sensitive records, best approach?",
+    "options": [
+      "Use Salesforce permissions (profiles/permission sets) tied to the operation",
+      "JSON Threat Protection",
+      "RPA Recorder restrictions",
+      "Spike Control"
+    ],
+    "correctAnswer": "A",
+    "explanation": "User-level access is governed in Salesforce via permissions. API policies don’t directly control Salesforce user invocations.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "They need auditable logging for every run (correlation ID, status). Best approach?",
+    "options": [
+      "Write logs to a custom Salesforce object for each run/failure",
+      "Rely only on Composer’s UI history",
+      "Use Slack messages as logs",
+      "Use Flow Orchestration for logging"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Persisted logs enable reporting/audit. UI-only is limited; Slack isn’t an audit store; Orchestration doesn’t automatically solve logging.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Need a monthly CSV of top 10% customers by loyalty points; customer data already uses API-led; loyalty system has HTTP endpoint with no integration yet. Best approach?",
+    "options": [
+      "Build a System API for loyalty and reuse existing Customer System API",
+      "Do the entire ranking in Composer only",
+      "Build a Process API to aggregate/transform and compute top 10%",
+      "Build an Experience API to expose the result to business consumers",
+      "Use RPA to compute the top 10%"
+    ],
+    "correctAnswer": "A, C, D",
+    "explanation": "With existing API-led strategy, extend with System (loyalty), Process (logic), Experience (consumption). Composer-only is less robust; RPA unnecessary when API exists.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A Salesforce-based automation needs consistent authentication and credential rotation for an external service used from Salesforce. Best approach?",
+    "options": [
+      "Salesforce Named Credentials",
+      "Client ID Enforcement in Anypoint",
+      "Hardcode credentials in Composer",
+      "Store credentials in a public Salesforce text field"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Named Credentials centralize auth and rotation. Client ID Enforcement isn’t credential storage. Hardcoding/public fields are security anti-patterns.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines must extract data from a legacy website with no API.Best tool?",
+    "options": [
+      "MuleSoft RPA",
+      "MuleSoft Composer",
+      "Flow Orchestration",
+      "Experience API"
+    ],
+    "correctAnswer": "A",
+    "explanation": "UI automation without APIs → RPA. Composer/Orchestration require APIs or Salesforce context; Experience API assumes API access.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "What does RPA Recorder automatically capture when recording manual activity?",
+    "options": [
+      "Business intent notes",
+      "Conditional decisions by the user",
+      "UI elements/metadata used during interaction",
+      "Full test plans"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Recorder captures UI interaction details; logic/comments/tests are added later.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Best practices for autogenerated Recorder workflow code:",
+    "options": [
+      "Replace fragile autogenerated steps with more robust/specialized steps",
+      "Keep as-is; it’s production-ready",
+      "Remove/mask sensitive info captured during recording",
+      "Disable all keystrokes/mouse clicks before production"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Autogenerated flows often need hardening and may contain secrets. “Production-ready” is a trap; disabling clicks breaks automation.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A BPMN diamond with an “X” represents:",
+    "options": [
+      "Error handler activity",
+      "Exclusive Gateway (one of several paths based on conditions)",
+      "End event",
+      "Parallel split"
+    ],
+    "correctAnswer": "B",
+    "explanation": "“X” gateway = exclusive decision. Other symbols describe different BPMN elements.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "(RPA Testing): Where do RPA process test plans execute?",
+    "options": [
+      "On a configured RPA Bot",
+      "In RPA Manager only",
+      "In RPA Builder only",
+      "In Salesforce Setup"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Bots run executions/tests. Builder is authoring; Manager is monitoring/management.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "An RPA process fails in Production. Best practice debugging approach?",
+    "options": [
+      "Download analysis package, revert to Build phase, import into Builder, debug",
+      "Copy logs into a text editor and guess root cause",
+      "Deactivate the process and run manually forever",
+      "Replace with Composer immediately"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Proper debugging uses analysis package + Builder. Others are unreliable or change scope unnecessarily.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which two qualifiers indicate good RPA candidates?",
+    "options": [
+      "Rule-based",
+      "Requires creative judgment at many steps",
+      "Data-driven",
+      "Highly variable daily with no patterns"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "RPA excels at repeatable, rules + data. High variability/creativity reduces automation success.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "RPA process has a User Task that can take up to 24 hours. Best way for Composer to consume results?",
+    "options": [
+      "Trigger a second Composer flow when the RPA completes",
+      "Block the original Composer flow until completion",
+      "Poll every minute continuously",
+      "Replace with Flow Orchestration"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Asynchronous completion pattern. Blocking/polling is inefficient; Orchestration doesn’t execute UI automation.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A bot must ensure applications are closed at the end even if an error occurs. Best approach?",
+    "options": [
+      "Add cleanup/finally steps in the bot workflow",
+      "Add an Exclusive Gateway",
+      "Publish an Experience API",
+      "Add a Composer Switch/Case"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Cleanup handling belongs in bot design. Gateways/Composer/APIs don’t guarantee application closure.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which three practices reduce UI automation fragility?",
+    "options": [
+      "Prefer stable selectors/identifiers over screen coordinates",
+      "Add waits/state checks before clicking",
+      "Remove logging to improve performance",
+      "Handle exceptions and alternate paths",
+      "Apply Spike Control"
+    ],
+    "correctAnswer": "A, B, D",
+    "explanation": "Stability + synchronization + exception handling improves robustness. Removing logs harms troubleshooting. Spike Control is unrelated.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Where should bot credentials be stored?",
+    "options": [
+      "Secure credential/secret mechanism (vault/managed secrets)",
+      "Hardcoded in workflow",
+      "Sent via Slack DM to bot operator",
+      "Stored in a public Salesforce field"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Secrets must be protected. Hardcoding or public storage is insecure; Slack is not secure secret storage.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A website layout change breaks an RPA process. Best next step?",
+    "options": [
+      "Update selectors and replace recorded steps with more robust steps",
+      "Record more clicks and rerun",
+      "Switch to Composer even though there is no API",
+      "Ignore the failure and proceed"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Maintain selectors and harden workflow. More clicks increases fragility. Composer can’t automate UI without APIs. Ignoring breaks business outcomes.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO needs a multi-step process with handoffs across departments after a Case is created. Best structure?",
+    "options": [
+      "Flow Orchestration using stages and steps",
+      "One autolaunched flow with all logic",
+      "Only a Screen Flow",
+      "RPA bot to coordinate users"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Orchestration is purpose-built for multi-step, handoffs, and process tracking. Others lack governance/coordination.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "How do Interactive Steps help involve users?",
+    "options": [
+      "Let users interact directly with external systems via UI automation",
+      "Allow user interaction between automated backend steps",
+      "Enforce API policies",
+      "Run large batch jobs"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Interactive Steps are human tasks/inputs in the orchestrated process. Not API policy or batch features.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "How should stages be organized for a complicated process?",
+    "options": [
+      "Group steps by handoffs/major branches",
+      "Group steps by technology used (Slack stage, NetSuite stage)",
+      "Group steps by responsibility transitions (who owns work)",
+      "Create random stages for aesthetics"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Stages represent phases/handoffs/ownership changes. Grouping by tool is a common distractor.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A stage has three possible exit paths based on criteria. Best implementation?",
+    "options": [
+      "Evaluation flow returns a number/code, then Decision routes paths",
+      "Chain multiple evaluation flows until one matches",
+      "Use Composer Switch/Case inside Orchestration",
+      "Apply Spike Control"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Standard pattern: evaluation output → decision. Composer/policies are irrelevant inside Orchestration routing.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "(Flow best practice): A Salesforce admin hits DML governor limits in Flow due to many record updates. Best advice?",
+    "options": [
+      "Avoid DML inside loops; use collections and bulk updates",
+      "Increase DML governor limits in Setup",
+      "Replace Flow with RPA",
+      "Apply Rate Limiting policy"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Bulkification avoids governor limits. Limits can’t be increased. RPA/policies don’t fix Salesforce transaction limits.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines needs automated steps plus an approval before continuing. Best solution?",
+    "options": [
+      "Orchestration with automated steps and an Interactive Step for approval",
+      "Composer only",
+      "RPA only",
+      "Experience API only"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Orchestration combines automation + human tasks. Others don’t provide in-Salesforce approval orchestration.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which three signals strongly suggest Flow Orchestration over a simple Flow?",
+    "options": [
+      "Multiple users participate",
+      "Handoffs across teams",
+      "Only one field update on a record",
+      "Interactive steps and stage tracking are required",
+      "The process has clear phases/milestones"
+    ],
+    "correctAnswer": "A, B, D",
+    "explanation": "Multi-user + handoffs + interactive/traceable phases → Orchestration. Single field update is simple Flow territory.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A process spans external automation and must capture the outcome back in Salesforce at completion. Best pattern?",
+    "options": [
+      "Use Orchestration to update Salesforce records at the end of a stage/step",
+      "Have RPA write directly into Salesforce database tables",
+      "Use Spike Control to manage the outcome",
+      "Composer cannot record outcomes"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Salesforce remains system of record; update via Flow/Orchestration. Direct DB writes are not appropriate. Policies/claims about Composer are distractors.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "When an Order is marked Complete, update Last Order Date on related Account. Best practice?",
+    "options": [
+      "Record-triggered Flow on Order to update Account",
+      "Replace the whole integration with API-led in Anypoint",
+      "Build an RPA bot to update Account",
+      "Send a Slack notification instead"
+    ],
+    "correctAnswer": "A",
+    "explanation": "This is an internal Salesforce data rule → record-triggered Flow. Other options are unnecessary or don’t meet requirement.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "What is the difference between Run and Debug modes in Flow Builder?",
+    "options": [
+      "Debug shows step-by-step details for troubleshooting",
+      "Debug uses AI to fix bugs automatically",
+      "Run is only available for active flows",
+      "Run ignores the latest saved version"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Debug provides granular execution detail. The other statements are common distractors/misconceptions.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "The business wants progress visibility by phases (Intake, Validation, Approval). What supports that?",
+    "options": [
+      "Stages in Flow Orchestration",
+      "For Each in Composer",
+      "Spike Control policy",
+      "Client ID Enforcement"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Stages represent process phases and provide tracking. Others are unrelated.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "A process is single-user but long and needs structure + traceability. What’s most aligned?",
+    "options": [
+      "Use Orchestration with stages/steps even if single-user",
+      "Put everything into one massive Screen Flow",
+      "Use subflows for modularity/reuse where appropriate",
+      "Use RPA as the primary orchestrator"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Orchestration provides structure/visibility; subflows improve reuse. Massive Screen Flows create maintenance risk. RPA isn’t a Salesforce process coordinator.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "(API-led): NTO uses API-led connectivity for web/mobile channels and needs aggregation/transformation from multiple systems. Where should that logic live?",
+    "options": [
+      "Experience API",
+      "Process API",
+      "System API",
+      "API Gateway"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Process API handles orchestration, aggregation, transformation. Experience shapes per channel; System exposes source systems; Gateway enforces policies.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines’ API backend fails during sudden bursts of traffic. Which policy prevents overload?",
+    "options": [
+      "Client ID Enforcement",
+      "JSON Threat Protection",
+      "Spike Control",
+      "CORS"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Spike Control smooths bursts. Client ID is identification; Threat Protection is payload security; CORS is browser cross-origin.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which policy limits how many requests an individual client can make based on tiers/SLA?",
+    "options": [
+      "Spike Control",
+      "Rate Limiting – SLA-based",
+      "OAuth token enforcement only",
+      "JSON Threat Protection"
+    ],
+    "correctAnswer": "B",
+    "explanation": "SLA-based rate limiting is per consumer/tier. Spike Control targets burst smoothing, not per-client quotas.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO wants to share an internal API with website backend and RPA bots only within the organization. Best place?",
+    "options": [
+      "Public Exchange",
+      "Private Exchange",
+      "Share the RAML in SharePoint",
+      "Post docs in Slack"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Private Exchange is designed for internal discovery/reuse with access control. Public Exchange is external.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines wants to publish an API to the public Exchange portal. What must be configured first?",
+    "options": [
+      "Set asset/API instance visibility appropriately for public sharing",
+      "Build an RPA bot to validate the API",
+      "Build a Screen Flow to publish the API",
+      "Add a Switch/Case routing step"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Public sharing requires visibility/public access configuration. Others don’t control Exchange publication.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Before building a new integration/API, where should a developer look for reusable assets?",
+    "options": [
+      "Anypoint Exchange",
+      "RPA Recorder",
+      "API catalog/Design Center (as applicable)",
+      "Slack channel history"
+    ],
+    "correctAnswer": "A, C",
+    "explanation": "Exchange + design/catalog are for discovery/reuse. Recorder and Slack aren’t asset repositories.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines runs on AWS and needs vertical/horizontal scaling plus zero-downtime deployments for Mule runtimes. Best deployment strategy?",
+    "options": [
+      "CloudHub only",
+      "Runtime Fabric",
+      "Private Cloud Edition is required",
+      "Composer scheduling"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Runtime Fabric supports enterprise deployment patterns, scaling, and rolling/zero-downtime approaches on customer-managed infra/cloud.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Which component enforces API policies at runtime?",
+    "options": [
+      "API Analytics",
+      "API Manager alone",
+      "API Gateway/runtime component",
+      "Exchange portal"
+    ],
+    "correctAnswer": "C",
+    "explanation": "API Manager configures policies; enforcement happens at the gateway/runtime (e.g., Flex Gateway/Mule runtime gateway layer).",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "NTO has existing non-MuleSoft APIs and wants quick security/governance in Anypoint without rewriting. Best approach?",
+    "options": [
+      "Rewrite all APIs in Mule",
+      "Create an API proxy in front of each existing API",
+      "Convert to RPA",
+      "Expose each endpoint as a basic endpoint without proxy"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Proxies allow applying policies/analytics quickly. Rewriting is slow; RPA is irrelevant; no proxy means less governance.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines wants built-in automated testing for Mule integrations. Which tool fits?",
+    "options": [
+      "MUnit (within Anypoint/Studio ecosystem)",
+      "MuleSoft Composer",
+      "Flow Orchestration",
+      "RPA Manager"
+    ],
+    "correctAnswer": "A",
+    "explanation": "MUnit is the standard for Mule app automated tests. Others don’t provide Mule application unit testing.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "Requirement: SOAP-based service, bidirectional near real-time, complex transformations, strong reliability. Which three decisions align best?",
+    "options": [
+      "Implement using Anypoint Studio (Mule app)",
+      "Model the API/spec in Design Center (RAML/OAS)",
+      "Use Compo",
+      "Apply governance/policies via API Manager",
+      "Use RPA because SOAP is “legacy”"
+    ],
+    "correctAnswer": "A, B, D",
+    "explanation": "Enterprise integration with SOAP/complexity → Mule app + API design + policy governance. Composer is too limited; RPA is for UI, not SOAP integration.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  },
+  {
+    "content": "AnyAirlines needs to enforce per-consumer quotas and contractual usage tiers. Best mechanism?",
+    "options": [
+      "Rate Limiting – SLA-based",
+      "Switch/Case",
+      "Screen Flow",
+      "RPA Recorder"
+    ],
+    "correctAnswer": "A",
+    "explanation": "SLA-based rate limiting supports tiers/quotas per client. Others aren’t API governance mechanisms.",
+    "simuladoType": "v2",
+    "difficulty": "medium"
+  }
+]
