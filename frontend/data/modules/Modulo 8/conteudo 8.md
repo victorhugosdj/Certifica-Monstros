@@ -1,12 +1,4 @@
-# Modulo 8: Salesforce Flow Orchestration
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 8.md` (questoes em ingles).
-
----
-# 📚 Módulo 8
-
-# **🎼 Módulo 8: Salesforce Flow Orchestration (Conteúdo Extendido)**
+# **🎼 Módulo 8: Salesforce Flow Orchestration (Conteúdo Extendido) **
 
 **Peso no Exame: 8%**
 

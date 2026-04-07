@@ -1,12 +1,4 @@
-# Modulo 4: Salesforce Flow
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 4.md` (questoes em ingles).
-
----
-# 📚 Módulo 4
-
-# **⚡ Módulo 4: Salesforce Flow (Conteúdo Extendido)**
+# **⚡ Módulo 4: Salesforce Flow **
 
 **Peso no Exame:** 13%
 

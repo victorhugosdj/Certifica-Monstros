@@ -1,0 +1,901 @@
+﻿[
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants to prevent each team from creating duplicate integrations for the same system. What role does Anypoint Exchange play in this?",
+        "opcoes":  [
+                       "IDE for Mule Flow Development",
+                       "Central reusable asset catalogue (APIs, connectors, templates, fragments, RPA)",
+                       "Deploy on-premises tool",
+                       "RPA Console"
+                   ],
+        "justificativa":  "Anypoint Exchange acts as the central catalog where teams publish APIs, connectors, templates, and examples before building something new. That reduces duplicate integrations because architects can discover existing assets, evaluate fit, and reuse approved patterns instead of creating parallel solutions for the same system.",
+        "id":  "m7_q298",
+        "correta_texto":  "Central reusable asset catalogue (APIs, connectors, templates, fragments, RPA)",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "Northern Trail Outfitters (NTO) wants to publish API specifications so Salesforce Flow can consume them via External Services. What kind of asset should be published?",
+        "opcoes":  [
+                       "API Specification (RAML/OAS)",
+                       "API Only Fragments",
+                       "Connectors Only",
+                       "Templates Only"
+                   ],
+        "justificativa":  "For Salesforce Flow to consume an API via External Services, the key asset is the API specification published in Exchange, typically an OpenAPI contract. The important point is that Flow needs a machine-readable contract it can register declaratively, not just a PDF or prose documentation.",
+        "id":  "m7_q299",
+        "correta_texto":  "API Specification (RAML/OAS)",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A Flow developer needs to understand which parameters an HR MuleSoft API requires. What is the first recommended step?",
+        "opcoes":  [
+                       "View Mule application source code",
+                       "Please refer to Anypoint Exchange and review interactive API documentation/console",
+                       "Ask the integration team by email",
+                       "Access the database directly"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. A Flow developer needs to understand which parameters an HR MuleSoft API requires. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q300",
+        "correta_texto":  "Please refer to Anypoint Exchange and review interactive API documentation/console",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One scenario describes that an organization wants to share connectors, templates and fragments between internal teams only. What type of Exchange should be used?",
+        "opcoes":  [
+                       "Public Exchange only",
+                       "Private organisation exchange",
+                       "Public GitHub",
+                       "Shared file server"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. One scenario describes that an organization wants to share connectors, templates and fragments between internal teams... Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q301",
+        "correta_texto":  "Private organisation exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "An API is published in Exchange with its specification. What does Exchange automatically offer to help consumers?",
+        "opcoes":  [
+                       "Just download the PDF",
+                       "Interactive console to test calls and navigable documentation",
+                       "API logs only",
+                       "Financial reports"
+                   ],
+        "justificativa":  "When an API is published in Exchange with its specification, consumers typically get navigable documentation and an interactive console to understand and test calls. That lowers onboarding friction and helps teams explore the contract without reading the raw spec file.",
+        "id":  "m7_q302",
+        "correta_texto":  "Interactive console to test calls and navigable documentation",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to reuse the standard “Address” model in several RAML APIs. What kind of asset is more appropriate?",
+        "opcoes":  [
+                       "Complete API specification",
+                       "API Fragment (for example, a reusable Address data type)",
+                       "Project template",
+                       "RPA Asset"
+                   ],
+        "justificativa":  "An API Fragment is the right asset because shared RAML elements such as an Address data type should be defined once and referenced from multiple APIs. That keeps the model consistent and avoids copying the same schema across many specifications.",
+        "id":  "m7_q303",
+        "correta_texto":  "API Fragment (e.g. dataType Address)",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "An alternate states that “Exchange only stores APIs, not other types of assets”. How would this be evaluated?",
+        "opcoes":  [
+                       "Correct.",
+                       "False; Exchange also stores connectors, templates, fragments, RPA assets, etc.",
+                       "True only on-premises",
+                       "True only for free accounts"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. An alternate states that “Exchange only stores APIs, not other types of assets”. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q304",
+        "correta_texto":  "False; Exchange also stores connectors, templates, fragments, RPA assets, etc.",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A company wants to use official connectors for SAP and Oracle developed by MuleSoft and partners. Where are these assets available?",
+        "opcoes":  [
+                       "Runtime Manager only",
+                       "No Anywhere Public Exchange",
+                       "Only in Composer",
+                       "Only in RPA Manager"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. A company wants to use official connectors for SAP and Oracle developed by MuleSoft and partners. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q305",
+        "correta_texto":  "No Anywhere Public Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants developers to see which projects depend on a particular RAML fragment before changing it. Which Exchange resource helps with that?",
+        "opcoes":  [
+                       "API Notebook",
+                       "Dependency tracking",
+                       "Viewer",
+                       "RPA Dashboard"
+                   ],
+        "justificativa":  "Dependency tracking helps teams understand where a shared fragment is used before they change it. That reduces risk and improves governance across reusable assets.",
+        "id":  "m7_q306",
+        "correta_texto":  "Dependency tracking",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "Exchange is described as the \u0027first source of truth\u0027 before creating any new integration. What does that mean in practice?",
+        "opcoes":  [
+                       "Create a new API first and document it later",
+                       "Consult Exchange to see whether reusable APIs or assets already exist before building something new",
+                       "Ask the original integration developer before checking any catalog",
+                       "Use Exchange only for documentation, not for reuse"
+                   ],
+        "justificativa":  "Treating Exchange as the first source of truth means checking the catalog before building from scratch. The goal is to find reusable assets, avoid duplication, and standardize how teams work.",
+        "id":  "m7_q307",
+        "correta_texto":  "Consult Exchange to see if there are already reusable APIs/actives before developing something new",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to publish an existing RPA process so that other areas know it can be reused. Where should this be exposed?",
+        "opcoes":  [
+                       "Only internal wiki",
+                       "The RPA Asset in Anypoint Exchange",
+                       "Only in the RPA Manager",
+                       "Only in emails"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. NTO wants to publish an existing RPA process so that other areas know it can be reused. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q308",
+        "correta_texto":  "The RPA Asset in Anypoint Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "An alternative says that “Exchange has no impact on the test, because it is only a visual store”. How could the candidate respond?",
+        "opcoes":  [
+                       "Agree; not relevant",
+                       "Disagree; Exchange is central to reuse, Mocking Service and asset discovery",
+                       "Depends on the project",
+                       "Only applications to public APIs"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. An alternative says that “Exchange has no impact on the test, because it is only a visual store”. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q309",
+        "correta_texto":  "Disagree; Exchange is central to reuse, Mocking Service and asset discovery",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A team wants to use a “Salesforce ↔ SAP” integration ready template provided by MuleSoft. Where\u0027s this template found?",
+        "opcoes":  [
+                       "API Manager",
+                       "Anypoint Exchange",
+                       "Runtime Manager",
+                       "RPA Manager"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. A team wants to use a “Salesforce ↔ SAP” integration ready template provided by MuleSoft. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q310",
+        "correta_texto":  "Anypoint Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A question contrasts two implementation options for Exchange usage. If only option B preserves reuse and governance, which answer should the candidate choose?",
+        "opcoes":  [
+                       "A",
+                       "B",
+                       "Both equally",
+                       "None"
+                   ],
+        "justificativa":  "Choose B because Exchange governance is not just about storing files; it is about making approved, versioned, and discoverable assets available for reuse. The stronger option is the one that preserves catalog visibility and controlled reuse instead of hiding logic inside isolated team artifacts.",
+        "id":  "m7_q311",
+        "correta_texto":  "B",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option says: \u0027To maximize reuse, always create new assets without recording dependencies.\u0027 Why is that a bad idea?",
+        "opcoes":  [
+                       "Because Exchange does not support dependencies",
+                       "Because ignoring dependencies makes it difficult to understand impact and governance",
+                       "Because dependencies are optional",
+                       "Because only RPA uses dependencies"
+                   ],
+        "justificativa":  "Ignoring dependencies makes it much harder to understand impact, manage change safely, and govern shared assets. Reuse without visibility creates hidden risk.",
+        "id":  "m7_q312",
+        "correta_texto":  "Because ignoring dependencies makes it difficult to understand impact and governance",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants the Salesforce Flow team to start integrating a credit API before it is currently implemented. The RAML contract already exist. What resource speeds that up?",
+        "opcoes":  [
+                       "Direct Deploy in Production",
+                       "Exchange Mocking Service, displaying a simulated URL",
+                       "Only manual tests on Postman",
+                       "Local Logs"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. AnyAirlines wants the Salesforce Flow team to start integrating a credit API before it is currently implemented. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q313",
+        "correta_texto":  "Exchange Mocking Service, displaying a simulated URL",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "Northern Trail Outfitters (NTO) wants external developers to test an API using an interactive console and then request access credentials. Where\u0027s this set up?",
+        "opcoes":  [
+                       "Runtime Manager",
+                       "Portal/Exchange API with “Request Access” flow",
+                       "Anypoint Studio",
+                       "Compose"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. Northern Trail Outfitters (NTO) wants external developers to test an API using an interactive console and then reques... Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q314",
+        "correta_texto":  "Portal/Exchange API with “Request Access” flow",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One scenario says that the front-end team wants to keep testing against mocks while the backend is still being built. Which practice fits best?",
+        "opcoes":  [
+                       "Connect directly to an unstable backend and accept broken tests",
+                       "Use Mocking Service with example data until the backend is ready",
+                       "Wait until the backend is complete before validating anything",
+                       "Build isolated test stubs outside the shared API contract"
+                   ],
+        "justificativa":  "Mocking Service is ideal when teams need to keep moving in parallel before the real backend is available. It allows front-end and integration work to progress without waiting on the final implementation.",
+        "id":  "m7_q315",
+        "correta_texto":  "Use Mocking Service with example data until the backend is ready",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option says that \u0027Mocking Service is not useful for hyperautomation scenarios.\u0027 How should this be evaluated?",
+        "opcoes":  [
+                       "Correct",
+                       "False; it is very useful to let Flow, Composer, and RPA advance in parallel",
+                       "Only correct on-premises",
+                       "It applies only to public APIs"
+                   ],
+        "justificativa":  "That statement is false because Mocking Service is especially valuable when several tools or teams depend on an API contract before the real implementation is ready.",
+        "id":  "m7_q316",
+        "correta_texto":  "False; it is very useful to allow Flow, Composer and RPA to advance in parallel",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to separate internal and external consumption from an API, but maintain the same specification. What can Exchange and API Manager offer?",
+        "opcoes":  [
+                       "Nothing; duplicate required API",
+                       "Same contract at Exchange, with different policies and consumers portals",
+                       "Static documentation only",
+                       "Logs only"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. NTO wants to separate internal and external consumption from an API, but maintain the same specification. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q317",
+        "correta_texto":  "Same contract at Exchange, with different policies and consumers portals",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A Mule developer wants to create interactive tutorials that perform real API calls within the documentation. Which resource is referenced in the module?",
+        "opcoes":  [
+                       "API Notebook",
+                       "Viewer",
+                       "RPA Recorder",
+                       "Functional Monitoring"
+                   ],
+        "justificativa":  "API Notebook is meant for interactive learning and experimentation with real API calls, making it useful for tutorials and self-service onboarding.",
+        "id":  "m7_q318",
+        "correta_texto":  "API Notebook",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A company wants business teams to navigate integration assets such as APIs, templates, and RPA processes and understand what already exists before opening new requests. Which practice supports that?",
+        "opcoes":  [
+                       "Keep everything only in internal Git repositories",
+                       "Publish and maintain well-documented assets in Exchange",
+                       "Send emails with code attachments",
+                       "Rely on the integration team to remember everything"
+                   ],
+        "justificativa":  "Well-documented assets in Exchange make discovery easier for both technical and business teams. That improves reuse and reduces unnecessary requests for things that already exist.",
+        "id":  "m7_q319",
+        "correta_texto":  "Publish and maintain well-documented assets in Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants external consumers to request access to an API directly through documentation and receive a Client ID/Secret when approved. What\u0027s this flow?",
+        "opcoes":  [
+                       "Manual Provisioning in Studio",
+                       "Request Access Flow in an Exchange Portal API",
+                       "Process Builder in Salesforce",
+                       "Manual email only"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. AnyAirlines wants external consumers to request access to an API directly through documentation and receive a Client... Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q320",
+        "correta_texto":  "Request Access Flow in an Exchange Portal API",
+        "refs":  [
+                     "https://docs.mulesoft.com/composer/ms_composer_overview",
+                     "https://docs.mulesoft.com/composer-salesforce/ms_composer_overview",
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option suggests that \u0027Mocking Service should be used in production forever because it simplifies the backend.\u0027 Why is that incorrect?",
+        "opcoes":  [
+                       "Because mocks are never allowed",
+                       "Because Mocking Service is for testing and parallel development, not for replacing the backend in production",
+                       "Because only RPA uses mocks",
+                       "Because Flow does not work with mocks"
+                   ],
+        "justificativa":  "Mocking Service is valuable during design and parallel development, but it is not a substitute for a production backend. Keeping mocks in production would hide the absence of the real implementation.",
+        "id":  "m7_q321",
+        "correta_texto":  "Because Mocking Service is for testing and parallel development, not to replace the backend in production",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A candidate needs to identify where to find request and response examples for an API. What location is most expected?",
+        "opcoes":  [
+                       "API source code only",
+                       "Interactive asset documentation and console on Exchange",
+                       "Former team emails",
+                       "Production logs"
+                   ],
+        "justificativa":  "Exchange is the expected place because it centralizes API documentation, examples, and other reusable assets. That makes request and response samples easier to discover and reuse.",
+        "id":  "m7_q322",
+        "correta_texto":  "Interactive asset documentation and console on Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to control who can see certain sensitive assets, such as internal finance APIs. How does Exchange help?",
+        "opcoes":  [
+                       "It doesn\u0027t help; everything is always public",
+                       "Allows you to configure visibility and asset access permissions",
+                       "API Only Manager does that",
+                       "Only logs control access"
+                   ],
+        "justificativa":  "Exchange supports asset visibility and access permissions, so teams can keep sensitive assets private or limited to specific audiences. That is important for internal APIs that should be discoverable only by authorized users, not exposed to everyone.",
+        "id":  "m7_q323",
+        "correta_texto":  "Allows you to configure visibility and asset access permissions",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A team launches a new version of an API, but wants to keep the previous one for some consumers. How does Exchange contribute here?",
+        "opcoes":  [
+                       "Does not support versions",
+                       "Allows asset versioning and documentation for multiple active versions",
+                       "Automatically removes old versions",
+                       "Shows only the latest version"
+                   ],
+        "justificativa":  "Exchange supports versioned assets and documentation, so multiple API versions can coexist while consumers migrate at their own pace. That is exactly what teams need when a new version is released but some clients still depend on the previous contract.",
+        "id":  "m7_q324",
+        "correta_texto":  "Allows asset versioning and documentation for multiple active versions",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines also wants to register templates and reference integration examples to accelerate future projects. How should these appear in Exchange?",
+        "opcoes":  [
+                       "Only APIs",
+                       "Templates and samples published as assets",
+                       "As logs",
+                       "The workers"
+                   ],
+        "justificativa":  "Templates and samples should be published as Exchange assets so future teams can discover and reuse them instead of starting from zero.",
+        "id":  "m7_q325",
+        "correta_texto":  "Templates and samples published as assets",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "An alternate states that “only MuleSoft public APIs can be placed in Exchange; not internal company APIs”. How would this be treated?",
+        "opcoes":  [
+                       "Correct.",
+                       "False; organisations may have Private exports with their own internal assets",
+                       "True only in CloudHub",
+                       "True only for RAML"
+                   ],
+        "justificativa":  "That statement is false. Exchange can store private internal assets as well as public-facing ones, which is why it is useful for enterprise reuse, governance, and internal discoverability.",
+        "id":  "m7_q326",
+        "correta_texto":  "False; organisations may have Private exports with their own internal assets",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A team wants to create a developer portal for a specific API, with branding, docs and access button. What combination of features supports this?",
+        "opcoes":  [
+                       "API Portal in Exchange + API Manager for Access Control",
+                       "Runtime Manager Only",
+                       "Just Anypoint Studio",
+                       "RPA Manager only"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. A team wants to create a developer portal for a specific API, with branding, docs and access button. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q327",
+        "correta_texto":  "API Portal in Exchange + API Manager for Access Control",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines notes that even with Exchange, teams still create duplicate integrations. What practice helps to change this behavior?",
+        "opcoes":  [
+                       "Ban the use of Exchange",
+                       "Make Exchange a mandatory part of the process: always search before building",
+                       "Use PDF documentation only",
+                       "Maintain only verbal communication"
+                   ],
+        "justificativa":  "Teams change behavior when reuse becomes part of the delivery process, not an optional afterthought. Making Exchange review mandatory before building helps reduce duplicate integrations and reinforces catalog-first thinking.",
+        "id":  "m7_q328",
+        "correta_texto":  "Make Exchange a mandatory part of the process: always search before building",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option suggests always writing new code in each project so teams do not depend on shared assets. Why does that contradict MuleSoft\u0027s vision?",
+        "opcoes":  [
+                       "Because new code is always slower",
+                       "Because MuleSoft values reuse, well-defined contracts and central catalogue rather than duplication",
+                       "Because Exchange does not support multiple consumers",
+                       "Because APIs cannot be replicated"
+                   ],
+        "justificativa":  "MuleSoft favors reuse, stable contracts, and a central catalog of shared assets. Rewriting the same capabilities in every project increases duplication and weakens governance.",
+        "id":  "m7_q329",
+        "correta_texto":  "Because MuleSoft values reuse, well-defined contracts and central catalogue rather than duplication",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to ensure that all projects use a unique “Customer” model in RAML. Which combination is more aligned?",
+        "opcoes":  [
+                       "Create the \u0027Customer\u0027 type in each individual API",
+                       "Create an API Fragment with a \u0027Customer\u0027 type and reference it from multiple APIs",
+                       "Keep it only in external documentation",
+                       "Store it only in the database"
+                   ],
+        "justificativa":  "If multiple APIs should share the same RAML model, the right approach is to create a reusable fragment and reference it where needed. That keeps the contract consistent across projects.",
+        "id":  "m7_q330",
+        "correta_texto":  "Create an API Fragment with a \u0027Customer\u0027 type and reference it from multiple APIs",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A question presents two Exchange-related options. If only option A follows the module\u0027s best practices, which answer should the candidate choose?",
+        "opcoes":  [
+                       "A",
+                       "B",
+                       "Both",
+                       "None"
+                   ],
+        "justificativa":  "Option A is correct because the module reinforces a reuse-first process: check Exchange, evaluate existing approved assets, and only then create something new. That keeps the catalog trustworthy and reduces duplicate work across teams.",
+        "id":  "m7_q331",
+        "correta_texto":  "A",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants new developers to quickly learn how to use an internal API without having to talk to the original team. Which Exchange feature helps?",
+        "opcoes":  [
+                       "Execution logs only",
+                       "Documentation automatically generated + examples + API Notebook",
+                       "Old emails only",
+                       "Binary code only"
+                   ],
+        "justificativa":  "Automatically generated documentation, examples, and API Notebook together create a strong self-service onboarding path for new developers consuming an internal API.",
+        "id":  "m7_q332",
+        "correta_texto":  "Documentation automatically generated + examples + API Notebook",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option suggests that RPA processes do not need to appear in Exchange because they are not APIs. How does the module contradict that?",
+        "opcoes":  [
+                       "RPA is not mentioned in the module",
+                       "RPA assets can be published in Exchange to promote visibility and reuse",
+                       "Exchange only accepts RAML",
+                       "RPA should use a separate catalog"
+                   ],
+        "justificativa":  "Exchange is not limited to APIs; it is a catalog for reusable assets more broadly. Publishing RPA assets there improves discoverability and reuse across teams.",
+        "id":  "m7_q333",
+        "correta_texto":  "RPA assets can be published in Exchange to promote visibility and reuse",
+        "refs":  [
+                     "https://docs.mulesoft.com/rpa-home/",
+                     "https://docs.mulesoft.com/rpa-manager/",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO plans to delete an old RAML fragment without checking dependencies. What risk does the evidence want you to recognize?",
+        "opcoes":  [
+                       "None; fragments are not used in production",
+                       "APIs that depend on this fragment can break, and so it is important to check “Dependencies” in Exchange",
+                       "Only logs will be affected",
+                       "Only RPA will be affected"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. NTO plans to delete an old RAML fragment without checking dependencies. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q334",
+        "correta_texto":  "APIs that depend on this fragment can break, and so it is important to check “Dependencies” in Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One question states that before creating a new API, the team must always check Exchange for existing assets. What concept does that reinforce?",
+        "opcoes":  [
+                       "Strong pairing",
+                       "Reuse and catalogue culture",
+                       "Focus only on code",
+                       "Default rejection"
+                   ],
+        "justificativa":  "That reinforces a reuse and catalog culture: teams should search the shared catalog before building something new. The point is to reuse approved assets whenever possible and avoid duplicate integrations by default.",
+        "id":  "m7_q335",
+        "correta_texto":  "Reuse and catalogue culture",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants to control which teams can publish new assets in Exchange and who can only consume. Where is this control set up?",
+        "opcoes":  [
+                       "API Manager only",
+                       "In organization permissions and roles in Anypoint Platform / Exchange",
+                       "Runtime Manager only",
+                       "Only in Flow Builder"
+                   ],
+        "justificativa":  "This control is configured through organization roles and permissions in Anypoint Platform and Exchange, where teams are granted publish or consume rights. The point is governance of asset ownership and visibility, not runtime policy management.",
+        "id":  "m7_q336",
+        "correta_texto":  "In organization permissions and roles in Anypoint Platform / Exchange",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option says: \u0027To save time, it is best to ignore Exchange and assume we always need to build something new.\u0027 How should this be treated?",
+        "opcoes":  [
+                       "Reasonable for fast-moving prototype teams",
+                       "Incorrect; the exam usually expects you to check for reusable assets first",
+                       "Correct if the scenario does not mention Exchange explicitly",
+                       "Preferred when teams want to avoid shared dependencies"
+                   ],
+        "justificativa":  "Ignoring Exchange goes against the reuse-first mindset of the module. The better answer is to check the catalog before building from scratch.",
+        "id":  "m7_q337",
+        "correta_texto":  "Incorrect; the exam usually expects you to check for reusable assets first",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "NTO wants to standardize security policies for all APIs in a domain. How can Exchange help indirectly?",
+        "opcoes":  [
+                       "Saving only logs",
+                       "Serving as a unique place where APIs and their contracts are documented and discovered, facilitating consistent policy application",
+                       "Applying policies directly",
+                       "CPU Monitoring"
+                   ],
+        "justificativa":  "A central catalog helps teams discover APIs and their contracts consistently, which supports more standardized policy application across a domain.",
+        "id":  "m7_q338",
+        "correta_texto":  "Serving as a unique place where APIs and their contracts are documented and discovered, facilitating consistent policy application",
+        "refs":  [
+                     "https://docs.mulesoft.com/mule-gateway/",
+                     "https://docs.mulesoft.com/mule-gateway/mule-gateway-autodiscovery-overview",
+                     "https://docs.mulesoft.com/mule-gateway/policies-included-rate-limiting-sla",
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "One option suggests that \u0027using Exchange is optional and does not bring clear benefits.\u0027 Based on the module, what response is more aligned?",
+        "opcoes":  [
+                       "Agreement; it\u0027s just a window",
+                       "Disagree; Exchange is a key piece for reuse, discovery, mock, dependencies and portals",
+                       "Depends on the type of API",
+                       "Only materials for public APIs"
+                   ],
+        "justificativa":  "That view is incorrect because Exchange is central to discovery, reuse, dependency visibility, mocks, and self-service portals. It is one of the main enablers of MuleSoft governance.",
+        "id":  "m7_q339",
+        "correta_texto":  "Disagree; Exchange is a key piece for reuse, discovery, mock, dependencies and portals",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "hard"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "AnyAirlines wants to share, with front-end teams, examples of API calls that will be used in Flutter and React. What\u0027s the best location?",
+        "opcoes":  [
+                       "Anypoint Exchange in the documentation and examples of the matching asset",
+                       "Single emails",
+                       "Private Chat",
+                       "Code comments"
+                   ],
+        "justificativa":  "Anypoint Exchange is the catalog for discovering, publishing, and reusing assets (APIs, templates, connectors, examples) across teams. AnyAirlines wants to share, with front-end teams, examples of API calls that will be used in Flutter and React. Using Exchange supports standardization and reduces duplicated work.",
+        "id":  "m7_q340",
+        "correta_texto":  "Anypoint Exchange in the documentation and examples of the matching asset",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "A team finds an API already available in Exchange but creates another identical one anyway. What does that indicate from the module\u0027s point of view?",
+        "opcoes":  [
+                       "Mature architecture",
+                       "Lack of catalogue culture and reuse",
+                       "Correct Use of Exchange",
+                       "Excess of governance"
+                   ],
+        "justificativa":  "Creating a duplicate asset even though a reusable API already exists shows poor catalog usage and weak reuse culture. The module expects teams to look in Exchange first.",
+        "id":  "m7_q341",
+        "correta_texto":  "Lack of catalogue culture and reuse",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "easy"
+    },
+    {
+        "modulo":  7,
+        "pergunta":  "The final alternate states: “Exchange is only to show APIs to external teams, it has no value for internal teams”. How could the candidate respond?",
+        "opcoes":  [
+                       "Agree",
+                       "Disagree; internal teams benefit most from catalogs, mocks, templates and fragments",
+                       "Depends on the size of the company",
+                       "True only in small organizations"
+                   ],
+        "justificativa":  "The correct option is the one that publishes and catalogs reusable integration assets for discovery and controlled reuse across teams. The final alternate states: “Exchange is only to show APIs to external teams, it has no value for internal teams”.",
+        "id":  "m7_q342",
+        "correta_texto":  "Disagree; internal teams benefit most from catalogs, mocks, templates and fragments",
+        "refs":  [
+                     "https://docs.mulesoft.com/exchange/",
+                     "https://docs.mulesoft.com/exchange/about-sharing-assets",
+                     "https://docs.mulesoft.com/exchange/workflow-sharing-assets"
+                 ],
+        "difficulty":  "medium"
+    }
+]

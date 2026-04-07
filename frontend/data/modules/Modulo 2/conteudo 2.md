@@ -1,12 +1,4 @@
-# Modulo 2: MuleSoft RPA
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 2.md` (questoes em ingles).
-
----
-# 📚 Módulo 2
-
-# **🤖 Módulo 2: MuleSoft RPA (Conteúdo Extendido)**
+# **🤖 Módulo 2: MuleSoft RPA **
 
 **Peso no Exame:** 17%
 

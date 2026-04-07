@@ -1,93 +1,93 @@
----
-# 📝 Prova 1 – Módulo 5: Fundamentos de Anypoint Platform & API‑Led
----
+﻿# Prova 1 - Modulo 5
 
-1. AnyAirlines wants to modernizar integrações ponto‑a‑ponto e adotar uma arquitetura mais governada. Qual abordagem é mais alinhada à MuleSoft?
-   A. Adicionar mais integrações diretas entre sistemas  
-   B. Implementar API‑Led Connectivity com camadas System, Process e Experience  
-   C. Usar apenas RPA e Composer  
-   D. Construir um monólito gigante de integração  
+Use este arquivo como treino rapido do modulo.
 
-2. Northern Trail Outfitters (NTO) precisa acessar dados do SAP de maneira reutilizável para vários projetos. Que tipo de API deve ser criada primeiro?
-   A. Experience API  
-   B. System API para expor dados do SAP  
-   C. Process API  
-   D. Apenas um job em lote  
+1. AnyAirlines wants to modernize point-to-point integrations and adopt a more governed architecture. Which approach is more aligned with MuleSoft?
+   A) Add more direct system integrations
+   B) Implement API-led connectivity with System, Process, and Experience layers
+   C) Use only RPA and Composer
+   D) Build a giant integration monolith
 
-3. Uma empresa precisa combinar dados de Cliente (CRM) e Estoque (ERP) em uma lógica de “Criar Pedido”. Em qual camada isso normalmente vive?
-   A. System API  
-   B. Process API  
-   C. Experience API  
-   D. Apenas no banco de dados  
+2. Northern Trail Outfitters (NTO) needs to access SAP data in a reusable way for multiple projects. What type of API should be created first?
+   A) Experience API
+   B) System API to expose SAP data
+   C) Process API
+   D) Only one batch job
 
-4. Um aplicativo móvel precisa de um payload específico e simplificado para exibir pedidos a um usuário final. Qual camada deve expor essa interface?
-   A. System API  
-   B. Process API  
-   C. Experience API  
-   D. API interna do banco  
+3. A company needs to combine customer data (CRM) and inventory data (ERP) in a 'Create Order' process. Which layer does that normally belong to?
+   A) System API
+   B) Process API
+   C) Experience API
+   D) Only in the database
 
-5. Em um cenário de prova, uma alternativa sugere colocar toda a transformação de dados diretamente em System APIs. Por que isso é geralmente incorreto?
-   A. System APIs não podem transformar dados  
-   B. Transformações e orquestrações de negócio pertencem principalmente a Process APIs  
-   C. Experience APIs não podem consumir System APIs  
-   D. Só RPA deve transformar dados  
+4. A mobile app needs a specific and simplified payload to display requests to an end-user. Which layer should expose this interface?
+   A) System API
+   B) Process API
+   C) Experience API
+   D) Internal Bank API
 
-6. O exame apresenta um ciclo: Design → Simulate → Implement → Deploy → Manage. Qual plataforma isso descreve?
-   A. Composer  
-   B. Anypoint Platform (API Designer, Mocking Service, Studio, Runtime Manager, API Manager)  
-   C. Salesforce Setup  
-   D. Sistema operacional  
+5. In a test scenario, one option suggests placing all data transformation directly into System APIs. Why is this usually incorrect?
+   A) System APIs cannot transform data
+   B) Business transformations and orchestration mainly belong in Process APIs
+   C) Experience APIs cannot consume System APIs
+   D) Only RPA should transform data
 
-7. NTO quer que times de Flow e RPA comecem a trabalhar antes da implementação real das APIs. Qual recurso é mais relevante?
-   A. Mocking Service do Anypoint Exchange  
-   B. Apenas logs em produção  
-   C. Functional Monitoring  
-   D. Visualizer  
+6. The test presents a cycle: Design → Simulate → Implementation → Deploy → Manage. What platform does that describe?
+   A) Compose
+   B) Anypoint Platform (API Designer, Mocking Service, Studio, Runtime Manager, API Manager)
+   C) Salesforce Setup
+   D) Operating system
 
-8. Uma pergunta de prova fala sobre "desbloquear dados de sistemas centrais e isolar a complexidade do destino". Qual camada está sendo descrita?
-   A. Experience API  
-   B. Process API  
-   C. System API  
-   D. Exchange Asset  
+7. NTO wants Flow and RPA teams to start working before current API implementation. Which resource is more relevant?
+   A) Mocking Service of Anypoint Exchange
+   B) Only logs in production
+   C) Functional Monitoring
+   D) Viewer
 
-9. Uma empresa publica a especificação de API no Exchange para que Salesforce Flow possa consumi‑la via External Services. Que ativo está sendo aproveitado?
-   A. API Fragment  
-   B. API Specification (RAML/OAS)  
-   C. Template de projeto  
-   D. RPA Asset  
+8. One exam question talks about unlocking data from central systems and isolating destination complexity. Which layer is being described?
+   A) Experience API
+   B) Process API
+   C) System API
+   D) Exchange Asset
 
-10. Em um cenário, múltiplas equipes querem consumir a mesma API de clientes para diferentes casos de uso. Qual abordagem é mais eficiente?
-    A. Criar uma nova API idêntica para cada equipe  
-    B. Expor uma System API reutilizável e, quando necessário, Experience APIs específicas  
-    C. Usar apenas integrações ponto‑a‑ponto  
-    D. Restringir o uso da API a um único time  
+9. A company publishes an API specification in Exchange so Salesforce Flow can consume it via External Services. What asset is being published?
+   A) API Fragment
+   B) API Specification (RAML/OAS)
+   C) Project template
+   D) RPA Asset
 
-11. AnyAirlines precisa de controle de acesso, rate limiting e monitoramento central de APIs. Qual componente é responsável principalmente por isso?
-    A. Anypoint Studio  
-    B. Runtime Manager  
-    C. API Manager  
-    D. RPA Manager  
+10. In one scenario, multiple teams want to consume the same API of customers for different use cases. Which approach is more efficient?
+   A) Create an identical new API for each team
+   B) Expose a reusable System API and, when necessary, Experience specific APIs
+   C) Use only point-to-point integrations
+   D) Restrict API uses to a single team
 
-12. Uma alternativa diz que “Experience APIs devem acessar diretamente bancos de dados, sem System APIs, para reduzir hops”. Como isso deve ser avaliado?
-    A. Correto; isso reduz latência  
-    B. Errado; viola separação de responsabilidades da API‑Led  
-    C. Aceitável apenas para RPA  
-    D. Recomendado pela MuleSoft  
+11. AnyAirlines needs access control, rate limiting and central API monitoring. Which component is primarily responsible for this?
+   A) Anypoint Studio
+   B) Runtime Manager
+   C) API Manager
+   D) RPA Manager
 
-13. Um time deseja versionar contratos de APIs, obter feedback e simular chamadas antes de implementar código. Que ferramenta é usada na fase de Design?
-    A. Anypoint Studio  
-    B. API Designer  
-    C. Runtime Manager  
-    D. Visualizer  
+12. One option says that 'Experience APIs must directly access databases without System APIs to reduce hops.' How should this be evaluated?
+   A) Correct; this reduces latency
+   B) Wrong; this violates API-led separation of responsibilities
+   C) Acceptable only for RPA
+   D) Recommended by MuleSoft
 
-14. NTO precisa escolher a camada certa para expor dados a um aplicativo de atendimento ao cliente em Salesforce, sem expor detalhes internos de sistemas. Qual é a melhor opção?
-    A. System API  
-    B. Process API  
-    C. Experience API específica para Salesforce  
-    D. Conexão direta ao banco  
+13. A team wants to edit API contracts, get feedback and simulate calls before implementing code. What tool is used in the Design phase?
+   A) Anypoint Studio
+   B) API Designer
+   C) Runtime Manager
+   D) Viewer
 
-15. Uma alternativa sugere que “API‑Led Connectivity é apenas um nome para qualquer conjunto de APIs sem regras claras”. Qual é a leitura correta?
-    A. Verdadeiro  
-    B. Falso; API‑Led define claramente papéis de System, Process e Experience APIs com foco em reutilização e governança  
-    C. Depende do projeto  
-    D. Só se aplica a on‑premises  
+14. NTO needs to choose the right layer to expose data to a customer service application in Salesforce without exposing internal system details. What's the best option?
+   A) System API
+   B) Process API
+   C) Salesforce-specific Experience API
+   D) Direct connection to the database
+
+15. One option says that 'API-led Connectivity is just a name for any set of APIs without clear rules.' What is the correct reading?
+   A) True
+   B) False; API-Led clearly defines System, Process, and Experience API roles focusing on reuse and governance
+   C) Depends on the project
+   D) Only applications to on-premises

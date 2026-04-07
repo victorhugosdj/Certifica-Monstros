@@ -1,12 +1,4 @@
-# Modulo 6: Anypoint Monitoring & API Manager
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 6.md` (questoes em ingles).
-
----
-# 📚 Módulo 6
-
-# **📊 Módulo 6: Anypoint Monitoring & API Manager**
+# **📊 Módulo 6: Anypoint Monitoring & API Manager **
 
 **Peso no Exame:** 7%
 

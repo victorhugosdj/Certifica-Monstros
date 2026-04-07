@@ -1,93 +1,93 @@
----
-# 📝 Prova 1 – Módulo 4: Fundamentos de Salesforce Flow
----
+﻿# Prova 1 - Modulo 4
 
-1. AnyAirlines wants a guided screen for agents to capture claim details in Salesforce and then send the data to an API. Which tipo de Flow é mais apropriado?
-   A. Autolaunched Flow  
-   B. Screen Flow  
-   C. Schedule‑Triggered Flow  
-   D. Record‑Triggered Flow  
+Use este arquivo como treino rapido do modulo.
 
-2. Northern Trail Outfitters (NTO) precisa que, ao criar um novo Contrato, uma automação execute lógica imediatamente sem interface de usuário. Qual tipo de Flow deve ser usado?
-   A. Screen Flow  
-   B. Record‑Triggered Flow  
-   C. Flow Orchestration  
-   D. Scheduled Flow externo  
+1. AnyAirlines wants a guided screen for agents to capture claim details in Salesforce and then send the data to an API. Which type of Flow is more appropriate?
+   A) Autolaunched Flow
+   B) Screen Flow
+   C) Schedule-Triggered Flow
+   D) Record-Triggered Flow
 
-3. Um cenário descreve um fluxo complexo de backoffice que deve ser chamado tanto por Apex quanto por uma Orchestration. Qual tipo de Flow é mais adequado como “bloco reutilizável”?
-   A. Screen Flow  
-   B. Autolaunched Flow  
-   C. Record‑Triggered Flow  
-   D. Workflow Rule  
+2. Northern Trail Outfitters (NTO) requires that, when a new Agreement is created, automation runs immediately without a user interface. Which Flow type should be used?
+   A) Screen Flow
+   B) Record-Triggered Flow
+   C) Flow Orchestration
+   D) Scheduled External Flow
 
-4. AnyAirlines quer que, sempre que uma Opportunity for marcada como “Closed Won”, um processo RPA seja chamado via External Services. Onde essa chamada deve ficar?
-   A. Em um Screen Flow independente  
-   B. Em um Record‑Triggered Flow na Opportunity  
-   C. Em um Flow Orchestration sem gatilho  
-   D. Em um Apex Trigger apenas  
+3. A scenario describes a complex back-office flow that should be called both by Apex and by an Orchestration. Which Flow type is best suited as a reusable building block?
+   A) Screen Flow
+   B) Autolaunched Flow
+   C) Record-Triggered Flow
+   D) Workflow Rule
 
-5. NTO quer garantir que o mesmo Record‑Triggered Flow seja reutilizável entre ambientes (Sandbox → Produção). O que representa essa definição de fluxo?
-   A. Flow Metadata migrada por change sets ou DevOps  
-   B. Logs do Salesforce  
-   C. Documentação em PDF  
-   D. Código Java externo  
+4. AnyAirlines wants that whenever an Opportunity is marked “Close Won”, a RPA process be called via External Services. Where should this call be?
+   A) In an independent Screen Flow
+   B) In a Record-Triggered Flow in Opportunity
+   C) In a Flow Orchestration without trigger
+   D) In an Apex Trigger only
 
-6. Um candidato sugere usar apenas Apex para todas as automações, ignorando Flows. Por que isso não está alinhado com o posicionamento atual da Salesforce?
-   A. Apex está obsoleto  
-   B. Salesforce incentiva o uso de Flow como motor declarativo principal, reservando Apex para lógica muito complexa  
-   C. Flow não suporta integrações  
-   D. Flows não podem ser testados  
+5. NTO wants to ensure that the same Record-Triggered Flow is reusable between environments (Sandbox → Production). What does this definition of flow represent?
+   A) Flow Metadata migrated by change sets or DevOps
+   B) Salesforce Logs
+   C) PDF Documentation
+   D) External Java code
 
-7. Um Screen Flow coleta dados do cliente e, depois, precisa chamar uma API da MuleSoft para validar limite de crédito. Qual recurso do Flow deve ser usado para consumir a especificação dessa API de forma declarativa?
-   A. Platform Events  
-   B. External Services  
-   C. Inbound Email Services  
-   D. Apex REST Callout escrito manualmente  
+6. A candidate suggests using only Apex for all automations, ignoring Flows. Why isn't this aligned with Salesforce's current position?
+   A) Apex is obsolete.
+   B) Salesforce encourages the use of Flow as the main declarative engine, reserving Apex for very complex logic
+   C) Flow does not support integrations
+   D) Flows cannot be tested
 
-8. Um cenário descreve um Flow que precisa chamar um endpoint HTTP simples sem possuir um arquivo OpenAPI ou RAML. Qual recurso pode ser usado?
-   A. HTTP Callout configurado diretamente no Flow  
-   B. Apenas Apex HTTP classes  
-   C. Somente Workflow Rules  
-   D. Visualforce Pages  
+7. A Screen Flow collects customer data and then needs to call a MuleSoft API to validate credit limit. Which Flow feature should be used to declaratively use the specification of this API?
+   A) Platform Events
+   B) External Services
+   C) Inbound Email Services
+   D) Apex REST Callout written manually
 
-9. AnyAirlines quer usar Einstein Bot para coletar informações de um passageiro e, em seguida, chamar um processo de backoffice via Flow. Qual relacionamento é mais correto?
-   A. Bot chama Flow, que chama APIs/RPA  
-   B. Flow chama Bot, que chama APIs  
-   C. RPA chama Bot, que chama Flow  
-   D. Composer chama Bot diretamente  
+8. A scenario describes a Flow that needs to call a simple HTTP endpoint without having an OpenAPI or RAML file. What feature can be used?
+   A) HTTP Callout configured directly in Flow
+   B) Apex HTTP classes only
+   C) Workflow Rules Only
+   D) Visualforce Pages
 
-10. NTO deseja que parte da lógica de cálculo seja reutilizada em vários Flows. Qual recurso do Flow ajuda nessa reutilização?
-    A. Subflows  
-    B. Process Builder  
-    C. Workflow Rules  
-    D. Approval Processes  
+9. AnyAirlines wants to use Einstein Bot to collect information from a passenger and then call a backoffice process via Flow. Which relationship is more correct?
+   A) Bot calls Flow, calling APIs/RPA
+   B) Flow calls Bot, calling APIs
+   C) RPA calls Bot, who calls Flow
+   D) Composer calls Bot directly
 
-11. Um cenário de prova afirma que um Flow deveria processar vários registros de uma vez, mas está tratando apenas um por vez e atingindo governor limits. Qual princípio deve ser lembrado?
-    A. Bulkification do Flow  
-    B. Somente uso de Apex  
-    C. Desativar limites da plataforma  
-    D. Usar RPA no lugar do Flow  
+10. NTO wants part of the calculation logic to be reused in several Flows. What resource does Flow help with this reuse?
+   A) Subflows
+   B) Process Builder
+   C) Workflow Rules
+   D) Approval Processes
 
-12. Uma equipe quer que um Flow rode em resposta a um evento externo publicado pela MuleSoft. Qual recurso Salesforce está mais alinhado a esse caso?
-    A. Email Services  
-    B. Platform Events como gatilho  
-    C. Custom Metadata Types  
-    D. Static Resources  
+11. A scenario states that a Flow should process several records at once, but it is handling only one at a time and hitting governor limits. Which principle should be remembered?
+   A) Flow Bulkification
+   B) Only use of Apex
+   C) Disable platform boundaries
+   D) Use RPA instead of Flow
 
-13. Um candidato sugere usar Screen Flow para toda lógica, inclusive cenários sem interface. Por que isso pode ser uma má escolha?
-    A. Screen Flow não suporta apex actions  
-    B. Autolaunched Flow é mais apropriado para lógica sem UI, facilitando reutilização e orquestração  
-    C. Screen Flow não suporta subflows  
-    D. Screen Flow não pode usar External Services  
+12. A team wants a Flow to run in response to an external event published by MuleSoft. Which Salesforce resource is most appropriate for this case?
+   A) Email Services
+   B) Platform Events as a trigger
+   C) Custom Metadata Types
+   D) Static Resources
 
-14. Um Record‑Triggered Flow faz atualizações em massa, mas está falhando por limites de DML. Qual prática está mais alinhada a boas práticas?
-    A. Fazer DML dentro de loops sem agrupar registros  
-    B. Usar padrões de bulkification e evitar DML em loops  
-    C. Sempre reduzir o número de registros processados  
-    D. Mover tudo para RPA  
+13. A candidate suggests using Screen Flow for all logic, including scenarios without user interaction. Why can this be a bad choice?
+   A) Screen Flow does not support integrations
+   B) Autolaunched Flow is more suitable for logic without UI, facilitating reuse and orchestration
+   C) Screen Flow does not support subflows
+   D) Screen Flow cannot use External Services
 
-15. Um item de prova mostra um cenário simples de automação de CRM com lógica declarativa, sem necessidade de código complexo. Qual ferramenta a prova tende a preferir?
-    A. Apex triggers apenas  
-    B. Salesforce Flow  
-    C. MuleSoft RPA  
-    D. Custom Java Services  
+14. A Record-Triggered Flow performs mass updates but is failing because of DML limits. Which practice is more aligned with good design?
+   A) DML within loops without grouping records
+   B) Use bulkification patterns and avoid DML in loops
+   C) Always reduce the number of processed records
+   D) Move everything to RPA
+
+15. An exam scenario shows simple CRM automation with declarative logic and no need for complex code. Which tool is typically preferred?
+   A) Apex triggers only
+   B) Salesforce Flow
+   C) MuleSoft RPA
+   D) Custom Java Services

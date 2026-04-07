@@ -1,96 +1,93 @@
----
-# 📝 Prova 3 – Módulo 4: Arquitetura, API‑led e Pegadinhas com Flow
----
+﻿# Prova 3 - Modulo 4
 
-1. AnyAirlines quer que um Screen Flow chame uma API MuleSoft que já está publicada como Experience API. Qual é a abordagem mais alinhada com API‑led?
-   A. Flow chama diretamente o banco de dados, ignorando a API  
-   B. Flow consome a Experience API via External Services  
-   C. Flow usa RPA para consultar o sistema  
-   D. Flow usa apenas campos calculados, sem integração  
+Use este arquivo como treino rapido do modulo.
 
-2. NTO já possui uma System API para ERP e uma Process API para regras de crédito. Um candidato sugere que o Screen Flow chame diretamente a System API. Qual é a opção mais alinhada?
-   A. Aceitar, pois Flow deve sempre falar com System APIs  
-   B. Preferir que o Flow consuma a Process/Experience API, reutilizando a orquestração existente  
-   C. Ignorar APIs e usar Composer  
-   D. Usar sempre RPA  
+1. AnyAirlines wants a Screen Flow to call a MuleSoft API that is already published as an Experience API. What is the most API-led-aligned approach?
+   A) Flow directly calls the database, ignoring the API
+   B) Flow consumes the Experience API via External Services
+   C) Flow uses RPA to check the system
+   D) Flow uses only calculated fields without integration
 
-3. Um item de prova oferece duas alternativas:
-   - A) Criar nova System API específica para um projeto, mesmo já existindo outra que expõe os mesmos dados  
-   - B) Reutilizar a System API existente e, se necessário, criar uma Experience API  
-   Qual delas está mais alinhada com reutilização?
-   A. A  
-   B. B  
-   C. Ambas  
-   D. Nenhuma  
+2. NTO already has a System API for ERP and a Process API for credit rules. One candidate suggests that Screen Flow should call the System API directly. What is the most aligned option?
+   A) Have Flow call the System API directly and rebuild the credit rules in Flow
+   B) Have Flow consume a Process or Experience API, reusing the existing orchestration
+   C) Use Composer as the main orchestration layer even though the APIs already exist
+   D) Use RPA to query ERP screens for all credit validation logic
 
-4. Um Flow de entrada (Screen Flow) coleta dados para sinistro e aciona um RPA que preenche um sistema legado. O que o exame provavelmente quer reforçar?
-   A. Flow como camada de interface humana em hiperautomação  
-   B. RPA como interface principal  
-   C. APIs substituindo Flow  
-   D. Composer substituindo Flow  
+3. A Flow integration question presents two alternatives. If only option B preserves reuse and separation of concerns, which answer should the candidate choose?
+   A) A
+   B) B
+   C) Both
+   D) None
 
-5. Uma alternativa sugere colocar toda a lógica de transformação de dados no Screen Flow, mesmo já existindo uma Process API para isso. Por que isso costuma ser uma pegadinha?
-   A. Flows não podem transformar dados  
-   B. API‑led recomenda centralizar lógica de negócio na Process API, não na UI  
-   C. Process APIs não suportam múltiplos consumidores  
-   D. Examens não cobram Process APIs  
+4. A Screen Flow collects claim data and triggers an RPA bot that updates a legacy system. What does the exam probably want to reinforce?
+   A) Flow as the human interaction layer in hyperautomation
+   B) RPA as the main user interface
+   C) Replacing APIs with Flow
+   D) Composer replacing Flow
 
-6. Um cenário descreve que, quando uma venda é fechada, o Flow deve: 1) Disparar RPA para sistema legado de logística, 2) Chamar API de SMS, 3) Registrar logs. Qual dos componentes deveria coordenar esse fluxo?
-   A. Apenas RPA  
-   B. Record‑Triggered Flow com chamadas às integrações  
-   C. Apenas Composer  
-   D. Apenas Apex  
+5. One option suggests putting all data transformation logic into Screen Flow even though a Process API already exists for that purpose. Why is this usually a bad choice?
+   A) Flows cannot transform data
+   B) API-led best practices place reusable business logic in the Process API, not in the UI layer
+   C) Process APIs do not support multiple consumers
+   D) Process APIs are not covered in the exam
 
-7. Em uma questão, uma opção propõe usar Flow Orchestration para um processo extremamente simples de uma etapa, que poderia ser resolvido com um único Record‑Triggered Flow. Que tipo de pegadinha é essa?
-   A. Alternativa tecnicamente impossível  
-   B. Alternativa que adiciona complexidade desnecessária  
-   C. Alternativa que ignora reutilização  
-   D. Alternativa que viola limites de DML  
+6. One scenario says that when a sale is closed, Flow must 1) trigger RPA for a legacy logistics system, 2) call an SMS API, and 3) register logs. Which component should coordinate this automation?
+   A) Let the RPA bot orchestrate the SMS, logging, and legacy updates
+   B) Record-Triggered Flow with integration calls
+   C) Use Composer as the main coordinator by polling Salesforce for closed sales
+   D) Implement the orchestration entirely in Apex triggers
 
-8. Uma empresa planeja fazer um fluxo que, ao atualizar um registro, chama vários subflows e APIs em série, correndo risco de chegar em limites. Qual abordagem é mais madura?
-   A. Ignorar limites e confiar em retries  
-   B. Repensar a arquitetura usando Process APIs, bulkification e, se necessário, Orchestration  
-   C. Mover tudo para RPA  
-   D. Desativar validações no Salesforce  
+7. In one question, an option proposes using Flow Orchestration for an extremely simple one-step process that a single Record-Triggered Flow could handle. What kind of mistake is this?
+   A) A technically impossible alternative
+   B) An alternative that adds unnecessary complexity
+   C) An alternative that ignores reuse
+   D) An alternative that violates DML limits
 
-9. NTO quer garantir que decisões complexas de roteamento (por exemplo, para qual fila enviar um caso) fiquem configuráveis e reutilizáveis. O que a prova tende a preferir?
-   A. Lógica espalhada em vários Apex Triggers  
-   B. Lógica centralizada em Flows reutilizáveis ou subflows  
-   C. Lógica em scripts locais  
-   D. Lógica somente na API externa  
+8. A company plans a Flow that, on record update, calls several subflows and multiple serial APIs, creating a risk of hitting limits. Which approach is more mature?
+   A) Keep the design and add more retries inside the same record-triggered Flow
+   B) Rethink the architecture using Process APIs, bulkification, and, if necessary, Orchestration
+   C) Shift the serial calls to RPA while keeping the orchestration unchanged
+   D) Turn off validations to shorten execution time
 
-10. Uma alternativa diz: “Para garantir performance, conecte o Flow diretamente ao banco de dados, evitando APIs e Exchange.” Por que isso é incorreto?
-    A. Salesforce não consegue acessar bancos de dados  
-    B. Isso viola API‑led Connectivity, governança e reutilização de ativos  
-    C. APIs não suportam governança  
-    D. Exchange é apenas opcional para RPA  
+9. NTO wants routing decisions such as which queue receives a case to remain configurable and reusable. What does the exam tend to prefer?
+   A) Logic spread across several Apex triggers
+   B) Centralized reusable Flow logic or subflows
+   C) Logic in local scripts
+   D) Logic only in the external API
 
-11. Um cenário mostra: Flow → chama API sem contrato → ninguém sabe quem consome a API. Qual melhoria está mais alinhada à estratégia da MuleSoft?
-    A. Deixar como está  
-    B. Publicar a especificação no Exchange, usar External Services e aplicar políticas no API Manager  
-    C. Trocar API por consultas diretas em banco  
-    D. Migrar toda a lógica para RPA  
+10. One option says: 'To ensure performance, connect Flow directly to the database, avoiding APIs and Exchange.' Why is that incorrect?
+   A) Salesforce cannot access databases
+   B) This breaks API-led connectivity, governance, and asset reuse
+   C) It does not support governed APIs
+   D) Exchange is optional only for RPA
 
-12. Uma questão descreve um time criando vários Flows que fazem chamadas redundantes para diferentes APIs com lógica duplicada. Qual resposta mais alinhada à visão de C4E?
-    A. Permitir duplicação para velocidade  
-    B. Criar Process/Experience APIs reutilizáveis e documentá‑las no Exchange para uso pelos Flows  
-    C. Descontinuar o uso de Flow  
-    D. Criar um Flow separado para cada time sem padrão  
+11. One scenario shows: Flow -> API without a contract -> nobody knows who consumes the API. What improvement is more aligned with the MuleSoft strategy?
+   A) Leave it as it is
+   B) Publish the specification in Exchange, use External Services, and apply policies in API Manager
+   C) Replace the API with direct database queries
+   D) Migrate all logic to RPA
 
-13. Uma opção sugere que, quando uma API falha, é melhor deixar o Flow quebrar silenciosamente para o usuário não perceber. Como isso deve ser avaliado?
-    A. Correta, porque melhora UX  
-    B. Errada; erros devem ser tratados via Fault Paths e feedback adequado  
-    C. Neutra  
-    D. Só correta em produção  
+12. One question describes a team creating multiple Flows that make redundant calls to different APIs with duplicate logic. What response is more aligned with C4E vision?
+   A) Allow duplication for speed
+   B) Create reusable Process and Experience APIs and document them in Exchange for Flow consumption
+   C) Discontinue the use of Flow
+   D) Create a separate Flow for each team without standards
 
-14. Em um cenário típico de hiperautomação, qual papel do Salesforce Flow em relação a RPA, Composer e APIs?
-    A. Ser o motor de UI e gatilho de eventos, consumindo APIs/RPA/Composer  
-    B. Substituir todos os outros componentes  
-    C. Apenas executar batchs noturnos  
-    D. Atuar apenas como ferramenta de teste  
+13. One option suggests that when an API fails, it is best to let Flow break silently so the user does not notice. How would this be evaluated?
+   A) Acceptable if the user sees success while support is notified later
+   B) Wrong; error should be handled via Fault Paths and appropriate feedback
+   C) Acceptable only when the failing API is not business-critical
+   D) Correct when the error comes from an external system
 
-15. Uma alternativa de prova diz: “Construa um novo Flow complexo que duplica o comportamento de uma Experience API já existente, para não depender da equipe de integração.” Por que essa resposta é provavelmente errada?
-    A. Flows não podem consumir APIs  
-    B. Ela ignora reutilização de APIs existentes e aumenta a dívida técnica  
-    C. Experience APIs não podem ser chamadas por Flow  
-    D. Não há impacto em arquitetura  
+14. In a typical scenario of hyperautomation, what role does Salesforce Flow play in relation to RPA, Composer and APIs?
+   A) Act as the UI layer and event trigger, consuming APIs, RPA, and Composer
+   B) Replace all other components
+   C) Just run nightly jobs
+   D) Act only as a test tool
+
+15. One option says: 'Build a new complex Flow that duplicates the behavior of an existing Experience API so the team does not depend on Integration.' Why is that probably wrong?
+   A) Flows cannot consume APIs
+   B) It ignores reuse of existing APIs and increases technical debt
+   C) Experience APIs cannot be called by Flow
+   D) It has no meaningful architectural impact

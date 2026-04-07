@@ -1,93 +1,93 @@
----
-# 📝 Prova 2 – Módulo 6: Performance, Gargalos e Troubleshooting
----
+﻿# Prova 2 - Modulo 6
 
-1. AnyAirlines nota que o tempo de resposta de uma API aumentou muito, mas o uso de CPU dos workers está baixo. Qual conclusão é mais provável?
-   A. Problema na infraestrutura da API  
-   B. Problema no sistema de destino (ex: banco de dados lento)  
-   C. Falha no API Manager  
-   D. Falha de rede entre CloudHub e internet  
+Use este arquivo como treino rapido do modulo.
 
-2. Northern Trail Outfitters (NTO) vê CPU constantemente em 100% para uma API crítica. Qual ação está mais alinhada?
-   A. Reduzir o número de requisições aceitas  
-   B. Aumentar vCores ou número de workers (escala vertical/horizontal)  
-   C. Desativar logs  
-   D. Ignorar, se não há erros 500  
+1. AnyAirlines notices that the response time of an API has greatly increased, but worker CPU usage is low. Which conclusion is more likely?
+   A) Problem with API infrastructure
+   B) Destination system problem (e.g. slow database)
+   C) API Manager Failed
+   D) Network failure between CloudHub and internet
 
-3. Um fluxo de hiperautomação começa no Salesforce Flow, chama uma API MuleSoft, que por sua vez chama um sistema legado. O Flow recebe 500. Onde o time deve olhar primeiro?
-   A. Logs do Flow apenas  
-   B. Log Search no Anypoint Monitoring para entender o erro no nível da API  
-   C. Logs do usuário final apenas  
-   D. Configurações DNS  
+2. Northern Trail Outfitters (NTO) constantly sees CPU at 100% for a critical API. Which action is more aligned?
+   A) Throttle all consumers first, even if the demand is legitimate
+   B) Increase vCores or the number of workers (vertical/horizontal scaling)
+   C) Reduce logging detail to free runtime resources
+   D) Wait until users report errors before scaling
 
-4. Em um cenário, RPA e Composer consomem a mesma API de estoque. De repente, o sistema legado começa a travar. Qual combinação é mais adequada?
-   A. Escalar apenas RPA  
-   B. Aplicar Rate Limiting/SLA Tiers e, se necessário, ajustar capacidade do backend  
-   C. Desativar monitoramento  
-   D. Permitir tráfego irrestrito  
+3. A hyperautomation stream starts in Salesforce Flow, calls for a MuleSoft API, which in turn calls for a legacy system. Flow gets 500. Where would the team look first?
+   A) Flow Logs Only
+   B) Log Search in Anypoint Monitoring to understand error at API level
+   C) End user logs only
+   D) DNS Settings
 
-5. NTO quer diferenciar problemas de infraestrutura (CPU/memória) de problemas de aplicação (erros de negócio). Qual conjunto de visões ajuda?
-   A. Apenas logs locais  
-   B. Dashboards de infra + métricas de aplicação no Anypoint Monitoring  
-   C. Somente gráficos de CPU  
-   D. Somente contagem de requisições  
+4. In one scenario, RPA and Composer consume the same stock API. Suddenly, the legacy system begins to stop. Which combination is more appropriate?
+   A) Scale only RPA
+   B) Apply Rate Limiting/SLA Tiers and, if necessary, adjust backend capacity
+   C) Disable monitoring
+   D) Allow unrestricted traffic
 
-6. Um item de prova mostra um gráfico em que a taxa de erro aumenta junto com a latência, enquanto CPU se mantém baixa. O que isso sugere?
-   A. Gargalo de infraestrutura da API  
-   B. Gargalo no sistema de destino ou dependência externa  
-   C. Erro no RPA  
-   D. Problema de DNS  
+5. NTO wants to differentiate infrastructure problems (CPU/memory) from application problems. What set of views help?
+   A) Local logs only
+   B) Infra + Application metric Dashboards in Anypoint Monitoring
+   C) CPU graphics only
+   D) Requests only count
 
-7. Uma empresa quer detectar proativamente se uma API crítica parou de responder como esperado para um cenário específico, antes que usuários reclamem. Qual recurso usar?
-   A. Functional Monitoring com testes agendados  
-   B. Apenas Console de Logs  
-   C. Apenas alertas de CPU alta  
-   D. Apenas testes manuais ocasionais  
+6. A graph shows the error rate increasing along with latency while CPU remains low. What does that suggest?
+   A) API infrastructure bottleneck
+   B) Bottleneck in the destination system or an external dependency
+   C) RPA error
+   D) DNS problem
 
-8. AnyAirlines observa picos de tráfego gerados por um Flow mal configurado, causando falhas em lote. Qual resposta mais madura?
-   A. Desativar o Flow sem análise  
-   B. Ajustar design do Flow e, em paralelo, configurar Rate Limiting e alertas  
-   C. Duplicar a API  
-   D. Ignorar, esperando o volume cair  
+7. A company wants to proactively detect when a critical API has stopped responding to a specific scenario before users complain. What resource to use?
+   A) Functional Monitoring with scheduled tests
+   B) Log Console Only
+   C) Only high CPU alerts
+   D) Only occasional manual tests
 
-9. NTO precisa investigar um caso específico em que um pedido falhou em uma cadeia de APIs. Qual abordagem é mais eficiente?
-   A. Pedir prints de tela ao usuário  
-   B. Correlacionar logs da execução daquela requisição via Anypoint Monitoring  
-   C. Desinstalar a API  
-   D. Ler todos os logs de todos os dias manualmente  
+8. AnyAirlines observes traffic peaks generated by a rich configured Flow, causing batch failures. What more mature response?
+   A) Disable Flow without parsing
+   B) Adjust Flow design and in parallel configure Rate Limiting and Alerts
+   C) Duplicate API
+   D) Ignore, wait for volume to drop
 
-10. Um bot RPA dispara milhares de chamadas, gerando erros 429. O que isso indica e qual ação combina melhor?
-    A. Indica problema de autenticação; trocar credenciais  
-    B. Indica violação de Rate Limit; revisar política e padrão de chamada do bot  
-    C. Indica que a API está offline  
-    D. Indica erro de DNS  
+9. NTO needs to investigate a specific case where an order failed in an API chain. Which approach is more efficient?
+   A) Ask the user for screen prints
+   B) Correlate logs of the execution of that request via Anypoint Monitoring
+   C) Uninstall API
+   D) Read all logs every day manually
 
-11. Um candidato afirma: “não é necessário configurar alertas, pois o time sempre vê dashboards diariamente”. Como a prova tende a avaliar isso?
-    A. Correto  
-    B. Limitado; alertas automáticos são essenciais para responder rapidamente a incidentes  
-    C. Válido apenas em produção  
-    D. Suficiente para ambientes críticos  
+10. One RPA botfires thousands of calls, generating 429 errors. What does this indicate and which action best combinations?
+   A) Indicates authentication problem; exchange credentials
+   B) Indicates break of Rate Limit; review bot policy and call pattern
+   C) Indicates API is offline
+   D) DNS error indications
 
-12. Um cenário mostra que uma API está “up”, mas chamadas para um endpoint específico falham. Qual combinação de recursos ajuda na análise?
-    A. Apenas status de worker  
-    B. Logs detalhados e Functional Monitoring para aquele endpoint  
-    C. Somente dashboards de CPU  
-    D. Apenas logs do RPA  
+11. One candidate states: 'It is not necessary to set up alerts, because the team checks dashboards every day.' How does the exam tend to evaluate that?
+   A) Correct
+   B) Limited; automatic alerts are essential to respond quickly to incidents
+   C) Valid only in production
+   D) Enough for critical environments
 
-13. AnyAirlines quer reduzir o MTTR (Mean Time To Resolve) para falhas em integrações. Qual prática é mais alinhada?
-    A. Depender de e‑mails de usuários  
-    B. Configurar monitoramento, alertas e dashboards claros para APIs chave  
-    C. Apenas aumentar vCores  
-    D. Desativar logs para simplificar  
+12. A scenario shows that an API is up, but calls to a specific endpoint fail. What combination of resources helps with the analysis?
+   A) Worker status only
+   B) Detailed logs and Functional Monitoring for that endpoint
+   C) CPU dashboards only
+   D) RPA logs only
 
-14. Um time observa que, após um deploy, erros começaram a ocorrer. O que deve ser avaliado no Monitoring?
-    A. Nenhuma métrica, pois é esperado errar  
-    B. Comparação de métricas antes/depois do deploy (erros, latência, throughput)  
-    C. Apenas logs locais  
-    D. Apenas número de workers  
+13. AnyAirlines wants to reduce the MTTR (Mean Time To Solve) to integration failures. Which practice is more aligned?
+   A) Rely on user emails and support tickets
+   B) Configure clear monitoring, alerts, and dashboards for key APIs
+   C) Scale workers whenever an alert appears, before diagnosis
+   D) Reduce logging to simplify the platform
 
-15. Uma alternativa sugere que “para resolver problemas de performance, a melhor estratégia é sempre adicionar mais vCores, sem analisar métricas detalhadas”. Como isso deve ser visto?
-    A. Correto em todos os casos  
-    B. Pegadinha; é preciso entender se o gargalo é infra, aplicação ou sistema destino antes de escalar  
-    C. Aceitável apenas on‑premises  
-    D. Aceitável apenas em CloudHub  
+14. A team observes that failures began right after a deployment. What should be evaluated in Monitoring?
+   A) No metrics, because some instability is expected
+   B) Compare metrics before and after the deploy (errors, latency, throughput)
+   C) Local logs only
+   D) Only the number of workers
+
+15. One option suggests that to solve performance problems, the best strategy is always to add more vCores without analyzing detailed metrics. How should this be seen?
+   A) Correct in all cases
+   B) Misleading; you must first identify whether the bottleneck is in the application, infrastructure, or destination system
+   C) Acceptable only on-premises
+   D) Acceptable only in CloudHub

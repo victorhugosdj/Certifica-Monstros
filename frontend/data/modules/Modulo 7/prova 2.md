@@ -1,93 +1,93 @@
----
-# 📝 Prova 2 – Módulo 7: Mocking Service, Portais e Descoberta
----
+﻿# Prova 2 - Modulo 7
 
-1. AnyAirlines quer que a equipe de Salesforce Flow comece a integrar uma API de crédito antes que ela seja implementada de fato. O contrato RAML já existe. Qual recurso acelera isso?
-   A. Deploy direto em produção  
-   B. Mocking Service do Exchange, expondo uma URL simulada  
-   C. Apenas testes manuais no Postman  
-   D. Logs locais  
+Use este arquivo como treino rapido do modulo.
 
-2. Northern Trail Outfitters (NTO) quer que desenvolvedores externos testem uma API usando um console interativo e, depois, solicitem credenciais de acesso. Onde isso é configurado?
-   A. Runtime Manager  
-   B. API Portal/Exchange com fluxo de “Request Access”  
-   C. Anypoint Studio  
-   D. Composer  
+1. AnyAirlines wants the Salesforce Flow team to start integrating a credit API before it is currently implemented. The RAML contract already exist. What resource speeds that up?
+   A) Direct Deploy in Production
+   B) Exchange Mocking Service, displaying a simulated URL
+   C) Only manual tests on Postman
+   D) Local Logs
 
-3. Um cenário descreve que o time de front‑end quer continuar testando contra mocks enquanto o backend evolui. Qual prática se encaixa melhor?
-   A. Usar sempre o backend real  
-   B. Usar Mocking Service com dados de exemplo até o backend estar pronto  
-   C. Esperar o backend ficar pronto sem testar  
-   D. Usar apenas RPA  
+2. Northern Trail Outfitters (NTO) wants external developers to test an API using an interactive console and then request access credentials. Where's this set up?
+   A) Runtime Manager
+   B) Portal/Exchange API with “Request Access” flow
+   C) Anypoint Studio
+   D) Compose
 
-4. Uma alternativa diz que “Mocking Service não é adequado para cenários de hiperautomação”. Como isso deve ser avaliado?
-   A. Correto  
-   B. Falso; é muito útil para permitir que Flow, Composer e RPA avancem em paralelo  
-   C. Só correto on‑premises  
-   D. Só vale para APIs públicas  
+3. One scenario says that the front-end team wants to keep testing against mocks while the backend is still being built. Which practice fits best?
+   A) Connect directly to an unstable backend and accept broken tests
+   B) Use Mocking Service with example data until the backend is ready
+   C) Wait until the backend is complete before validating anything
+   D) Build isolated test stubs outside the shared API contract
 
-5. NTO quer separar o consumo interno e externo de uma API, mas manter a mesma especificação. O que o Exchange e API Manager podem oferecer?
-   A. Nada; é preciso duplicar a API  
-   B. Mesmo contrato no Exchange, com diferentes políticas e portais por consumidor  
-   C. Apenas documentação estática  
-   D. Apenas logs  
+4. One option says that 'Mocking Service is not useful for hyperautomation scenarios.' How should this be evaluated?
+   A) Correct
+   B) False; it is very useful to let Flow, Composer, and RPA advance in parallel
+   C) Only correct on-premises
+   D) It applies only to public APIs
 
-6. Um desenvolvedor Mule quer criar tutoriais interativos que executam chamadas reais de API dentro da documentação. Que recurso é citado no conteúdo do módulo?
-   A. API Notebook  
-   B. Visualizer  
-   C. RPA Recorder  
-   D. Functional Monitoring  
+5. NTO wants to separate internal and external consumption from an API, but maintain the same specification. What can Exchange and API Manager offer?
+   A) Nothing; duplicate required API
+   B) Same contract at Exchange, with different policies and consumers portals
+   C) Static documentation only
+   D) Logs only
 
-7. Uma empresa deseja que times de negócio possam navegar pelos ativos de integração (APIs, templates, RPA) e entender o que já existe antes de abrir novas demandas. Qual prática apoia isso?
-   A. Manter tudo apenas em repositórios Git internos  
-   B. Publicar e manter ativos bem documentados no Exchange  
-   C. Enviar e‑mails com anexos de código  
-   D. Deixar a equipe de integração “lembrar de cabeça”  
+6. A Mule developer wants to create interactive tutorials that perform real API calls within the documentation. Which resource is referenced in the module?
+   A) API Notebook
+   B) Viewer
+   C) RPA Recorder
+   D) Functional Monitoring
 
-8. AnyAirlines quer que consumidores externos solicitem acesso a uma API diretamente pela documentação e recebam um Client ID/Secret quando aprovados. Que fluxo é este?
-   A. Provisionamento manual em Studio  
-   B. Fluxo de “Request Access” em um API Portal do Exchange  
-   C. Process Builder no Salesforce  
-   D. Apenas e‑mail manual  
+7. A company wants business teams to navigate integration assets such as APIs, templates, and RPA processes and understand what already exists before opening new requests. Which practice supports that?
+   A) Keep everything only in internal Git repositories
+   B) Publish and maintain well-documented assets in Exchange
+   C) Send emails with code attachments
+   D) Rely on the integration team to remember everything
 
-9. Uma alternativa sugere que “Mocking Service deve ser usado em produção para sempre, pois simplifica o backend”. Por que isso é uma pegadinha?
-   A. Porque mocks nunca são permitidos  
-   B. Porque Mocking Service é para testes e desenvolvimento paralelo, não para substituir o backend em produção  
-   C. Porque só RPA usa mocks  
-   D. Porque Flow não funciona com mocks  
+8. AnyAirlines wants external consumers to request access to an API directly through documentation and receive a Client ID/Secret when approved. What's this flow?
+   A) Manual Provisioning in Studio
+   B) Request Access Flow in an Exchange Portal API
+   C) Process Builder in Salesforce
+   D) Manual email only
 
-10. Em um cenário de prova, o candidato precisa identificar onde encontrar exemplos de requisição e resposta para uma API. Qual local é o mais esperado?
-    A. Código fonte da API apenas  
-    B. Documentação e console interativo do asset no Exchange  
-    C. E‑mails antigos da equipe  
-    D. Logs de produção  
+9. One option suggests that 'Mocking Service should be used in production forever because it simplifies the backend.' Why is that incorrect?
+   A) Because mocks are never allowed
+   B) Because Mocking Service is for testing and parallel development, not for replacing the backend in production
+   C) Because only RPA uses mocks
+   D) Because Flow does not work with mocks
 
-11. NTO quer controlar quem pode ver determinados ativos sensíveis (por exemplo, APIs internas de finanças). Como o Exchange ajuda?
-    A. Não ajuda; tudo é sempre público  
-    B. Permite configurar visibilidade e permissões de acesso a assets  
-    C. Somente API Manager faz isso  
-    D. Apenas logs controlam acesso  
+10. A candidate needs to identify where to find request and response examples for an API. What location is most expected?
+   A) API source code only
+   B) Interactive asset documentation and console on Exchange
+   C) Former team emails
+   D) Production logs
 
-12. Um time lança uma nova versão de uma API, mas quer manter a anterior para alguns consumidores. Como o Exchange contribui aqui?
-    A. Não suporta versões  
-    B. Permite versionar assets e manter documentação de múltiplas versões  
-    C. Remove automaticamente versões antigas  
-    D. Só mostra a última versão  
+11. NTO wants to control who can see certain sensitive assets, such as internal finance APIs. How does Exchange help?
+   A) It doesn't help; everything is always public
+   B) Allows you to configure visibility and asset access permissions
+   C) API Only Manager does that
+   D) Only logs control access
 
-13. AnyAirlines quer registrar também templates e exemplos de integração de referência para que projetos futuros sejam acelerados. Como isso aparece no Exchange?
-    A. Como APIs apenas  
-    B. Como Templates e Examples publicados como assets  
-    C. Como logs  
-    D. Como workers  
+12. A team launches a new version of an API, but wants to keep the previous one for some consumers. How does Exchange contribute here?
+   A) Does not support versions
+   B) Allows asset versioning and documentation for multiple active versions
+   C) Automatically removes old versions
+   D) Shows only the latest version
 
-14. Uma alternativa afirma que “apenas APIs públicas da MuleSoft podem ser colocadas no Exchange; APIs internas da empresa não”. Como isso deve ser tratado?
-    A. Correto  
-    B. Falso; organizações podem ter Exchanges privados com seus próprios assets internos  
-    C. Verdadeiro apenas em CloudHub  
-    D. Verdadeiro só para RAML  
+13. AnyAirlines also wants to register templates and reference integration examples to accelerate future projects. How should these appear in Exchange?
+   A) Only APIs
+   B) Templates and samples published as assets
+   C) As logs
+   D) The workers
 
-15. Um time quer criar um portal de desenvolvedores para uma API específica, com branding, docs e botão de acesso. Qual combinação de recursos suporta isso?
-    A. API Portal no Exchange + API Manager para controle de acesso  
-    B. Apenas Runtime Manager  
-    C. Apenas Anypoint Studio  
-    D. Apenas RPA Manager  
+14. An alternate states that “only MuleSoft public APIs can be placed in Exchange; not internal company APIs”. How would this be treated?
+   A) Correct.
+   B) False; organisations may have Private exports with their own internal assets
+   C) True only in CloudHub
+   D) True only for RAML
+
+15. A team wants to create a developer portal for a specific API, with branding, docs and access button. What combination of features supports this?
+   A) API Portal in Exchange + API Manager for Access Control
+   B) Runtime Manager Only
+   C) Just Anypoint Studio
+   D) RPA Manager only

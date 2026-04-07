@@ -1,93 +1,93 @@
----
-# 📝 Prova 3 – Módulo 8: Estratégia, Cenários e Pegadinhas
----
+﻿# Prova 3 - Modulo 8
 
-1. AnyAirlines tem um processo de compras: funcionário pede item, gerente aprova, API verifica estoque, compras aprovam compra externa se necessário. Por que Flow Orchestration é indicado?
-   A. Porque é apenas um processo batch simples  
-   B. Porque coordena múltiplos passos humanos e automáticos ao longo do tempo  
-   C. Porque substitui todas as APIs  
-   D. Porque não usa nenhum Flow  
+Use este arquivo como treino rapido do modulo.
 
-2. Uma alternativa sugere usar apenas RPA para coordenar todas as aprovações humanas e sistemas em um processo de semanas. Qual é o problema com essa abordagem?
-   A. RPA não suporta UI  
-   B. Orchestration foi desenhado para coordenação de longo prazo e tarefas humanas em Salesforce  
-   C. RPA não pode chamar APIs  
-   D. Flow não interage com humanos  
+1. AnyAirlines has a purchasing process: an employee requests an item, a manager approves it, stock is checked through an API, and purchasing approves an external buy if needed. Why is Flow Orchestration indicated?
+   A) Because it is just a simple batch process
+   B) Because it coordinates multiple human and automated steps over time
+   C) Because it replaces all APIs
+   D) Because no Flow should be used
 
-3. NTO quer decidir entre Flow Orchestration e um único Screen Flow para um processo de atendimento rápido que termina em poucos minutos em uma única sessão. O que a prova tende a preferir?
-   A. Orchestration por ser mais complexa  
-   B. Um Screen Flow simples, sem sobre‑engenharia  
-   C. RPA apenas  
-   D. Composer apenas  
+2. One option suggests using only RPA to coordinate all human approvals and systems in a week-long process. What is wrong with that approach?
+   A) RPA does not support UI
+   B) Orchestration is designed for long-running coordination and human tasks in Salesforce
+   C) RPA cannot call APIs
+   D) Flow does not interact with humans
 
-4. Uma questão oferece a opção de usar Orchestration para um cenário onde não há etapas humanas nem espera; tudo é síncrono e curto. Que tipo de pegadinha é essa?
-   A. Alternativa que adiciona complexidade desnecessária  
-   B. Alternativa tecnicamente impossível  
-   C. Alternativa que ignora APIs  
-   D. Alternativa que viola DML limits  
+3. NTO needs to choose between Flow Orchestration and a single Screen Flow for a quick service process that ends in a few minutes within one session. Which option is typically preferred?
+   A) Flow Orchestration because it gives more visibility for any process
+   B) A simple Screen Flow without over-engineering
+   C) An RPA bot started from Salesforce
+   D) A Composer flow replacing the screen interaction
 
-5. AnyAirlines quer que um gerente possa acompanhar o progresso de um processo complexo diretamente no registro de Conta. Qual combinação suporta isso?
-   A. Apenas logs de API  
-   B. Orchestration + Work Guide exibido no registro  
-   C. Apenas RPA  
-   D. Apenas Composer  
+4. One option uses Orchestration for a scenario with no human steps and no waits, where everything is short and synchronous. What kind of mistake is this?
+   A) An alternative that adds unnecessary complexity
+   B) A technically impossible alternative
+   C) An alternative that ignores APIs
+   D) An alternative that violates DML limits
 
-6. Uma alternativa sugere duplicar a lógica de aprovação em vários Flows em vez de centralizá‑la em uma Orchestration e subflows. Por que isso é frágil?
-   A. Porque Flows não podem ter lógica de aprovação  
-   B. Porque duplica lógica e dificulta manutenção e auditoria  
-   C. Porque Orchestration não pode chamar subflows  
-   D. Porque APIs não suportam aprovação  
+5. AnyAirlines wants a manager to monitor the progress of a complex process directly on the Account record. What combination supports that?
+   A) API logs only
+   B) Orchestration plus Work Guide displayed on the record
+   C) RPA only
+   D) Composer only
 
-7. NTO vê vários processos parados em estágios diferentes e precisa priorizar onde atuar. Qual artefato ajuda a ter essa visão de alto nível?
-   A. Lista de Apex Classes  
-   B. Lista de Orchestration Runs com status (em andamento, pausada, falha, concluída)  
-   C. Logs locais das máquinas dos usuários  
-   D. Apenas relatórios de casos  
+6. One option suggests scattering the application logic across several Flows instead of centralizing it in Orchestration and reusable subflows. Why is that a bad practice?
+   A) Because Flows cannot have approval logic
+   B) Because it duplicates logic and makes maintenance and auditing harder
+   C) Because Orchestration cannot call subflows
+   D) Because approval APIs are not supported
 
-8. Uma questão mostra um processo em que, enquanto RH valida documentos, TI já pode começar a preparar o ambiente, ambos em paralelo. Qual resposta demonstra entendimento correto?
-   A. Orchestration deve sempre ser sequencial  
-   B. Orchestration permite Steps paralelos em um Stage, concluído somente quando ambos terminam  
-   C. Múltiplas Orchestrations são obrigatórias  
-   D. Somente RPA pode rodar em paralelo  
+7. NTO sees several processes stopped at different stages and needs to prioritize where to act. What artifact helps you get this high-level vision?
+   A) Apex Class List
+   B) List of Orchestration Runs with status (in progress, paused, failed, completed)
+   C) Local user machine logs
+   D) Case reports only
 
-9. Um candidato escolhe uma opção que diz: “em caso de erro, é melhor cancelar toda a Orchestration sem qualquer informação de estado”. Por que isso é inadequado?
-   A. Porque não é tecnicamente possível  
-   B. Porque perde rastreabilidade; melhor registrar, permitir retomada e manter histórico  
-   C. Porque erros nunca ocorrem  
-   D. Porque RPA sempre manipula erros  
+8. A process lets HR validate documents while IT prepares the environment in parallel. Which answer shows the correct understanding?
+   A) Orchestration must always be sequential
+   B) Orchestration allows parallel steps within a stage, and the stage completes only when both finish
+   C) Multiple orchestrations are mandatory
+   D) Only RPA can run in parallel
 
-10. AnyAirlines quer que processos de aprovação possam evoluir com o tempo, mantendo histórico de versões. Qual combinação está mais alinhada?
-    A. Apex hard‑coded  
-    B. Flows e Orchestrations versionados, com migração cuidadosa entre versões  
-    C. Scripts locais  
-    D. Apenas e‑mails  
+9. One option says: 'In case of error, it is best to cancel the whole orchestration without recording any status information.' Why is that inappropriate?
+   A) Because it is not technically possible
+   B) Because it loses traceability; it is better to record status, allow resume, and maintain history
+   C) Because errors never occur
+   D) Because RPA always manages errors
 
-11. Uma alternativa sugere construir toda a lógica de processo em Apex e deixar Orchestration apenas como “fachada vazia”. Por que isso não reflete o foco do módulo?
-    A. Porque Apex não é suportado  
-    B. Porque Flow Orchestrator é justamente a camada para coordenar processo, e Apex deve ser usado apenas quando necessário  
-    C. Porque Orchestration não chama Apex Actions  
-    D. Porque a prova não considera Apex  
+10. AnyAirlines wants to apply processes to evolve over time, keeping version history. Which combination is more aligned?
+   A) Apex hard-coded
+   B) Versioned Flows and Orchestrations, with careful migration between versions
+   C) Local Scripts
+   D) Emails only
 
-12. NTO quer usar Orchestration, mas também precisa chamar APIs MuleSoft em certos pontos do processo. Qual é a arquitetura recomendada?
-    A. Orchestration chama Flows, que usam External Services/HTTP Callout para consumir APIs  
-    B. Orchestration chama diretamente o banco  
-    C. APIs chamam Orchestration sempre  
-    D. RPA substitui todas as APIs  
+11. One option suggests building all process logic in Apex and leaving Orchestration as an empty shell. Why does that not reflect the focus of the module?
+   A) Because Apex is not supported
+   B) Because Flow Orchestrator should coordinate the process, and Apex should be used only when needed
+   C) Because Orchestration cannot call Apex actions
+   D) Because the exam does not consider Apex
 
-13. Uma questão apresenta um processo que já está bem atendido por um Record‑Triggered Flow e algumas automações simples. Uma opção sugere migrar tudo para Orchestration “só porque é novo”. Como avaliar?
-    A. Sempre migrar para a tecnologia mais nova  
-    B. Reconhecer como pegadinha; só usar Orchestration quando houver benefício claro (longa duração, múltiplos times, etc.)  
-    C. Migrar por questões de marketing  
-    D. Ignorar o cenário  
+12. NTO wants to use Orchestration, but also needs to call MuleSoft APIs at certain points in the process. What is the recommended architecture?
+   A) Orchestration calls Flows, which use External Services or HTTP Callout to consume APIs
+   B) Orchestration directly calls the database
+   C) APIs must always call Orchestration
+   D) RPA replaces all APIs
 
-14. AnyAirlines quer que, se a verificação de estoque via API falhar, o processo seja pausado e redirecionado para uma fila de análise. Como isso pode ser modelado?
-    A. Sem registrar nada  
-    B. Background Step chamando Flow que trata falhas e encaminha Work Item para fila apropriada  
-    C. Apenas com logs  
-    D. Apenas com RPA  
+13. One question presents a process that is already well served by a Record-Triggered Flow and a few simple automations. One option suggests migrating everything to Orchestration just because it is new. How should this be evaluated?
+   A) Adopt Orchestration anyway to standardize on the newest tool
+   B) Recognize this as overengineering; use Orchestration only when there is a clear benefit such as long duration, multiple stages, or human work
+   C) Move to Orchestration mainly because monitoring will look cleaner
+   D) Migrate first and decide later whether the process needed orchestration
 
-15. Uma alternativa final afirma: “Flow Orchestration substitui completamente a necessidade de RPA, Composer e APIs em qualquer cenário de hiperautomação.” Qual resposta é mais alinhada?
-    A. Concordar; Orchestration é suficiente para tudo  
-    B. Discordar; Orchestration coordena processos, mas continua dependendo de Flows, APIs, RPA e Composer para executar tarefas especializadas  
-    C. Concordar apenas para processos internos  
-    D. Depende do volume  
+14. AnyAirlines wants the process to pause and route work to an analysis queue if the inventory check API fails. How can this be modeled?
+   A) Do not record the failure
+   B) Use a Background Step that calls a Flow, handles the failure, and routes the Work Item to the appropriate queue
+   C) Log the issue only
+   D) Use only RPA
+
+15. The final alternate states: “Flow Orchestration completely replaces the need for RPA, Composer and APIs in any hyperautomation scenario.” What answer is more aligned?
+   A) Agreement; Orchestration is enough for everything
+   B) Disagree; Orchestration coordinates processes, but still depends on Flows, APIs, RPA and Composer to perform specialized tasks
+   C) Agreement only for internal processes
+   D) Depends on the volume

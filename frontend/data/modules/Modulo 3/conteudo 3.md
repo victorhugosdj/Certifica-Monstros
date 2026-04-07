@@ -1,12 +1,5 @@
-# Modulo 3: MuleSoft Composer
 
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 3.md` (questoes em ingles).
-
----
-# 📚 Módulo 3
-
-# **🎼 Módulo 3: MuleSoft Composer** 
+# **🎼 Módulo 3: MuleSoft Composer ** 
 
 **Peso no Exame:** 12%
 

@@ -1,93 +1,93 @@
----
-# 📝 Prova 3 – Módulo 6: Estratégia de Governança e Pegadinhas
----
+﻿# Prova 3 - Modulo 6
 
-1. AnyAirlines quer garantir que integrações de diferentes times não derrubem um sistema legado via APIs. Qual combinação melhor reflete a abordagem recomendada?
-   A. Nenhuma limitação; confiar nos times  
-   B. Aplicar políticas de Rate Limiting/SLA e monitorar com dashboards e alertas  
-   C. Desativar todas as integrações  
-   D. Usar apenas RPA  
+Use este arquivo como treino rapido do modulo.
 
-2. Uma alternativa sugere expor APIs internas sem autenticação “para simplificar o acesso por RPA e Flow”. Por que isso é uma má prática?
-   A. Porque APIs internas não podem ser usadas  
-   B. Porque ignora segurança básica; políticas como Client ID Enforcement são recomendadas  
-   C. Porque APIs com autenticação não funcionam com Flow  
-   D. Porque Anypoint Monitoring não suporta APIs internas  
+1. AnyAirlines wants to ensure that integrations from different teams do not bring down a legacy system via APIs. Which combination best reflections the recommended approach?
+   A) No limitations; relying on teams
+   B) Apply Rate Limiting/SLA policies and monitor with dashboards and alerts
+   C) Disable all integrations
+   D) Use only RPA
 
-3. NTO tem múltiplas APIs críticas encadeadas em um processo de hiperautomação. O que melhor representa uma estratégia madura?
-   A. Monitorar apenas a API final do fluxo  
-   B. Monitorar e aplicar políticas nas principais APIs, entendendo o impacto de cada uma  
-   C. Desativar logs para reduzir custo  
-   D. Depender apenas do monitoramento de RPA  
+2. One option suggests exposing internal APIs without authentication to simplify access by RPA and Flow. Why is that a bad practice?
+   A) Because internal APIs cannot be used
+   B) Because it ignores basic security; policies like Client ID Enforcement are recommended
+   C) Because authentication APIs don't work with Flow
+   D) Because Anypoint Monitoring does not support internal APIs
 
-4. Uma questão mostra que um novo cliente externo deve solicitar acesso a uma API. Qual fluxo esperado na plataforma MuleSoft?
-   A. Cliente acessa o API Portal, solicita acesso e recebe Client ID/Secret aprovado  
-   B. Cliente recebe acesso direto ao banco  
-   C. Cliente chama a API sem autenticação  
-   D. Cliente precisa de usuário administrativo no Anypoint Platform  
+3. NTO has multiple critical APIs chained into a hyperautomation process. What best represents a mature strategy?
+   A) Monitor only the last API in the chain and infer the rest
+   B) Monitor the main APIs and apply policies with awareness of each dependency's impact
+   C) Reduce observability on intermediate APIs to save cost
+   D) Rely only on RPA or front-end monitoring to detect failures
 
-5. Um candidato escolhe uma opção que diz: “para evitar limites, é melhor remover Rate Limiting de APIs que suportam RPA e Flows”. Como isso deve ser lido?
-   A. Correta; limites atrapalham automações  
-   B. Pegadinha; limites protegem sistemas e ajudam a manter estabilidade  
-   C. Correta apenas para sistemas internos  
-   D. Correta se houver muitos consumidores  
+4. A new external client needs access to an API. What is the expected flow on the MuleSoft platform?
+   A) The client accesses the API portal, requests access, and receives an approved Client ID and Secret
+   B) The client receives direct access to the backend
+   C) The client calls the API without authentication
+   D) The client needs an administrative user in Anypoint Platform
 
-6. AnyAirlines quer aplicar regras diferentes de consumo para clientes Gold, Silver e Bronze. Qual funcionalidade se encaixa melhor?
-   A. IP Whitelisting  
-   B. SLA‑Based Policies no API Manager  
-   C. Apenas Rate Limiting estático  
-   D. Somente logs  
+5. A candidate chooses an option that says: “To avoid limits, it is best to remove Rate Limiting from APIs that support RPA and Flows”. How would this be read?
+   A) Correct; limits hinder automations
+   B) Trick; limits protection systems and help maintain stability
+   C) Correct for internal systems only
+   D) Correct if there are too many consumers
 
-7. Uma alternativa sugere criar cópias idênticas de uma API para separar tráfego interno e externo, em vez de usar políticas e gestão adequada. Por que isso normalmente é errado?
-   A. Porque não se pode ter mais de uma API  
-   B. Porque duplicação aumenta complexidade e reduz reutilização, ao invés de usar governança apropriada  
-   C. Porque políticas não funcionam em APIs internas  
-   D. Porque só RPA pode usar APIs internas  
+6. AnyAirlines wants to apply different consumer rules to Gold, Silver and Bronze customers. Which functionality fits best?
+   A) IP Whitelisting
+   B) SLA-Based Policies in API Manager
+   C) Static Limiting Rate Only
+   D) Logs Only
 
-8. NTO quer que incidentes de APIs críticas sejam rapidamente comunicados às equipes corretas. Qual combinação é mais alinhada?
-   A. Apenas dashboards sem alertas  
-   B. Alertas configurados no Monitoring integrados a canais como e‑mail ou Slack  
-   C. Depender de clientes externos para avisar  
-   D. Apenas reuniões semanais de status  
+7. One option suggests creating duplicate copies of an API to separate internal and external traffic instead of using policies and management. Why is this usually wrong?
+   A) Because you can't have more than one API
+   B) Because duplication increases complexity and decreases reuse, rather than using appropriate governance
+   C) Because policies don't work on internal APIs
+   D) Because only RPA can use internal APIs
 
-9. Uma questão mostra que uma API está configurada como Basic Endpoint, diretamente no runtime. Em qual situação considerar Proxy Endpoint faz mais sentido?
-   A. Quando não se deseja aplicar nenhuma política  
-   B. Quando se quer colocar um proxy entre consumidor e backend, sem tocar no código da API original  
-   C. Quando se quer remover monitoramento  
-   D. Quando a API está em beta  
+8. NTO wants critical API incidents to be quickly reported to the correct teams. Which combination is more aligned?
+   A) Dashboards reviewed manually every morning
+   B) Alerts configured in Channel-integrated Monitoring email or Slack
+   C) Depend on customers to report incidents
+   D) Weekly incident summary meeting
 
-10. Um candidato propõe “desabilitar logs detalhados” como solução primária para problemas de performance, sem qualquer análise. Por que isso é uma resposta fraca?
-    A. Porque logs nunca impactam performance  
-    B. Porque ataca sintomas às cegas, sem entender métricas nem causas reais  
-    C. Porque Monitoring não usa logs  
-    D. Porque API Manager ignora logs  
+9. An issue shows that an API is configured as Basic Endpoint, directly in runtime. In what situation does Proxy Endpoint make more sense?
+   A) When no policy is soight
+   B) When you want to put a proxy between consumer and backend, without touching the original API code
+   C) When you want to remove monitoring
+   D) When API is in beta
 
-11. AnyAirlines quer evidências de que sua arquitetura está saudável: tempos estáveis, poucas falhas, políticas aplicadas. Qual combinação de ferramentas suporta essa visão?
-    A. Apenas Studio  
-    B. Anypoint Monitoring + API Manager (políticas, analytics, SLAs)  
-    C. Apenas Exchange  
-    D. Apenas RPA Manager  
+10. One candidate proposes disabling detailed logs as a primary solution to performance problems without any analysis. Why is that a weak answer?
+   A) Because logs never affect performance
+   B) Because it treats symptoms blindly without understanding metrics or root causes
+   C) Because Monitoring does not use logs
+   D) Because API Manager ignores logs
 
-12. Uma alternativa afirma: “Como as APIs são internas, não há necessidade de políticas de segurança nem controle de quem consome”. Como o candidato deve responder?
-    A. Concordar, pois segurança é só para APIs externas  
-    B. Discordar; mesmo internas, APIs críticas precisam de governança e controle de acesso  
-    C. Depende do time de rede  
-    D. Verdadeiro apenas em Sandbox  
+11. AnyAirlines wants evidence that their architecture is health: stable times, few failures, applied policies. Which tool combination supports this view?
+   A) Studio Only
+   B) Anypoint Monitoring + API Manager (politics, analytics, SLAs)
+   C) Exchange Only
+   D) RPA Manager only
 
-13. NTO quer uma forma rápida de visualizar, em produção, quem está consumindo cada API e qual o volume por consumidor. Qual componente ajuda?
-    A. API Manager (analytics e consumer metrics)  
-    B. Studio  
-    C. Exchange  
-    D. Flow Builder  
+12. One alternate states: “The APIs are internal, there is no need for security policies or control of those who consume.” How could the candidate respond?
+   A) Agree, because security is only for external APIs
+   B) Disagree; even internal, critical APIs need governance and access control
+   C) Depends on the network team
+   D) True only in Sandbox
 
-14. Uma questão mostra um fluxo onde Flow → API → Sistema legado. A resposta “correta” sugere desativar Rate Limiting para resolver picos de erro. Que ponto a prova tenta testar?
-    A. Que limites são sempre ruins  
-    B. Que remover Rate Limiting pode agravar o problema e derrubar o sistema legado  
-    C. Que Flow não suporta limites  
-    D. Que APIs não precisam de proteção  
+13. NTO wants a quick way to view, in production, who is consuming each API and what volume per consumer. What component helps?
+   A) API Manager (analytics and consumer metrics)
+   B) Studio
+   C) Exchange
+   D) Flow Builder
 
-15. Uma alternativa final diz: “Boa governança significa nunca tocar em políticas ou monitoramento depois da primeira configuração”. Qual é a visão de melhores práticas?
-    A. Correta; configuração inicial basta  
-    B. Errada; governança e monitoramento são contínuos, ajustados conforme uso e incidentes  
-    C. Correta apenas em produção  
-    D. Correta apenas para APIs internas  
+14. A question shows a flow where Flow -> API -> legacy system. One answer suggests disabling Rate Limiting to reduce error peaks. What is the exam trying to test?
+   A) That limits are always bad
+   B) That removing Rate Limiting can worsen the problem and overload the legacy system
+   C) That Flow does not support limits
+   D) That APIs do not need protection
+
+15. The final alternate says: “Good governance means never to touch policies or monitoring after the first configuration.” What is the vision of best practice?
+   A) Correct; initial setting is enough
+   B) Mistake; governance and monitoring are continued, adjusted according to use and incidents
+   C) Correct only in production
+   D) Correct only for internal APIs

@@ -1,93 +1,93 @@
----
-# 📝 Prova 2 – Módulo 5: Ciclo de Vida, Componentes e Deploy
----
+﻿# Prova 2 - Modulo 5
 
-1. AnyAirlines está definindo o processo de desenvolvimento de APIs. Qual ordem representa corretamente o ciclo de vida dentro da Anypoint Platform?
-   A. Implement → Design → Deploy → Manage  
-   B. Design → Simulate → Feedback → Implement → Deploy → Manage  
-   C. Deploy → Design → Implement → Manage  
-   D. Simulate → Design → Deploy → Implement  
+Use este arquivo como treino rapido do modulo.
 
-2. NTO quer permitir que consumidores explorem APIs, vejam documentação e testem chamadas em um console interativo. Qual componente deve ser usado?
-   A. Runtime Manager  
-   B. Anypoint Exchange (API Portal)  
-   C. Anypoint Studio  
-   D. Anypoint Monitoring  
+1. AnyAirlines is defining the API development process. What order correctly represents the life cycle within the Anypoint Platform?
+   A) Implementation → Design → Deploy → Manage
+   B) Design → Simulate → Feedback → Implementation → Deploy → Manage
+   C) Deploy → Design → Implementation → Manage
+   D) Simulate → Design → Deploy → Implementation
 
-3. Um time precisa editar fluxos Mule, adicionar conectores e escrever DataWeave. Qual ferramenta é utilizada?
-   A. API Designer  
-   B. Anypoint Studio  
-   C. API Manager  
-   D. RPA Builder  
+2. NTO wants to allow consumers to explore APIs, see documentation and test calls on an interactive console. Which component should be used?
+   A) Runtime Manager
+   B) Anypoint Exchange (API Portal)
+   C) Anypoint Studio
+   D) Anypoint Monitoring
 
-4. Uma empresa precisa escalar o número de trabalhadores (workers) da aplicação conforme cresce o uso da API. Onde isso é configurado?
-   A. Exchange  
-   B. Runtime Manager  
-   C. API Designer  
-   D. Composer  
+3. A team needs to edit Mule flows, add connectors, and write DataWeave. Which tool is used?
+   A) API Designer
+   B) Anypoint Studio
+   C) API Manager
+   D) RPA Builder
 
-5. Em um cenário, a solução exige deployment em data center próprio com requisitos estritos de compliance. Qual opção de deploy é mais alinhada?
-   A. Apenas CloudHub  
-   B. On‑Premises ou Runtime Fabric, conforme o contexto  
-   C. Apenas RPA  
-   D. Apenas Composer  
+4. A company needs to scale the number of workers for an application as API usage grows. Where is this configured?
+   A) Exchange
+   B) Runtime Manager
+   C) Designer API
+   D) Compose
 
-6. Um item de prova descreve um cenário de containers e Kubernetes para rodar aplicações Mule. Qual tecnologia da MuleSoft é citada?
-   A. Runtime Fabric (RTF)  
-   B. Anypoint MQ  
-   C. CloudHub 1.0  
-   D. Exchange  
+5. In a scenario, the solution must run in the company's own data center because of strict compliance requirements. Which deployment option is more aligned?
+   A) CloudHub with secure connectivity back to the data center
+   B) On-Premises or Runtime Fabric, according to context
+   C) Composer-based integration running from SaaS connectors
+   D) RPA bots hosted near the internal applications
 
-7. AnyAirlines quer compartilhar uma API interna com desenvolvedores externos de parceiros, com controle de acesso e botão “Request Access”. Qual recurso suporta isso?
-   A. API Notebook  
-   B. API Portal / Exchange com fluxo de Client ID/Secret  
-   C. Runtime Manager somente  
-   D. Apenas documentação PDF  
+6. A proof item describes a container and Kubernetes-based scenario for running Mule applications. Which MuleSoft technology is being referenced?
+   A) Runtime Fabric (RTF)
+   B) Anypoint MQ
+   C) CloudHub 1.0
+   D) Exchange
 
-8. NTO tem uma API que será consumida por Salesforce Flow via External Services e por RPA via HTTP. Qual prática melhor suporta essa reutilização?
-   A. Publicar a especificação e a API como ativos no Exchange  
-   B. Esconder a especificação  
-   C. Criar uma API separada para cada consumidor  
-   D. Expor diretamente o banco de dados  
+7. AnyAirlines wants to share an internal API with external partner developers, with access control and “Request Access” button. What resource supports this?
+   A) API Notebook
+   B) Portal / Exchange API with Client ID/Secret Flow
+   C) Runtime Manager only
+   D) Documentation only PDF
 
-9. Um time quer simular a API de crédito antes da implementação definitiva, permitindo que Flows e RPA usem dados fictícios. O que deve ser utilizado?
-   A. Mocking Service do Exchange  
-   B. Apenas logs  
-   C. Apenas testes manuais em produção  
-   D. Visualizer  
+8. NTO has an API that will be consumed by Salesforce Flow via External Services and by RPA via HTTP. Which practice best supports this reuse?
+   A) Publisher specification and API as Exchange assets
+   B) Hide specification
+   C) Create the separate API for each consumer
+   D) Display database directly
 
-10. Uma alternativa diz que a fase de “Manage” se refere apenas a desligar a API quando necessário. Qual é a visão correta?
-    A. Correto  
-    B. Falso; “Manage” inclui aplicar políticas, controlar consumo, analytics e governança  
-    C. Depende do tipo de API  
-    D. Só vale para APIs públicas  
+9. A team wants to simulate the credit API before definitive implementation, allowing Flows and RPA to use fictional data. What should be used?
+   A) Exchange Mocking Service
+   B) Logs only
+   C) Only manual tests in production
+   D) Viewer
 
-11. Em um cenário de prova, a empresa precisa enxergar relacionamentos entre APIs e dependências em um mapa visual. Qual recurso atende isso?
-    A. Visualizer  
-    B. Functional Monitoring  
-    C. Exchange  
-    D. RPA Manager  
+10. One option says that the 'Manage' phase refers only to shutting down the API when necessary. What is the correct view?
+   A) Correct
+   B) False; 'Manage' includes applying policies, controlling consumption, analytics, and governance
+   C) Depends on the type of API
+   D) It applies only to public APIs
 
-12. NTO quer garantir que mudanças em um fragmento RAML compartilhado não quebrem projetos dependentes sem visibilidade. Qual conceito aparece no Exchange?
-    A. Asset apenas  
-    B. Dependency tracking  
-    C. Worker logs  
-    D. Credential Manager  
+11. The company needs to see relationships between APIs and dependencies on a visual map. What capability does that refer to?
+   A) Viewer
+   B) Functional Monitoring
+   C) Exchange
+   D) RPA Manager
 
-13. Um candidato sugere implementar APIs diretamente no API Manager. Por que isso é incorreto?
-    A. API Manager não existe  
-    B. API Manager é para governança e políticas, não para desenvolvimento de código  
-    C. API Manager substitui Exchange  
-    D. API Manager roda apenas em on‑premises  
+12. NTO wants to ensure that changes in a shared RAML fragment do not break dependent projects without visibility. What Exchange concept addresses this?
+   A) Asset only
+   B) Dependency tracking
+   C) Worker logs
+   D) Credential Manager
 
-14. AnyAirlines precisa decidir entre CloudHub e On‑Premises. O cenário enfatiza acesso simplificado a sistemas internos sem expor firewalls. Qual opção pode ser mais adequada?
-    A. Apenas CloudHub sempre  
-    B. On‑Premises ou RTF próximo dos sistemas internos  
-    C. Apenas Composer  
-    D. Apenas RPA  
+13. A candidate suggests implementing APIs directly in API Manager. Why is that incorrect?
+   A) API Manager does not exist
+   B) API Manager is for governance and policies, not code development
+   C) API Manager Replacements Exchange
+   D) API Manager runs only on-premises
 
-15. Uma alternativa propõe: “Para cada novo projeto, criar uma nova API idêntica com URL diferente para facilitar gestão por time”. Por que isso é provavelmente uma pegadinha?
-    A. Porque APIs não podem ter URLs diferentes  
-    B. Porque isso reduz reutilização e aumenta fragmentação, contra a estratégia da MuleSoft  
-    C. Porque Exchange não suporta múltiplas APIs  
-    D. Porque CloudHub não suporta mais de uma aplicação  
+14. AnyAirlines needs to decide between CloudHub and On-Premises. The scenario emphasizes simplified access to internal systems without exposing firewalls. Which option can be more appropriate?
+   A) CloudHub with firewall exceptions into the internal network
+   B) On-Premises or RTF close to internal systems
+   C) Composer with connectors reaching the internal systems directly
+   D) RPA running on shared desktops near the target systems
+
+15. One option says: 'For each new project, create a brand-new API with a different URL to make team management easier.' Why is this usually a bad idea?
+   A) Because APIs cannot have different URLs
+   B) Because this reduces reuse and increases fragmentation, which goes against MuleSoft strategy
+   C) Because Exchange does not support multiple APIs
+   D) Because CloudHub does not support more than one application

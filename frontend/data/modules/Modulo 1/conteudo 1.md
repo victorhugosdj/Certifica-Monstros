@@ -1,14 +1,4 @@
-# Modulo 1: Melhores Praticas de Hiperautomacao (Deep Dive)
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 1.md` (questoes em ingles).
-
----
-# 📚 Módulo 1
-
----
-
-# **📚 Módulo 1: Melhores Práticas de Hiperautomação (Deep Dive)**
+# **📚 Módulo 1: Melhores Práticas de Hiperautomação (Deep Dive) **
 
 **Peso no Exame:** 20%
 
@@ -119,3 +109,69 @@ Um pilar da MuleSoft é o **Center for Enablement (C4E)**.
 * Relacione tipos de falha com camadas específicas: validação de negócio em Flow/Composer, erros técnicos em APIs (Anypoint), problemas de interface no RPA e gargalos de performance monitorados pelo Anypoint Monitoring.
 * Identifique sempre oportunidades de reutilização: APIs publicadas no Exchange, fragmentos de RAML, processos de RPA reutilizáveis, subflows em Salesforce e fluxos genéricos de Composer que podem ser chamados por diferentes equipes.
 * Avalie a velocidade de desenvolvimento desejada no cenário: integrações simples entre nuvens SaaS favorecem o Composer; processos com interação humana longa pedem Flow Orchestration; integrações críticas e reutilizáveis exigem Anypoint; sistemas sem API pedem RPA.
+
+---
+
+## **7. Mapeamento Direto com o Edital**
+
+Para este módulo, você deve ser capaz de responder explicitamente aos seguintes objetivos:
+
+### **7.1 Dado um cenário, identificar as ferramentas corretas**
+
+Use esta regra mental:
+
+* **MuleSoft RPA:** quando não existe API utilizável e a automação precisa interagir com tela, desktop, Citrix ou sistema legado.
+* **MuleSoft Composer:** quando o caso é simples, a entrega precisa ser rápida e a integração é majoritariamente SaaS com conectores prontos.
+* **Anypoint Platform:** quando o caso exige APIs reutilizáveis, transformação complexa, alto volume, governança e segurança forte.
+* **Salesforce Flow / Flow Orchestration:** quando a experiência e o processo vivem no ecossistema Salesforce, especialmente com interação humana, aprovações e etapas longas.
+
+### **7.2 Modelar testes e dados para uma solução ponta a ponta**
+
+Ao desenhar testes de hiperautomação:
+
+* separe testes por camada: Salesforce, API, Composer, RPA e sistema-alvo
+* use **dados sintéticos** e **Mocking Service** para desacoplar o teste dos sistemas ainda não disponíveis
+* valide não só o "caminho feliz", mas também timeout, retry, indisponibilidade e erro de negócio
+
+### **7.3 Implementar padrões de comunicação entre Salesforce, Anypoint, Composer e RPA**
+
+Os padrões mais importantes para a prova são:
+
+* **External Services** para expor ações invocáveis no Salesforce
+* **Process APIs** para centralizar orquestração e lógica de negócio
+* **request/response** para consultas rápidas
+* **assíncrono com callback, fila ou polling** para automações RPA e processos demorados
+* **CDC / eventos / conectores** para integração reativa quando o cenário pede quase tempo real
+
+### **7.4 Aplicar tratamento de falhas por ferramenta**
+
+Pense sempre em duas categorias:
+
+* **falha técnica:** timeout, indisponibilidade, erro de conexão, UI instável no RPA
+* **falha de negócio:** regra inválida, dado inconsistente, reprovação humana, cliente inelegível
+
+Abordagens esperadas:
+
+* **Anypoint:** timeout, retry com exponential backoff, isolamento de dependência, observabilidade
+* **RPA:** waits robustos, retry controlado, análise de erro de interface e logs do processo
+* **Flow/Composer:** fault paths, tratamento de exceção de negócio, tarefas humanas quando necessário
+
+### **7.5 Identificar cenários e técnicas de reutilização**
+
+A resposta madura quase sempre privilegia:
+
+* APIs em camadas com reaproveitamento entre canais
+* ativos publicados no **Anypoint Exchange**
+* processos RPA reutilizáveis
+* evitar reconstruir integrações ou lógicas já existentes
+
+### **7.6 Identificar velocidade de desenvolvimento conforme ferramenta e complexidade**
+
+Use esta heurística:
+
+* **mais velocidade / menos complexidade:** Composer
+* **boa velocidade para experiência Salesforce:** Flow
+* **mais governança e mais robustez para casos complexos:** Anypoint
+* **ponte temporária para legado sem API:** RPA
+
+Na prova, a melhor resposta normalmente equilibra **velocidade, manutenção futura e reutilização**, e não apenas a entrega mais rápida do momento.

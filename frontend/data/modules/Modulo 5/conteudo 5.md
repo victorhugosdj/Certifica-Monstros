@@ -1,12 +1,4 @@
-# Modulo 5: Anypoint Platform & APIs
-
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 5.md` (questoes em ingles).
-
----
-# 📚 Módulo 5
-
-# **🌐 Módulo 5: Anypoint Platform & APIs**
+# **🌐 Módulo 5: Anypoint Platform & APIs **
 
 **Peso no Exame:** 15%
 

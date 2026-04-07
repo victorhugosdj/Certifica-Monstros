@@ -1,93 +1,93 @@
----
-# 📝 Prova 3 – Módulo 5: Governança, Reutilização e Pegadinhas
----
+﻿# Prova 3 - Modulo 5
 
-1. AnyAirlines nota que diferentes equipes estão construindo integrações diretas para o mesmo sistema legado, sem usar APIs comuns. Qual prática da MuleSoft mais combate esse problema?
-   A. Incentivar mais integrações ponto‑a‑ponto  
-   B. Criar System/Process APIs reutilizáveis e catalogá‑las no Exchange  
-   C. Migrar tudo para planilhas  
-   D. Usar apenas RPA  
+Use este arquivo como treino rapido do modulo.
 
-2. NTO quer aplicar políticas de Rate Limiting em uma API sem alterar o código Mule. Qual componente deve ser usado?
-   A. Anypoint Studio  
-   B. API Manager com políticas aplicadas ao endpoint  
-   C. Runtime Manager  
-   D. RPA Manager  
+1. AnyAirlines notes that different teams are building direct integrations to the same legacy system without using common APIs. Which MuleSoft practice fights this problem the most?
+   A) Encurage more point-to-point integrations
+   B) Create Reusable System/Process APIs and catalog them in Exchange
+   C) Migrate everything to spreadsheets
+   D) Use only RPA
 
-3. Um cenário de exame: um Flow está sobrecarregando um sistema legado via API, causando travamentos. Qual resposta mais alinhada?
-   A. Permitir o volume e esperar que o sistema seja atualizado  
-   B. Aplicar Rate Limiting / SLA‑based Tiering na API para proteger o sistema  
-   C. Desativar logs do sistema legado  
-   D. Substituir a API por acesso direto ao banco  
+2. NTO wants to apply Rate Limiting policies to an API without changing Mule code. Which component should be used?
+   A) Anypoint Studio
+   B) API Manager
+   C) Runtime Manager
+   D) RPA Manager
 
-4. Uma alternativa sugere expor uma API sem nenhuma forma de autenticação para simplificar o consumo por RPA, Flow e Composer. Como isso deve ser visto?
-   A. Correto para ambientes internos  
-   B. Errado; políticas como Client ID Enforcement são recomendadas mesmo em cenários internos críticos  
-   C. Recomendado em provas  
-   D. Neutro  
+3. An exam scenario: a Flow is overloading a legacy system via API, causing crashes. What answer is more aligned?
+   A) Scale the legacy system first and keep traffic patterns unchanged
+   B) Apply Rate Limiting or SLA-based Tiering in the API to protect the system
+   C) Reduce logging to relieve pressure on the system
+   D) Expose a second direct integration path that bypasses the API
 
-5. Uma empresa quer garantir que apenas IPs da infraestrutura Salesforce acessem determinada API. Qual política é usada?
-   A. Rate Limiting  
-   B. IP Whitelisting  
-   C. Client ID Enforcement  
-   D. JWT Validation  
+4. One option suggests exposing an API without any form of authentication to simplify consumption by RPA, Flow, and Composer. How should this be evaluated?
+   A) Correct for internal environments
+   B) Wrong; policies like Client ID Enforcement are recommended even in critical internal scenarios
+   C) Recommended in the exam
+   D) Neutral
 
-6. Em um cenário, várias APIs críticas fazem parte de um fluxo de hiperautomação. Qual combinação ajuda a enxergar disponibilidade e erros em tempo real?
-   A. Apenas logs locais dos servidores  
-   B. Anypoint Monitoring com dashboards e Log Search  
-   C. E‑mails manuais de usuários  
-   D. Apenas o console do RPA  
+5. A company wants to ensure that only Salesforce infrastructure IPs access a given API. What policy is used?
+   A) Rate Limiting
+   B) IP Whitelisting
+   C) Client ID Enforcement
+   D) JWT Validation
 
-7. Um item descreve um sistema em “choque” porque um Flow disparou milhares de requisições simultâneas. A alternativa correta provavelmente fala sobre:
-   A. Escalar apenas vCores  
-   B. Combinar Rate Limiting e, se necessário, ajustar capacidade (vCores/workers)  
-   C. Desligar o Flow permanentemente  
-   D. Migrar para integrações manuais  
+6. In one scenario, several critical APIs are part of a hyperautomation flow. What combination helps you see availability and errors in real time?
+   A) Local server logs only
+   B) Anypoint Monitoring with dashboards and Log Search
+   C) Manual user emails
+   D) Only the RPA console
 
-8. NTO quer monitorar não só se a API está “de pé”, mas se está respondendo corretamente a determinados cenários críticos. Qual recurso é mencionado?
-   A. Visualizer  
-   B. Functional Monitoring  
-   C. Exchange  
-   D. API Notebook  
+7. One item describes a “shock” system because one Flow Fired Thousands of simultaneous requests. The correct alternative probably talks about:
+   A) Scale vColors Only
+   B) Combine Rate Limiting and, if necessary, adjust capacity (vColors/workers)
+   C) Permanently turn off Flow
+   D) Migrate to manual integrations
 
-9. Uma alternativa diz: “Sempre que um novo consumidor aparecer, crie uma API nova para ele, com sua própria lógica e dados, mesmo que já exista uma API genérica”. Por que isso é típica pegadinha?
-   A. Porque APIs não podem ter mais de um consumidor  
-   B. Porque viola reutilização e aumenta acoplamento, indo contra o modelo API‑Led  
-   C. Porque nenhuma API pode ser genérica  
-   D. Porque API Manager não suporta múltiplas políticas  
+8. NTO wants to monitor not only whether an API is up, but also whether it responds correctly to critical scenarios. What resource is being referenced?
+   A) Viewer
+   B) Functional Monitoring
+   C) Exchange
+   D) API Notebook
 
-10. Em um cenário, uma Experience API faz transformações pesadas e agregações de múltiplos sistemas. Já existe uma Process API que faz o mesmo. Qual opção é mais alinhada?
-    A. Manter lógica duplicada na Experience API  
-    B. Centralizar transformação na Process API e manter Experience mais fina  
-    C. Migrar tudo para System APIs  
-    D. Remover Process API  
+9. One option says: 'Whenever a new consumer appears, create a new API just for that consumer, even if a generic API already exists.' Why is this usually wrong?
+   A) Because APIs cannot have more than one consumer
+   B) Because it violates reuse and increases coupling, going against the API-led model
+   C) Because no API can be generic
+   D) Because API Manager does not support multiple policies
 
-11. Uma equipe argumenta que não há necessidade de publicar ativos no Exchange porque todos já sabem onde está o código. Por que isso é fraco arquiteturalmente?
-    A. Porque o Exchange é obrigatório por contrato  
-    B. Porque sem catálogo central, reutilização, descoberta e governança ficam muito mais difíceis  
-    C. Porque APIs não funcionam sem Exchange  
-    D. Porque Runtime Manager depende do Exchange  
+10. In one scenario, an Experience API makes heavy transformations and multiple system aggregations. There is already a Process API that does the same. Which option is more aligned?
+   A) Keep Double Logic in the Experience API
+   B) Centralize transformation in Process API and maintain Finer experience
+   C) Migrate everything to System APIs
+   D) Remove Process API
 
-12. AnyAirlines quer que RPA, Flow e Composer usem a mesma API de clientes. Qual desenho é mais consistente com a estratégia MuleSoft?
-    A. Cada ferramenta chamando seu próprio conector proprietário para o sistema legado  
-    B. Todas chamando a mesma API publicada e governada na Anypoint Platform  
-    C. Apenas Flow chamando a API  
-    D. Apenas RPA chamando a API  
+11. A team argues that there is no need to publish assets in Exchange because everyone already knows where the code is. Why is that architecturally weak?
+   A) Because Exchange is contractually mandatory
+   B) Because without a central catalog, reuse, discovery, and governance become much harder
+   C) Because APIs do not work without Exchange
+   D) Because Runtime Manager depends on Exchange
 
-13. Um item de prova menciona “Shared Load Balancer” (SLB). O que ele representa?
-    A. Um concentrador de bots RPA  
-    B. O balanceador padrão que fornece URL pública para APIs no CloudHub  
-    C. Um componente exclusivo do Runtime Fabric  
-    D. Um módulo de autenticação do Salesforce  
+12. AnyAirlines wants RPA, Flow, and Composer to use the same customer API. Which design is most consistent with MuleSoft strategy?
+   A) Each tool calls a separate wrapper API owned by its team
+   B) All tools call the same governed API published in Anypoint Platform
+   C) Only Flow uses the governed API while the other tools integrate directly
+   D) Keep RPA and Composer on direct connectors to move faster
 
-14. NTO quer limitar o tráfego para uma API com base no plano de acesso de cada consumidor (por exemplo, Bronze, Prata, Ouro). Qual funcionalidade é mais adequada?
-    A. Rate Limiting simples  
-    B. SLA‑based policies no API Manager  
-    C. IP Whitelisting apenas  
-    D. Desativar API em horários de pico  
+13. An exam question mentions 'Shared Load Balancer' (SLB). What does it represent?
+   A) The RPA bot concentrator
+   B) The default load balancer that provides a public URL for APIs in CloudHub
+   C) An exclusive component of Runtime Fabric
+   D) A Salesforce authentication module
 
-15. Uma alternativa de prova afirma: “Em uma boa arquitetura MuleSoft, é melhor duplicar APIs do que ajustar contratos existentes para permitir reutilização”. Como o candidato ideal responde?
-    A. Concorda, para evitar dependências  
-    B. Discorda; a estratégia valoriza reutilização, contratos bem desenhados e minimização de duplicação  
-    C. Depende do humor da equipe  
-    D. Reproduz a abordagem sem questionar  
+14. NTO wants to limit traffic to an API based on each consumer's access plan (e.g. Bronze, Silver, Gold). What functionality is more appropriate?
+   A) A single global rate limit shared by all consumers
+   B) SLA-based policies in API Manager
+   C) IP whitelisting with the same quota for every consumer
+   D) Manually disable the API during peak times
+
+15. One option states: 'In a good MuleSoft architecture, it is better to duplicate APIs than adjust existing contracts to enable reuse.' How should the ideal candidate respond?
+   A) Agree, to avoid dependencies
+   B) Disagree; the strategy values reuse, well-designed contracts, and minimization of duplication
+   C) It depends on the team's mood
+   D) Accept the approach without questioning it
