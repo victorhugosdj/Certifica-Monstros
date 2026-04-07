@@ -1,27 +1,112 @@
-# Modulos e questoes
+# Certifica-Monstros
 
-Esta pasta separa apenas o material de estudo e os bancos de questoes encontrados no projeto.
+Sistema de estudo interativo para certificações, com módulos teóricos, provas e simulados oficiais.
 
-## Conteudo incluido
+## 🚀 Quick Start
 
-- `data/modulos.json`: metadados dos 8 modulos.
-- `data/provas.json`: banco principal de questoes por modulo usado pelo motor de provas.
-- `data/modules/Modulo 1` ate `data/modules/Modulo 8`: conteudo teorico, questoes em Markdown, questoes em JSON e provas por modulo.
-- `data/official-exams`: simulados oficiais/agregados:
-  - `simulados_oficiais.json`
-  - `Simulado.json`
-  - `Simulado V2.json`
-  - `Simulado V3.json`
-  - `Simulado V4.json`
+### Pré-requisitos
+- Python 3.8+
+- Node.js (opcional, para desenvolvimento frontend)
+- Conta Supabase
 
-## Resumo
+### Instalação
 
-- Total de modulos: 8.
-- Questoes por modulo em `questions.json`: 45.
-- Total de questoes por modulo: 360.
-- Simulados oficiais: 4 arquivos com 60 questoes cada.
-- Total de questoes em simulados oficiais: 240.
+1. **Backend:**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
 
-## Observacao
+2. **Frontend:**
+   - Abra `frontend/index.html` no navegador
+   - Ou use um servidor local: `python -m http.server 8000`
 
-Nao foram copiados arquivos de backend, frontend, estilos, assets, testes, logs, documentacao tecnica ou configuracoes de deploy.
+3. **Configuração Supabase:**
+   - Crie um projeto em https://supabase.com
+   - Configure as variáveis de ambiente em `.env`:
+     ```
+     SUPABASE_URL=your_supabase_url
+     SUPABASE_SERVICE_KEY=your_service_key
+     ```
+
+## 🏗️ Arquitetura
+
+### Frontend
+- **Tecnologias:** HTML, CSS, JavaScript vanilla
+- **Arquivos principais:**
+  - `index.html` - Estrutura da aplicação
+  - `app.js` - Lógica principal
+  - `module-viewer.js` - Visualização interativa de módulos
+  - `exam-engine.js` - Motor de provas
+  - `dashboard.js` - Estatísticas e progresso
+
+### Backend
+- **Tecnologias:** Python FastAPI
+- **Arquivos principais:**
+  - `main.py` - Endpoints REST
+  - `database.py` - Cliente Supabase
+- **Dependências:** fastapi, uvicorn, supabase, python-dotenv
+
+### Banco de Dados
+- **Supabase PostgreSQL**
+- **Tabelas principais:**
+  - `respostas_usuario` - Respostas dos usuários
+  - `profiles` - Perfis dos usuários
+  - `responses` - Respostas detalhadas
+
+## 📊 Dados do Sistema
+
+- **Módulos:** 8 módulos de estudo
+- **Questões por módulo:** 45 questões (360 total)
+- **Simulados oficiais:** 4 arquivos com 60 questões cada (240 total)
+- **Estrutura de dados:**
+  - `data/modulos.json` - Metadados dos módulos
+  - `data/provas.json` - Banco de questões
+  - `data/modules/` - Conteúdo teórico e provas em Markdown
+  - `data/official-exams/` - Simulados oficiais
+
+## 🔧 Desenvolvimento
+
+### Estrutura do Projeto
+```
+certifica-monstros/
+├── api/                    # Vercel serverless functions
+├── backend/               # FastAPI backend
+├── frontend/              # Frontend estático
+│   ├── assets/           # CSS, imagens
+│   ├── data/            # Dados espelhados
+│   └── src/             # JavaScript
+├── data/                 # Dados fonte
+├── docs/                 # Documentação (removida)
+├── observação/           # Arquivos de observação (removidos)
+└── tools/                # Scripts utilitários
+```
+
+### Comandos Úteis
+- **Executar backend:** `cd backend && uvicorn main:app --reload`
+- **Testar frontend:** Abrir `frontend/index.html` no navegador
+- **Deploy:** Push para GitHub ativa deploy automático no Vercel
+
+### Configuração Vercel
+- **Framework:** Static Site + Serverless Functions
+- **Build Command:** Nenhum (estático)
+- **Output Directory:** `frontend/`
+- **Functions Directory:** `api/`
+
+## 📝 Notas para Desenvolvedores
+
+- O frontend usa dados espelhados em `frontend/data/` para performance
+- Manter sincronizados com `data/` usando scripts de build
+- Autenticação via Supabase Auth
+- Dados de progresso salvos no Supabase
+- Suporte a PWA (Progressive Web App)
+
+## 🐛 Troubleshooting
+
+- **Erro de CORS:** Verificar configuração do Vercel
+- **Dados não carregam:** Verificar sincronização frontend/data
+- **Auth falha:** Verificar chaves Supabase
+
+## 📄 Licença
+
+Este projeto é privado e confidencial.
