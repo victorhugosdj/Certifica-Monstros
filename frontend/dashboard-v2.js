@@ -48,6 +48,11 @@ const OFFICIAL_EXAM_CATALOG = {};
 let OFFICIAL_EXAM_PROGRESS_REMOTE = null;
 let isLoadingOfficialCatalog = false;
 let isOfficialCatalogLoaded = false;
+const dashboardCharts = {
+  acertosErros: null,
+  radar: null,
+  barras: null
+};
 
 function escapeHtml(text) {
   return String(text || '')
@@ -806,7 +811,11 @@ function renderChartAcertosErros(stats) {
   const acertos = stats.overall.correct;
   const erros = (stats.overall.attempted || 0) - stats.overall.correct;
 
-  new Chart(canvas.getContext('2d'), {
+  if (dashboardCharts.acertosErros) {
+    dashboardCharts.acertosErros.destroy();
+  }
+
+  dashboardCharts.acertosErros = new Chart(canvas.getContext('2d'), {
     type: 'doughnut',
     data: {
       labels: ['✅ Acertos', '❌ Erros'],
@@ -850,7 +859,11 @@ function renderChartRadar(stats) {
     data.push(stats.byModule[i].percentage);
   }
 
-  new Chart(canvas.getContext('2d'), {
+  if (dashboardCharts.radar) {
+    dashboardCharts.radar.destroy();
+  }
+
+  dashboardCharts.radar = new Chart(canvas.getContext('2d'), {
     type: 'radar',
     data: {
       labels,
@@ -927,7 +940,11 @@ function renderChartBarras(stats) {
     erros.push(stats.byModule[i].wrong);
   }
 
-  new Chart(canvas.getContext('2d'), {
+  if (dashboardCharts.barras) {
+    dashboardCharts.barras.destroy();
+  }
+
+  dashboardCharts.barras = new Chart(canvas.getContext('2d'), {
     type: 'bar',
     data: {
       labels,
