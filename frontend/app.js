@@ -1178,44 +1178,16 @@ async function salvarRespostasNoBackend(userId, moduleId, responses) {
     return false;
   }
 
-  const payload = {
-    responses: responses.map(r => ({
+  // Compatibilidade legada: reaproveita estratégia principal de sync.
+  const payload = responses.map(r => ({
       user_id: userId,
       module: moduleId,
       question_id: r.id,
       correto: r.correct
-    }))
-  };
+  }));
 
-  try {
-    const res = await apiFetch('/api/responses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    console.log("✅ Respostas enviadas ao backend:", data);
-    
-    if (typeof notify === 'function') {
-      notify(`${data.inserted || responses.length} respostas sincronizadas ✅`, "success");
-    }
-    
-    return true;
-
-  } catch (error) {
-    console.error("❌ Erro ao enviar respostas:", error);
-    
-    if (typeof notify === 'function') {
-      notify("Aviso: Respostas salvas localmente mas não sincronizadas com servidor", "warning");
-    }
-    
-    return false;
-  }
+  const result = await recordResponses(payload);
+  return Boolean(result?.ok);
 }
 
 function initApp() {
