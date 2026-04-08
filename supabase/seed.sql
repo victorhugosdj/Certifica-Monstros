@@ -42,6 +42,74 @@ CREATE TABLE IF NOT EXISTS respostas_usuario (
 CREATE INDEX IF NOT EXISTS idx_respostas_usuario_user_id ON respostas_usuario(user_id);
 CREATE INDEX IF NOT EXISTS idx_respostas_usuario_module ON respostas_usuario(module);
 
+-- Snapshot canônico consolidado por usuário/questão
+CREATE TABLE IF NOT EXISTS progresso_usuario_snapshot (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  question_id text NOT NULL,
+  module integer,
+  correct boolean NOT NULL DEFAULT false,
+  points double precision NOT NULL DEFAULT 0,
+  attempts integer NOT NULL DEFAULT 1,
+  wrong_attempts integer NOT NULL DEFAULT 0,
+  last_answered_at timestamptz,
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, question_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_progress_snapshot_user_id ON progresso_usuario_snapshot(user_id);
+
+ALTER TABLE progresso_usuario_snapshot ENABLE ROW LEVEL SECURITY;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'progresso_usuario_snapshot'
+      AND policyname = 'Users can only read own canonical progress'
+  ) THEN
+    CREATE POLICY "Users can only read own canonical progress"
+      ON progresso_usuario_snapshot
+      FOR SELECT
+      USING (auth.uid() = user_id);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'progresso_usuario_snapshot'
+      AND policyname = 'Users can only insert own canonical progress'
+  ) THEN
+    CREATE POLICY "Users can only insert own canonical progress"
+      ON progresso_usuario_snapshot
+      FOR INSERT
+      WITH CHECK (auth.uid() = user_id);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'progresso_usuario_snapshot'
+      AND policyname = 'Users can only update own canonical progress'
+  ) THEN
+    CREATE POLICY "Users can only update own canonical progress"
+      ON progresso_usuario_snapshot
+      FOR UPDATE
+      USING (auth.uid() = user_id)
+      WITH CHECK (auth.uid() = user_id);
+  END IF;
+END $$;
+
+GRANT SELECT, INSERT, UPDATE ON progresso_usuario_snapshot TO authenticated;
+GRANT ALL ON progresso_usuario_snapshot TO service_role;
+
 -- Tabela de questões importadas do JSON
 CREATE TABLE IF NOT EXISTS questoes (
   id text PRIMARY KEY,

@@ -60,6 +60,21 @@ class ResponseRecords(BaseModel):
     responses: List[ResponseRecord]
 
 
+class ProgressSnapshotEntry(BaseModel):
+    module: Optional[int] = None
+    correct: bool
+    points: float = 0
+    attempts: int = 1
+    lastAnsweredAt: str = ""
+    wrong_attempts: Optional[int] = None
+
+
+class ProgressSnapshotPayload(BaseModel):
+    user_id: Optional[str] = None
+    progress: Dict[str, ProgressSnapshotEntry]
+    errors: Dict[str, int] = {}
+
+
 def get_authenticated_user(
     credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme),
 ) -> Dict[str, Any]:
@@ -85,6 +100,73 @@ def get_authenticated_user(
     return {
         "id": getattr(user, "id", None),
         "email": getattr(user, "email", None),
+    }
+
+
+def _normalize_iso_optional(raw_value: Optional[str]) -> Optional[str]:
+    value = str(raw_value or "").strip()
+    return value or None
+
+
+def _parse_iso_safe(raw_value: Optional[str]) -> Optional[datetime]:
+    if not raw_value:
+        return None
+    try:
+        return datetime.fromisoformat(str(raw_value).replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+
+def _pick_latest_valid_timestamp(incoming_value: Optional[str], existing_value: Optional[str]) -> Optional[str]:
+    normalized_incoming = _normalize_iso_optional(incoming_value)
+    normalized_existing = _normalize_iso_optional(existing_value)
+    incoming_dt = _parse_iso_safe(normalized_incoming)
+    existing_dt = _parse_iso_safe(normalized_existing)
+
+    if incoming_dt and existing_dt:
+        return normalized_incoming if incoming_dt >= existing_dt else normalized_existing
+    if incoming_dt:
+        return normalized_incoming
+    if existing_dt:
+        return normalized_existing
+    return None
+
+
+def _build_progress_from_event_rows(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    latest_rows_by_question: Dict[str, Dict[str, Any]] = {}
+    attempts_by_question: Dict[str, int] = {}
+    errors_by_question: Dict[str, int] = {}
+
+    for row in rows:
+        question_id = row.get("question_id")
+        if not question_id:
+            continue
+
+        attempts_by_question[question_id] = attempts_by_question.get(question_id, 0) + 1
+        if not row.get("correto"):
+            errors_by_question[question_id] = errors_by_question.get(question_id, 0) + 1
+
+        created_at = row.get("created_at") or row.get("answered_at") or ""
+        existing = latest_rows_by_question.get(question_id)
+        if existing and created_at <= (existing.get("created_at") or existing.get("answered_at") or ""):
+            continue
+        latest_rows_by_question[question_id] = row
+
+    latest_by_question: Dict[str, Dict[str, Any]] = {}
+    for question_id, row in latest_rows_by_question.items():
+        is_correct = bool(row.get("correto"))
+        latest_by_question[question_id] = {
+            "module": row.get("module"),
+            "correct": is_correct,
+            "points": 1 if is_correct else 0,
+            "attempts": attempts_by_question.get(question_id, 1),
+            "wrong_attempts": errors_by_question.get(question_id, 0),
+            "lastAnsweredAt": row.get("created_at") or row.get("answered_at") or "",
+        }
+
+    return {
+        "progress": latest_by_question,
+        "errors": errors_by_question,
     }
 
 
@@ -501,6 +583,47 @@ def user_progress(
         raise HTTPException(status_code=500, detail="Supabase service client is not configured")
 
     try:
+        # Fonte canônica de verdade (snapshot consolidado).
+        # Se a tabela ainda não existir no banco, o fluxo cai para reconstrução por eventos.
+        try:
+            canonical_res = (
+                service_client
+                .table("progresso_usuario_snapshot")
+                .select("question_id,module,correct,points,attempts,wrong_attempts,last_answered_at")
+                .eq("user_id", user_id)
+                .execute()
+            )
+            if not canonical_res.error:
+                canonical_rows = canonical_res.data or []
+                if canonical_rows:
+                    progress: Dict[str, Dict[str, Any]] = {}
+                    errors: Dict[str, int] = {}
+                    for row in canonical_rows:
+                        question_id = row.get("question_id")
+                        if not question_id:
+                            continue
+                        wrong_attempts = int(row.get("wrong_attempts") or 0)
+                        progress[question_id] = {
+                            "module": row.get("module"),
+                            "correct": bool(row.get("correct")),
+                            "points": float(row.get("points") or 0),
+                            "attempts": int(row.get("attempts") or 1),
+                            "wrong_attempts": wrong_attempts,
+                            "lastAnsweredAt": row.get("last_answered_at") or "",
+                        }
+                        if wrong_attempts > 0:
+                            errors[question_id] = wrong_attempts
+
+                    return {
+                        "user_id": user_id,
+                        "progress": progress,
+                        "errors": errors,
+                    }
+            else:
+                logger.info("Canonical snapshot table unavailable/error. Falling back to event history: %s", canonical_res.error)
+        except Exception as canonical_error:
+            logger.info("Canonical snapshot unavailable, falling back to event history: %s", canonical_error)
+
         res = (
             service_client
             .table("respostas_usuario")
@@ -512,40 +635,12 @@ def user_progress(
             raise HTTPException(status_code=500, detail=str(res.error))
 
         rows = res.data or []
-        latest_rows_by_question: Dict[str, Dict[str, Any]] = {}
-        attempts_by_question: Dict[str, int] = {}
-        errors_by_question: Dict[str, int] = {}
-
-        for row in rows:
-            question_id = row.get("question_id")
-            if not question_id:
-                continue
-
-            attempts_by_question[question_id] = attempts_by_question.get(question_id, 0) + 1
-            if not row.get("correto"):
-                errors_by_question[question_id] = errors_by_question.get(question_id, 0) + 1
-
-            created_at = row.get("created_at") or ""
-            existing = latest_rows_by_question.get(question_id)
-            if existing and created_at <= (existing.get("created_at") or ""):
-                continue
-            latest_rows_by_question[question_id] = row
-
-        latest_by_question: Dict[str, Dict[str, Any]] = {}
-        for question_id, row in latest_rows_by_question.items():
-            latest_by_question[question_id] = {
-                "module": row.get("module"),
-                "correct": bool(row.get("correto")),
-                "points": 1 if row.get("correto") else 0,
-                "attempts": attempts_by_question.get(question_id, 1),
-                "wrong_attempts": errors_by_question.get(question_id, 0),
-                "lastAnsweredAt": row.get("created_at") or "",
-            }
+        event_state = _build_progress_from_event_rows(rows)
 
         return {
             "user_id": user_id,
-            "progress": latest_by_question,
-            "errors": errors_by_question,
+            "progress": event_state["progress"],
+            "errors": event_state["errors"],
         }
 
     except HTTPException:
@@ -553,6 +648,145 @@ def user_progress(
     except Exception as e:
         logger.error("Error computing user progress for %s: %s", user_id, e)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/progress/sync")
+def sync_progress_snapshot(
+    payload: ProgressSnapshotPayload,
+    current_user: Dict[str, Any] = Security(get_authenticated_user),
+) -> Dict[str, Any]:
+    """Persist a canonical, idempotent progress snapshot for the authenticated user."""
+
+    authenticated_user_id = current_user["id"]
+    if payload.user_id and payload.user_id != authenticated_user_id:
+        logger.warning(
+            "Ignoring mismatched payload user_id on /api/progress/sync: payload=%s auth=%s",
+            payload.user_id,
+            authenticated_user_id,
+        )
+
+    service_client = get_supabase_service_client()
+    if not service_client:
+        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+
+    progress = payload.progress or {}
+    errors = payload.errors or {}
+    if not progress:
+        logger.info("POST /api/progress/sync user=%s with empty progress payload", authenticated_user_id)
+        return {"upserted": 0, "message": "No progress items to sync"}
+
+    logger.info(
+        "POST /api/progress/sync user=%s progress_items=%d error_items=%d",
+        authenticated_user_id,
+        len(progress),
+        len(errors),
+    )
+
+    question_ids = [qid for qid in progress.keys() if qid]
+    existing_by_question: Dict[str, Dict[str, Any]] = {}
+    if question_ids:
+        try:
+            existing_res = (
+                service_client
+                .table("progresso_usuario_snapshot")
+                .select("question_id,module,correct,points,attempts,wrong_attempts,last_answered_at")
+                .eq("user_id", authenticated_user_id)
+                .in_("question_id", question_ids)
+                .execute()
+            )
+            if existing_res.error:
+                logger.info("Could not read existing canonical snapshot rows before upsert: %s", existing_res.error)
+            else:
+                for row in existing_res.data or []:
+                    question_id = row.get("question_id")
+                    if question_id:
+                        existing_by_question[question_id] = row
+        except Exception as read_existing_error:
+            logger.info("Skipping pre-merge with existing snapshot due to read error: %s", read_existing_error)
+
+    now_iso = datetime.utcnow().isoformat()
+    rows = []
+    for question_id, entry in progress.items():
+        if not question_id:
+            continue
+        existing = existing_by_question.get(question_id, {})
+
+        incoming_wrong_attempts = int(errors.get(question_id, entry.wrong_attempts or 0) or 0)
+        existing_wrong_attempts = int(existing.get("wrong_attempts") or 0)
+        merged_wrong_attempts = max(incoming_wrong_attempts, existing_wrong_attempts)
+
+        incoming_correct = bool(entry.correct)
+        existing_correct = bool(existing.get("correct"))
+        # Regra cumulativa: uma questão marcada como correta não deve regredir para incorreta.
+        merged_correct = incoming_correct or existing_correct
+
+        incoming_points = float(entry.points or 0)
+        existing_points = float(existing.get("points") or 0)
+        merged_points = max(incoming_points, existing_points)
+
+        incoming_attempts = max(int(entry.attempts or 1), 1)
+        existing_attempts = max(int(existing.get("attempts") or 1), 1)
+        merged_attempts = max(incoming_attempts, existing_attempts)
+
+        merged_last = _pick_latest_valid_timestamp(
+            entry.lastAnsweredAt,
+            existing.get("last_answered_at"),
+        )
+
+        incoming_module = entry.module
+        existing_module = existing.get("module")
+        merged_module = incoming_module if incoming_module is not None else existing_module
+
+        rows.append({
+            "user_id": authenticated_user_id,
+            "question_id": question_id,
+            "module": merged_module,
+            "correct": merged_correct,
+            "points": merged_points,
+            "attempts": merged_attempts,
+            "wrong_attempts": max(merged_wrong_attempts, 0),
+            "last_answered_at": merged_last,
+            "updated_at": now_iso,
+        })
+
+    if not rows:
+        return {"upserted": 0, "message": "No valid progress rows to sync"}
+
+    try:
+        res = (
+            service_client
+            .table("progresso_usuario_snapshot")
+            .upsert(rows, on_conflict="user_id,question_id")
+            .execute()
+        )
+        upsert_error = getattr(res, "error", None)
+        if upsert_error:
+            logger.error(
+                "Supabase upsert error on progresso_usuario_snapshot user=%s rows=%d error=%s",
+                authenticated_user_id,
+                len(rows),
+                upsert_error,
+            )
+            raise HTTPException(status_code=500, detail=f"Database error: {str(upsert_error)}")
+
+        returned_rows = getattr(res, "data", None) or []
+        logger.info(
+            "POST /api/progress/sync upsert success user=%s rows=%d returned=%d",
+            authenticated_user_id,
+            len(rows),
+            len(returned_rows),
+        )
+
+        return {
+            "upserted": len(rows),
+            "message": "Progress snapshot synchronized",
+            "timestamp": now_iso,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Error syncing canonical progress snapshot for %s: %s", authenticated_user_id, e)
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
 @app.post("/api/responses")

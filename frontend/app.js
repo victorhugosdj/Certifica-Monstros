@@ -18,6 +18,7 @@ let moduleActionsBound = false;
 let navigationBound = false;
 let registerInFlight = false;
 const loginSyncInFlightUsers = new Set();
+const loginHydrationInFlightUsers = new Set();
 
 function getSupabaseClient() {
   if (SUPABASE) return SUPABASE;
@@ -472,12 +473,54 @@ async function fetchRemoteProgress(userId) {
   }
 }
 
+async function syncProgressSnapshotToBackend(userId, progress = {}, errors = {}) {
+  if (!userId || !progress || !hasAnyValues(progress)) {
+    return { ok: true, upserted: 0 };
+  }
+
+  try {
+    const progressCount = Object.keys(progress || {}).length;
+    const errorCount = Object.keys(errors || {}).length;
+    console.info('[sync-snapshot] POST /api/progress/sync', {
+      userId,
+      progressCount,
+      errorCount,
+    });
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(await getAuthHeaders()),
+    };
+    const response = await apiFetch('/api/progress/sync', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        progress,
+        errors: errors || {},
+      }),
+    });
+    if (!response.ok) {
+      const errorBody = await response.text().catch(() => '');
+      throw new Error(
+        `Falha ao sincronizar snapshot de progresso (HTTP ${response.status}) ${errorBody}`.trim()
+      );
+    }
+    const responseJson = await response.json().catch(() => ({}));
+    console.info('[sync-snapshot] sucesso', responseJson);
+    return { ok: true, ...responseJson };
+  } catch (error) {
+    console.warn('Nao foi possivel sincronizar snapshot de progresso:', error);
+    return { ok: false, reason: 'network', detail: String(error?.message || error) };
+  }
+}
+
 async function syncUserProgressFromRemote(userId) {
   if (!userId) {
     return {
       progress: loadProgress(userId),
       errors: loadErrors(userId),
       remoteProgress: {},
+      remoteErrors: {},
       remoteFetchSucceeded: false,
     };
   }
@@ -493,6 +536,7 @@ async function syncUserProgressFromRemote(userId) {
       progress: localProgress,
       errors: localErrors,
       remoteProgress: {},
+      remoteErrors: {},
       remoteFetchSucceeded: false,
     };
   }
@@ -510,6 +554,7 @@ async function syncUserProgressFromRemote(userId) {
     progress: mergedProgress,
     errors: mergedErrors,
     remoteProgress,
+    remoteErrors,
     remoteFetchSucceeded: true,
   };
 }
@@ -1217,17 +1262,40 @@ async function onLoginSuccess(user) {
     console.warn('Falha ao carregar provas antes dos módulos:', e);
   }
 
-  try {
-    const syncFromRemote = await syncUserProgressFromRemote(user.id);
-    await syncMergedProgressToBackendAfterLogin(
+  if (!loginHydrationInFlightUsers.has(user.id)) {
+    loginHydrationInFlightUsers.add(user.id);
+    try {
+      const syncFromRemote = await syncUserProgressFromRemote(user.id);
+    const snapshotSync = await syncProgressSnapshotToBackend(
       user.id,
       syncFromRemote.progress,
-      syncFromRemote.remoteProgress,
-      { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
+      syncFromRemote.errors
     );
-    await flushPendingResponses(user.id);
-  } catch (e) {
-    console.warn('Falha ao sincronizar progresso remoto:', e);
+    if (!snapshotSync.ok) {
+      console.warn('[sync-snapshot] fallback para sync incremental', snapshotSync);
+      await syncMergedProgressToBackendAfterLogin(
+        user.id,
+        syncFromRemote.progress,
+        syncFromRemote.remoteProgress,
+        { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
+        );
+      }
+      await flushPendingResponses(user.id);
+
+      const consolidatedRemote = await fetchRemoteProgress(user.id);
+      if (consolidatedRemote !== null && CURRENT_USER?.id === user.id) {
+        const finalProgress = mergeProgress(syncFromRemote.progress, consolidatedRemote?.progress || {});
+        const finalErrors = mergeErrors(syncFromRemote.errors, consolidatedRemote?.errors || {});
+        STATE.userProgress = finalProgress;
+        STATE.userErrors = finalErrors;
+        saveProgress(user.id, finalProgress);
+        saveErrors(user.id, finalErrors);
+      }
+    } catch (e) {
+      console.warn('Falha ao sincronizar progresso remoto:', e);
+    } finally {
+      loginHydrationInFlightUsers.delete(user.id);
+    }
   }
 
   await loadModules().then(renderModulesGrid).catch(console.error);
