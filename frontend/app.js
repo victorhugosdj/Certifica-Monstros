@@ -1601,6 +1601,59 @@ async function salvarRespostasNoBackend(userId, moduleId, responses) {
   return Boolean(result?.ok);
 }
 
+// Debug/migracao manual:
+// Forca um backfill completo de progresso local -> backend para o usuario autenticado.
+async function forceSyncLocalProgressToBackend() {
+  const userId = CURRENT_USER?.id;
+  if (!userId) {
+    console.warn('[force-sync] Nenhum usuario autenticado.');
+    return { ok: false, reason: 'no-user' };
+  }
+
+  const recovered = recoverLocalProgressAndErrors(userId);
+  const localProgress = recovered?.progress || {};
+  const localErrors = recovered?.errors || {};
+
+  const remoteBefore = await fetchRemoteProgress(userId);
+  const remoteProgressBefore = remoteBefore?.progress || {};
+  const remoteErrorsBefore = remoteBefore?.errors || {};
+
+  const mergedProgress = mergeProgress(localProgress, remoteProgressBefore);
+  const mergedErrors = mergeErrors(localErrors, remoteErrorsBefore);
+
+  const syncResult = await syncProgressSnapshotToBackend(userId, mergedProgress, mergedErrors);
+  if (!syncResult?.ok) {
+    console.warn('[force-sync] Falha ao sincronizar snapshot consolidado:', syncResult);
+    return { ok: false, reason: syncResult?.reason || 'sync-failed', detail: syncResult };
+  }
+
+  const remoteAfter = await fetchRemoteProgress(userId);
+  const finalProgress = mergeProgress(mergedProgress, remoteAfter?.progress || {});
+  const finalErrors = mergeErrors(mergedErrors, remoteAfter?.errors || {});
+
+  STATE.userProgress = finalProgress;
+  STATE.userErrors = finalErrors;
+  saveProgress(userId, finalProgress);
+  saveErrors(userId, finalErrors);
+
+  const progressCount = Object.keys(finalProgress || {}).length;
+  const errorCount = Object.keys(finalErrors || {}).length;
+  console.info('[force-sync] Backfill concluido', {
+    userId,
+    syncedItems: progressCount,
+    errorItems: errorCount,
+    upserted: Number(syncResult?.upserted || 0),
+  });
+
+  return {
+    ok: true,
+    userId,
+    syncedItems: progressCount,
+    errorItems: errorCount,
+    upserted: Number(syncResult?.upserted || 0),
+  };
+}
+
 function initApp() {
   showLogin();
   bindLoginForm();
@@ -1617,3 +1670,4 @@ window.loadProvas = loadProvas;
 window.setView = setView;
 window.getCurrentUserProgress = () => (CURRENT_USER?.id ? loadProgress(CURRENT_USER.id) : {});
 window.getCurrentUserErrors = () => (CURRENT_USER?.id ? loadErrors(CURRENT_USER.id) : {});
+window.forceSyncLocalProgressToBackend = forceSyncLocalProgressToBackend;
