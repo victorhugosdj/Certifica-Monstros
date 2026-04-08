@@ -17,6 +17,7 @@ const STATE = {
 let moduleActionsBound = false;
 let navigationBound = false;
 let registerInFlight = false;
+const loginSyncInFlightUsers = new Set();
 
 function getSupabaseClient() {
   if (SUPABASE) return SUPABASE;
@@ -409,7 +410,7 @@ async function fetchRemoteProgress(userId) {
 
 async function syncUserProgressFromRemote(userId) {
   if (!userId) {
-    return { progress: loadProgress(userId), errors: loadErrors(userId) };
+    return { progress: loadProgress(userId), errors: loadErrors(userId), remoteProgress: {}, hadRemote: false };
   }
 
   const recoveredLocalData = recoverLocalProgressAndErrors(userId);
@@ -426,12 +427,12 @@ async function syncUserProgressFromRemote(userId) {
     STATE.userErrors = mergedErrors;
     saveProgress(userId, mergedProgress);
     saveErrors(userId, mergedErrors);
-    return { progress: mergedProgress, errors: mergedErrors };
+    return { progress: mergedProgress, errors: mergedErrors, remoteProgress, hadRemote: true };
   }
 
   STATE.userProgress = localProgress;
   STATE.userErrors = localErrors;
-  return { progress: localProgress, errors: localErrors };
+  return { progress: localProgress, errors: localErrors, remoteProgress: {}, hadRemote: false };
 }
 
 async function refreshUserDataFromBackend() {
@@ -955,6 +956,54 @@ async function recordResponses(responses) {
   }
 }
 
+async function syncMergedProgressToBackendAfterLogin(userId, mergedProgress = {}, remoteProgress = {}) {
+  if (!userId || !mergedProgress || loginSyncInFlightUsers.has(userId)) {
+    return { ok: true, sent: 0 };
+  }
+  if (!Array.isArray(STATE.provas) || STATE.provas.length === 0) {
+    return { ok: true, sent: 0 };
+  }
+
+  loginSyncInFlightUsers.add(userId);
+  try {
+    const questionsById = new Map(
+      STATE.provas.map((question) => [String(question.id), question])
+    );
+    const payload = [];
+
+    Object.entries(mergedProgress || {}).forEach(([questionId, mergedEntry]) => {
+      const question = questionsById.get(String(questionId));
+      if (!question) return;
+
+      const remoteEntry = remoteProgress?.[questionId];
+      const mergedDate = String(mergedEntry?.lastAnsweredAt || '');
+      const remoteDate = String(remoteEntry?.lastAnsweredAt || '');
+      const mergedCorrect = Boolean(mergedEntry?.correct);
+      const remoteCorrect = Boolean(remoteEntry?.correct);
+      const shouldSync = !remoteEntry
+        || mergedDate > remoteDate
+        || mergedCorrect !== remoteCorrect;
+      if (!shouldSync) return;
+
+      payload.push({
+        user_id: userId,
+        module: Number(question.modulo),
+        question_id: question.id,
+        correto: mergedCorrect,
+      });
+    });
+
+    if (!payload.length) {
+      return { ok: true, sent: 0 };
+    }
+
+    const result = await recordResponses(payload);
+    return { ok: result.ok, sent: payload.length };
+  } finally {
+    loginSyncInFlightUsers.delete(userId);
+  }
+}
+
 async function gradeExam(questions, answersByQuestionId = {}) {
   if (!CURRENT_USER) return;
   const errors = loadErrors(CURRENT_USER.id);
@@ -1067,7 +1116,14 @@ async function onLoginSuccess(user) {
   }
 
   try {
-    await syncUserProgressFromRemote(user.id);
+    const syncFromRemote = await syncUserProgressFromRemote(user.id);
+    if (syncFromRemote?.hadRemote) {
+      await syncMergedProgressToBackendAfterLogin(
+        user.id,
+        syncFromRemote.progress,
+        syncFromRemote.remoteProgress
+      );
+    }
   } catch (e) {
     console.warn('Falha ao sincronizar progresso remoto:', e);
   }
