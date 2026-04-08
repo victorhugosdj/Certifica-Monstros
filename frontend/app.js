@@ -193,10 +193,21 @@ function getAuthRedirectUrl() {
   return redirectUrl.toString();
 }
 
+function getPasswordRecoveryRedirectUrl() {
+  const redirectUrl = new URL(getCanonicalAppUrl());
+  redirectUrl.searchParams.set('auth_mode', 'recovery');
+  return redirectUrl.toString();
+}
+
 function clearAuthUrlState() {
   const cleanUrl = new URL(window.location.href);
   cleanUrl.hash = '';
   cleanUrl.searchParams.delete('auth_mode');
+  cleanUrl.searchParams.delete('code');
+  cleanUrl.searchParams.delete('token');
+  cleanUrl.searchParams.delete('token_hash');
+  cleanUrl.searchParams.delete('type');
+  cleanUrl.searchParams.delete('next');
   history.replaceState({}, document.title, cleanUrl.toString());
 }
 
@@ -209,6 +220,17 @@ function isEmailConfirmationCallback() {
   const url = new URL(window.location.href);
   const hash = url.hash || '';
   return shouldForceLoginView() && hash.includes('access_token=') && !hash.includes('type=recovery');
+}
+
+function isPasswordRecoveryCallback() {
+  const url = new URL(window.location.href);
+  const hash = url.hash || '';
+  const typeFromQuery = (url.searchParams.get('type') || '').toLowerCase();
+  const hasRecoveryType = hash.includes('type=recovery') || typeFromQuery === 'recovery';
+  const hasRecoveryToken = hash.includes('access_token=') || url.searchParams.has('token') || url.searchParams.has('token_hash');
+  const hasRecoveryCode = url.searchParams.has('code');
+  const isRecoveryMode = (url.searchParams.get('auth_mode') || '').toLowerCase() === 'recovery';
+  return hasRecoveryType || (isRecoveryMode && (hasRecoveryToken || hasRecoveryCode));
 }
 
 function loadProgress(userId) {
@@ -1047,17 +1069,37 @@ async function initAuth() {
   const supabase = getSupabaseClient();
   if (!supabase) return;
 
-  if (shouldForceLoginView()) {
+  const isRecovery = isPasswordRecoveryCallback();
+  if (shouldForceLoginView() || isRecovery) {
     showLogin();
   }
 
+  if (isRecovery) {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    if (code) {
+      try {
+        await supabase.auth.exchangeCodeForSession(code);
+      } catch (error) {
+        console.warn('Falha ao trocar código de recuperação por sessão:', error);
+      }
+    }
+    mostrarModalAtualizarSenha();
+  }
+
   const { data } = await supabase.auth.getSession();
-  if (data?.session?.user && !isEmailConfirmationCallback()) {
+  if (data?.session?.user && !isEmailConfirmationCallback() && !isRecovery) {
     onLoginSuccess(data.session.user);
   }
 
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
+      mostrarModalAtualizarSenha();
+      return;
+    }
+
+    if (isPasswordRecoveryCallback()) {
+      showLogin();
       mostrarModalAtualizarSenha();
       return;
     }
@@ -1138,7 +1180,7 @@ async function resetPassword(email) {
   const supabase = getSupabaseClient();
   if (!supabase) return;
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: getAuthRedirectUrl()
+    redirectTo: getPasswordRecoveryRedirectUrl()
   });
   if (error) {
     alert(error.message || 'Erro ao enviar link de recuperação');
@@ -1158,8 +1200,14 @@ async function updatePassword(password) {
     return false;
   }
 
-  alert('Senha atualizada com sucesso.');
+  await supabase.auth.signOut();
+  CURRENT_USER = null;
+  STATE.userProgress = null;
+  STATE.userErrors = null;
+  clearAuthUrlState();
+  alert('Senha atualizada com sucesso. Faça login com a nova senha.');
   fecharModalAtualizarSenha();
+  showLogin();
   return true;
 }
 
