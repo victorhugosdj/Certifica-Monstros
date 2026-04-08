@@ -34,7 +34,7 @@ function getUserProgress(userId) {
 }
 
 const OFFICIAL_EXAMS_BASE_PATH_SAFE = 'data/modules/conteudos e provas/Hyperautomation/Simulados e Quest\u00f5es';
-const OFFICIAL_EXAMS_JSON_PATH = 'data/simulados_oficiais.json';
+const OFFICIAL_EXAMS_JSON_PATH = 'data/official-exams/simulados_oficiais.json';
 const OFFICIAL_EXAMS = [
   { title: 'Simulado V1', file: 'SimuladoV1.md', version: 'V1', kind: 'Simulado oficial' },
   { title: 'Simulado V2', file: 'Simulado V2.md', version: 'V2', kind: 'Simulado oficial' },
@@ -294,6 +294,10 @@ async function loadOfficialExamCatalog() {
 
 async function startOfficialExam(file, title) {
   try {
+    if (!isOfficialCatalogLoaded) {
+      await loadOfficialExamCatalog();
+    }
+
     let questions = OFFICIAL_EXAM_CATALOG[file]?.questions || [];
     if (!questions.length) {
       const url = encodeURI(`${OFFICIAL_EXAMS_BASE_PATH_SAFE}/${file}`);
