@@ -125,7 +125,14 @@ function fecharModalAtualizarSenha() {
 function getApiBaseUrl() {
   const el = document.querySelector('meta[name="api-base-url"]');
   const configured = el?.content?.trim() || "";
-  if (!configured) return "";
+  if (!configured) {
+    const isLocalHost = /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname);
+    // Em desenvolvimento local, o frontend costuma rodar em 8000 e o backend em 8001.
+    if (isLocalHost) {
+      return `${window.location.protocol}//${window.location.hostname}:8001`;
+    }
+    return "";
+  }
 
   try {
     const parsed = new URL(configured, window.location.origin);
@@ -475,16 +482,19 @@ async function fetchRemoteProgress(userId) {
 
 async function syncProgressSnapshotToBackend(userId, progress = {}, errors = {}) {
   if (!userId || !progress || !hasAnyValues(progress)) {
+    console.info('[sync-snapshot] skip: payload de progresso vazio', { userId });
     return { ok: true, upserted: 0 };
   }
 
   try {
     const progressCount = Object.keys(progress || {}).length;
     const errorCount = Object.keys(errors || {}).length;
+    const apiBase = getApiBaseUrl();
     console.info('[sync-snapshot] POST /api/progress/sync', {
       userId,
       progressCount,
       errorCount,
+      apiBase,
     });
 
     const headers = {
