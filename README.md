@@ -60,10 +60,10 @@ Sistema de estudo interativo para certificações, com módulos teóricos, prova
 - **Questões por módulo:** 45 questões (360 total)
 - **Simulados oficiais:** 4 arquivos com 60 questões cada (240 total)
 - **Estrutura de dados:**
-  - `data/modulos.json` - Metadados dos módulos
-  - `data/provas.json` - Banco de questões
-  - `data/modules/` - Conteúdo teórico e provas em Markdown
-  - `data/official-exams/` - Simulados oficiais
+  - `frontend/data/modulos.json` - Metadados dos módulos
+  - `frontend/data/provas.json` - Banco de questões
+  - `frontend/data/modules/` - Conteúdo teórico e provas em Markdown
+  - `frontend/data/official-exams/` - Simulados oficiais
 
 ## 🔧 Desenvolvimento
 
@@ -74,9 +74,8 @@ certifica-monstros/
 ├── backend/               # FastAPI backend
 ├── frontend/              # Frontend estático
 │   ├── assets/           # CSS, imagens
-│   ├── data/            # Dados espelhados
+│   ├── data/            # Dados usados pelo frontend
 │   └── src/             # JavaScript
-├── data/                 # Dados fonte
 ├── docs/                 # Documentação (removida)
 ├── observação/           # Arquivos de observação (removidos)
 └── tools/                # Scripts utilitários
@@ -95,8 +94,8 @@ certifica-monstros/
 
 ## 📝 Notas para Desenvolvedores
 
-- O frontend usa dados espelhados em `frontend/data/` para performance
-- Manter sincronizados com `data/` usando scripts de build
+- O frontend usa dados em `frontend/data/`
+- Atualize `frontend/data/` diretamente ou via scripts de build
 - Autenticação via Supabase Auth
 - Dados de progresso salvos no Supabase
 - Suporte a PWA (Progressive Web App)
