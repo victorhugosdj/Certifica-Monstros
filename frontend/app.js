@@ -280,6 +280,81 @@ function mergeErrors(localErrors = {}, remoteErrors = {}) {
   return merged;
 }
 
+const STORAGE_MIGRATION_VERSION = 'v1';
+
+function getStorageMigrationKey(userId) {
+  return `certifica_storage_migration_${STORAGE_MIGRATION_VERSION}_${userId}`;
+}
+
+function readStorageObjectSafely(key) {
+  if (!key) return {};
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function hasAnyValues(obj = {}) {
+  return Object.keys(obj || {}).length > 0;
+}
+
+function collectLegacyStorageKeys(currentKey, genericPrefix, genericKey) {
+  const keys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (!key) continue;
+      if (key === currentKey) continue;
+      if (key === genericKey || key.startsWith(genericPrefix)) {
+        keys.push(key);
+      }
+    }
+  } catch {
+    return [];
+  }
+  return keys;
+}
+
+function recoverLocalProgressAndErrors(userId) {
+  const progressKey = getProgressKey(userId);
+  const errorKey = getErrorKey(userId);
+  const migrationKey = getStorageMigrationKey(userId);
+
+  let mergedProgress = loadProgress(userId);
+  let mergedErrors = loadErrors(userId);
+  const alreadyMigrated = localStorage.getItem(migrationKey) === '1';
+
+  // Executa apenas uma vez por usuário para evitar reprocessamento contínuo.
+  if (alreadyMigrated) {
+    return { progress: mergedProgress, errors: mergedErrors };
+  }
+
+  const progressCandidateKeys = collectLegacyStorageKeys(progressKey, 'certifica_progress_', 'certifica_progress');
+  const errorCandidateKeys = collectLegacyStorageKeys(errorKey, 'certifica_errors_', 'certifica_errors');
+
+  progressCandidateKeys.forEach((key) => {
+    const candidate = readStorageObjectSafely(key);
+    if (!hasAnyValues(candidate)) return;
+    mergedProgress = mergeProgress(mergedProgress, candidate);
+  });
+
+  errorCandidateKeys.forEach((key) => {
+    const candidate = readStorageObjectSafely(key);
+    if (!hasAnyValues(candidate)) return;
+    mergedErrors = mergeErrors(mergedErrors, candidate);
+  });
+
+  saveProgress(userId, mergedProgress);
+  saveErrors(userId, mergedErrors);
+  localStorage.setItem(migrationKey, '1');
+
+  return { progress: mergedProgress, errors: mergedErrors };
+}
+
 async function fetchRemoteProgress(userId) {
   if (!userId) return null;
 
@@ -301,8 +376,9 @@ async function syncUserProgressFromRemote(userId) {
     return { progress: loadProgress(userId), errors: loadErrors(userId) };
   }
 
-  const localProgress = loadProgress(userId);
-  const localErrors = loadErrors(userId);
+  const recoveredLocalData = recoverLocalProgressAndErrors(userId);
+  const localProgress = recoveredLocalData.progress;
+  const localErrors = recoveredLocalData.errors;
   const remotePayload = await fetchRemoteProgress(userId);
   if (remotePayload?.progress || remotePayload?.errors) {
     const remoteProgress = remotePayload?.progress || {};
