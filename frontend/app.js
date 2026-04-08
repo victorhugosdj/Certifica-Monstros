@@ -424,8 +424,8 @@ async function syncUserProgressFromRemote(userId) {
 
     STATE.userProgress = mergedProgress;
     STATE.userErrors = mergedErrors;
-    localStorage.setItem(getProgressKey(userId), JSON.stringify(mergedProgress));
-    localStorage.setItem(getErrorKey(userId), JSON.stringify(mergedErrors));
+    saveProgress(userId, mergedProgress);
+    saveErrors(userId, mergedErrors);
     return { progress: mergedProgress, errors: mergedErrors };
   }
 
