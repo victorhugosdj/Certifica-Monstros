@@ -1178,6 +1178,30 @@ async function salvarRespostasNoBackend(userId, moduleId, responses) {
     return false;
   }
 
+  // Persistir localmente antes da sincronização remota (fallback seguro).
+  const progress = loadProgress(userId);
+  const errors = loadErrors(userId);
+  const answeredAt = new Date().toISOString();
+
+  responses.forEach((r) => {
+    const isCorrect = Boolean(r.correct);
+    progress[r.id] = {
+      correct: isCorrect,
+      points: isCorrect ? 1 : 0,
+      attempts: (progress[r.id]?.attempts || 0) + 1,
+      lastAnsweredAt: answeredAt
+    };
+
+    if (isCorrect) {
+      delete errors[r.id];
+    } else {
+      errors[r.id] = (errors[r.id] || 0) + 1;
+    }
+  });
+
+  saveProgress(userId, progress);
+  saveErrors(userId, errors);
+
   // Compatibilidade legada: reaproveita estratégia principal de sync.
   const payload = responses.map(r => ({
       user_id: userId,
