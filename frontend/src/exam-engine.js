@@ -64,13 +64,13 @@ const ExamEngine = {
     const questions = this.generateExam(moduleInfo.id, examType === "REFORCO", state, fullPool);
 
     ExamUI.openModal();
-    ExamUI.renderExamList(moduleInfo, questions, examType, () => this.grade(moduleCode, questions));
+    ExamUI.renderExamList(moduleInfo, questions, examType, () => this.grade(moduleCode, questions, moduleInfo.id));
   },
 
   /**
    * Avalia as respostas da prova
    */
-  async grade(moduleCode, questions) {
+  async grade(moduleCode, questions, moduleId) {
     const state = await loadState();
     const moduleState = getModuleState(state, moduleCode);
     let correctCount = 0;
@@ -128,7 +128,7 @@ const ExamEngine = {
       }));
       
       // Enviar de forma assíncrona (não bloqueia UI)
-      window.salvarRespostasNoBackend(CURRENT_USER.id, moduleInfo.id, responses);
+      window.salvarRespostasNoBackend(CURRENT_USER.id, moduleId, responses);
     }
 
     // Check for achievements if user is logged in
