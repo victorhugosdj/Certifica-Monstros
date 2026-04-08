@@ -11,16 +11,19 @@ import logging
 import os
 from collections import Counter
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
+from dotenv import load_dotenv
 
 from .database import (
     get_supabase_client,
     get_supabase_service_client,
+    get_supabase_service_client_error_detail,
     get_user_errors,
     load_modulos,
     load_provas,
@@ -30,10 +33,24 @@ from .database import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Carrega variÃ¡veis de ambiente tanto da raiz do projeto quanto de backend/.env
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+if not os.getenv("SUPABASE_URL") or not (
+    os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+):
+    logger.warning(
+        "SUPABASE_URL ou chave de service role ausente. Configure SUPABASE_SERVICE_KEY "
+        "ou SUPABASE_SERVICE_ROLE_KEY. Endpoints /api/progress*, /api/responses e "
+        "metricas podem retornar 500."
+    )
+
 app = FastAPI(title="Certifica Monstros - Backend")
 bearer_scheme = HTTPBearer(auto_error=False)
 
-# ✅ CORS Seguro: Apenas origens confiáveis
+# âœ… CORS Seguro: Apenas origens confiÃ¡veis
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
     "http://localhost:3000,http://localhost:8080,http://localhost:5173,http://127.0.0.1:5500,http://127.0.0.1:8000,http://127.0.0.1:8080"
@@ -85,7 +102,7 @@ def get_authenticated_user(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
         auth_response = service_client.auth.get_user(credentials.credentials)
@@ -129,6 +146,17 @@ def _pick_latest_valid_timestamp(incoming_value: Optional[str], existing_value: 
         return normalized_incoming
     if existing_dt:
         return normalized_existing
+    return None
+
+
+def _response_error(response: Any) -> Optional[Any]:
+    """Compat helper for Supabase responses across client versions."""
+    if response is None:
+        return "empty response"
+    if hasattr(response, "error"):
+        return getattr(response, "error")
+    if isinstance(response, dict):
+        return response.get("error")
     return None
 
 
@@ -207,8 +235,9 @@ def list_profiles(limit: int = 50) -> List[Dict[str, Any]]:
         raise HTTPException(status_code=500, detail="Supabase not configured")
 
     res = supabase.table("profiles").select("*").limit(limit).execute()
-    if res.error:
-        raise HTTPException(status_code=500, detail=str(res.error))
+    response_error = _response_error(res)
+    if response_error:
+        raise HTTPException(status_code=500, detail=str(response_error))
     return res.data
 
 
@@ -221,8 +250,9 @@ def get_profile(user_id: str) -> Dict[str, Any]:
         raise HTTPException(status_code=500, detail="Supabase not configured")
 
     res = supabase.table("profiles").select("*").eq("user_id", user_id).maybe_single().execute()
-    if res.error:
-        raise HTTPException(status_code=500, detail=str(res.error))
+    response_error = _response_error(res)
+    if response_error:
+        raise HTTPException(status_code=500, detail=str(response_error))
     return res.data or {}
 
 
@@ -252,7 +282,7 @@ def user_metrics(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     # Total responses for the user (correct + incorrect)
     res = (
@@ -262,8 +292,9 @@ def user_metrics(
         .eq("user_id", user_id)
         .execute()
     )
-    if res.error:
-        raise HTTPException(status_code=500, detail=str(res.error))
+    response_error = _response_error(res)
+    if response_error:
+        raise HTTPException(status_code=500, detail=str(response_error))
 
     rows = res.data or []
     total = len(rows)
@@ -317,12 +348,13 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
         res = service_client.table("respostas_usuario").select("user_id,correto,created_at").execute()
-        if res.error:
-            raise HTTPException(status_code=500, detail=str(res.error))
+        response_error = _response_error(res)
+        if response_error:
+            raise HTTPException(status_code=500, detail=str(response_error))
 
         rows = res.data or []
 
@@ -410,7 +442,7 @@ def public_progress(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
         res = (
@@ -420,8 +452,9 @@ def public_progress(
             .eq("user_id", user_id)
             .execute()
         )
-        if res.error:
-            raise HTTPException(status_code=500, detail=str(res.error))
+        response_error = _response_error(res)
+        if response_error:
+            raise HTTPException(status_code=500, detail=str(response_error))
 
         rows = res.data or []
 
@@ -500,7 +533,7 @@ def official_exam_progress(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
         res = (
@@ -511,8 +544,9 @@ def official_exam_progress(
             .like("question_id", "official:%")
             .execute()
         )
-        if res.error:
-            raise HTTPException(status_code=500, detail=str(res.error))
+        response_error = _response_error(res)
+        if response_error:
+            raise HTTPException(status_code=500, detail=str(response_error))
 
         rows = res.data or []
         per_file: Dict[str, Dict[str, Any]] = {}
@@ -580,11 +614,11 @@ def user_progress(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
-        # Fonte canônica de verdade (snapshot consolidado).
-        # Se a tabela ainda não existir no banco, o fluxo cai para reconstrução por eventos.
+        # Fonte canÃ´nica de verdade (snapshot consolidado).
+        # Se a tabela ainda nÃ£o existir no banco, o fluxo cai para reconstruÃ§Ã£o por eventos.
         try:
             canonical_res = (
                 service_client
@@ -593,7 +627,8 @@ def user_progress(
                 .eq("user_id", user_id)
                 .execute()
             )
-            if not canonical_res.error:
+            canonical_error = _response_error(canonical_res)
+            if not canonical_error:
                 canonical_rows = canonical_res.data or []
                 if canonical_rows:
                     progress: Dict[str, Dict[str, Any]] = {}
@@ -620,7 +655,7 @@ def user_progress(
                         "errors": errors,
                     }
             else:
-                logger.info("Canonical snapshot table unavailable/error. Falling back to event history: %s", canonical_res.error)
+                logger.info("Canonical snapshot table unavailable/error. Falling back to event history: %s", canonical_error)
         except Exception as canonical_error:
             logger.info("Canonical snapshot unavailable, falling back to event history: %s", canonical_error)
 
@@ -631,8 +666,9 @@ def user_progress(
             .eq("user_id", user_id)
             .execute()
         )
-        if res.error:
-            raise HTTPException(status_code=500, detail=str(res.error))
+        response_error = _response_error(res)
+        if response_error:
+            raise HTTPException(status_code=500, detail=str(response_error))
 
         rows = res.data or []
         event_state = _build_progress_from_event_rows(rows)
@@ -667,7 +703,7 @@ def sync_progress_snapshot(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     progress = payload.progress or {}
     errors = payload.errors or {}
@@ -694,8 +730,9 @@ def sync_progress_snapshot(
                 .in_("question_id", question_ids)
                 .execute()
             )
-            if existing_res.error:
-                logger.info("Could not read existing canonical snapshot rows before upsert: %s", existing_res.error)
+            existing_error = _response_error(existing_res)
+            if existing_error:
+                logger.info("Could not read existing canonical snapshot rows before upsert: %s", existing_error)
             else:
                 for row in existing_res.data or []:
                     question_id = row.get("question_id")
@@ -717,7 +754,7 @@ def sync_progress_snapshot(
 
         incoming_correct = bool(entry.correct)
         existing_correct = bool(existing.get("correct"))
-        # Regra cumulativa: uma questão marcada como correta não deve regredir para incorreta.
+        # Regra cumulativa: uma questÃ£o marcada como correta nÃ£o deve regredir para incorreta.
         merged_correct = incoming_correct or existing_correct
 
         incoming_points = float(entry.points or 0)
@@ -806,9 +843,9 @@ def record_responses(
         HTTPException: If validation or database error occurs
     """
 
-    # Validação de entrada
+    # ValidaÃ§Ã£o de entrada
     if not payload.responses:
-        logger.warning("❌ POST /api/responses com array vazio")
+        logger.warning("âŒ POST /api/responses com array vazio")
         raise HTTPException(status_code=400, detail="responses array cannot be empty")
 
     invalid_users = sorted({r.user_id for r in payload.responses if r.user_id != current_user["id"]})
@@ -818,8 +855,8 @@ def record_responses(
 
     service_client = get_supabase_service_client()
     if not service_client:
-        logger.error("❌ Supabase service client não configurado")
-        raise HTTPException(status_code=500, detail="Supabase service client is not configured")
+        logger.error("âŒ Supabase service client nÃ£o configurado")
+        raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
         # Preparar dados com timestamp
@@ -834,24 +871,25 @@ def record_responses(
             for r in payload.responses
         ]
 
-        logger.info(f"📝 Registrando {len(rows)} respostas para usuário {rows[0].get('user_id', 'unknown')}")
+        logger.info(f"ðŸ“ Registrando {len(rows)} respostas para usuÃ¡rio {rows[0].get('user_id', 'unknown')}")
 
         res = service_client.table("respostas_usuario").insert(rows).execute()
-        
-        if res.error:
-            logger.error(f"❌ Erro Supabase: {res.error}")
-            raise HTTPException(status_code=500, detail=f"Database error: {str(res.error)}")
+        response_error = _response_error(res)
+        if response_error:
+            logger.error(f"âŒ Erro Supabase: {response_error}")
+            raise HTTPException(status_code=500, detail=f"Database error: {str(response_error)}")
 
-        logger.info(f"✅ {len(rows)} respostas registradas com sucesso")
+        logger.info(f"âœ… {len(rows)} respostas registradas com sucesso")
         
         return {
             "inserted": len(rows),
-            "message": f"✅ {len(rows)} respostas registradas com sucesso",
+            "message": f"âœ… {len(rows)} respostas registradas com sucesso",
             "timestamp": datetime.utcnow().isoformat()
         }
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Exception ao registrar respostas: {str(e)}")
+        logger.error(f"âŒ Exception ao registrar respostas: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+

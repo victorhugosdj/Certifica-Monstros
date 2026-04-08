@@ -18,6 +18,7 @@ from supabase import Client, create_client
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+SUPABASE_SERVICE_KEY_ENV_NAMES = ("SUPABASE_SERVICE_KEY", "SUPABASE_SERVICE_ROLE_KEY")
 
 
 def get_supabase_client() -> Optional[Client]:
@@ -43,10 +44,20 @@ def get_supabase_service_client() -> Optional[Client]:
     """
 
     url = os.getenv("SUPABASE_URL")
-    key = os.getenv("SUPABASE_SERVICE_KEY")
+    key = next((os.getenv(env_name) for env_name in SUPABASE_SERVICE_KEY_ENV_NAMES if os.getenv(env_name)), None)
     if not url or not key:
         return None
     return create_client(url, key)
+
+
+def get_supabase_service_client_error_detail() -> str:
+    """Return a consistent error detail for missing service client configuration."""
+
+    return (
+        "Supabase service client is not configured. "
+        "Required env vars: SUPABASE_URL and SUPABASE_SERVICE_KEY "
+        "(or SUPABASE_SERVICE_ROLE_KEY)."
+    )
 
 
 def get_user_errors(user_id: str):
@@ -57,7 +68,7 @@ def get_user_errors(user_id: str):
 
     client = get_supabase_service_client()
     if not client:
-        raise RuntimeError("Supabase service client is not configured")
+        raise RuntimeError(get_supabase_service_client_error_detail())
 
     return (
         client

@@ -32,9 +32,12 @@ def build_question_id(raw_id: str) -> str:
 
 def main() -> None:
     url = os.getenv("SUPABASE_URL")
-    key = os.getenv("SUPABASE_SERVICE_KEY")
+    key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
     if not url or not key:
-        raise RuntimeError("Missing SUPABASE_URL or SUPABASE_SERVICE_KEY environment variables")
+        raise RuntimeError(
+            "Missing SUPABASE_URL and service key environment variables. "
+            "Use SUPABASE_SERVICE_KEY or SUPABASE_SERVICE_ROLE_KEY."
+        )
 
     client = create_client(url, key)
 
