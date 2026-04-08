@@ -1207,14 +1207,17 @@ function renderRadarChart(data) {
  */
 function renderRankingTable(currentUserId, ranking) {
   const container = document.getElementById('ranking-container') || document.getElementById('dashboard-root');
+  const useSectionHeader = container.id !== 'ranking-container';
   
   const html = [];
-  html.push('<div class="card" style="margin-bottom:20px;">');
-  html.push('<h3>🏆 Ranking de Usuários (TOP 3)</h3>');
-  
+  if (useSectionHeader) {
+    html.push('<div class="card" style="margin-bottom:20px;">');
+    html.push('<h3>🏆 Ranking de Usuários (TOP 3)</h3>');
+  }
+
+  html.push('<div class="card" style="margin-bottom:20px; padding: 16px;">');
   if (!ranking || ranking.length === 0) {
-    html.push('<p style="color:#aaa;">Sem dados de ranking ainda. Faça mais simulados!</p>');
-    html.push('</div>');
+    html.push('<p style="color:#aaa; margin: 0;">Sem dados de ranking ainda. Faça mais simulados!</p>');
   } else {
     html.push('<table class="table" style="width:100%;">');
     html.push('<thead><tr style="border-bottom:2px solid rgba(255,255,255,0.2);">');
@@ -1224,13 +1227,13 @@ function renderRankingTable(currentUserId, ranking) {
     html.push('<th style="text-align:center;">Total</th>');
     html.push('<th style="text-align:center;">Acurácia</th>');
     html.push('</tr></thead><tbody>');
-    
+
     ranking.slice(0, 3).forEach((user, index) => {
       const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
       const isCurrentUser = user.userId === currentUserId;
       const bgColor = isCurrentUser ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255,255,255,0.02)';
       const fontWeight = isCurrentUser ? 'bold' : 'normal';
-      
+
       html.push(`<tr style="background:${bgColor};border-bottom:1px solid rgba(255,255,255,0.1);font-weight:${fontWeight};">`);
       html.push(`<td style="text-align:center;font-size:18px;">${medal}</td>`);
       html.push(`<td>${user.userName}${isCurrentUser ? ' (você)' : ''}</td>`);
@@ -1239,17 +1242,22 @@ function renderRankingTable(currentUserId, ranking) {
       html.push(`<td style="text-align:center;font-weight:700;color:#4CAF50;">${user.percentage}%</td>`);
       html.push('</tr>');
     });
-    
+
     html.push('</tbody></table>');
+  }
+  html.push('</div>');
+
+  if (useSectionHeader) {
     html.push('</div>');
   }
-  
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = html.join('');
+
+  const content = html.join('');
   if (container.id === 'dashboard-root') {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = content;
     container.appendChild(wrapper.firstElementChild);
   } else {
-    container.innerHTML = html.join('');
+    container.innerHTML = content;
   }
 }
 
@@ -1310,7 +1318,6 @@ async function initDashboard() {
     renderChartBarras(stats);  // Gráfico opcional
     renderModulesProgress(CURRENT_USER.id, stats);
     renderRecommendations(CURRENT_USER.id, allProvas);
-    renderChallengingList(CURRENT_USER.id);
     
     // Gráfico radar adicional se disponível
     if (remoteMetrics && remoteMetrics.grafico_radar) {
