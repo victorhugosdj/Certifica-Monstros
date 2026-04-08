@@ -792,7 +792,7 @@ function renderMetrics(stats) {
     { selector: '#metrics-grid .metric-card:nth-child(1) .metric-value', value: stats.overall.total },
     { selector: '#metrics-grid .metric-card:nth-child(2) .metric-value', value: stats.overall.correct },
     { selector: '#metrics-grid .metric-card:nth-child(3) .metric-value', value: `${stats.overall.percentage}%` },
-    { selector: '#metrics-grid .metric-card:nth-child(4) .metric-value', value: `${Object.values(stats.byModule).filter(m => m.total > 0).length}/8` }
+    { selector: '#metrics-grid .metric-card:nth-child(4) .metric-value', value: `${Object.values(stats.byModule).filter(m => m.attempted > 0).length}/8` }
   ];
 
   metricsMap.forEach(item => {

@@ -176,6 +176,70 @@ function getProgressKey(userId) {
   return `certifica_progress_${userId}`;
 }
 
+function getPendingResponsesKey(userId) {
+  return `certifica_pending_responses_${userId}`;
+}
+
+function loadPendingResponses(userId) {
+  if (!userId) return [];
+  try {
+    const raw = JSON.parse(localStorage.getItem(getPendingResponsesKey(userId)) || '[]');
+    return Array.isArray(raw) ? raw : [];
+  } catch {
+    return [];
+  }
+}
+
+function dedupeResponses(responses = []) {
+  const byKey = new Map();
+  responses.forEach((response) => {
+    const userId = String(response?.user_id || '');
+    const module = String(response?.module ?? '');
+    const questionId = String(response?.question_id || '');
+    const correto = response?.correto ? '1' : '0';
+    if (!userId || !questionId) return;
+    byKey.set(`${userId}|${module}|${questionId}|${correto}`, response);
+  });
+  return Array.from(byKey.values());
+}
+
+function savePendingResponses(userId, responses) {
+  if (!userId) return;
+  const normalized = dedupeResponses(Array.isArray(responses) ? responses : []);
+  if (!normalized.length) {
+    localStorage.removeItem(getPendingResponsesKey(userId));
+    return;
+  }
+  localStorage.setItem(getPendingResponsesKey(userId), JSON.stringify(normalized));
+}
+
+function queuePendingResponses(userId, responses = []) {
+  if (!userId || !Array.isArray(responses) || !responses.length) return;
+  const current = loadPendingResponses(userId);
+  savePendingResponses(userId, [...current, ...responses]);
+}
+
+function buildResponsesPayloadFromProgress(userId, progressMap = {}) {
+  if (!userId || !Array.isArray(STATE.provas) || STATE.provas.length === 0) {
+    return [];
+  }
+  const questionsById = new Map(
+    STATE.provas.map((question) => [String(question.id), question])
+  );
+
+  return Object.entries(progressMap || []).reduce((acc, [questionId, entry]) => {
+    const question = questionsById.get(String(questionId));
+    if (!question) return acc;
+    acc.push({
+      user_id: userId,
+      module: Number(question.modulo),
+      question_id: question.id,
+      correto: Boolean(entry?.correct),
+    });
+    return acc;
+  }, []);
+}
+
 function showInfo(message, type = 'info') {
   if (typeof notify === 'function') {
     notify(message, type);
@@ -949,7 +1013,9 @@ function renderExamModal(moduloId, questions, modalOptions = {}) {
   renderCurrentQuestion();
 }
 
-async function recordResponses(responses) {
+async function recordResponses(responses, options = {}) {
+  const queueOnFailure = options?.queueOnFailure !== false;
+  const firstUserId = responses?.[0]?.user_id || CURRENT_USER?.id || null;
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -965,6 +1031,9 @@ async function recordResponses(responses) {
     }
     return { ok: true };
   } catch (err) {
+    if (queueOnFailure && firstUserId && Array.isArray(responses) && responses.length) {
+      queuePendingResponses(firstUserId, responses);
+    }
     // Não bloqueia a experiência do usuário se houver problemas de rede.
     console.warn('Não foi possível enviar respostas ao backend:', err);
     return { ok: false, reason: 'network' };
@@ -979,7 +1048,9 @@ async function syncMergedProgressToBackendAfterLogin(userId, mergedProgress = {}
     return { ok: true, sent: 0 };
   }
   if (options?.remoteFetchSucceeded === false) {
-    return { ok: false, sent: 0, reason: 'remote-unavailable' };
+    const fallbackPayload = buildResponsesPayloadFromProgress(userId, mergedProgress);
+    queuePendingResponses(userId, fallbackPayload);
+    return { ok: false, sent: 0, reason: 'remote-unavailable', queued: fallbackPayload.length };
   }
 
   loginSyncInFlightUsers.add(userId);
@@ -1020,6 +1091,19 @@ async function syncMergedProgressToBackendAfterLogin(userId, mergedProgress = {}
   } finally {
     loginSyncInFlightUsers.delete(userId);
   }
+}
+
+async function flushPendingResponses(userId) {
+  if (!userId) return { ok: true, sent: 0 };
+  const pending = loadPendingResponses(userId);
+  if (!pending.length) return { ok: true, sent: 0 };
+
+  const result = await recordResponses(pending, { queueOnFailure: false });
+  if (result.ok) {
+    savePendingResponses(userId, []);
+    return { ok: true, sent: pending.length };
+  }
+  return { ok: false, sent: 0, reason: result.reason || 'network' };
 }
 
 async function gradeExam(questions, answersByQuestionId = {}) {
@@ -1141,6 +1225,7 @@ async function onLoginSuccess(user) {
       syncFromRemote.remoteProgress,
       { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
     );
+    await flushPendingResponses(user.id);
   } catch (e) {
     console.warn('Falha ao sincronizar progresso remoto:', e);
   }
