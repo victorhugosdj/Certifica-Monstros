@@ -1317,7 +1317,6 @@ async function initDashboard() {
     renderChartRadar(stats);  // Gráfico opcional
     renderChartBarras(stats);  // Gráfico opcional
     renderModulesProgress(CURRENT_USER.id, stats);
-    renderRecommendations(CURRENT_USER.id, allProvas);
     
     // Gráfico radar adicional se disponível
     if (remoteMetrics && remoteMetrics.grafico_radar) {
