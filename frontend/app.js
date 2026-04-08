@@ -293,19 +293,22 @@ async function syncUserProgressFromRemote(userId) {
     return { progress: loadProgress(userId), errors: loadErrors(userId) };
   }
 
+  const localProgress = loadProgress(userId);
+  const localErrors = loadErrors(userId);
   const remotePayload = await fetchRemoteProgress(userId);
   if (remotePayload?.progress || remotePayload?.errors) {
     const remoteProgress = remotePayload?.progress || {};
     const remoteErrors = remotePayload?.errors || {};
-    STATE.userProgress = remoteProgress;
-    STATE.userErrors = remoteErrors;
-    localStorage.setItem(getProgressKey(userId), JSON.stringify(remoteProgress));
-    localStorage.setItem(getErrorKey(userId), JSON.stringify(remoteErrors));
-    return { progress: remoteProgress, errors: remoteErrors };
+    const mergedProgress = mergeProgress(localProgress, remoteProgress);
+    const mergedErrors = mergeErrors(localErrors, remoteErrors);
+
+    STATE.userProgress = mergedProgress;
+    STATE.userErrors = mergedErrors;
+    localStorage.setItem(getProgressKey(userId), JSON.stringify(mergedProgress));
+    localStorage.setItem(getErrorKey(userId), JSON.stringify(mergedErrors));
+    return { progress: mergedProgress, errors: mergedErrors };
   }
 
-  const localProgress = loadProgress(userId);
-  const localErrors = loadErrors(userId);
   STATE.userProgress = localProgress;
   STATE.userErrors = localErrors;
   return { progress: localProgress, errors: localErrors };
