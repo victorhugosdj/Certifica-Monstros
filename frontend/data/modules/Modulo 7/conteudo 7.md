@@ -1,12 +1,5 @@
-# Modulo 7: Anypoint Exchange
 
-Este arquivo contem o guia teorico do modulo em portugues.
-Para praticar, use o arquivo `questoes 7.md` (questoes em ingles).
-
----
-# 📚 Módulo 7
-
-# **📦 Módulo 7: Anypoint Exchange**
+# **📦 Módulo 7: Anypoint Exchange **
 
 **Peso no Exame:** 8%
 
