@@ -183,7 +183,21 @@ function showInfo(message, type = 'info') {
   alert(message);
 }
 
+function getConfiguredAppBaseUrl() {
+  const el = document.querySelector('meta[name="app-base-url"]');
+  const configured = el?.content?.trim() || '';
+  if (!configured) return '';
+
+  try {
+    return new URL(configured, window.location.origin).toString();
+  } catch {
+    return '';
+  }
+}
+
 function getCanonicalAppUrl() {
+  const configured = getConfiguredAppBaseUrl();
+  if (configured) return configured;
   return new URL('frontend/index.html', window.location.origin).toString();
 }
 
