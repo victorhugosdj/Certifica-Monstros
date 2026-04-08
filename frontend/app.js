@@ -410,29 +410,44 @@ async function fetchRemoteProgress(userId) {
 
 async function syncUserProgressFromRemote(userId) {
   if (!userId) {
-    return { progress: loadProgress(userId), errors: loadErrors(userId), remoteProgress: {}, hadRemote: false };
+    return {
+      progress: loadProgress(userId),
+      errors: loadErrors(userId),
+      remoteProgress: {},
+      remoteFetchSucceeded: false,
+    };
   }
 
   const recoveredLocalData = recoverLocalProgressAndErrors(userId);
   const localProgress = recoveredLocalData.progress;
   const localErrors = recoveredLocalData.errors;
   const remotePayload = await fetchRemoteProgress(userId);
-  if (remotePayload?.progress || remotePayload?.errors) {
-    const remoteProgress = remotePayload?.progress || {};
-    const remoteErrors = remotePayload?.errors || {};
-    const mergedProgress = mergeProgress(localProgress, remoteProgress);
-    const mergedErrors = mergeErrors(localErrors, remoteErrors);
-
-    STATE.userProgress = mergedProgress;
-    STATE.userErrors = mergedErrors;
-    saveProgress(userId, mergedProgress);
-    saveErrors(userId, mergedErrors);
-    return { progress: mergedProgress, errors: mergedErrors, remoteProgress, hadRemote: true };
+  if (remotePayload === null) {
+    STATE.userProgress = localProgress;
+    STATE.userErrors = localErrors;
+    return {
+      progress: localProgress,
+      errors: localErrors,
+      remoteProgress: {},
+      remoteFetchSucceeded: false,
+    };
   }
 
-  STATE.userProgress = localProgress;
-  STATE.userErrors = localErrors;
-  return { progress: localProgress, errors: localErrors, remoteProgress: {}, hadRemote: false };
+  const remoteProgress = remotePayload?.progress || {};
+  const remoteErrors = remotePayload?.errors || {};
+  const mergedProgress = mergeProgress(localProgress, remoteProgress);
+  const mergedErrors = mergeErrors(localErrors, remoteErrors);
+
+  STATE.userProgress = mergedProgress;
+  STATE.userErrors = mergedErrors;
+  saveProgress(userId, mergedProgress);
+  saveErrors(userId, mergedErrors);
+  return {
+    progress: mergedProgress,
+    errors: mergedErrors,
+    remoteProgress,
+    remoteFetchSucceeded: true,
+  };
 }
 
 async function refreshUserDataFromBackend() {
@@ -956,12 +971,15 @@ async function recordResponses(responses) {
   }
 }
 
-async function syncMergedProgressToBackendAfterLogin(userId, mergedProgress = {}, remoteProgress = {}) {
+async function syncMergedProgressToBackendAfterLogin(userId, mergedProgress = {}, remoteProgress = {}, options = {}) {
   if (!userId || !mergedProgress || loginSyncInFlightUsers.has(userId)) {
     return { ok: true, sent: 0 };
   }
   if (!Array.isArray(STATE.provas) || STATE.provas.length === 0) {
     return { ok: true, sent: 0 };
+  }
+  if (options?.remoteFetchSucceeded === false) {
+    return { ok: false, sent: 0, reason: 'remote-unavailable' };
   }
 
   loginSyncInFlightUsers.add(userId);
@@ -1117,13 +1135,12 @@ async function onLoginSuccess(user) {
 
   try {
     const syncFromRemote = await syncUserProgressFromRemote(user.id);
-    if (syncFromRemote?.hadRemote) {
-      await syncMergedProgressToBackendAfterLogin(
-        user.id,
-        syncFromRemote.progress,
-        syncFromRemote.remoteProgress
-      );
-    }
+    await syncMergedProgressToBackendAfterLogin(
+      user.id,
+      syncFromRemote.progress,
+      syncFromRemote.remoteProgress,
+      { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
+    );
   } catch (e) {
     console.warn('Falha ao sincronizar progresso remoto:', e);
   }
