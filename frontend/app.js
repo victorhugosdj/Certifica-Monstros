@@ -236,11 +236,17 @@ function mergeProgress(localProgress = {}, remoteProgress = {}) {
     const localEntry = merged[questionId];
     const remoteDate = remoteEntry?.lastAnsweredAt || '';
     const localDate = localEntry?.lastAnsweredAt || '';
+    const localCorrect = Boolean(localEntry?.correct);
+    const remoteCorrect = Boolean(remoteEntry?.correct);
+    const mergedCorrect = localCorrect || remoteCorrect;
+    const localPoints = Number(localEntry?.points ?? (localCorrect ? 1 : 0));
+    const remotePoints = Number(remoteEntry?.points ?? (remoteCorrect ? 1 : 0));
+    const mergedPoints = Math.max(localPoints, remotePoints);
 
     if (!localEntry || remoteDate >= localDate) {
       merged[questionId] = {
-        correct: Boolean(remoteEntry?.correct),
-        points: Number(remoteEntry?.points ?? (remoteEntry?.correct ? 1 : 0)),
+        correct: mergedCorrect,
+        points: mergedPoints,
         attempts: Number(remoteEntry?.attempts || localEntry?.attempts || 1),
         lastAnsweredAt: remoteDate || localDate || new Date().toISOString(),
       };
@@ -249,6 +255,8 @@ function mergeProgress(localProgress = {}, remoteProgress = {}) {
 
     merged[questionId] = {
       ...localEntry,
+      correct: mergedCorrect,
+      points: mergedPoints,
       attempts: Math.max(
         Number(localEntry?.attempts || 0),
         Number(remoteEntry?.attempts || 0),
@@ -848,6 +856,7 @@ async function gradeExam(questions, answersByQuestionId = {}) {
     const answer = answersByQuestionId[q.id] ?? null;
     const questionScore = evaluateQuestionScore(q, answer);
     const isCorrect = questionScore === 1;
+    const previousProgress = progress[q.id] || {};
     totalPoints += questionScore;
 
     // Atualiza registro de erros para permitir visualização detalhada
@@ -859,9 +868,9 @@ async function gradeExam(questions, answersByQuestionId = {}) {
 
     // Atualiza progresso local para que dashboard saiba quais questões foram respondidas
     progress[q.id] = {
-      correct: isCorrect,
-      points: questionScore,
-      attempts: (progress[q.id]?.attempts || 0) + 1,
+      correct: Boolean(previousProgress.correct) || isCorrect,
+      points: Math.max(Number(previousProgress.points || 0), questionScore),
+      attempts: (previousProgress.attempts || 0) + 1,
       lastAnsweredAt: new Date().toISOString()
     };
 
@@ -1188,10 +1197,11 @@ async function salvarRespostasNoBackend(userId, moduleId, responses) {
 
   responses.forEach((r) => {
     const isCorrect = Boolean(r.correct);
+    const previousProgress = progress[r.id] || {};
     progress[r.id] = {
-      correct: isCorrect,
-      points: isCorrect ? 1 : 0,
-      attempts: (progress[r.id]?.attempts || 0) + 1,
+      correct: Boolean(previousProgress.correct) || isCorrect,
+      points: Math.max(Number(previousProgress.points || 0), isCorrect ? 1 : 0),
+      attempts: (previousProgress.attempts || 0) + 1,
       lastAnsweredAt: answeredAt
     };
 
