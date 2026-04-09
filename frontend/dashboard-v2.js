@@ -485,7 +485,24 @@ function renderOfficialExams() {
   });
 }
 
-async function fetchRanking() {
+function normalizeUserMetrics({ questionBankTotal, attempted, correct }) {
+  const bankTotal = Math.max(0, Number(questionBankTotal || 0));
+  const attemptedSafe = Math.max(0, Number(attempted || 0));
+  const correctSafe = Math.max(0, Math.min(Number(correct || 0), attemptedSafe));
+  const wrongSafe = Math.max(0, attemptedSafe - correctSafe);
+  const accuracy = attemptedSafe > 0 ? Math.min(100, Math.round((correctSafe / attemptedSafe) * 100)) : 0;
+  const coverage = bankTotal > 0 ? Math.min(100, Math.round((attemptedSafe / bankTotal) * 100)) : 0;
+  return {
+    questionBankTotal: bankTotal,
+    attempted: attemptedSafe,
+    correct: correctSafe,
+    wrong: wrongSafe,
+    accuracy,
+    coverage
+  };
+}
+
+async function fetchRanking(questionBankTotal = 0) {
   const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
   const rankingUrl = `${API_BASE.replace(/\/$/, '')}/api/ranking?limit=0`;
   const res = await fetch(rankingUrl);
@@ -494,12 +511,13 @@ async function fetchRanking() {
   }
   const data = await res.json();
   return data.map(u => ({
+    ...normalizeUserMetrics({
+      questionBankTotal,
+      attempted: Number(u.total || 0),
+      correct: Number(u.correct || 0)
+    }),
     userId: u.user_id || u.userId,
     userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12),
-    correct: u.correct,
-    total: u.total,
-    percentage: u.percentage,
-    progress: u.progress_percentage ?? 0,
     lastAccess: u.last_access || null
   }));
 }
@@ -603,6 +621,110 @@ async function fetchUserMetrics(userId) {
     });
     return null;
   }
+}
+
+async function fetchUserProgressSnapshot(userId) {
+  try {
+    if (!userId) return null;
+    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+    const headers = await getAuthHeadersForPublicProgress();
+    const requestUrl = `${API_BASE.replace(/\/$/, '')}/api/progress/${encodeURIComponent(userId)}`;
+    const res = await fetch(requestUrl, { headers });
+    if (!res.ok) throw new Error(`Falha ao buscar progresso canônico (HTTP ${res.status})`);
+    return await res.json();
+  } catch (err) {
+    console.warn('Nao foi possivel buscar progresso canonico:', err);
+    return null;
+  }
+}
+
+function buildStatsFromProgressPayload(progressPayload, allProvas) {
+  const stats = {
+    byModule: {},
+    overall: {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      accuracy: 0,
+      coverage: 0
+    }
+  };
+
+  const questionModuleMap = {};
+  for (let i = 1; i <= 8; i++) {
+    stats.byModule[i] = {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      notStarted: 0,
+      accuracy: 0,
+      coverage: 0,
+      errorCount: 0,
+      total: 0,
+      percentage: 0,
+      questions: [],
+      errorQuestions: []
+    };
+  }
+
+  (allProvas || []).forEach((prova) => {
+    const mod = Number(prova.modulo);
+    if (!stats.byModule[mod]) return;
+    stats.byModule[mod].questionBankTotal += 1;
+    stats.byModule[mod].total = stats.byModule[mod].questionBankTotal;
+    questionModuleMap[String(prova.id)] = mod;
+  });
+
+  const progress = progressPayload?.progress || {};
+  Object.entries(progress).forEach(([questionId, entry]) => {
+    let mod = Number(entry?.module);
+    if (Number.isNaN(mod) || !stats.byModule[mod]) {
+      mod = Number(questionModuleMap[String(questionId)]);
+    }
+    if (!stats.byModule[mod]) return;
+    const moduleStats = stats.byModule[mod];
+    moduleStats.attempted += 1;
+    if (Boolean(entry?.correct)) {
+      moduleStats.correct += 1;
+    } else {
+      moduleStats.wrong += 1;
+    }
+  });
+
+  for (let i = 1; i <= 8; i++) {
+    const mod = stats.byModule[i];
+    mod.notStarted = Math.max(mod.questionBankTotal - mod.attempted, 0);
+    const normalized = normalizeUserMetrics({
+      questionBankTotal: mod.questionBankTotal,
+      attempted: mod.attempted,
+      correct: mod.correct
+    });
+    mod.correct = normalized.correct;
+    mod.wrong = normalized.wrong;
+    mod.accuracy = normalized.accuracy;
+    mod.coverage = normalized.coverage;
+    mod.percentage = mod.accuracy;
+    stats.overall.questionBankTotal += mod.questionBankTotal;
+    stats.overall.attempted += mod.attempted;
+    stats.overall.correct += mod.correct;
+  }
+
+  const overallNormalized = normalizeUserMetrics({
+    questionBankTotal: stats.overall.questionBankTotal,
+    attempted: stats.overall.attempted,
+    correct: stats.overall.correct
+  });
+  stats.overall.attempted = overallNormalized.attempted;
+  stats.overall.correct = overallNormalized.correct;
+  stats.overall.wrong = overallNormalized.wrong;
+  stats.overall.accuracy = overallNormalized.accuracy;
+  stats.overall.coverage = overallNormalized.coverage;
+  stats.overall.total = stats.overall.questionBankTotal;
+  stats.overall.percentage = stats.overall.accuracy;
+
+  return stats;
 }
 
 function buildStatsFromBackend(metrics, allProvas) {
@@ -814,8 +936,8 @@ function renderRanking(currentUserId, ranking) {
     html.push(`<div class="ranking-medal">${medal}</div>`);
     html.push(`<div class="ranking-info">`);
     html.push(`<div class="ranking-name">${user.userName}${isCurrentUser ? ' (você)' : ''}</div>`);
-    html.push(`<div class="ranking-stats">${user.correct}/${user.total} • ${user.percentage}%</div>`);
-    html.push(`<div class="ranking-stats">Progresso: ${user.progress}% • Último acesso: ${formatLastAccess(user.lastAccess)}</div>`);
+    html.push(`<div class="ranking-stats">${user.correct}/${user.attempted} - ${user.accuracy}%</div>`);
+    html.push(`<div class="ranking-stats">Cobertura: ${user.coverage}% - Ultimo acesso: ${formatLastAccess(user.lastAccess)}</div>`);
     html.push('</div>');
     html.push('</div>');
   });
@@ -1173,7 +1295,7 @@ function renderModulesProgress(userId, stats) {
     html.push(`</div>`);
 
     html.push(`<div class="progress-bar-small"><div class="progress-bar-fill" style="width:${coverage}%;background:${colors.stroke};"></div></div>`);
-    html.push(`<div class="module-analysis-hint">Clique para abrir detalhes e revisar erros</div>`);
+    html.push(`<div class="module-analysis-hint">Cobertura do modulo - clique para abrir detalhes e revisar erros</div>`);
     html.push(`</div>`);
   }
 
@@ -1226,18 +1348,27 @@ async function initDashboard() {
     const allProvas = await loadProvas();
     window.allProvasGlobal = allProvas;
     
-    const remoteMetrics = await fetchUserMetrics(CURRENT_USER.id);
-    const stats = remoteMetrics
-      ? buildStatsFromBackend(remoteMetrics, allProvas)
-      : calculateModuleStats(CURRENT_USER.id, allProvas);
-    if (!remoteMetrics) {
-      console.warn('[dashboard-debug][fallback-localstats]', {
-        reason: 'remoteMetrics-null',
-        userId: CURRENT_USER.id
-      });
+    const remoteProgress = await fetchUserProgressSnapshot(CURRENT_USER.id);
+    let stats = null;
+    let statsSource = 'localStorage:fallback';
+    if (remoteProgress?.progress) {
+      stats = buildStatsFromProgressPayload(remoteProgress, allProvas);
+      statsSource = 'backend:/api/progress';
+    } else {
+      const remoteMetrics = await fetchUserMetrics(CURRENT_USER.id);
+      if (remoteMetrics) {
+        stats = buildStatsFromBackend(remoteMetrics, allProvas);
+        statsSource = 'backend:/api/metrics';
+      } else {
+        stats = calculateModuleStats(CURRENT_USER.id, allProvas);
+        console.warn('[dashboard-debug][fallback-localstats]', {
+          reason: 'remoteProgress-and-remoteMetrics-null',
+          userId: CURRENT_USER.id
+        });
+      }
     }
     console.info('[dashboard-debug][stats-final]', {
-      source: remoteMetrics ? 'backend:/api/metrics' : 'localStorage:fallback',
+      source: statsSource,
       overall: stats?.overall,
       module1: stats?.byModule?.[1],
       module2: stats?.byModule?.[2],
@@ -1250,7 +1381,7 @@ async function initDashboard() {
     });
     let ranking = [];
     try {
-      ranking = await fetchRanking();
+      ranking = await fetchRanking(stats?.overall?.questionBankTotal || 0);
     } catch (rankingError) {
       console.error('[dashboard] Falha ao carregar ranking. Dashboard seguirá sem ranking.', rankingError);
       renderRankingMessage('Não foi possível carregar o ranking agora.');
