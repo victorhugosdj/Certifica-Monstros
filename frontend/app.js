@@ -38,8 +38,16 @@ function setView(viewId) {
     btn.classList.toggle('active', btn.dataset.view === viewId);
   });
 
-  if (viewId === 'dashboard' && typeof initDashboard === 'function') {
-    initDashboard();
+  if (viewId === 'dashboard') {
+    console.info('[dashboard-debug][setView-dashboard]', {
+      hasInitDashboard: typeof initDashboard === 'function',
+      currentUserId: CURRENT_USER?.id || null
+    });
+    if (typeof initDashboard === 'function') {
+      initDashboard();
+    } else {
+      console.warn('[dashboard-debug][setView-dashboard-missing-init]');
+    }
   }
 
   if (viewId === 'official-exams' && typeof renderOfficialExams === 'function') {
@@ -579,6 +587,9 @@ async function refreshUserDataFromBackend() {
 
   const dashboardView = document.getElementById('view-dashboard');
   if (dashboardView?.classList.contains('active') && typeof initDashboard === 'function') {
+    console.info('[dashboard-debug][refresh-calls-initDashboard]', {
+      currentUserId: CURRENT_USER?.id || null
+    });
     initDashboard();
   }
 }

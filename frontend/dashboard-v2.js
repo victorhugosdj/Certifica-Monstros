@@ -486,24 +486,28 @@ function renderOfficialExams() {
 }
 
 async function fetchRanking() {
-  try {
-    const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
-    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/ranking?limit=0`);
-    if (!res.ok) throw new Error('Falha ao buscar ranking do backend');
-    const data = await res.json();
-    return data.map(u => ({
-      userId: u.user_id || u.userId,
-      userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12),
-      correct: u.correct,
-      total: u.total,
-      percentage: u.percentage,
-      progress: u.progress_percentage ?? 0,
-      lastAccess: u.last_access || null
-    }));
-  } catch (err) {
-    console.error('Erro ao buscar ranking:', err);
-    return [];
+  const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
+  const rankingUrl = `${API_BASE.replace(/\/$/, '')}/api/ranking?limit=0`;
+  const res = await fetch(rankingUrl);
+  if (!res.ok) {
+    throw new Error(`Falha ao buscar ranking do backend (HTTP ${res.status})`);
   }
+  const data = await res.json();
+  return data.map(u => ({
+    userId: u.user_id || u.userId,
+    userName: u.userName || u.display_name || (u.user_id || u.userId).substring(0,12),
+    correct: u.correct,
+    total: u.total,
+    percentage: u.percentage,
+    progress: u.progress_percentage ?? 0,
+    lastAccess: u.last_access || null
+  }));
+}
+
+function renderRankingMessage(message) {
+  const container = document.getElementById('ranking-container');
+  if (!container) return;
+  container.innerHTML = `<p style="color:#aaa; text-align:center;">${escapeHtml(message)}</p>`;
 }
 
 async function getAuthHeadersForPublicProgress() {
@@ -548,15 +552,55 @@ async function fetchOfficialExamProgress(userId) {
 }
 
 async function fetchUserMetrics(userId) {
+  let requestUrl = '';
   try {
     if (!userId) return null;
     const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
     const headers = await getAuthHeadersForPublicProgress();
-    const res = await fetch(`${API_BASE.replace(/\/$/, '')}/api/metrics/${encodeURIComponent(userId)}`, { headers });
+    requestUrl = `${API_BASE.replace(/\/$/, '')}/api/metrics/${encodeURIComponent(userId)}`;
+    console.info('[dashboard-debug][api-metrics-request]', {
+      userId,
+      apiBaseRaw: API_BASE,
+      requestUrl,
+      hasAuthHeader: Boolean(headers?.Authorization)
+    });
+    const res = await fetch(requestUrl, { headers });
+    console.info('[dashboard-debug][api-metrics-response-meta]', {
+      userId,
+      requestUrl,
+      ok: res.ok,
+      status: res.status
+    });
     if (!res.ok) throw new Error('Falha ao buscar metricas do usuario');
-    return await res.json();
+    let payload = null;
+    try {
+      payload = await res.json();
+    } catch (jsonErr) {
+      const rawText = await res.text().catch(() => '');
+      console.error('[dashboard-debug][api-metrics-invalid-json]', {
+        userId,
+        requestUrl,
+        status: res.status,
+        rawTextSample: String(rawText || '').slice(0, 500),
+        error: String(jsonErr?.message || jsonErr)
+      });
+      throw jsonErr;
+    }
+    console.info('[dashboard-debug][api-metrics-response]', {
+      userId,
+      endpoint: '/api/metrics/{user_id}',
+      totalResponses: payload?.total_responses,
+      totalErrors: payload?.total_errors,
+      perModuleCount: Array.isArray(payload?.per_module) ? payload.per_module.length : 0,
+      perModuleSample: Array.isArray(payload?.per_module) ? payload.per_module.slice(0, 3) : []
+    });
+    return payload;
   } catch (err) {
-    console.warn('Nao foi possivel buscar metricas remotas:', err);
+    console.warn('Nao foi possivel buscar metricas remotas:', {
+      userId,
+      requestUrl,
+      error: String(err?.message || err)
+    });
     return null;
   }
 }
@@ -734,7 +778,11 @@ function calculateModuleStats(userId, allProvas) {
  */
 function renderRanking(currentUserId, ranking) {
   const container = document.getElementById('ranking-container');
-  if (!container || !ranking || ranking.length === 0) return;
+  if (!container) return;
+  if (!ranking || ranking.length === 0) {
+    renderRankingMessage('Ranking indisponível no momento.');
+    return;
+  }
 
   const html = [];
   
@@ -846,6 +894,21 @@ function renderMetrics(stats) {
     { label: 'Taxa de Acerto', value: `${stats.overall.accuracy}%` },
     { label: 'Cobertura', value: `${stats.overall.coverage}%` }
   ];
+
+  console.info('[dashboard-debug][cards-render-input]', {
+    source: 'renderMetrics',
+    questionBankTotal: stats?.overall?.questionBankTotal,
+    attempted: stats?.overall?.attempted,
+    correct: stats?.overall?.correct,
+    wrong: stats?.overall?.wrong,
+    accuracy: stats?.overall?.accuracy,
+    coverage: stats?.overall?.coverage,
+    invalid: {
+      correctGtAttempted: Number(stats?.overall?.correct || 0) > Number(stats?.overall?.attempted || 0),
+      accuracyGt100: Number(stats?.overall?.accuracy || 0) > 100,
+      wrongLt0: Number(stats?.overall?.wrong || 0) < 0
+    }
+  });
 
   grid.innerHTML = cards.map(card => `
     <div class="metric-card">
@@ -1129,7 +1192,14 @@ function renderStatsTable(stats) {
 // ========== INICIALIZADOR ==========
 
 async function initDashboard() {
-  if (!CURRENT_USER) return;
+  console.info('[dashboard-debug][init-start]', {
+    hasCurrentUser: Boolean(CURRENT_USER),
+    currentUserId: CURRENT_USER?.id || null
+  });
+  if (!CURRENT_USER) {
+    console.warn('[dashboard-debug][init-abort-no-user]');
+    return;
+  }
 
   try {
     // Carregar dados
@@ -1140,7 +1210,32 @@ async function initDashboard() {
     const stats = remoteMetrics
       ? buildStatsFromBackend(remoteMetrics, allProvas)
       : calculateModuleStats(CURRENT_USER.id, allProvas);
-    const ranking = await fetchRanking();
+    if (!remoteMetrics) {
+      console.warn('[dashboard-debug][fallback-localstats]', {
+        reason: 'remoteMetrics-null',
+        userId: CURRENT_USER.id
+      });
+    }
+    console.info('[dashboard-debug][stats-final]', {
+      source: remoteMetrics ? 'backend:/api/metrics' : 'localStorage:fallback',
+      overall: stats?.overall,
+      module1: stats?.byModule?.[1],
+      module2: stats?.byModule?.[2],
+      invalid: {
+        correctGtAttempted: Number(stats?.overall?.correct || 0) > Number(stats?.overall?.attempted || 0),
+        accuracyGt100: Number(stats?.overall?.accuracy || 0) > 100,
+        coverageGt100: Number(stats?.overall?.coverage || 0) > 100,
+        wrongLt0: Number(stats?.overall?.wrong || 0) < 0
+      }
+    });
+    let ranking = [];
+    try {
+      ranking = await fetchRanking();
+    } catch (rankingError) {
+      console.error('[dashboard] Falha ao carregar ranking. Dashboard seguirá sem ranking.', rankingError);
+      renderRankingMessage('Não foi possível carregar o ranking agora.');
+      ranking = [];
+    }
 
     // Renderizar todos os componentes
     renderRanking(CURRENT_USER.id, ranking);

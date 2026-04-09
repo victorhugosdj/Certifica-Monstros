@@ -376,6 +376,20 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
     if not service_client:
         raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
+    # limit defensivo:
+    # - <= 0 (inclui limit=0) usa teto seguro para evitar consultas excessivas
+    # - > teto também é limitado
+    SAFE_DEFAULT_LIMIT = 200
+    SAFE_MAX_LIMIT = 1000
+    try:
+        requested_limit = int(limit)
+    except (TypeError, ValueError):
+        requested_limit = SAFE_DEFAULT_LIMIT
+    if requested_limit <= 0:
+        effective_limit = SAFE_DEFAULT_LIMIT
+    else:
+        effective_limit = min(requested_limit, SAFE_MAX_LIMIT)
+
     try:
         stats: Dict[str, Dict[str, Any]] = {}
         used_canonical = False
@@ -467,8 +481,8 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
         # Sort
         ranking.sort(key=lambda x: (-x["percentage"], -x["total"]))
 
-        # Limit (0 or negative = return all)
-        top = ranking if limit <= 0 else ranking[:limit]
+        # Limit sempre seguro
+        top = ranking[:effective_limit]
 
         # Fetch display names from profiles (if present), chunking to avoid large IN queries.
         user_ids = [r["user_id"] for r in top]
@@ -477,16 +491,24 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
             chunk_size = 200
             for i in range(0, len(user_ids), chunk_size):
                 chunk = user_ids[i:i + chunk_size]
-                prof_res = (
-                    service_client
-                    .table("profiles")
-                    .select("user_id,display_name")
-                    .in_("user_id", chunk)
-                    .execute()
-                )
-                profiles = prof_res.data or []
-                for profile in profiles:
-                    name_map[profile.get("user_id")] = profile.get("display_name")
+                try:
+                    prof_res = (
+                        service_client
+                        .table("profiles")
+                        .select("user_id,display_name")
+                        .in_("user_id", chunk)
+                        .execute()
+                    )
+                    prof_error = _response_error(prof_res)
+                    if prof_error:
+                        logger.warning("Ranking endpoint: failed to load profile names for chunk size=%d: %s", len(chunk), prof_error)
+                        continue
+                    profiles = prof_res.data or []
+                    for profile in profiles:
+                        name_map[profile.get("user_id")] = profile.get("display_name")
+                except Exception as profile_error:
+                    logger.warning("Ranking endpoint: exception while loading profile names: %s", profile_error)
+                    continue
 
         # Attach display names
         for r in top:
@@ -497,8 +519,9 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error computing global ranking: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error("Error computing global ranking (limit=%s, effective_limit=%s): %s", limit, effective_limit, e)
+        # Retorna lista vazia em vez de 500 para manter dashboard operacional.
+        return []
 
 
 @app.get("/api/public-progress/{user_id}")
