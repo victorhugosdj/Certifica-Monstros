@@ -635,6 +635,14 @@ function buildStatsFromBackend(metrics, allProvas) {
       };
     }
   });
+  const totalResponsesRaw = Number(metrics?.total_responses || 0);
+  const totalErrorsRaw = Number(metrics?.total_errors || 0);
+  const totalResponses = Math.max(0, totalResponsesRaw);
+  const totalErrors = Math.max(0, Math.min(totalErrorsRaw, totalResponses));
+  const totalCorrect = Math.max(0, totalResponses - totalErrors);
+  let summedAttempted = 0;
+  let summedCorrect = 0;
+  let summedWrong = 0;
 
   for (let i = 1; i <= 8; i++) {
     const questionBankTotal = totalByModule[i] || 0;
@@ -662,9 +670,21 @@ function buildStatsFromBackend(metrics, allProvas) {
     };
 
     stats.overall.questionBankTotal += questionBankTotal;
-    stats.overall.attempted += attempted;
-    stats.overall.correct += correct;
-    stats.overall.wrong += wrong;
+    summedAttempted += attempted;
+    summedCorrect += correct;
+    summedWrong += wrong;
+  }
+
+  const hasPerModuleData = Object.keys(byModuleMap).length > 0;
+  if (hasPerModuleData) {
+    stats.overall.attempted = summedAttempted;
+    stats.overall.correct = summedCorrect;
+    stats.overall.wrong = summedWrong;
+  } else {
+    // Fallback obrigatório: quando per_module vier vazio, usa métricas globais da API.
+    stats.overall.attempted = totalResponses;
+    stats.overall.wrong = totalErrors;
+    stats.overall.correct = totalCorrect;
   }
 
   stats.overall.correct = Math.max(0, Math.min(stats.overall.correct, stats.overall.attempted));
