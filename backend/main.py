@@ -272,43 +272,69 @@ def user_metrics(
 
     # This endpoint reads per-user metrics. Use the Service Role client for
     # secure access (avoid exposing service keys to clients).
-    try:
-        errors_res = get_user_errors(user_id)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-    errors_rows = errors_res.data or []
-    errors = len(errors_rows)
-
     service_client = get_supabase_service_client()
     if not service_client:
         raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
-    # Total responses for the user (correct + incorrect)
-    res = (
-        service_client
-        .table("respostas_usuario")
-        .select("user_id,module,question_id,correto")
-        .eq("user_id", user_id)
-        .execute()
-    )
-    response_error = _response_error(res)
-    if response_error:
-        raise HTTPException(status_code=500, detail=str(response_error))
+    progress_by_question: Dict[str, Dict[str, Any]] = {}
 
-    rows = res.data or []
-    total = len(rows)
+    try:
+        # Fonte canônica: snapshot consolidado por questão (1 linha por questão).
+        canonical_res = (
+            service_client
+            .table("progresso_usuario_snapshot")
+            .select("question_id,module,correct,last_answered_at")
+            .eq("user_id", user_id)
+            .execute()
+        )
+        canonical_error = _response_error(canonical_res)
+        if not canonical_error:
+            for row in (canonical_res.data or []):
+                question_id = str(row.get("question_id") or "").strip()
+                if not question_id:
+                    continue
+                progress_by_question[question_id] = {
+                    "module": row.get("module"),
+                    "correct": bool(row.get("correct")),
+                    "lastAnsweredAt": row.get("last_answered_at") or "",
+                }
+        else:
+            logger.info("Metrics endpoint: canonical snapshot unavailable/error. Falling back to event history: %s", canonical_error)
+    except Exception as canonical_error:
+        logger.info("Metrics endpoint: canonical snapshot unavailable, falling back to event history: %s", canonical_error)
 
-    per_module = {}
-    for r in rows:
-        mod = r.get("module")
+    if not progress_by_question:
+        # Fallback: deduplica histórico de eventos por questão e considera a resposta mais recente.
+        res = (
+            service_client
+            .table("respostas_usuario")
+            .select("module,question_id,correto,created_at")
+            .eq("user_id", user_id)
+            .execute()
+        )
+        response_error = _response_error(res)
+        if response_error:
+            raise HTTPException(status_code=500, detail=str(response_error))
+        event_state = _build_progress_from_event_rows(res.data or [])
+        progress_by_question = event_state["progress"]
+
+    total = len(progress_by_question)
+    errors = 0
+    per_module: Dict[int, Dict[str, int]] = {}
+    for entry in progress_by_question.values():
+        mod = entry.get("module")
         if mod is None:
             continue
-        if mod not in per_module:
-            per_module[mod] = {"total": 0, "errors": 0}
-        per_module[mod]["total"] += 1
-        if not r.get("correto"):
-            per_module[mod]["errors"] += 1
+        try:
+            mod_int = int(mod)
+        except (TypeError, ValueError):
+            continue
+        if mod_int not in per_module:
+            per_module[mod_int] = {"total": 0, "errors": 0}
+        per_module[mod_int]["total"] += 1
+        if not bool(entry.get("correct")):
+            per_module[mod_int]["errors"] += 1
+            errors += 1
 
     per_module_list = [
         {
@@ -351,26 +377,70 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
         raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
-        res = service_client.table("respostas_usuario").select("user_id,correto,created_at").execute()
-        response_error = _response_error(res)
-        if response_error:
-            raise HTTPException(status_code=500, detail=str(response_error))
+        stats: Dict[str, Dict[str, Any]] = {}
+        used_canonical = False
 
-        rows = res.data or []
+        try:
+            canonical_res = (
+                service_client
+                .table("progresso_usuario_snapshot")
+                .select("user_id,question_id,correct,last_answered_at")
+                .execute()
+            )
+            canonical_error = _response_error(canonical_res)
+            if not canonical_error:
+                used_canonical = True
+                for row in (canonical_res.data or []):
+                    uid = row.get("user_id")
+                    qid = row.get("question_id")
+                    if not uid or not qid:
+                        continue
+                    entry = stats.setdefault(uid, {"correct": 0, "total": 0, "last_access": None})
+                    entry["total"] += 1
+                    if bool(row.get("correct")):
+                        entry["correct"] += 1
+                    last_answered_at = row.get("last_answered_at")
+                    if last_answered_at and (not entry["last_access"] or last_answered_at > entry["last_access"]):
+                        entry["last_access"] = last_answered_at
+            else:
+                logger.info("Ranking endpoint: canonical snapshot unavailable/error. Falling back to event history: %s", canonical_error)
+        except Exception as canonical_error:
+            logger.info("Ranking endpoint: canonical snapshot unavailable, falling back to event history: %s", canonical_error)
 
-        # Aggregate per user
-        stats = {}
-        for r in rows:
-            uid = r.get("user_id")
-            if not uid:
-                continue
-            entry = stats.setdefault(uid, {"correct": 0, "total": 0, "last_access": None})
-            entry["total"] += 1
-            if r.get("correto"):
-                entry["correct"] += 1
-            created_at = r.get("created_at")
-            if created_at:
-                if not entry["last_access"] or created_at > entry["last_access"]:
+        if not used_canonical:
+            res = (
+                service_client
+                .table("respostas_usuario")
+                .select("user_id,question_id,correto,created_at")
+                .execute()
+            )
+            response_error = _response_error(res)
+            if response_error:
+                raise HTTPException(status_code=500, detail=str(response_error))
+
+            latest_by_user_question: Dict[str, Dict[str, Any]] = {}
+            for row in (res.data or []):
+                uid = row.get("user_id")
+                qid = row.get("question_id")
+                if not uid or not qid:
+                    continue
+                key = f"{uid}::{qid}"
+                created_at = row.get("created_at") or ""
+                existing = latest_by_user_question.get(key)
+                if existing and created_at <= (existing.get("created_at") or ""):
+                    continue
+                latest_by_user_question[key] = row
+
+            for row in latest_by_user_question.values():
+                uid = row.get("user_id")
+                if not uid:
+                    continue
+                entry = stats.setdefault(uid, {"correct": 0, "total": 0, "last_access": None})
+                entry["total"] += 1
+                if bool(row.get("correto")):
+                    entry["correct"] += 1
+                created_at = row.get("created_at")
+                if created_at and (not entry["last_access"] or created_at > entry["last_access"]):
                     entry["last_access"] = created_at
 
         # Total questions for progress calculation
@@ -384,6 +454,7 @@ def global_ranking(limit: int = 0) -> List[Dict[str, Any]]:
         for uid, s in stats.items():
             percent = round((s["correct"] / s["total"] * 100)) if s["total"] else 0
             progress_percent = round((s["total"] / total_questions) * 100) if total_questions else 0
+            progress_percent = min(max(progress_percent, 0), 100)
             ranking.append({
                 "user_id": uid,
                 "correct": s["correct"],
@@ -445,22 +516,49 @@ def public_progress(
         raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
     try:
-        res = (
-            service_client
-            .table("respostas_usuario")
-            .select("module,correto")
-            .eq("user_id", user_id)
-            .execute()
-        )
-        response_error = _response_error(res)
-        if response_error:
-            raise HTTPException(status_code=500, detail=str(response_error))
+        progress_by_question: Dict[str, Dict[str, Any]] = {}
 
-        rows = res.data or []
+        try:
+            canonical_res = (
+                service_client
+                .table("progresso_usuario_snapshot")
+                .select("question_id,module,correct,last_answered_at")
+                .eq("user_id", user_id)
+                .execute()
+            )
+            canonical_error = _response_error(canonical_res)
+            if not canonical_error:
+                for row in (canonical_res.data or []):
+                    question_id = str(row.get("question_id") or "").strip()
+                    if not question_id:
+                        continue
+                    progress_by_question[question_id] = {
+                        "module": row.get("module"),
+                        "correct": bool(row.get("correct")),
+                        "lastAnsweredAt": row.get("last_answered_at") or "",
+                    }
+            else:
+                logger.info("Public progress endpoint: canonical snapshot unavailable/error. Falling back to event history: %s", canonical_error)
+        except Exception as canonical_error:
+            logger.info("Public progress endpoint: canonical snapshot unavailable, falling back to event history: %s", canonical_error)
+
+        if not progress_by_question:
+            res = (
+                service_client
+                .table("respostas_usuario")
+                .select("module,question_id,correto,created_at")
+                .eq("user_id", user_id)
+                .execute()
+            )
+            response_error = _response_error(res)
+            if response_error:
+                raise HTTPException(status_code=500, detail=str(response_error))
+            event_state = _build_progress_from_event_rows(res.data or [])
+            progress_by_question = event_state["progress"]
 
         per_module = {i: {"module": i, "correct": 0, "total": 0} for i in range(1, 9)}
-        for r in rows:
-            mod = r.get("module")
+        for entry in progress_by_question.values():
+            mod = entry.get("module")
             if mod is None:
                 continue
             try:
@@ -470,7 +568,7 @@ def public_progress(
             if mod not in per_module:
                 continue
             per_module[mod]["total"] += 1
-            if r.get("correto"):
+            if bool(entry.get("correct")):
                 per_module[mod]["correct"] += 1
 
         per_module_list = []

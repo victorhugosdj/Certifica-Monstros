@@ -594,10 +594,11 @@ function buildStatsFromBackend(metrics, allProvas) {
 
   for (let i = 1; i <= 8; i++) {
     const questionBankTotal = totalByModule[i] || 0;
-    const attempted = byModuleMap[i]?.total || 0;
-    const errors = byModuleMap[i]?.errors || 0;
-    const correct = Math.max(attempted - errors, 0);
-    const wrong = Math.max(errors, 0);
+    const attemptedRaw = Number(byModuleMap[i]?.total || 0);
+    const attempted = Math.max(0, Math.min(questionBankTotal, attemptedRaw));
+    const errorsRaw = Number(byModuleMap[i]?.errors || 0);
+    const wrong = Math.max(0, Math.min(errorsRaw, attempted));
+    const correct = Math.max(0, Math.min(attempted - wrong, attempted));
     const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
     const coverage = questionBankTotal > 0 ? Math.min(100, Math.round((attempted / questionBankTotal) * 100)) : 0;
 
@@ -622,11 +623,13 @@ function buildStatsFromBackend(metrics, allProvas) {
     stats.overall.wrong += wrong;
   }
 
+  stats.overall.correct = Math.max(0, Math.min(stats.overall.correct, stats.overall.attempted));
+  stats.overall.wrong = Math.max(0, Math.min(stats.overall.wrong, stats.overall.attempted));
   stats.overall.accuracy = stats.overall.attempted > 0
-    ? Math.round((stats.overall.correct / stats.overall.attempted) * 100)
+    ? Math.min(100, Math.round((stats.overall.correct / stats.overall.attempted) * 100))
     : 0;
   stats.overall.coverage = stats.overall.questionBankTotal > 0
-    ? Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100)
+    ? Math.min(100, Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100))
     : 0;
   stats.overall.total = stats.overall.questionBankTotal;
   stats.overall.percentage = stats.overall.accuracy;
@@ -710,11 +713,13 @@ function calculateModuleStats(userId, allProvas) {
     stats.overall.wrong += mod.wrong;
   });
 
+  stats.overall.correct = Math.max(0, Math.min(stats.overall.correct, stats.overall.attempted));
+  stats.overall.wrong = Math.max(0, Math.min(stats.overall.wrong, stats.overall.attempted));
   stats.overall.accuracy = stats.overall.attempted > 0
-    ? Math.round((stats.overall.correct / stats.overall.attempted) * 100)
+    ? Math.min(100, Math.round((stats.overall.correct / stats.overall.attempted) * 100))
     : 0;
   stats.overall.coverage = stats.overall.questionBankTotal > 0
-    ? Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100)
+    ? Math.min(100, Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100))
     : 0;
   stats.overall.total = stats.overall.questionBankTotal;
   stats.overall.percentage = stats.overall.accuracy;
