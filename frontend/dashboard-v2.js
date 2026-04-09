@@ -564,7 +564,14 @@ async function fetchUserMetrics(userId) {
 function buildStatsFromBackend(metrics, allProvas) {
   const stats = {
     byModule: {},
-    overall: { correct: 0, total: 0, attempted: 0, percentage: 0 }
+    overall: {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      accuracy: 0,
+      coverage: 0
+    }
   };
 
   const totalByModule = {};
@@ -586,31 +593,43 @@ function buildStatsFromBackend(metrics, allProvas) {
   });
 
   for (let i = 1; i <= 8; i++) {
-    const totalQuestions = totalByModule[i] || 0;
+    const questionBankTotal = totalByModule[i] || 0;
     const attempted = byModuleMap[i]?.total || 0;
     const errors = byModuleMap[i]?.errors || 0;
     const correct = Math.max(attempted - errors, 0);
+    const wrong = Math.max(errors, 0);
+    const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+    const coverage = questionBankTotal > 0 ? Math.min(100, Math.round((attempted / questionBankTotal) * 100)) : 0;
 
     stats.byModule[i] = {
-      total: totalQuestions,
+      questionBankTotal,
       attempted,
       correct,
-      wrong: errors,
-      notStarted: Math.max(totalQuestions - attempted, 0),
-      percentage: totalQuestions > 0 ? Math.min(100, Math.round((correct / totalQuestions) * 100)) : 0,
-      errorCount: errors,
+      wrong,
+      accuracy,
+      coverage,
+      notStarted: Math.max(questionBankTotal - attempted, 0),
+      errorCount: wrong,
+      total: questionBankTotal,
+      percentage: accuracy,
       questions: [],
       errorQuestions: []
     };
 
-    stats.overall.correct += correct;
-    stats.overall.total += totalQuestions;
+    stats.overall.questionBankTotal += questionBankTotal;
     stats.overall.attempted += attempted;
+    stats.overall.correct += correct;
+    stats.overall.wrong += wrong;
   }
 
-  stats.overall.percentage = stats.overall.total > 0
-    ? Math.round((stats.overall.correct / stats.overall.total) * 100)
+  stats.overall.accuracy = stats.overall.attempted > 0
+    ? Math.round((stats.overall.correct / stats.overall.attempted) * 100)
     : 0;
+  stats.overall.coverage = stats.overall.questionBankTotal > 0
+    ? Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100)
+    : 0;
+  stats.overall.total = stats.overall.questionBankTotal;
+  stats.overall.percentage = stats.overall.accuracy;
 
   return stats;
 }
@@ -623,18 +642,28 @@ function calculateModuleStats(userId, allProvas) {
 
   const stats = {
     byModule: {},
-    overall: { correct: 0, total: 0, attempted: 0, percentage: 0 }
+    overall: {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      accuracy: 0,
+      coverage: 0
+    }
   };
 
   for (let i = 1; i <= 8; i++) {
     stats.byModule[i] = {
-      total: 0,
+      questionBankTotal: 0,
       attempted: 0,
       correct: 0,
       wrong: 0,
       notStarted: 0,
-      percentage: 0,
+      accuracy: 0,
+      coverage: 0,
       errorCount: 0,
+      total: 0,
+      percentage: 0,
       questions: [],
       errorQuestions: []
     };
@@ -645,7 +674,8 @@ function calculateModuleStats(userId, allProvas) {
     if (!stats.byModule[module]) return;
 
     const mod = stats.byModule[module];
-    mod.total += 1;
+    mod.questionBankTotal += 1;
+    mod.total = mod.questionBankTotal;
     mod.questions.push(prova.id);
 
     const prog = progress[prova.id];
@@ -669,17 +699,25 @@ function calculateModuleStats(userId, allProvas) {
   });
 
   Object.values(stats.byModule).forEach(mod => {
-    mod.notStarted = mod.total - mod.attempted;
-    mod.percentage = mod.total > 0 ? Math.round((mod.correct / mod.total) * 100) : 0;
+    mod.notStarted = mod.questionBankTotal - mod.attempted;
+    mod.accuracy = mod.attempted > 0 ? Math.round((mod.correct / mod.attempted) * 100) : 0;
+    mod.coverage = mod.questionBankTotal > 0 ? Math.round((mod.attempted / mod.questionBankTotal) * 100) : 0;
+    mod.percentage = mod.accuracy;
 
-    stats.overall.correct += mod.correct;
-    stats.overall.total += mod.total;
+    stats.overall.questionBankTotal += mod.questionBankTotal;
     stats.overall.attempted += mod.attempted;
+    stats.overall.correct += mod.correct;
+    stats.overall.wrong += mod.wrong;
   });
 
-  stats.overall.percentage = stats.overall.total > 0
-    ? Math.round((stats.overall.correct / stats.overall.total) * 100)
+  stats.overall.accuracy = stats.overall.attempted > 0
+    ? Math.round((stats.overall.correct / stats.overall.attempted) * 100)
     : 0;
+  stats.overall.coverage = stats.overall.questionBankTotal > 0
+    ? Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100)
+    : 0;
+  stats.overall.total = stats.overall.questionBankTotal;
+  stats.overall.percentage = stats.overall.accuracy;
 
   return stats;
 }
@@ -792,17 +830,24 @@ window.closeUserProgressModal = closeUserProgressModal;
  * Renderizar métricas gerais
  */
 function renderMetrics(stats) {
-  const metricsMap = [
-    { selector: '#metrics-grid .metric-card:nth-child(1) .metric-value', value: stats.overall.total },
-    { selector: '#metrics-grid .metric-card:nth-child(2) .metric-value', value: stats.overall.correct },
-    { selector: '#metrics-grid .metric-card:nth-child(3) .metric-value', value: `${stats.overall.percentage}%` },
-    { selector: '#metrics-grid .metric-card:nth-child(4) .metric-value', value: `${Object.values(stats.byModule).filter(m => m.attempted > 0).length}/8` }
+  const grid = document.getElementById('metrics-grid');
+  if (!grid) return;
+
+  const cards = [
+    { label: 'Questões no Banco', value: stats.overall.questionBankTotal },
+    { label: 'Respondidas', value: stats.overall.attempted },
+    { label: 'Acertos', value: stats.overall.correct },
+    { label: 'Erradas', value: stats.overall.wrong },
+    { label: 'Taxa de Acerto', value: `${stats.overall.accuracy}%` },
+    { label: 'Cobertura', value: `${stats.overall.coverage}%` }
   ];
 
-  metricsMap.forEach(item => {
-    const el = document.querySelector(item.selector);
-    if (el) el.textContent = item.value;
-  });
+  grid.innerHTML = cards.map(card => `
+    <div class="metric-card">
+      <div class="metric-value">${card.value}</div>
+      <div class="metric-label">${card.label}</div>
+    </div>
+  `).join('');
 }
 
 /**
@@ -813,7 +858,7 @@ function renderChartAcertosErros(stats) {
   if (!canvas) return;
 
   const acertos = stats.overall.correct;
-  const erros = (stats.overall.attempted || 0) - stats.overall.correct;
+  const erros = stats.overall.wrong;
 
   if (dashboardCharts.acertosErros) {
     dashboardCharts.acertosErros.destroy();
@@ -860,7 +905,7 @@ function renderChartRadar(stats) {
   
   for (let i = 1; i <= 8; i++) {
     labels.push(`M${i}`);
-    data.push(stats.byModule[i].percentage);
+    data.push(stats.byModule[i].accuracy);
   }
 
   if (dashboardCharts.radar) {
@@ -872,7 +917,7 @@ function renderChartRadar(stats) {
     data: {
       labels,
       datasets: [{
-        label: 'Taxa de Acerto (%)',
+        label: 'Taxa de Acerto Real (%)',
         data,
         backgroundColor: 'rgba(76, 175, 80, 0.2)',
         borderColor: 'rgba(76, 175, 80, 0.8)',
@@ -994,23 +1039,24 @@ function renderModulesProgress(userId, stats) {
   
   for (let i = 1; i <= 8; i++) {
     const mod = stats.byModule[i];
-    const percentage = mod.percentage;
+    const accuracy = mod.accuracy;
+    const coverage = mod.coverage;
     
     const colors = {
       text: '#ddd',
       stroke: '#999'
     };
     
-    if (percentage >= 80) {
+    if (accuracy >= 80) {
       colors.stroke = '#4CAF50'; // Verde
-    } else if (percentage >= 60) {
+    } else if (accuracy >= 60) {
       colors.stroke = '#FFC107'; // Amarelo
-    } else if (percentage > 0) {
+    } else if (accuracy > 0) {
       colors.stroke = '#FF9800'; // Laranja
     }
     
     const circumference = 251.2; // 2 * PI * 40
-    const offset = circumference - (percentage / 100) * circumference;
+    const offset = circumference - (coverage / 100) * circumference;
     const statusLabel = mod.attempted > 0 ? 'Iniciado' : 'Novo';
     const wrong = mod.wrong || 0;
 
@@ -1026,17 +1072,19 @@ function renderModulesProgress(userId, stats) {
     html.push(`<circle class="progress-circle-bg" cx="50" cy="50" r="40" />`);
     html.push(`<circle class="progress-circle-fill" cx="50" cy="50" r="40" style="stroke: ${colors.stroke}; stroke-dashoffset: ${offset};" />`);
     html.push(`</svg>`);
-    html.push(`<div class="progress-text">${percentage}%</div>`);
+    html.push(`<div class="progress-text">${coverage}%</div>`);
     html.push(`</div>`);
     html.push(`<div class="module-kpis">`);
-    html.push(`<div class="module-kpi"><span class="kpi-label">Total</span><strong>${mod.total}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Total Banco</span><strong>${mod.questionBankTotal}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Respondidas</span><strong>${mod.attempted}</strong></div>`);
     html.push(`<div class="module-kpi"><span class="kpi-label">Não iniciadas</span><strong>${mod.notStarted}</strong></div>`);
     html.push(`<div class="module-kpi"><span class="kpi-label">Corretas</span><strong style="color:#4CAF50;">${mod.correct}</strong></div>`);
     html.push(`<div class="module-kpi"><span class="kpi-label">Erradas</span><strong style="color:#FF5252;">${wrong}</strong></div>`);
+    html.push(`<div class="module-kpi"><span class="kpi-label">Taxa</span><strong>${accuracy}%</strong></div>`);
     html.push(`</div>`);
     html.push(`</div>`);
 
-    html.push(`<div class="progress-bar-small"><div class="progress-bar-fill" style="width:${percentage}%;background:${colors.stroke};"></div></div>`);
+    html.push(`<div class="progress-bar-small"><div class="progress-bar-fill" style="width:${coverage}%;background:${colors.stroke};"></div></div>`);
     html.push(`<div class="module-analysis-hint">Clique para abrir detalhes e revisar erros</div>`);
     html.push(`</div>`);
   }
@@ -1062,8 +1110,8 @@ function renderStatsTable(stats) {
       : `${wrong}`;
 
     html.push(`<tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">`);
-    html.push(`<td style="padding: 12px; display: flex; align-items: center; gap: 10px;">${renderProgressCircleHTML(mod.percentage, 36)}<span style="font-weight: 600;">Módulo ${i}</span></td>`);
-    html.push(`<td style="padding: 12px; text-align: center; color: #aaa;">${mod.total}</td>`);
+    html.push(`<td style="padding: 12px; display: flex; align-items: center; gap: 10px;">${renderProgressCircleHTML(mod.coverage, 36)}<span style="font-weight: 600;">Módulo ${i}</span></td>`);
+    html.push(`<td style="padding: 12px; text-align: center; color: #aaa;">${mod.questionBankTotal}</td>`);
     html.push(`<td style="padding: 12px; text-align: center; color: #bbb;">${mod.notStarted}</td>`);
     html.push(`<td style="padding: 12px; text-align: center; color: #4CAF50; font-weight: 600;">${mod.correct}</td>`);
     html.push(`<td style="padding: 12px; text-align: center; color: #FF5252; font-weight: 600;">${wrongHtml}</td>`);
@@ -1154,7 +1202,7 @@ function renderModuleErrorsDetail(userId, moduleId, allProvas) {
   const erradas = modStats.wrong || 0;
   html.push(`<div class="stat-item"><div class="stat-value" style="color: #FF5722;">${erradas}</div><div class="stat-label">Erros</div></div>`);
   
-  html.push(`<div class="stat-item"><div class="stat-value" style="color: #FFC107;">${modStats.percentage}%</div><div class="stat-label">Taxa</div></div>`);
+  html.push(`<div class="stat-item"><div class="stat-value" style="color: #FFC107;">${modStats.accuracy}%</div><div class="stat-label">Taxa</div></div>`);
   html.push('</div>');
   
   // Lista de questões com erros

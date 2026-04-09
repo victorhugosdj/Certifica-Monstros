@@ -224,8 +224,8 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
               <div>
                 <strong style="color: #4CAF50;">Taxa de Acerto</strong>
-                <p style="font-size: 0.9em; margin-top: 5px;">= (Acertos / Total) × 100</p>
-                <p style="font-size: 0.85em; color: #aaa;">Exemplo: 96/120 = 80%</p>
+                <p style="font-size: 0.9em; margin-top: 5px;">= (Acertos / Respondidas) × 100</p>
+                <p style="font-size: 0.85em; color: #aaa;">Exemplo: 96/120 respondidas = 80%</p>
               </div>
               <div>
                 <strong style="color: #4CAF50;">Ranking</strong>
@@ -280,19 +280,27 @@
               <div id="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
                 <div class="metric-card">
                   <div class="metric-value">0</div>
-                  <div class="metric-label">Total de Questões</div>
+                  <div class="metric-label">Questões no Banco</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-value">0</div>
+                  <div class="metric-label">Respondidas</div>
                 </div>
                 <div class="metric-card">
                   <div class="metric-value">0</div>
                   <div class="metric-label">Acertos</div>
                 </div>
                 <div class="metric-card">
+                  <div class="metric-value">0</div>
+                  <div class="metric-label">Erradas</div>
+                </div>
+                <div class="metric-card">
                   <div class="metric-value">0%</div>
                   <div class="metric-label">Taxa de Acerto</div>
                 </div>
                 <div class="metric-card">
-                  <div class="metric-value">0/8</div>
-                  <div class="metric-label">Módulos Iniciados</div>
+                  <div class="metric-value">0%</div>
+                  <div class="metric-label">Cobertura</div>
                 </div>
               </div>
             </div>
