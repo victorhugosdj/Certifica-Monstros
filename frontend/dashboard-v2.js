@@ -502,6 +502,104 @@ function normalizeUserMetrics({ questionBankTotal, attempted, correct }) {
   };
 }
 
+function buildStatsFromProgress(progress, errors, allProvas) {
+  const safeProgress = progress && typeof progress === 'object' ? progress : {};
+  const safeErrors = errors && typeof errors === 'object' ? errors : {};
+  const stats = {
+    byModule: {},
+    overall: {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      accuracy: 0,
+      coverage: 0
+    }
+  };
+
+  for (let i = 1; i <= 8; i++) {
+    stats.byModule[i] = {
+      questionBankTotal: 0,
+      attempted: 0,
+      correct: 0,
+      wrong: 0,
+      notStarted: 0,
+      accuracy: 0,
+      coverage: 0,
+      errorCount: 0,
+      total: 0,
+      percentage: 0,
+      questions: [],
+      errorQuestions: []
+    };
+  }
+
+  (allProvas || []).forEach(prova => {
+    const module = Number(prova.modulo);
+    if (!stats.byModule[module]) return;
+
+    const mod = stats.byModule[module];
+    mod.questionBankTotal += 1;
+    mod.total = mod.questionBankTotal;
+    mod.questions.push(prova.id);
+
+    const prog = safeProgress[String(prova.id)] || safeProgress[prova.id];
+    if (prog) {
+      mod.attempted += 1;
+      if (Boolean(prog.correct)) {
+        mod.correct += 1;
+      } else {
+        mod.wrong += 1;
+      }
+    }
+
+    const rawErrors = safeErrors[String(prova.id)] || safeErrors[prova.id];
+    if (rawErrors) {
+      const errorsCount = Math.max(0, Number(rawErrors || 0));
+      mod.errorCount += errorsCount;
+      mod.errorQuestions.push({
+        id: prova.id,
+        titulo: prova.titulo || prova.pergunta || 'Questão sem título',
+        erros: errorsCount
+      });
+    }
+  });
+
+  Object.values(stats.byModule).forEach(mod => {
+    mod.notStarted = Math.max(mod.questionBankTotal - mod.attempted, 0);
+    const normalized = normalizeUserMetrics({
+      questionBankTotal: mod.questionBankTotal,
+      attempted: mod.attempted,
+      correct: mod.correct
+    });
+    mod.attempted = normalized.attempted;
+    mod.correct = normalized.correct;
+    mod.wrong = normalized.wrong;
+    mod.accuracy = normalized.accuracy;
+    mod.coverage = normalized.coverage;
+    mod.percentage = mod.accuracy;
+
+    stats.overall.questionBankTotal += mod.questionBankTotal;
+    stats.overall.attempted += mod.attempted;
+    stats.overall.correct += mod.correct;
+  });
+
+  const overallNormalized = normalizeUserMetrics({
+    questionBankTotal: stats.overall.questionBankTotal,
+    attempted: stats.overall.attempted,
+    correct: stats.overall.correct
+  });
+  stats.overall.attempted = overallNormalized.attempted;
+  stats.overall.correct = overallNormalized.correct;
+  stats.overall.wrong = overallNormalized.wrong;
+  stats.overall.accuracy = overallNormalized.accuracy;
+  stats.overall.coverage = overallNormalized.coverage;
+  stats.overall.total = stats.overall.questionBankTotal;
+  stats.overall.percentage = stats.overall.accuracy;
+
+  return stats;
+}
+
 async function fetchRanking(questionBankTotal = 0) {
   const API_BASE = document.querySelector('meta[name="api-base-url"]')?.content || '';
   const rankingUrl = `${API_BASE.replace(/\/$/, '')}/api/ranking?limit=0`;
@@ -639,92 +737,11 @@ async function fetchUserProgressSnapshot(userId) {
 }
 
 function buildStatsFromProgressPayload(progressPayload, allProvas) {
-  const stats = {
-    byModule: {},
-    overall: {
-      questionBankTotal: 0,
-      attempted: 0,
-      correct: 0,
-      wrong: 0,
-      accuracy: 0,
-      coverage: 0
-    }
-  };
-
-  const questionModuleMap = {};
-  for (let i = 1; i <= 8; i++) {
-    stats.byModule[i] = {
-      questionBankTotal: 0,
-      attempted: 0,
-      correct: 0,
-      wrong: 0,
-      notStarted: 0,
-      accuracy: 0,
-      coverage: 0,
-      errorCount: 0,
-      total: 0,
-      percentage: 0,
-      questions: [],
-      errorQuestions: []
-    };
-  }
-
-  (allProvas || []).forEach((prova) => {
-    const mod = Number(prova.modulo);
-    if (!stats.byModule[mod]) return;
-    stats.byModule[mod].questionBankTotal += 1;
-    stats.byModule[mod].total = stats.byModule[mod].questionBankTotal;
-    questionModuleMap[String(prova.id)] = mod;
-  });
-
-  const progress = progressPayload?.progress || {};
-  Object.entries(progress).forEach(([questionId, entry]) => {
-    let mod = Number(entry?.module);
-    if (Number.isNaN(mod) || !stats.byModule[mod]) {
-      mod = Number(questionModuleMap[String(questionId)]);
-    }
-    if (!stats.byModule[mod]) return;
-    const moduleStats = stats.byModule[mod];
-    moduleStats.attempted += 1;
-    if (Boolean(entry?.correct)) {
-      moduleStats.correct += 1;
-    } else {
-      moduleStats.wrong += 1;
-    }
-  });
-
-  for (let i = 1; i <= 8; i++) {
-    const mod = stats.byModule[i];
-    mod.notStarted = Math.max(mod.questionBankTotal - mod.attempted, 0);
-    const normalized = normalizeUserMetrics({
-      questionBankTotal: mod.questionBankTotal,
-      attempted: mod.attempted,
-      correct: mod.correct
-    });
-    mod.correct = normalized.correct;
-    mod.wrong = normalized.wrong;
-    mod.accuracy = normalized.accuracy;
-    mod.coverage = normalized.coverage;
-    mod.percentage = mod.accuracy;
-    stats.overall.questionBankTotal += mod.questionBankTotal;
-    stats.overall.attempted += mod.attempted;
-    stats.overall.correct += mod.correct;
-  }
-
-  const overallNormalized = normalizeUserMetrics({
-    questionBankTotal: stats.overall.questionBankTotal,
-    attempted: stats.overall.attempted,
-    correct: stats.overall.correct
-  });
-  stats.overall.attempted = overallNormalized.attempted;
-  stats.overall.correct = overallNormalized.correct;
-  stats.overall.wrong = overallNormalized.wrong;
-  stats.overall.accuracy = overallNormalized.accuracy;
-  stats.overall.coverage = overallNormalized.coverage;
-  stats.overall.total = stats.overall.questionBankTotal;
-  stats.overall.percentage = stats.overall.accuracy;
-
-  return stats;
+  return buildStatsFromProgress(
+    progressPayload?.progress || {},
+    progressPayload?.errors || {},
+    allProvas
+  );
 }
 
 function buildStatsFromBackend(metrics, allProvas) {
@@ -828,89 +845,7 @@ function buildStatsFromBackend(metrics, allProvas) {
 function calculateModuleStats(userId, allProvas) {
   const errors = getUserErrors(userId);
   const progress = getUserProgress(userId);
-
-  const stats = {
-    byModule: {},
-    overall: {
-      questionBankTotal: 0,
-      attempted: 0,
-      correct: 0,
-      wrong: 0,
-      accuracy: 0,
-      coverage: 0
-    }
-  };
-
-  for (let i = 1; i <= 8; i++) {
-    stats.byModule[i] = {
-      questionBankTotal: 0,
-      attempted: 0,
-      correct: 0,
-      wrong: 0,
-      notStarted: 0,
-      accuracy: 0,
-      coverage: 0,
-      errorCount: 0,
-      total: 0,
-      percentage: 0,
-      questions: [],
-      errorQuestions: []
-    };
-  }
-
-  allProvas.forEach(prova => {
-    const module = Number(prova.modulo);
-    if (!stats.byModule[module]) return;
-
-    const mod = stats.byModule[module];
-    mod.questionBankTotal += 1;
-    mod.total = mod.questionBankTotal;
-    mod.questions.push(prova.id);
-
-    const prog = progress[prova.id];
-    if (prog) {
-      mod.attempted += 1;
-      if (prog.correct) {
-        mod.correct += 1;
-      } else {
-        mod.wrong += 1;
-      }
-    }
-
-    if (errors[prova.id]) {
-      mod.errorCount += errors[prova.id];
-      mod.errorQuestions.push({
-        id: prova.id,
-        titulo: prova.titulo || prova.pergunta || 'Questão sem título',
-        erros: errors[prova.id]
-      });
-    }
-  });
-
-  Object.values(stats.byModule).forEach(mod => {
-    mod.notStarted = mod.questionBankTotal - mod.attempted;
-    mod.accuracy = mod.attempted > 0 ? Math.round((mod.correct / mod.attempted) * 100) : 0;
-    mod.coverage = mod.questionBankTotal > 0 ? Math.round((mod.attempted / mod.questionBankTotal) * 100) : 0;
-    mod.percentage = mod.accuracy;
-
-    stats.overall.questionBankTotal += mod.questionBankTotal;
-    stats.overall.attempted += mod.attempted;
-    stats.overall.correct += mod.correct;
-    stats.overall.wrong += mod.wrong;
-  });
-
-  stats.overall.correct = Math.max(0, Math.min(stats.overall.correct, stats.overall.attempted));
-  stats.overall.wrong = Math.max(0, Math.min(stats.overall.wrong, stats.overall.attempted));
-  stats.overall.accuracy = stats.overall.attempted > 0
-    ? Math.min(100, Math.round((stats.overall.correct / stats.overall.attempted) * 100))
-    : 0;
-  stats.overall.coverage = stats.overall.questionBankTotal > 0
-    ? Math.min(100, Math.round((stats.overall.attempted / stats.overall.questionBankTotal) * 100))
-    : 0;
-  stats.overall.total = stats.overall.questionBankTotal;
-  stats.overall.percentage = stats.overall.accuracy;
-
-  return stats;
+  return buildStatsFromProgress(progress, errors, allProvas);
 }
 
 // ========== RENDERIZADORES ==========
@@ -1348,23 +1283,20 @@ async function initDashboard() {
     const allProvas = await loadProvas();
     window.allProvasGlobal = allProvas;
     
-    const remoteProgress = await fetchUserProgressSnapshot(CURRENT_USER.id);
-    let stats = null;
-    let statsSource = 'localStorage:fallback';
-    if (remoteProgress?.progress) {
-      stats = buildStatsFromProgressPayload(remoteProgress, allProvas);
-      statsSource = 'backend:/api/progress';
-    } else {
-      const remoteMetrics = await fetchUserMetrics(CURRENT_USER.id);
-      if (remoteMetrics) {
-        stats = buildStatsFromBackend(remoteMetrics, allProvas);
-        statsSource = 'backend:/api/metrics';
+    let stats = calculateModuleStats(CURRENT_USER.id, allProvas);
+    let statsSource = 'local:progress+errors (same-as-modal)';
+    if (stats.overall.attempted === 0) {
+      const remoteProgress = await fetchUserProgressSnapshot(CURRENT_USER.id);
+      const hasRemoteProgress = Boolean(remoteProgress?.progress) && Object.keys(remoteProgress.progress).length > 0;
+      if (hasRemoteProgress) {
+        stats = buildStatsFromProgressPayload(remoteProgress, allProvas);
+        statsSource = 'backend:/api/progress(fallback)';
       } else {
-        stats = calculateModuleStats(CURRENT_USER.id, allProvas);
-        console.warn('[dashboard-debug][fallback-localstats]', {
-          reason: 'remoteProgress-and-remoteMetrics-null',
-          userId: CURRENT_USER.id
-        });
+        const remoteMetrics = await fetchUserMetrics(CURRENT_USER.id);
+        if (remoteMetrics) {
+          stats = buildStatsFromBackend(remoteMetrics, allProvas);
+          statsSource = 'backend:/api/metrics(last-fallback)';
+        }
       }
     }
     console.info('[dashboard-debug][stats-final]', {
@@ -1382,6 +1314,17 @@ async function initDashboard() {
     let ranking = [];
     try {
       ranking = await fetchRanking(stats?.overall?.questionBankTotal || 0);
+      const currentUserRankingIndex = ranking.findIndex(item => item.userId === CURRENT_USER.id);
+      if (currentUserRankingIndex >= 0) {
+        ranking[currentUserRankingIndex] = {
+          ...ranking[currentUserRankingIndex],
+          ...normalizeUserMetrics({
+            questionBankTotal: stats?.overall?.questionBankTotal || 0,
+            attempted: stats?.overall?.attempted || 0,
+            correct: stats?.overall?.correct || 0
+          })
+        };
+      }
     } catch (rankingError) {
       console.error('[dashboard] Falha ao carregar ranking. Dashboard seguirá sem ranking.', rankingError);
       renderRankingMessage('Não foi possível carregar o ranking agora.');
