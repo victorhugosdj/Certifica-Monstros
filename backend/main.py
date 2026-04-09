@@ -616,6 +616,18 @@ def user_progress(
     if not service_client:
         raise HTTPException(status_code=500, detail=get_supabase_service_client_error_detail())
 
+    def _safe_int(value: Any, default: int = 0) -> int:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
+
+    def _safe_float(value: Any, default: float = 0.0) -> float:
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return default
+
     try:
         # Fonte canÃ´nica de verdade (snapshot consolidado).
         # Se a tabela ainda nÃ£o existir no banco, o fluxo cai para reconstruÃ§Ã£o por eventos.
@@ -634,15 +646,19 @@ def user_progress(
                     progress: Dict[str, Dict[str, Any]] = {}
                     errors: Dict[str, int] = {}
                     for row in canonical_rows:
-                        question_id = row.get("question_id")
+                        question_id = str(row.get("question_id") or "").strip()
                         if not question_id:
                             continue
-                        wrong_attempts = int(row.get("wrong_attempts") or 0)
+
+                        wrong_attempts = max(_safe_int(row.get("wrong_attempts"), 0), 0)
+                        attempts = max(_safe_int(row.get("attempts"), 1), 1)
+                        is_correct = bool(row.get("correct"))
+
                         progress[question_id] = {
                             "module": row.get("module"),
-                            "correct": bool(row.get("correct")),
-                            "points": float(row.get("points") or 0),
-                            "attempts": int(row.get("attempts") or 1),
+                            "correct": is_correct,
+                            "points": _safe_float(row.get("points"), 1.0 if is_correct else 0.0),
+                            "attempts": attempts,
                             "wrong_attempts": wrong_attempts,
                             "lastAnsweredAt": row.get("last_answered_at") or "",
                         }
