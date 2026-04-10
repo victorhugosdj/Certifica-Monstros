@@ -19,6 +19,7 @@ let navigationBound = false;
 let registerInFlight = false;
 const loginSyncInFlightUsers = new Set();
 const loginHydrationInFlightUsers = new Set();
+const loginSuccessInFlightUsers = new Set();
 
 function getSupabaseClient() {
   if (SUPABASE) return SUPABASE;
@@ -346,6 +347,10 @@ function saveProgress(userId, data) {
   localStorage.setItem(getProgressKey(userId), JSON.stringify(data));
 }
 
+function isValidProgress(progress) {
+  return Boolean(progress) && typeof progress === 'object' && !Array.isArray(progress);
+}
+
 function mergeProgress(localProgress = {}, remoteProgress = {}) {
   const merged = { ...localProgress };
 
@@ -559,8 +564,24 @@ async function syncUserProgressFromRemote(userId) {
     };
   }
 
-  const remoteProgress = remotePayload?.progress || {};
-  const remoteErrors = remotePayload?.errors || {};
+  const remoteProgressRaw = remotePayload?.progress;
+  const remoteErrorsRaw = remotePayload?.errors;
+  const remoteProgress = isValidProgress(remoteProgressRaw) ? remoteProgressRaw : {};
+  const remoteErrors = isValidProgress(remoteErrorsRaw) ? remoteErrorsRaw : {};
+  if (remoteProgressRaw != null && !isValidProgress(remoteProgressRaw)) {
+    console.error('[login-sync] Payload remoto de progresso invalido; ignorando dados remotos.', {
+      userId,
+      progressType: typeof remoteProgressRaw,
+      progressIsArray: Array.isArray(remoteProgressRaw),
+    });
+  }
+  if (remoteErrorsRaw != null && !isValidProgress(remoteErrorsRaw)) {
+    console.error('[login-sync] Payload remoto de erros invalido; ignorando dados remotos.', {
+      userId,
+      errorsType: typeof remoteErrorsRaw,
+      errorsIsArray: Array.isArray(remoteErrorsRaw),
+    });
+  }
   const mergedProgress = mergeProgress(localProgress, remoteProgress);
   const mergedErrors = mergeErrors(localErrors, remoteErrors);
 
@@ -1272,58 +1293,84 @@ function bindNavigation() {
 }
 
 async function onLoginSuccess(user) {
-  CURRENT_USER = user;
-  const savedName = user?.id ? localStorage.getItem(`user_name_${user.id}`) : '';
-  const name = user.user_metadata?.full_name || savedName || user.email;
-  document.getElementById('user-name').textContent = name;
-  // Garantir que as questões (provas) estejam carregadas antes de calcular progresso
+  if (!user?.id) return;
+  // Proteção de reentrada: evita duas execuções paralelas para o mesmo usuário.
+  if (loginSuccessInFlightUsers.has(user.id)) {
+    return;
+  }
+  loginSuccessInFlightUsers.add(user.id);
+
   try {
-    await loadProvas();
-  } catch (e) {
-    console.warn('Falha ao carregar provas antes dos módulos:', e);
-  }
-
-  if (!loginHydrationInFlightUsers.has(user.id)) {
-    loginHydrationInFlightUsers.add(user.id);
+    CURRENT_USER = user;
+    const savedName = user?.id ? localStorage.getItem(`user_name_${user.id}`) : '';
+    const name = user.user_metadata?.full_name || savedName || user.email;
+    document.getElementById('user-name').textContent = name;
+    // Garantir que as questões (provas) estejam carregadas antes de calcular progresso
     try {
-      const syncFromRemote = await syncUserProgressFromRemote(user.id);
-    const snapshotSync = await syncProgressSnapshotToBackend(
-      user.id,
-      syncFromRemote.progress,
-      syncFromRemote.errors
-    );
-    if (!snapshotSync.ok) {
-      console.warn('[sync-snapshot] fallback para sync incremental', snapshotSync);
-      await syncMergedProgressToBackendAfterLogin(
-        user.id,
-        syncFromRemote.progress,
-        syncFromRemote.remoteProgress,
-        { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
-        );
-      }
-      await flushPendingResponses(user.id);
-
-      const consolidatedRemote = await fetchRemoteProgress(user.id);
-      if (consolidatedRemote !== null && CURRENT_USER?.id === user.id) {
-        const finalProgress = mergeProgress(syncFromRemote.progress, consolidatedRemote?.progress || {});
-        const finalErrors = mergeErrors(syncFromRemote.errors, consolidatedRemote?.errors || {});
-        STATE.userProgress = finalProgress;
-        STATE.userErrors = finalErrors;
-        saveProgress(user.id, finalProgress);
-        saveErrors(user.id, finalErrors);
-      }
+      await loadProvas();
     } catch (e) {
-      console.warn('Falha ao sincronizar progresso remoto:', e);
-    } finally {
-      loginHydrationInFlightUsers.delete(user.id);
+      console.warn('Falha ao carregar provas antes dos módulos:', e);
     }
-  }
 
-  await loadModules().then(renderModulesGrid).catch(console.error);
-  bindModuleActions();
-  bindNavigation();
-  setView('how-to');
-  showApp();
+    if (!loginHydrationInFlightUsers.has(user.id)) {
+      loginHydrationInFlightUsers.add(user.id);
+      try {
+        const syncFromRemote = await syncUserProgressFromRemote(user.id);
+        const snapshotSync = await syncProgressSnapshotToBackend(
+          user.id,
+          syncFromRemote.progress,
+          syncFromRemote.errors
+        );
+        if (!snapshotSync.ok) {
+          console.warn('[sync-snapshot] fallback para sync incremental', snapshotSync);
+          await syncMergedProgressToBackendAfterLogin(
+            user.id,
+            syncFromRemote.progress,
+            syncFromRemote.remoteProgress,
+            { remoteFetchSucceeded: syncFromRemote.remoteFetchSucceeded }
+          );
+        }
+        await flushPendingResponses(user.id);
+        if (CURRENT_USER?.id === user.id) {
+          // Reaproveita os dados já carregados por syncUserProgressFromRemote
+          // para evitar um segundo GET /api/progress no login.
+          if (isValidProgress(syncFromRemote.progress)) {
+            STATE.userProgress = syncFromRemote.progress;
+            saveProgress(user.id, syncFromRemote.progress);
+          } else {
+            console.error('[login-sync] Progresso remoto invalido; estado local preservado.', {
+              userId: user.id,
+              progressType: typeof syncFromRemote.progress,
+              progressIsArray: Array.isArray(syncFromRemote.progress),
+            });
+          }
+
+          if (isValidProgress(syncFromRemote.errors)) {
+            STATE.userErrors = syncFromRemote.errors;
+            saveErrors(user.id, syncFromRemote.errors);
+          } else {
+            console.error('[login-sync] Estrutura de erros remotos invalida; estado local preservado.', {
+              userId: user.id,
+              errorsType: typeof syncFromRemote.errors,
+              errorsIsArray: Array.isArray(syncFromRemote.errors),
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('Falha ao sincronizar progresso remoto:', e);
+      } finally {
+        loginHydrationInFlightUsers.delete(user.id);
+      }
+    }
+
+    await loadModules().then(renderModulesGrid).catch(console.error);
+    bindModuleActions();
+    bindNavigation();
+    setView('how-to');
+    showApp();
+  } finally {
+    loginSuccessInFlightUsers.delete(user.id);
+  }
 }
 
 async function initAuth() {
@@ -1354,6 +1401,10 @@ async function initAuth() {
   }
 
   supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'INITIAL_SESSION') {
+      return;
+    }
+
     if (event === 'PASSWORD_RECOVERY') {
       mostrarModalAtualizarSenha();
       return;

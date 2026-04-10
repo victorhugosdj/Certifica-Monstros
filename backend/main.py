@@ -749,6 +749,46 @@ def user_progress(
         except (TypeError, ValueError):
             return default
 
+    def _is_missing_column_error(error: Any, column_name: str) -> bool:
+        message = str(error or "").lower()
+        return (
+            bool(column_name)
+            and column_name.lower() in message
+            and ("does not exist" in message or "column" in message or "schema cache" in message)
+        )
+
+    def _fetch_event_rows_with_timestamp_fallback() -> List[Dict[str, Any]]:
+        # Compatibilidade de schema: alguns ambientes possuem answered_at em vez de created_at.
+        last_error: Optional[Any] = None
+        for ts_column in ("created_at", "answered_at"):
+            try:
+                res = (
+                    service_client
+                    .table("respostas_usuario")
+                    .select(f"module,question_id,correto,{ts_column}")
+                    .eq("user_id", user_id)
+                    .execute()
+                )
+                response_error = _response_error(res)
+                if response_error:
+                    if _is_missing_column_error(response_error, ts_column):
+                        last_error = response_error
+                        continue
+                    raise HTTPException(status_code=500, detail=str(response_error))
+                return res.data or []
+            except HTTPException:
+                raise
+            except Exception as exc:
+                if _is_missing_column_error(exc, ts_column):
+                    last_error = exc
+                    continue
+                raise HTTPException(status_code=500, detail=str(exc))
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to read respostas_usuario timestamp column (created_at/answered_at): {last_error}",
+        )
+
     try:
         # Fonte canÃ´nica de verdade (snapshot consolidado).
         # Se a tabela ainda nÃ£o existir no banco, o fluxo cai para reconstruÃ§Ã£o por eventos.
@@ -796,18 +836,7 @@ def user_progress(
         except Exception as canonical_error:
             logger.info("Canonical snapshot unavailable, falling back to event history: %s", canonical_error)
 
-        res = (
-            service_client
-            .table("respostas_usuario")
-            .select("module,question_id,correto,created_at")
-            .eq("user_id", user_id)
-            .execute()
-        )
-        response_error = _response_error(res)
-        if response_error:
-            raise HTTPException(status_code=500, detail=str(response_error))
-
-        rows = res.data or []
+        rows = _fetch_event_rows_with_timestamp_fallback()
         event_state = _build_progress_from_event_rows(rows)
 
         return {
